@@ -63,3 +63,6 @@
 *.so
 *.dylib
 *.a
+
+# Agent worktrees
+.claude/worktrees/

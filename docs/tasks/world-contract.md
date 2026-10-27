@@ -217,7 +217,7 @@ Body layouts: no mismatches found in those both sides serialize (join, response,
   - World-side alternative: `ZoneHost.ExtraArguments` can carry `--config path`, but it is the same for every zone.
 - Confidence: high
 
-### WC-05: Provide a launcher for static (continent) zones
+### WC-05: Provide a launcher for static (continent) zones — **Done** (zone repo owns it: `AAEmu.ZoneServer --zones a,b` starts one host per map with `+instance 0`, restarts with backoff)
 - Priority: P0
 - Evidence: W `ZoneHostSupervisor.cs:202-212` (`TryStart` is instance-only), `Models/WorldAppConfiguration.cs` (`SvPortBase` doc: continent hosts keep the Zone Manager default), `Program.cs (pre-restructure):79-90,242-274`, `PlayerEnterService.cs:25-33,182-205`; Z `Program.cs (pre-restructure):155-162`
 - Repo state: Absent on both sides. World never launches static zones, and the Zone Manager that does is in neither repo.

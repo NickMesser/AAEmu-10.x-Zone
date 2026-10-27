@@ -71,7 +71,7 @@ World's `ZoneHostSupervisor` starts one process per zone instance with `-dedicat
 - **Spawner placements.** These are read from `game/worlds/<world>/level_design/zone/<key>/zone_server/npc_spawners.g` in the configured assets unless `spawnerFile` or `--spawner-file` names a file.
 - **`AAEMU_ZONE_DLL`.** It is ignored: this process replaces that module.
 - **World configuration.** Set `ZoneHost.Executable` to `AAEmu.ZoneServer.exe` and `ZoneHost.WorkingDirectory` to the client directory that `+db_location` is relative to. World's preflight still requires `ZoneHost.NativeDll` to name an existing file (TASKS.md WC-03).
-- **Continent zones.** World currently launches only instance zones (TASKS.md WC-05).
+- **Continent zones.** World launches only instance zones. Start continent zones from this repo: `AAEmu.ZoneServer --zones w_gweonid_forest_1,w_solzreed_1 --config zone.json` runs one host per map with `+instance 0`, prefixes each host's output with its map name and restarts a host that exits (5 s backoff doubling to 1 min). Ctrl+C retires them all.
 
 By hand: `AAEmu.ZoneServer --config C:/path/to/zone.json [--spawner-file npc_spawners.g]`.
 

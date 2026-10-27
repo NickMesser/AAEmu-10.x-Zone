@@ -70,7 +70,7 @@ Totals: **183 tasks**: 30 P0, 89 P1, 64 P2.
 
 Goal: World starts `AAEmu.ZoneServer` for an instance and for the starter continent zone. The host reaches `ZWZoneLoaded` and stays connected until it is told to stop.
 
-1. **Launch contract:** finish WC-02, WC-03 and WC-04 (see above); WC-05 (a launcher or World-side list for static continent zones; nothing starts them today); WC-07 (World detects early host death).
+1. **Launch contract:** finish WC-02, WC-03 and WC-04 (see above); WC-05 (**done**: `--zones` launcher in this repo); WC-07 (World detects early host death).
 2. **Keep the session alive:** ZW-01 (send `ZWHeartbeat` every second); WZ-01 (no WZ packet may fault the session, mirroring native handlers that always `return 1`); OPS-06 (GM selectors 49/142–144); ZW-03 (native disconnect policy: types 2/3 `quit`).
 3. **Scene readiness:** SCN-03 (re-run the scene check and confirm `ZoneSceneLoadReport.Ready`); SCN-01 (bind or truthfully stub the 148 unbound IGame slots so no engine call `FailFast`s); DB-01 (`constants`, `options`, `return_points`, `sub_zones`, `characters`).
 4. **Prove it:** OPS-01 (run the host against an isolated World; add an in-process fake-World test for sync → `ZWZoneLoaded` → disconnect); OPS-03 (graceful shutdown on World's `Kill`, crash logging).
@@ -125,7 +125,7 @@ Do each of these once. The listed IDs are the same work seen from different angl
 
 ## Open questions to settle early
 
-- **Static zones.** Who launches continent zones: a World-side list, or a launcher in this repo (WC-05)? Today an external Zone Manager that is in neither repo does it.
+- ~~**Static zones.**~~ Decided: this repo launches continent zones given as arguments (`--zones`, WC-05).
 - **Coordinate frame.** Which frame do characters' ZW moves use with World's default settings (WC-06)? Settle it with a captured session.
 - **Template names.** Does World's `+zone` template name always equal the content `zones.name` (WC-02)? Otherwise config needs a name-to-key table.
 - **Player and actor classes.** Re-implement CPlayer/Monster/Quadruped in managed code, or keep a native creator path (SCN-02)? The engine currently refuses every x2game module by design.
@@ -143,7 +143,7 @@ Generated from the area reports. The links point to the full task bodies.
 | WC-02 | Join with the `+instance` id and resolve the zone key from the `+zone` template name | [world-contract](docs/tasks/world-contract.md#wc-02-join-with-the-instance-id-and-resolve-the-zone-key-from-the-zone-template-name) |
 | WC-03 | Make World's launch preflight accept a non-native host | [world-contract](docs/tasks/world-contract.md#wc-03-make-worlds-launch-preflight-accept-a-non-native-host) |
 | WC-04 | Derive the runtime configuration from launch arguments and env instead of a json plus spawner-file per zone | [world-contract](docs/tasks/world-contract.md#wc-04-derive-the-runtime-configuration-from-launch-arguments-and-env-instead-of-a-json-plus-spawner-file-per-zone) |
-| WC-05 | Provide a launcher for static (continent) zones | [world-contract](docs/tasks/world-contract.md#wc-05-provide-a-launcher-for-static-continent-zones) |
+| WC-05 | Provide a launcher for static (continent) zones — **Done** | [world-contract](docs/tasks/world-contract.md#wc-05-provide-a-launcher-for-static-continent-zones) |
 | WC-06 | Align coordinate frames and the movement flag with World's default (continent on the wire) | [world-contract](docs/tasks/world-contract.md#wc-06-align-coordinate-frames-and-the-movement-flag-with-worlds-default-continent-on-the-wire) |
 | WZ-01 | Make WZ dispatch non-fatal and native-ordered for the first-entry path | [wz-inbound](docs/tasks/wz-inbound.md#wz-01-make-wz-dispatch-non-fatal-and-native-ordered-for-the-first-entry-path) |
 | WZ-02 | Verify the end-to-end first-entry WZ sequence against native handlers | [wz-inbound](docs/tasks/wz-inbound.md#wz-02-verify-the-end-to-end-first-entry-wz-sequence-against-native-handlers) |
@@ -251,7 +251,7 @@ Generated from the area reports. The links point to the full task bodies.
 | WS-02 | Handle the remaining WZ world-state packets instead of counting them unimplemented | [world-state](docs/tasks/world-state.md#ws-02-handle-the-remaining-wz-world-state-packets-instead-of-counting-them-unimplemented) |
 | WS-04 | Emit the missing ZW world-state frames (ReportZoneStatus, Heartbeat loop, BackpackDropped, RemoveHouse) | [world-state](docs/tasks/world-state.md#ws-04-emit-the-missing-zw-world-state-frames-reportzonestatus-heartbeat-loop-backpackdropped-removehouse) |
 | WS-06 | Wire world-state consumers into gameplay (conflict state to PvP rules, siege and relation to combat, schedule to spawners) | [world-state](docs/tasks/world-state.md#ws-06-wire-world-state-consumers-into-gameplay-conflict-state-to-pvp-rules-siege-and-relation-to-combat-schedule-to-spawners) |
-| OPS-03 | Graceful shutdown, signal, and crash handling for the host | [ops](docs/tasks/ops.md#ops-03-graceful-shutdown-signal-and-crash-handling-for-the-host) |
+| OPS-03 | Graceful shutdown, signal, and crash handling for the host — **Partial** | [ops](docs/tasks/ops.md#ops-03-graceful-shutdown-signal-and-crash-handling-for-the-host) |
 | OPS-04 | Add a ServerCVar configuration layer with the sim-affecting native CVars | [ops](docs/tasks/ops.md#ops-04-add-a-servercvar-configuration-layer-with-the-sim-affecting-native-cvars) |
 | OPS-06 | Implement the four unsupported zone-side GM selectors (49, 142, 143, 144) without crashing the session | [ops](docs/tasks/ops.md#ops-06-implement-the-four-unsupported-zone-side-gm-selectors-49-142-143-144-without-crashing-the-session) |
 | OPS-10 | Remove the hardcoded Lua library path and external-environment assumptions | [ops](docs/tasks/ops.md#ops-10-remove-the-hardcoded-lua-library-path-and-external-environment-assumptions) |

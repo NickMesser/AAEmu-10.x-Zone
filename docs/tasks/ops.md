@@ -90,7 +90,7 @@ Notes on evidence quality: many `npc_*` / `net_*` / `um_*` names (e.g. `npc_move
 - Depends on: OPS-01
 - Confidence: medium
 
-### OPS-03: Graceful shutdown, signal, and crash handling for the host
+### OPS-03: Graceful shutdown, signal, and crash handling for the host — **Partial** (SIGTERM/SIGHUP/close retire like Ctrl+C, unhandled exceptions logged, exit codes 0/1/130 documented; crash dumps and log rotation open)
 - Priority: P1
 - Native evidence: World disconnect triggers console command `quit` for modes 2/3 (`sub_3936D7E0` at 0x3936D7E0, calls vtable +296 with "quit"); `bot_restart_after_crash` CVar (0x39FC7BC8) shows crash-restart is an external supervisor concern.
 - Repo state: only `Console.CancelKeyPress` (Program.cs (pre-restructure):47-49) mapped to exit 130; no `AppDomain.UnhandledException`, `ProcessExit`, `PosixSignalRegistration` (SIGTERM/SIGHUP/console close event); `ZoneNativeEngineConsole.cs` allocates a hidden console that is not tied to CTRL_CLOSE_EVENT.
