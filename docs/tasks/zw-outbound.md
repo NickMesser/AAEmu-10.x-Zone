@@ -71,7 +71,7 @@ First-entry requirements (player enters 129, walks, logs out): ZWHeartbeat (time
 
 ### Tasks
 
-### ZW-01: Emit ZWHeartbeat once per second from the scene tick
+### ZW-01: Emit ZWHeartbeat once per second from the scene tick — **Done** (ZoneHeartbeatEmitter on the script clock, flag defaults false; queued from UpdateHeartbeat)
 - Priority: P0
 - Native evidence: 0x39332510 sends ZWHeartbeat (opcode 0x3C, body one bool from cvar `e_water_ocean_simulate_on_zone`) when `now - last >= 1.0`; World answers with WZWorldGameTime (0x85).
 - Repo state: `src/AAEmu.Zone.Protocol/Messages/ZoneHeartbeat.cs` and tests exist; `src/AAEmu.Zone/Scene/ZoneSceneProviders.cs:967 UpdateHeartbeat()` only calls `TimeOfDayState.Advance` and `_scriptClock.Advance`; no frame is queued anywhere.
@@ -177,7 +177,7 @@ First-entry requirements (player enters 129, walks, logs out): ZWHeartbeat (time
 - Depends on: respective gameplay systems
 - Confidence: medium
 
-### ZW-11: Reconcile ZwOpcodes.cs with the full native list and add a coverage test
+### ZW-11: Reconcile ZwOpcodes.cs with the full native list and add a coverage test — **Done** (13 constants added from ctor sites, DoodadCollideUnit comment fixed, ZwOpcodeAndHeartbeatTests)
 - Priority: P2
 - Native evidence: the 13 missing opcodes above; values read at the constructor sites listed in the table.
 - Repo state: `ZwOpcodes.cs` has 45 constants; the `DoodadCollideUnit` comment says "without stable opcode" but native is 0x3B (59) at 0x394547C0.
