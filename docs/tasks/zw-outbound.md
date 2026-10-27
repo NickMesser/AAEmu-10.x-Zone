@@ -94,7 +94,7 @@ First-entry requirements (player enters 129, walks, logs out): ZWHeartbeat (time
 - Depends on: none
 - Confidence: medium (instance semantics not tested against a live World)
 
-### ZW-03: Match native disconnect/lifecycle policy
+### ZW-03: Match native disconnect/lifecycle policy — **Done** (disconnect + join-refusal named via ZoneWorldLifecycle; World EOF exits with code 3 for server type 2; refusal strings of off_3A51AB48 still positional)
 - Priority: P1
 - Native evidence: 0x3936D7E0 "zone: client disconnected (reason=%d)": types 2/3 run console command "quit"; type 1 continues. Connect failure ("zone: client failed to connect to world", handled in 0x39366760): error for type 2, warning otherwise. No reconnect logic exists in the zone (the SC/CA reconnect packets are game-client).
 - Repo state: `ZoneSession.ReceiveAsync` ends on EOF and retires the scene; `Program.cs (pre-restructure)` uses a 30 s connect deadline; no server-type distinction.

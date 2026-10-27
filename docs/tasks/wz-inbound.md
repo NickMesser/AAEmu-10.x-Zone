@@ -148,7 +148,7 @@ Summary count: 133 registered; 56 decoded+dispatched; 77 absent (0 missing from 
 
 ## Tasks
 
-### WZ-01: Make WZ dispatch non-fatal and native-ordered for the first-entry path
+### WZ-01: Make WZ dispatch non-fatal and native-ordered for the first-entry path — **Partial** (per-packet containment, per-opcode fault counters, pre-load gate for Npc/Schedule/SpawnerEvent, tests; "unit id too big" check not ported: max id sub_39258650 unrecovered)
 - Priority: P0
 - Native evidence: every handler registered by `sub_3936F740` returns 1 and never throws; e.g. `sub_39362D40` (NpcState) logs "OnNpcState: level is not loaded yet!" and drops; `sub_39364A80` (UnitRemoved) returns on unknown id; `sub_3936B3C0` (UnitState) logs "unit id from world server is too big" / "duplicate unit state" and returns; `sub_393648D0` logs "world server refused joining".
 - Repo state: `ZoneSession.ReceiveCore` (src/AAEmu.Zone/WorldLink/ZoneSession.cs:322-546) throws `NotSupportedException` when `RelationshipWorld` is null (Siege/Conflict, lines 334/339) or NPC simulation is not configured (`RequireNpcs`, line 548); UnitState already contains containment for named admission refusals (lines 441-463) but other opcodes do not. Comment at 443-447 records that one refusal previously retired the whole zone.

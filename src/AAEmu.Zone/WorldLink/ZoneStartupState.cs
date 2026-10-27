@@ -82,7 +82,7 @@ public sealed class ZoneStartupState
                     throw new InvalidDataException("World sent a duplicate join response.");
                 var join = ZoneJoinResponse.Read(frame.Body.Span);
                 if (join.Reason != 0)
-                    throw new InvalidDataException($"World rejected the Zone join with reason {join.Reason}.");
+                    throw new InvalidDataException(ZoneWorldLifecycle.JoinRefusalMessage(join.Reason));
                 var filter = WorldContentFilter.Read(join.Filter.Span, _contentNameComparer);
                 JoinResponse = join;
                 ContentFilter = filter;

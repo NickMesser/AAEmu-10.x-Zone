@@ -69,6 +69,13 @@ public static class ZoneServerStartup
             startup, configuration, configuration.Backends, placements, trace);
         await ZoneSceneHost.RunAsync(hostInputs, client.GetStream(), shutdown).ConfigureAwait(false);
         trace("Host session retired in order (frame -> loading -> tick -> spawners -> activation -> engine).");
+        // The receive loop only returns without cancellation when World closed the connection (ZW-03).
+        // Server type 2 (this host) runs console "quit" natively (3936D7E0): orderly exit, distinct code.
+        if (!shutdown.IsCancellationRequested && WorldLink.ZoneWorldLifecycle.QuitsOnDisconnect(WorldLink.ZoneWorldLifecycle.DedicatedServerType))
+        {
+            trace("World disconnected; server type 2 quits (native 3936D7E0).");
+            return WorldLink.ZoneWorldLifecycle.WorldDisconnectedExitCode;
+        }
         return 0;
     }
 

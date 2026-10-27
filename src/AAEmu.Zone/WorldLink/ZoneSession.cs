@@ -14,7 +14,7 @@ namespace AAEmu.Zone.WorldLink;
 /// One World connection's startup and unit state. The stream remains caller-owned.
 /// Reconnect creates a fresh session; snapshots from an old connection are never reused.
 /// </summary>
-public sealed class ZoneSession
+public sealed partial class ZoneSession
 {
     private readonly Stream _connection;
     private readonly ZoneSceneCoordinator? _scene;
@@ -204,7 +204,7 @@ public sealed class ZoneSession
         {
             // Cancellation can consume part of a frame. A terminated connection must not resume
             // or dispatch new frames into the old session, even if its snapshots are inspected.
-            IsClosed = true;
+            IsClosed = true; MarkDisconnect(receiveError, receiveCancellation);
             Registry.CloseNotifications();
             List<Exception>? cleanupErrors = null;
             if (_scene is not null)
@@ -325,6 +325,22 @@ public sealed class ZoneSession
     }
 
     private void ReceiveCore(ZoneFrame frame)
+    {
+        // Native WZ handlers (registered by 3936F740) always return 1: log and drop. A per-packet failure
+        // is counted per opcode and never ends the session. Cancellation and retirement still propagate.
+        try
+        {
+            if (!PassesLevelGate(frame)) return;
+            DispatchCore(frame);
+        }
+        catch (OperationCanceledException) { throw; }
+        catch (Exception error) when (!IsClosed && _scene?.IsRetired != true)
+        {
+            RecordHandlerFault(frame.Opcode, error);
+        }
+    }
+
+    private void DispatchCore(ZoneFrame frame)
     {
         switch (frame.Opcode)
         {
