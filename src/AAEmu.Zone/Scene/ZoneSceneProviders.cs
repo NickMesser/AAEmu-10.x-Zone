@@ -994,7 +994,7 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
     /// REAL 39332510 heartbeat: advances time-of-day (the engine-phase owner per ZoneTimeOfDayState.cs:8) and the native
     /// float-seconds signal clock once per frame, then sends ZWHeartbeat (op 60) when the float delta since the last send is
     /// &gt;= 1.0 (last starts at 0 like the native static). The bool is cvar e_water_ocean_simulate_on_zone != 0 (the native
-    /// sets it per zone group, 0x3935xxxx writer at line 576089); World answers with WZWorldGameTime.
+    /// sets it per zone group; writer near line 576089 of the x2game-dev_dedicate.c export); World answers with WZWorldGameTime.
     /// </summary>
     public void UpdateHeartbeat()
     {
