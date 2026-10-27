@@ -87,6 +87,15 @@ public sealed class ZoneContentDatabase : IDisposable
 
     public ZoneSceneContent LoadSceneContent() => ZoneSceneContent.Load(_connection);
 
+    /// <summary>constants, options and tags (39C80E80, 39D1A050, 39BFF050).</summary>
+    public ZoneConfigContent LoadConfigContent() => ZoneConfigContent.Load(_connection);
+
+    /// <summary>return_points and sub_zones (39B07660, 39CF5990).</summary>
+    public ZoneLocationContent LoadLocationContent() => ZoneLocationContent.Load(_connection);
+
+    /// <summary>characters plus character_default_skills/idle_buffs/supplies (39B03750 and companions).</summary>
+    public ZoneCharacterContent LoadCharacterContent() => ZoneCharacterContent.Load(_connection);
+
     public ZoneWorldContent LoadWorldContent() => ZoneWorldContent.Load(_connection);
 
     public ZoneAchievementContent LoadAchievementContent() => ZoneAchievementContent.Load(_connection);

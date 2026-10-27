@@ -15,7 +15,10 @@ public sealed record ZoneHostContent(
     ZoneSceneContent Scene,
     ZoneWorldContent World,
     ZoneAchievementContent Achievements,
-    ZoneLootContent Loot)
+    ZoneLootContent Loot,
+    ZoneConfigContent Config,
+    ZoneLocationContent Locations,
+    ZoneCharacterContent Characters)
 {
     public static ZoneHostContent Load(ZoneContentDatabase content, ZoneStatContent stats, ZoneModelContent models)
     {
@@ -27,7 +30,10 @@ public sealed record ZoneHostContent(
             content.LoadSceneContent(),
             content.LoadWorldContent(),
             content.LoadAchievementContent(),
-            content.LoadLootContent());
+            content.LoadLootContent(),
+            content.LoadConfigContent(),
+            content.LoadLocationContent(),
+            content.LoadCharacterContent());
     }
 
     /// <summary>One line per content family, printed by the server and the content check alike.</summary>
@@ -52,6 +58,9 @@ public sealed record ZoneHostContent(
         Console.WriteLine($"World content loaded: {World.Entries.Count} filter descriptors.");
         Console.WriteLine($"Achievement dependencies loaded: {Achievements.Achievements.Count} achievements, {Achievements.Objectives.Count} objectives, {Achievements.Prerequisites.Count} prerequisites.");
         Console.WriteLine($"Loot content loaded: {Loot.Packs.Count} packs, {Loot.NpcPackIds.Count} NPC mappings, {Loot.Packs.Values.Count(pack => pack.Metadata is null)} packs without declared metadata.");
+        Console.WriteLine($"Config content loaded: {Config.Constants.Count} constants, {Config.Options.Count} options, {Config.Tags.Count} tags.");
+        Console.WriteLine($"Location content loaded: {Locations.ReturnPoints.Count} return points, {Locations.SubZones.Count} sub-zones ({Locations.SubZonesForZone(zone).Count} in this zone group).");
+        Console.WriteLine($"Character content loaded: {Characters.Characters.Count} characters, {Characters.DefaultSkills.Count} default skills, {Characters.IdleBuffs.Count} idle buffs, {Characters.Supplies.Count} supplies.");
     }
 
     public void PrintPlacements(ZoneNpcSpawnerPlacementContent placements)
