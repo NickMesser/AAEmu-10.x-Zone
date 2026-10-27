@@ -71,7 +71,7 @@ Notes on evidence quality: many `npc_*` / `net_*` / `um_*` names (e.g. `npc_move
 - Status: **Partial** — protocol-level fake World and sync tests; live --host run against World still open
 - Priority: P0
 - Native evidence: join sequence `sub_393652F0`..`sub_393648D0` ("zone: client connected to world", "zone: successfully joined world server", refusal at 0x393648D0); disconnect `sub_3936D7E0` ("zone: client disconnected (reason=%d)").
-- Repo state: `Program.cs (pre-restructure)` already has `--host` (lines 57-62 help, 192-232 `RunHostAsync`) -> `ZoneSceneHost.RunAsync` (src/AAEmu.Zone/Hosting/ZoneSceneHost.cs:74) -> `ZoneSceneRunner.RunAsync`. TODO.md H1 still says "no persistent gameplay launch mode". It is untested: no test, and no recorded successful run. The TODO text is stale.
+- Repo state: `Program.cs (pre-restructure)` already has `--host` (lines 57-62 help, 192-232 `RunHostAsync`) -> `ZoneSceneHost.RunAsync` (src/AAEmu.Zone/Hosting/ZoneSceneHost.cs:89) -> `ZoneSceneRunner.RunAsync`. TODO.md H1 still says "no persistent gameplay launch mode". It is untested: no test, and no recorded successful run. The TODO text is stale.
 - Work:
   - Correct TODO.md H1 to reflect the existing `--host` path and list what is actually missing (player actor, movement publication).
   - Run `--host` against an isolated World stub or test World; record which phase first fails (load -> readiness -> adopt -> receive).
@@ -173,6 +173,7 @@ Notes on evidence quality: many `npc_*` / `net_*` / `um_*` names (e.g. `npc_move
 - Confidence: medium
 
 ### OPS-10: Remove the hardcoded Lua library path and external-environment assumptions
+- Status: **Done** — `luaLibraryPath` config key (relative to the config file), `AAEMU_ZONE_LUA_LIBRARY` override, no default (`ZoneSceneHost.ResolveLuaLibrary`); stock LNUM `"double int64"` accepted; README names LuaDist/lualnum.
 - Priority: P1
 - Native evidence: n/a (repo-only finding).
 - Repo state: `ZoneSceneHost.cs` line ~68: `DefaultLuaLibrary = @"C:\AAEmuRuntime\luatools\lua-5.1.1\x64\lua51.dll"` with env override `AAEMU_ZONE_LUA_LIBRARY`; error message cites `FIRST_ENTRY_NOTES:711` (file not in the publication). `Runtime.example.json` has no `luaLibrary` key.

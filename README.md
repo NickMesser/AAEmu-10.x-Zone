@@ -51,7 +51,7 @@ Copy [zone.example.json](src/AAEmu.ZoneServer/zone.example.json) outside this re
 - A configured decrypted `game.compact` export, opened read-only. Its actual filename may be `game_decrypted.sqlite3`; the unrelated `compact.sqlite` substitute is refused.
 - Authorized local game assets, accessed through configured loose directories and/or `game_pak`.
 - The exact compatible Windows AMD64 engine modules required by native framework, physics and AI paths. `ZoneNativeEngine.Identities.cs` records the accepted module hashes. This source does not supply or grant rights to those modules or assets.
-- A 64-bit Lua 5.1 library with the `double+int64` patch when using scripting/native host paths. Set `AAEMU_ZONE_LUA_LIBRARY` to its absolute path. The historical fallback is a local development path, not an installation mechanism.
+- A 64-bit Lua 5.1 library with the LNUM `double int64` patch (for example [LuaDist/lualnum](https://github.com/LuaDist/lualnum) compiled as a DLL with `LUA_BUILD_AS_DLL LNUM_DOUBLE LNUM_INT64`). Set `luaLibraryPath` in the zone configuration; `AAEMU_ZONE_LUA_LIBRARY` overrides it. There is no default path.
 - A compatible World server for startup exchange or host experiments, with an explicitly configured endpoint. Use an isolated development World; startup joins affect that World's connection lifecycle.
 
 For a read-only content check after building:

@@ -57,7 +57,7 @@ public sealed class ZoneSceneLoadingServices : IZoneSceneLoadingServices
     /// <param name="startup">Connection clocks and the join-derived time-of-day state.</param>
     /// <param name="activation">The host-created scene activation; Create/Load run through it, retirement stays with the resource scope.</param>
     /// <param name="scriptRoot">Absolute configured game content directory (the directory asset source) — root of ZoneDirectoryScriptSource.</param>
-    /// <param name="luaLibraryPath">Absolute Lua 5.1 double+int64 library path (AAEMU_ZONE_LUA_LIBRARY or the verified default).</param>
+    /// <param name="luaLibraryPath">Absolute Lua 5.1 double+int64 library path (AAEMU_ZONE_LUA_LIBRARY, else the configured luaLibraryPath).</param>
     /// <param name="sceneContent">Scene metadata for the areas leaf (zones-table row lookup by zone key).</param>
     /// <param name="zoneKey">This scene's Zone key (join-proven, ZoneSceneCoordinator.cs:107-109).</param>
     /// <param name="notes">Shared readiness partial-leaf sink printed by the host after level completion.</param>
@@ -103,7 +103,7 @@ public sealed class ZoneSceneLoadingServices : IZoneSceneLoadingServices
     /// <summary>
     /// The required script bootstrap (plan A2), run BEFORE the first activation work:
     /// ZoneLuaRuntime over the configured lua51.dll (env AAEMU_ZONE_LUA_LIBRARY, else the
-    /// verified C:\AAEmuRuntime\luatools\lua-5.1.1\x64\lua51.dll — FIRST_ENTRY_NOTES:711),
+    /// configuration's luaLibraryPath; ZoneSceneHost.ResolveLuaLibrary),
     /// ZoneDirectoryScriptSource over the configured directory asset source, then the required
     /// set: <c>loader.InstallBindings()</c> + <c>ZoneAiLookupTable.Load(source)</c>
     /// (Scripts/AI/lookup.xml). A missing or invalid lookup fails LoadLevelAsync BY NAME —
@@ -239,7 +239,7 @@ public sealed class ZoneSceneLoadingServices : IZoneSceneLoadingServices
 
     /// <summary>
     /// Retires the script runtime this provider created (Lua state + native lua51.dll mapping —
-    /// ZoneLuaRuntime.Dispose closes both, ZoneLuaRuntime.cs:285-301). The activation, engine
+    /// ZoneLuaRuntime.Dispose closes both, ZoneLuaRuntime.cs:286-302). The activation, engine
     /// and resource scope are NOT this provider's to dispose: they are registered separately in
     /// the scene scope so LIFO order stays frame objects → loading → simulation/spawners →
     /// activation → engine.

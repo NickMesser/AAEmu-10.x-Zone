@@ -9,6 +9,8 @@
   "worldHost": "127.0.0.1",
   "worldPort": 1240,
   "locale": "C",
+  "framePeriodMilliseconds": 33,
+  "luaLibraryPath": "C:/AAEmuRuntime/lua/x64/lua51.dll",
   "assetSources": [
     { "kind": "directory", "path": "C:/AA" },
     { "kind": "archive", "path": "C:/AA/game_pak" }

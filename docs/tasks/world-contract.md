@@ -235,7 +235,7 @@ Body layouts: no mismatches found in those both sides serialize (join, response,
 
 ### WC-06: Align coordinate frames and the movement flag with World's default (continent on the wire)
 - Priority: P0
-- Evidence: W `AAEmu.Game/Core/Managers/World/ZoneCoordBoundary.cs:24-60,94-113`, `MovementRelay.cs:548-580,642-644`, `AAEmu.Game/WorldIntegration.cs:882-934`, `ZoneProtocolHandler.cs:321-336`, `ZwSpawnNpcParser.cs:55-60`; Z `src/AAEmu.Zone/Hosting/ZoneSceneHost.cs:294` (`localOnWire: true`), `src/AAEmu.Zone/Actors/ZoneMovementOutgoing.cs:20-88,117`, `src/AAEmu.Zone/Actors/IZoneMovementFramePhases.cs:80-95`
+- Evidence: W `AAEmu.Game/Core/Managers/World/ZoneCoordBoundary.cs:24-60,94-113`, `MovementRelay.cs:548-580,642-644`, `AAEmu.Game/WorldIntegration.cs:882-934`, `ZoneProtocolHandler.cs:321-336`, `ZwSpawnNpcParser.cs:55-60`; Z `src/AAEmu.Zone/Hosting/ZoneSceneHost.cs:299` (`localOnWire: true`), `src/AAEmu.Zone/Actors/ZoneMovementOutgoing.cs:20-88,117`, `src/AAEmu.Zone/Actors/IZoneMovementFramePhases.cs:80-95`
 - Repo state: Partial and ambiguous. The replacement's own doc says the model pose is in the WZUnitState world frame, yet it passes `localOnWire: true` and says output is "in the same local/world convention World's relay decodes".
 - Work:
   - Zone repo: confirm in a captured session which frame Characters' ZW moves use. With World's default (`AAEMU_WZ_UNIT_POS_LOCAL` unset), World does not shift ZW moves for Characters, so they must be continent coordinates. NPCs get shifted only if World marked them `ZoneSimUsesLocalCoordinates`, which happens only when the local wire policy is on.

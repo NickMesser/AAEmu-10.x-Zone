@@ -254,7 +254,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | OPS-03 | Graceful shutdown, signal, and crash handling for the host | Partial | [ops](docs/tasks/ops.md#ops-03-graceful-shutdown-signal-and-crash-handling-for-the-host) |
 | OPS-04 | Add a ServerCVar configuration layer with the sim-affecting native CVars |  | [ops](docs/tasks/ops.md#ops-04-add-a-servercvar-configuration-layer-with-the-sim-affecting-native-cvars) |
 | OPS-06 | Implement the four unsupported zone-side GM selectors (49, 142, 143, 144) without crashing the session | Partial | [ops](docs/tasks/ops.md#ops-06-implement-the-four-unsupported-zone-side-gm-selectors-49-142-143-144-without-crashing-the-session) |
-| OPS-10 | Remove the hardcoded Lua library path and external-environment assumptions |  | [ops](docs/tasks/ops.md#ops-10-remove-the-hardcoded-lua-library-path-and-external-environment-assumptions) |
+| OPS-10 | Remove the hardcoded Lua library path and external-environment assumptions | Done | [ops](docs/tasks/ops.md#ops-10-remove-the-hardcoded-lua-library-path-and-external-environment-assumptions) |
 | OPS-12 | CI pipeline (build + selected tests + warnings gate) |  | [ops](docs/tasks/ops.md#ops-12-ci-pipeline-build--selected-tests--warnings-gate) |
 | OPS-14 | Close test gaps for the highest-risk subsystems |  | [ops](docs/tasks/ops.md#ops-14-close-test-gaps-for-the-highest-risk-subsystems) |
 | RT-02 | Implement ServerAreaManager (area enter/leave) and EnvironmentManager |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-02-implement-serverareamanager-area-enterleave-and-environmentmanager) |

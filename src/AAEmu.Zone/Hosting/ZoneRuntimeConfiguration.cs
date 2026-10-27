@@ -86,6 +86,7 @@ public sealed class ZoneRuntimeConfiguration
         Backends = ParseBackends(input.PhysicsBackend, input.AiBackend, input.AiDependencyGated);
         ScriptRoot = string.IsNullOrWhiteSpace(input.ScriptRoot) ? null : Resolve(input.ScriptRoot, directory, "scriptRoot");
         SpawnerFile = string.IsNullOrWhiteSpace(input.SpawnerFile) ? null : Resolve(input.SpawnerFile, directory, "spawnerFile");
+        LuaLibraryPath = string.IsNullOrWhiteSpace(input.LuaLibraryPath) ? null : Resolve(input.LuaLibraryPath, directory, "luaLibraryPath");
     }
 
     /// <summary>Backend strings → selection record, each refusal named at the config boundary (before any engine/network work).</summary>
@@ -160,6 +161,12 @@ public sealed class ZoneRuntimeConfiguration
     /// own file from the configured assets (ZoneServerStartup.NpcSpawnersAsset).
     /// </summary>
     public string? SpawnerFile { get; }
+
+    /// <summary>
+    /// The 64-bit Lua 5.1 LNUM double+int64 library (camelCase <c>luaLibraryPath</c>), relative to
+    /// the configuration file. AAEMU_ZONE_LUA_LIBRARY overrides it (ZoneSceneHost.ResolveLuaLibrary).
+    /// </summary>
+    public string? LuaLibraryPath { get; }
 
     /// <summary>
     /// Overlay World's launch values (ZoneServerLaunch) on this base configuration. The zone key
@@ -239,6 +246,7 @@ public sealed class ZoneRuntimeConfiguration
         /// </summary>
         public string? ScriptRoot { get; init; }
         public string? SpawnerFile { get; init; }
+        public string? LuaLibraryPath { get; init; }
     }
 
     private sealed class AssetDocument

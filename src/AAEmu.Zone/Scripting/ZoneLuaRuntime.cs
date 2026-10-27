@@ -33,7 +33,8 @@ public sealed class ZoneLuaRuntime : IDisposable
             if (_state == 0) throw new ZoneLuaException("Lua could not allocate a script state.");
             _api.OpenLibraries(_state);
             using var version = Execute("return _VERSION, _LNUM, 9007199254740993-9007199254740992", "=zone-abi");
-            if (version.Count != 3 || version[0] is not "Lua 5.1" || version[1] is not "double+int64" || version[2] is not 1L)
+            // Stock LNUM (lua514-lnum-20090417) reports "double int64"; some builds join the parts with '+'.
+            if (version.Count != 3 || version[0] is not "Lua 5.1" || version[1] is not ("double+int64" or "double int64") || version[2] is not 1L)
                 throw new NotSupportedException("Zone scripts require Lua 5.1 with the double+int64 patch.");
             // File access belongs to the configured content loader. Engine bindings are installed explicitly.
             // Capture primitives so scripts cannot replace the host's protected-call helpers.

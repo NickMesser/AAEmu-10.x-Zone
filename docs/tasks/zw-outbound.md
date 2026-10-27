@@ -17,7 +17,7 @@ Framing/session: `ZoneFrame.cs` (u16 LE length including the opcode, u16 opcode,
 | SaveInstanceSpawner | 0x05 | 0x39347F90 (persistent spawn) | yes | src/AAEmu.Zone.Protocol/Messages/SaveInstanceSpawner.cs | yes |
 | NpcSaid | 0x06 | 0x39326B40 (signal bubble), 0x39352C40 (ScriptBindUnit::Say) | yes | src/AAEmu.Zone.Protocol/Messages/NpcSpeech.cs | yes (signals) |
 | RemoveHouse | 0x07 | 0x3933AE70 | yes | absent | no |
-| UnitMovements | 0x08 | ZWUnitMovementsPacket (vftable ref line 741198), movement buffers drained per frame | yes | inline in ZoneMovementOutgoing.cs:268 | wired in ZoneSceneHost.cs:294 (unproven live) |
+| UnitMovements | 0x08 | ZWUnitMovementsPacket (vftable ref line 741198), movement buffers drained per frame | yes | inline in ZoneMovementOutgoing.cs:268 | wired in ZoneSceneHost.cs:299 (unproven live) |
 | SkillControllerState | 0x09 | 0x392291B0, 0x39229280, 0x39229350 | ABSENT | absent | no |
 | CreateBuff / RemoveBuff | 0x0A / 0x0B | 0x39268720, 0x39325AF0/0x39325B80, 0x39346050, 0x39347060, 0x39352F20/0x39353020 | yes | BuffCreationRequest / BuffRemovalRequest | partial (crowd buff only) |
 | ClearCombat | 0x0C | 0x393534D0 (ScriptBindUnit::ClearCombat), 0x3935FAC0 | ABSENT | absent | no |

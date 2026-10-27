@@ -116,6 +116,28 @@ public sealed class RuntimeConfigurationTests
         await Assert.That(() => configuration.WithLaunch(null, null, "test_zone", 456, "C:/x/compact.sqlite", null)).Throws<InvalidDataException>();
     }
 
+    [Test]
+    public async Task LuaLibraryComesFromTheEnvironmentThenTheConfigurationWithNoDefault()
+    {
+        using var fixture = new Fixture();
+        var unset = ZoneRuntimeConfiguration.LoadFile(fixture.ConfigurationPath);
+        await Assert.That(unset.LuaLibraryPath).IsNull();
+        await Assert.That(() => ZoneSceneHost.ResolveLuaLibrary(unset, _ => null)).Throws<ArgumentException>();
+
+        var json = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(fixture.ConfigurationJson())!;
+        json["luaLibraryPath"] = JsonSerializer.SerializeToElement("../lua/lua51.dll");
+        File.WriteAllText(fixture.ConfigurationPath, JsonSerializer.Serialize(json));
+        var configured = ZoneRuntimeConfiguration.LoadFile(fixture.ConfigurationPath);
+        var expected = Path.Combine(fixture.Root, "lua", "lua51.dll");
+        await Assert.That(configured.LuaLibraryPath).IsEqualTo(expected);
+        await Assert.That(ZoneSceneHost.ResolveLuaLibrary(configured, _ => null)).IsEqualTo(expected);
+        await Assert.That(configured.WithLaunch(null, null, "test_zone", 456, null, null).LuaLibraryPath).IsEqualTo(expected);
+
+        var overridden = Path.Combine(fixture.Root, "override.dll");
+        await Assert.That(ZoneSceneHost.ResolveLuaLibrary(configured,
+            name => name == ZoneSceneHost.LuaLibraryEnvironment ? overridden : null)).IsEqualTo(overridden);
+    }
+
     private sealed class Fixture : IDisposable
     {
         public const string WorldAsset = "game/worlds/test_world/world.xml";

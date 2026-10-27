@@ -72,7 +72,14 @@ public static class ZoneSceneHost
         ZoneNpcSpawnerPlacementContent Placements,
         Action<string> Trace);
 
-    private const string DefaultLuaLibrary = @"C:\AAEmuRuntime\luatools\lua-5.1.1\x64\lua51.dll";
+    /// <summary>Environment override for <see cref="ZoneRuntimeConfiguration.LuaLibraryPath"/>.</summary>
+    public const string LuaLibraryEnvironment = "AAEMU_ZONE_LUA_LIBRARY";
+
+    /// <summary>The Lua library: AAEMU_ZONE_LUA_LIBRARY, else the configured luaLibraryPath; no default.</summary>
+    internal static string ResolveLuaLibrary(ZoneRuntimeConfiguration configuration, Func<string, string?> environment) =>
+        environment(LuaLibraryEnvironment) is { Length: > 0 } configured ? Path.GetFullPath(configured)
+        : configuration.LuaLibraryPath ?? throw new ArgumentException(
+            $"Scripting requires a 64-bit Lua 5.1 LNUM double+int64 library: set luaLibraryPath in the zone configuration or {LuaLibraryEnvironment} (README, Requirements).");
 
     /// <summary>
     /// Runs one persistent scene session end-to-end on the dedicated simulation owner
@@ -94,12 +101,10 @@ public static class ZoneSceneHost
             : throw new ArgumentException($"Script bootstrap requires exactly one directory asset source when scriptRoot is absent; the configuration supplies {directories.Length}."));
         if (!Directory.Exists(scriptRoot))
             throw new DirectoryNotFoundException($"Script root '{scriptRoot}' does not exist.");
-        var luaLibraryPath = Environment.GetEnvironmentVariable("AAEMU_ZONE_LUA_LIBRARY") is { Length: > 0 } configured
-            ? configured : DefaultLuaLibrary;
+        var luaLibraryPath = ResolveLuaLibrary(inputs.Configuration, Environment.GetEnvironmentVariable);
         if (!File.Exists(luaLibraryPath))
             throw new FileNotFoundException(
-                $"Lua 5.1 library '{luaLibraryPath}' does not exist (set AAEMU_ZONE_LUA_LIBRARY to override; FIRST_ENTRY_NOTES:711).",
-                luaLibraryPath);
+                $"Lua 5.1 library '{luaLibraryPath}' does not exist (luaLibraryPath or {LuaLibraryEnvironment}).", luaLibraryPath);
         // Backend guard by name at the construction point (selection invariants, :41-47).
         // Managed physics is ADMITTED since Agent 8: ZoneOwnedPhysicsBackend is the host-owned
         // movement authority, and its ground still comes from the native terrain raycast.
