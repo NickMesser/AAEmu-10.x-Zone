@@ -67,7 +67,7 @@ Notes on evidence quality: many `npc_*` / `net_*` / `um_*` names (e.g. `npc_move
 
 ### Tasks
 
-### OPS-01: Refresh H1 status and prove `--host` end-to-end against an isolated World
+### OPS-01: Refresh H1 status and prove `--host` end-to-end against an isolated World — **Partial** (protocol-level fake World and sync tests; live --host run against World still open)
 - Priority: P0
 - Native evidence: join sequence `sub_393652F0`..`sub_393648D0` ("zone: client connected to world", "zone: successfully joined world server", refusal at 0x393648D0); disconnect `sub_3936D7E0` ("zone: client disconnected (reason=%d)").
 - Repo state: `Program.cs (pre-restructure)` already has `--host` (lines 57-62 help, 192-232 `RunHostAsync`) -> `ZoneSceneHost.RunAsync` (src/AAEmu.Zone/Hosting/ZoneSceneHost.cs:74) -> `ZoneSceneRunner.RunAsync`. TODO.md H1 still says "no persistent gameplay launch mode". It is untested: no test, and no recorded successful run. The TODO text is stale.

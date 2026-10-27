@@ -166,7 +166,7 @@ Generated from the area reports. The links point to the full task bodies.
 | LUA-04 | Dispatch the missing native-to-AI signals from the simulation | [lua-api](docs/tasks/lua-api.md#lua-04-dispatch-the-missing-native-to-ai-signals-from-the-simulation) |
 | CMB-01 | Verify the stat/vital path completes for a real first-entry character | [combat](docs/tasks/combat.md#cmb-01-verify-the-statvital-path-completes-for-a-real-first-entry-character) |
 | DB-01 | Add the missing global/config tables the first-entry path reads (constants, options, tags, return_points, sub_zones, characters) | [content-db](docs/tasks/content-db.md#db-01-add-the-missing-globalconfig-tables-the-first-entry-path-reads-constants-options-tags-return_points-sub_zones-characters) |
-| OPS-01 | Refresh H1 status and prove `--host` end-to-end against an isolated World | [ops](docs/tasks/ops.md#ops-01-refresh-h1-status-and-prove---host-end-to-end-against-an-isolated-world) |
+| OPS-01 | Refresh H1 status and prove `--host` end-to-end against an isolated World — **Partial** (protocol-level fake World and sync tests; live --host run against World still open) | [ops](docs/tasks/ops.md#ops-01-refresh-h1-status-and-prove---host-end-to-end-against-an-isolated-world) |
 | OPS-02 | Write the E1 client-entry runbook plus evidence-capture script | [ops](docs/tasks/ops.md#ops-02-write-the-e1-client-entry-runbook-plus-evidence-capture-script) |
 | RT-01 | Add ServerUnit / ServerCharacter / ServerUnitOwner class layer and CharacterManager | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-01-add-serverunit--servercharacter--serverunitowner-class-layer-and-charactermanager) |
 
