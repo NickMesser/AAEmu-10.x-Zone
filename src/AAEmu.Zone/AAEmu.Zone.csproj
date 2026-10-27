@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AAEmu.Commons\AAEmu.Commons.csproj" />
+    <ProjectReference Include="..\AAEmu.Zone.Protocol\AAEmu.Zone.Protocol.csproj" />
+    <PackageReference Include="Microsoft.Data.Sqlite" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="AAEmu.ZoneServer" />
+    <InternalsVisibleTo Include="AAEmu.Zone.Diagnostics" />
+    <InternalsVisibleTo Include="AAEmu.Zone.Tests" />
+  </ItemGroup>
+</Project>

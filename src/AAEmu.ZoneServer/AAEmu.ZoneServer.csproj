@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AAEmu.Zone\AAEmu.Zone.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="zone.example.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

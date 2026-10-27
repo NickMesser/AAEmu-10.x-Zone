@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AAEmu.Commons/AAEmu.Commons.csproj" />
+    <Project Path="src/AAEmu.Zone.Protocol/AAEmu.Zone.Protocol.csproj" />
+    <Project Path="src/AAEmu.Zone/AAEmu.Zone.csproj" />
+    <Project Path="src/AAEmu.ZoneServer/AAEmu.ZoneServer.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/AAEmu.Zone.Diagnostics/AAEmu.Zone.Diagnostics.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AAEmu.Zone.Tests/AAEmu.Zone.Tests.csproj" />
+  </Folder>
+</Solution>
