@@ -26,7 +26,7 @@ namespace AAEmu.Zone.Hosting;
 /// (coordinator adds) spawner factory → simulation/tick → loading → frame coordinator LAST, so
 /// disposal runs frame objects → loading (lua) → tick → factory → manager → spawner registry →
 /// activation (RetirePhysicsWorld trace) → engine (Shutdown). ZoneSession drains both producers
-/// before any of that runs (ZoneSession.cs:261-276 → EndReceiveAsync → Cleanup, which stops
+/// before any of that runs (ZoneSession.cs:262-277 → EndReceiveAsync → Cleanup, which stops
 /// NPC/movement producers before _resources.Dispose — ZoneSceneCoordinator.cs:302-320).
 ///
 /// Named decisions carried here:

@@ -62,10 +62,10 @@ public readonly record struct ZoneMovementFrame(
 /// Ordering rationale, all cited:
 /// <list type="bullet">
 /// <item>Packet dispatch precedes the tick and each side flushes its own notifications —
-/// the explicit event-loop policy (<c>WorldLink/ZoneSession.cs:231-240</c>) — so this frame's
+/// the explicit event-loop policy (<c>WorldLink/ZoneSession.cs:232-241</c>) — so this frame's
 /// received movement input arrives BEFORE <see cref="PrePhase"/> stages eligibility and BEFORE
 /// the step integrates it; the tick entry itself is
-/// <c>WorldLink/ZoneSession.cs:251-252</c>.</item>
+/// <c>WorldLink/ZoneSession.cs:252-253</c>.</item>
 /// <item><see cref="PrePhase"/> runs before <see cref="StepPhysics"/>: eligibility gates,
 /// history sampling and input production for this frame land before the integration.</item>
 /// <item><see cref="PostPhase"/> runs before <c>simulation.Update</c> because the manager
@@ -74,7 +74,7 @@ public readonly record struct ZoneMovementFrame(
 /// host phases outside those tick services (<c>Hosting/ZoneSimulationTick.cs:7-9</c>).</item>
 /// <item>The final flush happens after <see cref="PostPhase"/> so the ZWUnitMovements batch
 /// queued during postphase goes on the wire in the same iteration
-/// (<c>WorldLink/ZoneSession.cs:256</c>).</item>
+/// (<c>WorldLink/ZoneSession.cs:257</c>).</item>
 /// <item>Exactly ONE <see cref="StepPhysics"/> per frame per scene generation: the coordinator
 /// has a single call site, implementations rethrow on reentry inside a frame (recursion-guard
 /// precedent <c>Hosting/ZoneSimulationTick.cs:68</c>), and the native world's own busy guard

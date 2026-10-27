@@ -377,10 +377,43 @@ public sealed class ZoneUnitRegistry
             return true;
         }
         // 393639D0 parses before lookup and silently ignores other selectors.
-        if (!GmCommandData.TryRead(command.Parameters, out _) || !_units.ContainsKey(command.ObjectId)) return false;
+        if (!GmCommandData.TryRead(command.Parameters, out var data) || !_units.TryGetValue(command.ObjectId, out var gm)) return false;
         if (command.Command is 49 or 142 or 143 or 144)
-            throw new NotSupportedException($"Native GM command {command.Command} is not implemented.");
+            return ApplyDeferredGm(command.Command, data!, gm);
         return false;
+    }
+
+    /// <summary>
+    /// Selectors 49/142/143/144 of 393639D0 (handlers 39454180/39454400/39454230/39454260). Native arity
+    /// and unit-kind checks are reproduced; the effects need subsystems this zone lacks (skill fire path,
+    /// ZWDumpNpcPacket reply, NPC state setter, NPC teleport) and are logged by name, never thrown.
+    /// Returns false: no state changed.
+    /// </summary>
+    private bool ApplyDeferredGm(byte selector, GmCommandData data, ZoneUnit gm)
+    {
+        var isCharacter = gm.Snapshot.Identity.Kind == Protocol.Units.ZoneUnitKind.Character; // native unit+24 == 1
+        var count = data.Children.Count;
+        switch (selector)
+        {
+            case 49: // HandleGmSkill: needs >= 1 argument; fires skill via the IGame skill sub-object.
+                if (count < 1) return false;
+                if (!isCharacter) return false;
+                Console.WriteLine($"GM skill {data.Children[0].Int32Value} (selector 49) not applied: no skill fire path (TODO(gm-skill)).");
+                return false;
+            case 142: // HandleGmSearchNpc: 1-2 arguments, replies with ZWDumpNpcPacket.
+                if (count is < 1 or > 2) return false;
+                Console.WriteLine($"GM search NPC {data.Children[0].Int32Value} (selector 142) not applied: no NPC search and ZWDumpNpcPacket reply (TODO(gm-search-npc)).");
+                return false;
+            case 143: // 39454230: applies mode 14 to the Character's targeted NPC (393200D0).
+                if (!isCharacter || gm.TargetId == 0 || Npcs?.FindByObjectId(gm.TargetId) is null) return false;
+                Console.WriteLine($"GM selector 143 on target {gm.TargetId} not applied: NPC mode 14 setter (393200D0) is not ported (TODO(gm-npc-mode)).");
+                return false;
+            default: // 144 HandleGmMoveNpc: exactly 3 arguments (x, y, z) and a Character caller.
+                if (count != 3 || !isCharacter) return false;
+                Console.WriteLine($"GM move NPC to ({data.Children[0].Int32Value},{data.Children[1].Int32Value},{data.Children[2].Int32Value}) " +
+                    "(selector 144) not applied: no NPC teleport path (TODO(gm-move-npc)).");
+                return false;
+        }
     }
 
     public bool ChangeFaction(ReadOnlySpan<byte> body)

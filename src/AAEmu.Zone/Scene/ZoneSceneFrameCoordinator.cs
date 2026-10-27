@@ -22,7 +22,7 @@ namespace AAEmu.Zone.Scene;
 /// <code>
 /// packet dispatch (incl. ReceiveMovement) → flush
 /// tick:  PrePhase(frame) → StepPhysics(elapsed) → PostPhase(frame) → aiPump.Pump(serverMs)
-///        → simulation.Update(frame) → flush (ZoneSession.cs:256)
+///        → simulation.Update(frame) → flush (ZoneSession.cs:257)
 /// </code>
 /// Ordering rationale, all cited: packet-before-tick puts this frame's movement input before
 /// PrePhase/Step (IZoneMovementFramePhases.cs:64-69); PostPhase precedes
@@ -50,7 +50,7 @@ namespace AAEmu.Zone.Scene;
 /// Retirement: this coordinator is registered in the scene's ZoneSceneResourceScope LAST by the
 /// host, so LIFO disposal releases it (and, through it, the AI provider) before the movement
 /// stack, activation and engine — after ZoneSession has already drained both producers
-/// (ZoneSession.cs:261-276 → EndReceiveAsync → Cleanup, ZoneSceneCoordinator.cs:269-276).
+/// (ZoneSession.cs:262-277 → EndReceiveAsync → Cleanup, ZoneSceneCoordinator.cs:269-276).
 /// </summary>
 public sealed class ZoneSceneFrameCoordinator : IDisposable
 {

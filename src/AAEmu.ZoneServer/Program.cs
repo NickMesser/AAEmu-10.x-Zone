@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 
 using AAEmu.Zone.Hosting;
+using AAEmu.Zone.WorldLink;
 
 namespace AAEmu.ZoneServer;
 
@@ -14,6 +15,7 @@ public static class Program
 {
     /// <summary>Process exit codes. World only distinguishes "running" from "exited".</summary>
     public const int ExitRetired = 0, ExitFailed = 1, ExitCancelled = 130;
+    public const int ExitWorldDisconnected = ZoneWorldLifecycle.WorldDisconnectedExitCode;
 
     /// <summary>Time a launcher child gets to retire after shutdown before its tree is killed.</summary>
     private static readonly TimeSpan ChildStopGrace = TimeSpan.FromSeconds(30);
@@ -30,7 +32,7 @@ public static class Program
             Console.WriteLine($"             The base configuration comes from +zone_config, {ZoneServerLaunch.ConfigEnvironment} or {ZoneServerLaunch.DefaultConfigFileName} beside the executable.");
             Console.WriteLine($"             {ZoneServerLaunch.SaveDirectoryEnvironment} and {ZoneServerLaunch.LogNameEnvironment} select the log location World expects.");
             Console.WriteLine("  Diagnostic checks (--check-*, --probe-*) live in tools/AAEmu.Zone.Diagnostics.");
-            Console.WriteLine($"Exit codes: {ExitRetired} retired in order, {ExitFailed} failed, {ExitCancelled} cancelled. Gameplay simulation is under construction; see TASKS.md.");
+            Console.WriteLine($"Exit codes: {ExitRetired} retired in order, {ExitFailed} failed, {ExitWorldDisconnected} World disconnected, {ExitCancelled} cancelled. Gameplay simulation is under construction; see TASKS.md.");
             return ExitRetired;
         }
 

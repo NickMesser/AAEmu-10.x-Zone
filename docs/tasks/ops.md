@@ -128,6 +128,7 @@ Notes on evidence quality: many `npc_*` / `net_*` / `um_*` names (e.g. `npc_move
 - Confidence: medium
 
 ### OPS-06: Implement the four unsupported zone-side GM selectors (49, 142, 143, 144) without crashing the session
+- Status: **Partial** — no selector throws; native arity/kind checks ported, 49/142/143/144 effects log by name pending skill, NPC search reply, NPC mode and NPC teleport subsystems
 - Priority: P1
 - Native evidence: dispatcher `sub_393639D0` switch cases 0x31, 0x8E, 0x8F, 0x90 -> `sub_39454180` (HandleGmSkill: fire skill id on unit via vtable +80 of the IGame sub-object at gEnv+8 offset 912), `sub_39454400` (HandleGmSearchNpc, 1-2 args), `sub_39454230` (calls `sub_393200D0(unit+104, 14)`), `sub_39454260` (HandleGmMoveNpc: 3 floats minus cell origin `<<10`, then `sub_3933B510`).
 - Repo state: `ZoneUnitRegistry.cs:376-378` throws `NotSupportedException` for these four after the id lookup succeeds. `ZoneSession.ReceiveCore` (ZoneSession.cs:326-328) does not catch it, so one GM packet could fault the receive loop.

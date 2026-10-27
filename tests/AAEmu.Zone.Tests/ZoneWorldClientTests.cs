@@ -115,7 +115,7 @@ public sealed class ZoneWorldClientTests
         using var client = await world.ConnectAsync();
         var ex = await Assert.That(async () =>
             await ZoneWorldClient.SynchronizeAsync(client.GetStream(), JoinFor(), Timeout)).Throws<InvalidDataException>();
-        await Assert.That(ex!.Message).Contains("rejected the Zone join with reason 3");
+        await Assert.That(ex!.Message).Contains("world server refused joining").And.Contains("reason=3");
     }
 
     [Test]
