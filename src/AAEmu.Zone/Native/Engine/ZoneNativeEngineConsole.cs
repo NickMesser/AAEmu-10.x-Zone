@@ -30,10 +30,16 @@ internal sealed class ZoneNativeEngineConsole : IDisposable
         _ = Console.Error;
         if (GetConsoleWindow() == 0)
         {
-            if (!AllocConsole()) throw Error("Cannot allocate the native engine console.");
-            _allocated = true;
-            var window = GetConsoleWindow();
-            if (window != 0) _ = ShowWindow(window, 0);
+            // ERROR_ACCESS_DENIED: a windowless console is already attached (CREATE_NO_WINDOW,
+            // pseudoconsoles). Its CONIN$/CONOUT$ buffers serve the engine just as well.
+            if (AllocConsole())
+            {
+                _allocated = true;
+                var window = GetConsoleWindow();
+                if (window != 0) _ = ShowWindow(window, 0);
+            }
+            else if (Marshal.GetLastWin32Error() != 5)
+                throw Error("Cannot allocate the native engine console.");
         }
         _input = CreateFileW("CONIN$", 0xc0000000, 3, 0, 3, 0, 0);
         if (_input.IsInvalid) throw Error("Cannot open the native console input.");

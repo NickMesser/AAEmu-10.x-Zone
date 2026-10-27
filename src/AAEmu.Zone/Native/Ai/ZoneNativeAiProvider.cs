@@ -51,7 +51,7 @@ public sealed record ZoneNativeAiDependency(string Name, bool IsResolved, string
 /// Native dependencies, each with its evidence and open question:
 /// <list type="bullet">
 /// <item>cryaisystem_dedicate.dll module — SHA-256 identity
-/// <c>A740D58C…A9326CBB…AADFE921</c> (Native/Engine/ZoneNativeEngine.Identities.cs:13); the
+/// <c>A740D58C…A9326CBB…AADFE921</c> (Native/Engine/ZoneNativeEngine.Identities.cs:14); the
 /// native conditional AI loader accepts an absent module (Native/Engine/ZoneNativeEngine.cs:171-173).</item>
 /// <item>CAISystem instance — AI init already runs from framework PostInit
 /// (FIRST_ENTRY_NOTES.md:722-724, direct-call chain PostInit 306F77A2 → AI 31049268 →
@@ -354,7 +354,7 @@ public sealed class ZoneNativeAiProvider : IZoneAiProvider, IZoneAiFramePump, ID
             _aiModule = GetModuleHandleW("cryaisystem_dedicate.dll");
             _actionModule = GetModuleHandleW("cryaction_dedicate.dll");
             Dependencies.Add(new("cryaisystem_dedicate.dll module", _aiModule != 0,
-                "SHA-256 identity at Native/Engine/ZoneNativeEngine.Identities.cs:13; conditional native loader at Native/Engine/ZoneNativeEngine.cs:171-173."));
+                "SHA-256 identity at Native/Engine/ZoneNativeEngine.Identities.cs:14; conditional native loader at Native/Engine/ZoneNativeEngine.cs:171-173."));
             Dependencies.Add(new("CAISystem instance", false,
                 "TODO(native-ai): recover the CAISystem instance slot; AI init 31049268 already runs from framework PostInit (FIRST_ENTRY_NOTES.md:722-724, gEnv+8 observed at :766)."));
             Dependencies.Add(new(ConstructDependency, false,

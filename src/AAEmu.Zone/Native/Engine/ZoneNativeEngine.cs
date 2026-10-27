@@ -173,7 +173,7 @@ public sealed unsafe partial class ZoneNativeEngine : IDisposable
             if (name == "cryaisystem_dedicate.dll" && !File.Exists(path)) continue;
             var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
             _identityLocks.Add(stream);
-            if (!string.Equals(Convert.ToHexString(SHA256.HashData(stream)), digest, StringComparison.Ordinal))
+            if (!digest.Contains(Convert.ToHexString(SHA256.HashData(stream)), StringComparer.Ordinal))
                 throw new InvalidDataException($"Unsupported native engine binary identity: {name}.");
             stream.Position = 0;
             using var pe = new PEReader(stream, PEStreamOptions.LeaveOpen);
