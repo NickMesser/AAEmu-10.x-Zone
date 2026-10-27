@@ -73,6 +73,23 @@ public sealed class ZoneSceneScriptClock
 }
 
 /// <summary>
+/// REAL 0x39332510 send gate: ZWHeartbeat when the float delta on the simulation clock since the last send is &gt;= 1.0
+/// (last starts at 0 like the native static dword_3A607B54). Pure timing; the caller queues the frame.
+/// </summary>
+public sealed class ZoneHeartbeatEmitter(bool oceanSimulateOnZone)
+{
+    private float _lastSeconds;
+
+    public bool TryCreate(float nowSeconds, out ZoneFrame frame)
+    {
+        if (nowSeconds - _lastSeconds < 1.0f) { frame = default; return false; }
+        _lastSeconds = nowSeconds;
+        frame = new ZoneHeartbeat(oceanSimulateOnZone).ToFrame();
+        return true;
+    }
+}
+
+/// <summary>
 /// One scene generation's NPC actor-handle catalog — the IZoneNativeAiActorView backing the
 /// native AI provider's admission gate (ZoneNativeAiProvider.cs:11-22): generation per live
 /// owner, +1 on re-entry, GetKind throws for unknown/retired handles with the exact rejection
@@ -879,10 +896,12 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
     private readonly ZoneSceneScriptClock _scriptClock;
     private readonly float _frameSeconds;
     private readonly ZoneSceneReadinessNotes _notes;
+    private readonly ZoneHeartbeatEmitter _heartbeat;
 
     public ZoneSceneTickServices(ZoneUnitRegistry registry, ZoneStartupState startup, ZoneNpcManager manager,
-        ZoneSceneScriptClock scriptClock, TimeSpan framePeriod, ZoneSceneReadinessNotes notes)
+        ZoneSceneScriptClock scriptClock, TimeSpan framePeriod, ZoneSceneReadinessNotes notes, bool oceanSimulateOnZone = false)
     {
+        _heartbeat = new ZoneHeartbeatEmitter(oceanSimulateOnZone);
         ArgumentNullException.ThrowIfNull(registry);
         ArgumentNullException.ThrowIfNull(startup);
         ArgumentNullException.ThrowIfNull(manager);
@@ -971,11 +990,17 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
             _registry.UpdateSpatialMembership(unit);
     }
 
-    /// <summary>REAL 39332510 heartbeat: advances time-of-day (the engine-phase owner per ZoneTimeOfDayState.cs:8) and the native float-seconds signal clock once per frame.</summary>
+    /// <summary>
+    /// REAL 39332510 heartbeat: advances time-of-day (the engine-phase owner per ZoneTimeOfDayState.cs:8) and the native
+    /// float-seconds signal clock once per frame, then sends ZWHeartbeat (op 60) when the float delta since the last send is
+    /// &gt;= 1.0 (last starts at 0 like the native static). The bool is cvar e_water_ocean_simulate_on_zone != 0 (the native
+    /// sets it per zone group, 0x3935xxxx writer at line 576089); World answers with WZWorldGameTime.
+    /// </summary>
     public void UpdateHeartbeat()
     {
         _startup.TimeOfDayState.Advance(_frameSeconds);
         _scriptClock.Advance(_frameSeconds);
+        if (_heartbeat.TryCreate(_scriptClock.TimeSeconds, out var frame)) _registry.QueueNotification(frame);
     }
 
     /// <summary>Ownerless body — ctor note. See the class doc: report-don't-kill (ZoneSimulationTick never dies on an unowned phase).</summary>

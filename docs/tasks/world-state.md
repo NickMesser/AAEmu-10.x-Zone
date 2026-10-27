@@ -76,7 +76,7 @@ The native server has no weather or season system. The only hits are the client 
 - Depends on: WS-02 pattern, spawner registry.
 - Confidence: medium.
 
-### WS-04: Emit the missing ZW world-state frames (ReportZoneStatus, Heartbeat loop, BackpackDropped, RemoveHouse)
+### WS-04: Emit the missing ZW world-state frames (ReportZoneStatus, Heartbeat loop, BackpackDropped, RemoveHouse) — **Partial** (heartbeat loop done via ZW-01; ReportZoneStatus, BackpackDropped, RemoveHouse remain)
 - Priority: P1
 - Native evidence: ZWHeartbeat ctor 0x39332510, ZWReportZoneStatus 0x39365090, ZWBackpackDropped 0x3932B930, ZWRemoveHouse 0x3933AE70, ZWZoneLoaded 0x39332730 (already sent).
 - Repo state: only `ZwOpcodes.ZoneLoaded` and `UnitMovements` are sent from `AAEmu.Zone`. `src/AAEmu.Zone.Protocol/Messages/ZoneHeartbeat.cs` exists but no scheduler references it (verify before building).
