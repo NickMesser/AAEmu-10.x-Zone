@@ -1,0 +1,287 @@
+﻿using System.Net;
+using System.Reflection;
+
+namespace AAEmu.Commons.Utils;
+
+public static class Helpers
+{
+    private static Assembly _assembly;
+    private static string _exePath;
+    private static string _baseDirectory;
+
+    public static Assembly Assembly => _assembly ?? (_assembly = Assembly.GetEntryAssembly());
+    public static string ExePath => _exePath ?? (_exePath = Assembly.Location);
+    public static readonly bool Is64Bit = Environment.Is64BitOperatingSystem;
+
+    public static string BaseDirectory
+    {
+        get
+        {
+            if (_baseDirectory == null)
+            {
+                try
+                {
+                    _baseDirectory = ExePath;
+                    if (_baseDirectory.Length > 0)
+                        _baseDirectory = Path.GetDirectoryName(_baseDirectory);
+                }
+                catch
+                {
+                    _baseDirectory = "";
+                }
+            }
+            return _baseDirectory;
+        }
+    }
+
+    public static IEnumerable<Type> GetTypesInNamespace(Assembly sourceAssembly, string nameSpace)
+    {
+        return sourceAssembly.GetTypes().Where(t => string.Equals(t.Namespace, nameSpace, StringComparison.Ordinal)).ToArray();
+    }
+
+    public static long UnixTime(DateTime time)
+    {
+        if (time <= DateTime.MinValue)
+            return 0;
+        if (time < DateTime.UnixEpoch)
+            return 0;
+        var timeSpan = (time - DateTime.UnixEpoch);
+        return (long)timeSpan.TotalSeconds;
+    }
+
+    public static DateTime UnixTime(long time)
+    {
+        if (time > DateTime.MaxValue.Second)
+            return DateTime.MaxValue;
+
+        if (time < DateTime.MinValue.Second)
+            return DateTime.MinValue;
+
+        return DateTime.UnixEpoch.AddSeconds(time);
+    }
+
+    public static long UnixTimeNow()
+    {
+        var timeSpan = (DateTime.UtcNow - DateTime.UnixEpoch);
+        return (long)timeSpan.TotalSeconds;
+    }
+
+    public static long UnixTimeNowInMilli()
+    {
+        var timeSpan = (DateTime.UtcNow - DateTime.UnixEpoch);
+        return (long)timeSpan.TotalMilliseconds;
+    }
+
+    [Obsolete("This method is deprecated, it's better to use ConvertPosition", false)]
+    public static float ConvertX(byte[] coords)
+    {
+        return (float)Math.Round(coords[0] * 0.002f + coords[1] * 0.5f + coords[2] * 128, 4, MidpointRounding.ToEven);
+    }
+
+    [Obsolete("This method is deprecated, it's better to use ConvertPosition", false)]
+    public static byte[] ConvertX(float x)
+    {
+        var coords = new byte[3];
+        var temp = x;
+        coords[2] = (byte)(temp / 128f);
+        temp -= coords[2] * 128;
+        coords[1] = (byte)(temp / 0.5f);
+        temp -= coords[1] * 0.5f;
+        coords[0] = (byte)(temp * 512);
+        return coords;
+    }
+
+    [Obsolete("This method is deprecated, it's better to use ConvertPosition", false)]
+    public static float ConvertY(byte[] coords)
+    {
+        return (float)Math.Round(coords[0] * 0.002f + coords[1] * 0.5f + coords[2] * 128, 4, MidpointRounding.ToEven);
+    }
+
+    [Obsolete("This method is deprecated, it's better to use ConvertPosition", false)]
+    public static byte[] ConvertY(float y)
+    {
+        var coords = new byte[3];
+        var temp = y;
+        coords[2] = (byte)(temp / 128);
+        temp -= coords[2] * 128;
+        coords[1] = (byte)(temp / 0.5f);
+        temp -= coords[1] * 0.5f;
+        coords[0] = (byte)(temp * 512);
+        return coords;
+    }
+
+    [Obsolete("This method is deprecated, it's better to use ConvertPosition", false)]
+    public static float ConvertZ(byte[] coords)
+    {
+        return (float)Math.Round(coords[0] * 0.001f + coords[1] * 0.2561f + coords[2] * 65.5625f - 100, 4,
+            MidpointRounding.ToEven);
+    }
+
+    [Obsolete("This method is deprecated, it's better to use ConvertPosition", false)]
+    public static byte[] ConvertZ(float z)
+    {
+        var coords = new byte[3];
+        var temp = z + 100;
+        coords[2] = (byte)(temp / 65.5625f);
+        temp -= coords[2] * 65.5625f;
+        coords[1] = (byte)(temp / 0.2561);
+        temp -= coords[1] * 0.2561f;
+        coords[0] = (byte)(temp / 0.001);
+        return coords;
+    }
+
+    // 10.0.2.13 quantized world position (11 bytes): x and y carry 4 bytes each (abs>>35,>>43,>>51,>>59),
+    // z is 22-bit quantized over [-100, 4096] with base 4196.0, and the trailing byte packs the high z bits
+    // plus the x/y sign bits. Verified against binary UnitState_SerializeWorldPos 0x39B11410 (z base
+    // dword_3D8B5D94 = 0x45832000 = 4196.0). v1.2 used 3 bytes for x/y (9-byte total).
+    public static (float x, float y, float z) ConvertPosition(byte[] values)
+    {
+        var rawX = (long)values[0] | ((long)values[1] << 8) | ((long)values[2] << 16) | ((long)values[3] << 24);
+        var flagX = (values[10] & 0x80) != 0 ? -1 : 1;
+
+        var rawY = (long)values[4] | ((long)values[5] << 8) | ((long)values[6] << 16) | ((long)values[7] << 24);
+        var flagY = (values[10] & 0x40) != 0 ? -1 : 1;
+
+        var tempZ = (ulong)(values[8] + ((values[9] + ((values[10] & 0x3f) << 8)) << 8));
+
+        var resultX = 8f * rawX / 4096f * flagX;
+        var resultY = 8f * rawY / 4096f * flagY;
+        var resultZ = (float)Math.Round(tempZ * 0.00000023841858 * 4196 - 100, 4, MidpointRounding.ToEven);
+
+        return (resultX, resultY, resultZ);
+    }
+
+    public static byte[] ConvertPosition(float x, float y, float z)
+    {
+        var longX = ConvertLongX(x);
+        var longY = ConvertLongY(y);
+
+        var preX = longX >> 31;
+        var preY = longY >> 31;
+
+        var resultX = (preX ^ (longX + preX + (0 > preX ? 1 : 0))) >> 3;
+        var resultY = (preY ^ (longY + preY + (0 > preY ? 1 : 0))) >> 3;
+        var resultZ = (long)Math.Floor((z + 100f) / 4196f * 4194304f + 0.5);
+
+        var position = new byte[11];
+        position[0] = (byte)(resultX >> 32);
+        position[1] = (byte)(resultX >> 40);
+        position[2] = (byte)(resultX >> 48);
+        position[3] = (byte)(resultX >> 56);
+
+        position[4] = (byte)(resultY >> 32);
+        position[5] = (byte)(resultY >> 40);
+        position[6] = (byte)(resultY >> 48);
+        position[7] = (byte)(resultY >> 56);
+
+        position[8] = (byte)resultZ;
+        position[9] = (byte)(resultZ >> 8);
+        position[10] = (byte)(((resultZ >> 16) & 0x3F) + (((y < 0 ? 1 : 0) + 2 * (x < 0 ? 1 : 0)) << 6));
+        return position;
+    }
+
+    public static float ConvertLongX(long x)
+    {
+        return (x >> 32) / 4096f;
+    }
+
+    public static long ConvertLongX(float x)
+    {
+        return (long)(x * 4096) << 32;
+    }
+
+    public static float ConvertLongY(long y)
+    {
+        return (y >> 32) / 4096f;
+    }
+
+    public static long ConvertLongY(float y)
+    {
+        return (long)(y * 4096) << 32;
+    }
+
+    public static short ConvertRotation(sbyte rotation)
+    {
+        return (short)(rotation * 0.0078740157f / 0.000030518509f);
+    }
+
+    public static sbyte ConvertRotation(short rotation)
+    {
+        return (sbyte)(rotation * 0.000030518509f / 0.0078740157f);
+    }
+
+    public static byte[] StringToByteArray(string hex)
+    {
+        return Enumerable.Range(0, hex.Length)
+            .Where(x => x % 2 == 0)
+            .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+            .ToArray();
+    }
+
+    public static byte[] ConvertIp(string ip)
+    {
+        var result = IPAddress.Parse(ip);
+        return result.GetAddressBytes().Reverse().ToArray();
+    }
+
+    public static byte Crc8(byte[] data, int size)
+    {
+        var len = size;
+        uint checksum = 0;
+        for (var i = 0; i <= len - 1; i++)
+        {
+            checksum *= 0x13;
+            checksum += data[i];
+        }
+
+        return (byte)(checksum);
+    }
+
+    public static byte Crc8(byte[] data)
+    {
+        var size = data.Length;
+        return Crc8(data, size);
+    }
+
+    public static sbyte ConvertRadianToSbyteDirection(float radian)
+    {
+        var z = radian * 0.15915494309189533576888376337251; // values.X / (float)Math.PI * 2; // convert from radians to direction
+
+        var dir = Convert.ToSByte(z * 127f);
+
+        return dir;
+    }
+
+    // Method for cloning an object using MemberwiseClone
+    public static T Clone<T>(T obj)
+    {
+        var inst = obj.GetType().GetMethod("MemberwiseClone", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+
+        return (T)inst?.Invoke(obj, null);
+    }
+
+    // Метод для разделения списка/массива на несколько списков/массивов с указанным размером
+    // Method for splitting a list/array into several lists/arrays with a specified size
+    public static List<List<T>> SplitList<T>(List<T> list, int size)
+    {
+        return list.Select((x, i) => new { Index = i, Value = x })
+            .GroupBy(x => x.Index / size)
+            .Select(x => x.Select(v => v.Value).ToList())
+            .ToList();
+    }
+
+    public static T[][] SplitArray<T>(T[] array, int size)
+    {
+        var arraysCount = (int)Math.Ceiling((double)array.Length / size);
+        var arrays = new T[arraysCount][];
+
+        for (var i = 0; i < arraysCount; i++)
+        {
+            var elementsCount = Math.Min(size, array.Length - i * size);
+            arrays[i] = new T[elementsCount];
+            Array.Copy(array, i * size, arrays[i], 0, elementsCount);
+        }
+
+        return arrays;
+    }
+}

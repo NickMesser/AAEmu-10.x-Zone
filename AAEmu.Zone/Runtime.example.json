@@ -1,0 +1,16 @@
+{
+  "contentDatabasePath": "C:/AA/game/db/game_decrypted.sqlite3",
+  "engineDirectory": "C:/AA/Bin64",
+  "logDirectory": "C:/AAEmuRuntime/ZoneRemake/logs",
+  "zoneName": "w_gweonid_forest_1",
+  "zoneKey": 129,
+  "worldName": "main_world",
+  "worldMapAsset": "game/worlds/main_world/world.xml",
+  "worldHost": "127.0.0.1",
+  "worldPort": 1240,
+  "locale": "C",
+  "assetSources": [
+    { "kind": "directory", "path": "C:/AA" },
+    { "kind": "archive", "path": "C:/AA/game_pak" }
+  ]
+}
