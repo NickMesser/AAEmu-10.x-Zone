@@ -174,6 +174,7 @@ Body layouts: no mismatches found in those both sides serialize (join, response,
 ## Tasks
 
 ### WC-01: Accept the native `-dedicated +cvar value` command line in the replacement host
+- Status: **Done** — `ZoneServerLaunch` parses `-dedicated +cvar value` (last value wins, unconsumed CVars logged); tests built from `ZoneHostCommandLine.Build` output
 - Priority: P0
 - Evidence: W `Core/ZoneHost/ZoneHostCommandLine.cs:41-66`; Z `Program.cs (pre-restructure):674-690` (`Unknown option` on any other token), `Program.cs (pre-restructure):12-48` (modes)
 - Repo state: Absent. `-dedicated`, `+zone`, `+sv_map`, `+instance`, `+sv_port`, `+world_ip`, `+db_location` and the rest abort startup with `Zone failed: Unknown option ...` (exit 1).
@@ -185,6 +186,7 @@ Body layouts: no mismatches found in those both sides serialize (join, response,
 - Confidence: high
 
 ### WC-02: Join with the `+instance` id and resolve the zone key from the `+zone` template name
+- Status: **Partial** — ZWJoin carries `+instance`/`+sv_port`; template-name → content zone mapping still unverified against World
 - Priority: P0
 - Evidence: W `ZoneProtocolHandler.cs:195-201`, `Core/Zone/ZoneConnectionRegistry.cs:158-191`, `DungeonLoaderTask.cs:113,139-145`, `ZoneHostSupervisor.cs:212,252`; Z `Program.cs (pre-restructure):159-160`, `src/AAEmu.Zone/Hosting/ZoneRuntimeConfiguration.cs:128-134`
 - Repo state: Partial. The ZWJoin wire is right, but `iid` is hard-wired to 0 and the zone comes from a json `zoneName`/`zoneKey` pair.
@@ -196,6 +198,7 @@ Body layouts: no mismatches found in those both sides serialize (join, response,
 - Confidence: high for iid, medium for the name-to-key mapping
 
 ### WC-03: Make World's launch preflight accept a non-native host
+- Status: **Partial** — zone side ships `AAEmu.ZoneServer.exe`; World still requires `ZoneHost.NativeDll` to exist (World change or placeholder)
 - Priority: P0
 - Evidence: W `ZoneHostSupervisor.cs:219-235`, `ZoneHostCommandLine.cs:34-39,68-73`, `Models/WorldAppConfiguration.cs:75-101`, `Config.Local.json.example`; Z (no native zone DLL, deliverable is `AAEmu.Zone.dll`)
 - Repo state: World hard-requires `Executable`, `NativeDll` and `WorkingDirectory` to exist and always sets `AAEMU_ZONE_DLL`.
@@ -207,6 +210,7 @@ Body layouts: no mismatches found in those both sides serialize (join, response,
 - Confidence: high
 
 ### WC-04: Derive the runtime configuration from launch arguments and env instead of a json plus spawner-file per zone
+- Status: **Partial** — base config from `--config`/`+zone_config`/`AAEMU_ZONE_CONFIG`/`zone.json`, launch overlay via `WithLaunch`, `npc_spawners.g` from assets; world map still fixed by `worldMapAsset`
 - Priority: P0
 - Evidence: W `ZoneHostCommandLine.cs:45-53,68-73`; Z `Program.cs (pre-restructure):54-63` (`--host` requires `--config` and `--spawner-file`), `src/AAEmu.Zone/Hosting/ZoneRuntimeConfiguration.cs:43-100` (required fields, unmapped members disallowed), `src/AAEmu.ZoneServer/zone.example.json`
 - Repo state: Absent. World passes no config path. The json carries one `zoneName`/`zoneKey` and a fixed `worldHost`/`worldPort`, and `--host` demands `--spawner-file` for that one zone.
@@ -217,7 +221,8 @@ Body layouts: no mismatches found in those both sides serialize (join, response,
   - World-side alternative: `ZoneHost.ExtraArguments` can carry `--config path`, but it is the same for every zone.
 - Confidence: high
 
-### WC-05: Provide a launcher for static (continent) zones — **Done** (zone repo owns it: `AAEmu.ZoneServer --zones a,b` starts one host per map with `+instance 0`, restarts with backoff)
+### WC-05: Provide a launcher for static (continent) zones
+- Status: **Done** — zone repo owns it: `AAEmu.ZoneServer --zones a,b` starts one host per map with `+instance 0`, restarts with backoff
 - Priority: P0
 - Evidence: W `ZoneHostSupervisor.cs:202-212` (`TryStart` is instance-only), `Models/WorldAppConfiguration.cs` (`SvPortBase` doc: continent hosts keep the Zone Manager default), `Program.cs (pre-restructure):79-90,242-274`, `PlayerEnterService.cs:25-33,182-205`; Z `Program.cs (pre-restructure):155-162`
 - Repo state: Absent on both sides. World never launches static zones, and the Zone Manager that does is in neither repo.

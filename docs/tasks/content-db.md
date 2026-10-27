@@ -42,7 +42,8 @@ Method notes: table list came from `Grep` of inlined SELECT strings (`x2game-dev
 
 ## Tasks
 
-### DB-01: Add the missing global/config tables the first-entry path reads (constants, options, tags, return_points, sub_zones, characters) — **Partial** (constants, options, tags, return_points, sub_zones, characters + character_default_skills/idle_buffs/supplies readers and tests added, host-printed; return_points has no zone column so only id lookup, world_specific_content_configs/world_var_defaults/world_level_configs not yet read; no consumers rewired)
+### DB-01: Add the missing global/config tables the first-entry path reads (constants, options, tags, return_points, sub_zones, characters)
+- Status: **Partial** — constants, options, tags, return_points, sub_zones, characters + character_default_skills/idle_buffs/supplies readers and tests added, host-printed; return_points has no zone column so only id lookup, world_specific_content_configs/world_var_defaults/world_level_configs not yet read; no consumers rewired
 - Priority: P0
 - Native evidence: loaders `constants` sub_39C80E80, `options` sub_39D1A050, `tags` sub_39BFF050/sub_39C05DF0, `return_points` sub_39AF3090/sub_39B07660, `sub_zones` sub_39CF4C10/sub_39CF5990, `characters` sub_39B03750, `character_default_skills` sub_39B46610, `character_idle_buffs` sub_39C66520, `character_supplies` sub_39B03540, `world_specific_content_configs` sub_39B4CFC0, `world_var_defaults` sub_39CC7880/sub_39CDC7F0, `world_level_configs` sub_39B8F960; SQL strings in the 0x3A0F..0x3A14.. range of strings.txt.
 - Repo state: absent for all of these (no `FROM <table>` in any *.cs). Only `zones`, `zone_groups`, `world_contents`, `battle_fields`, `conflict_zones`, `indun_zones`, `festival_zones` are read (ZoneContentDatabase.cs, ZoneSceneContent.cs, ZoneWorldContent.cs).

@@ -133,202 +133,202 @@ Do each of these once. The listed IDs are the same work seen from different angl
 
 ## Task index
 
-Generated from the area reports. The links point to the full task bodies.
+Generated from the area reports; status comes from each task's `- Status:` line. The links point to the full task bodies.
 
 ### P0 - blocks World launching the zone or first player entry
 
-| ID | Task | Area |
-| --- | --- | --- |
-| WC-01 | Accept the native `-dedicated +cvar value` command line in the replacement host | [world-contract](docs/tasks/world-contract.md#wc-01-accept-the-native--dedicated-cvar-value-command-line-in-the-replacement-host) |
-| WC-02 | Join with the `+instance` id and resolve the zone key from the `+zone` template name | [world-contract](docs/tasks/world-contract.md#wc-02-join-with-the-instance-id-and-resolve-the-zone-key-from-the-zone-template-name) |
-| WC-03 | Make World's launch preflight accept a non-native host | [world-contract](docs/tasks/world-contract.md#wc-03-make-worlds-launch-preflight-accept-a-non-native-host) |
-| WC-04 | Derive the runtime configuration from launch arguments and env instead of a json plus spawner-file per zone | [world-contract](docs/tasks/world-contract.md#wc-04-derive-the-runtime-configuration-from-launch-arguments-and-env-instead-of-a-json-plus-spawner-file-per-zone) |
-| WC-05 | Provide a launcher for static (continent) zones — **Done** | [world-contract](docs/tasks/world-contract.md#wc-05-provide-a-launcher-for-static-continent-zones) |
-| WC-06 | Align coordinate frames and the movement flag with World's default (continent on the wire) | [world-contract](docs/tasks/world-contract.md#wc-06-align-coordinate-frames-and-the-movement-flag-with-worlds-default-continent-on-the-wire) |
-| WZ-01 | Make WZ dispatch non-fatal and native-ordered for the first-entry path | [wz-inbound](docs/tasks/wz-inbound.md#wz-01-make-wz-dispatch-non-fatal-and-native-ordered-for-the-first-entry-path) |
-| WZ-02 | Verify the end-to-end first-entry WZ sequence against native handlers | [wz-inbound](docs/tasks/wz-inbound.md#wz-02-verify-the-end-to-end-first-entry-wz-sequence-against-native-handlers) |
-| ZW-01 | Emit ZWHeartbeat once per second from the scene tick | [zw-outbound](docs/tasks/zw-outbound.md#zw-01-emit-zwheartbeat-once-per-second-from-the-scene-tick) — **Done** |
-| SCN-01 | Bind or truthfully stub the remaining 148 IGame slots | [scene](docs/tasks/scene.md#scn-01-bind-or-truthfully-stub-the-remaining-148-igame-slots) |
-| SCN-02 | Port InitGameFactory (Player GOE + actor classes + 4 entity classes) | [scene](docs/tasks/scene.md#scn-02-port-initgamefactory-player-goe--actor-classes--4-entity-classes) |
-| SCN-03 | Confirm scene readiness and refresh TODO.md S1/S2 | [scene](docs/tasks/scene.md#scn-03-confirm-scene-readiness-and-refresh-todomd-s1s2) |
-| MOV-01 | Publish CPlayer through the RTTI class registry and bind the player-class owner | [movement](docs/tasks/movement.md#mov-01-publish-cplayer-through-the-rtti-class-registry-and-bind-the-player-class-owner) |
-| MOV-02 | Compose GameObject / ActorSystem / AnimatedCharacter for the player entity | [movement](docs/tasks/movement.md#mov-02-compose-gameobject--actorsystem--animatedcharacter-for-the-player-entity) |
-| MOV-04 | Close the pose-write seam: move a living body by the native action handler (or take ownership of the frame pump) | [movement](docs/tasks/movement.md#mov-04-close-the-pose-write-seam-move-a-living-body-by-the-native-action-handler-or-take-ownership-of-the-frame-pump) |
-| MOV-05 | Wire real physics step with player living-body parameters (dimensions, gravity, dynamics) and ground contact | [movement](docs/tasks/movement.md#mov-05-wire-real-physics-step-with-player-living-body-parameters-dimensions-gravity-dynamics-and-ground-contact) |
-| MOV-06 | Bind the production movement services (replace permissive leaves) and run prephase/step/postphase in the host loop | [movement](docs/tasks/movement.md#mov-06-bind-the-production-movement-services-replace-permissive-leaves-and-run-prephasesteppostphase-in-the-host-loop) |
-| MOV-07 | Complete ZWUnitMovements publication (flags, optional blobs, zone-owned authoritative state) | [movement](docs/tasks/movement.md#mov-07-complete-zwunitmovements-publication-flags-optional-blobs-zone-owned-authoritative-state) |
-| MOV-14 | Player admission, placement and re-entry end to end (P1 acceptance) | [movement](docs/tasks/movement.md#mov-14-player-admission-placement-and-re-entry-end-to-end-p1-acceptance) |
-| OBJ-01 | Bind real static gimmick/doodad entities as ground objects for movement | [world-objects](docs/tasks/world-objects.md#obj-01-bind-real-static-gimmickdoodad-entities-as-ground-objects-for-movement) |
-| OBJ-02 | Run the ServerOnly elevator/platform graph for zone 129 | [world-objects](docs/tasks/world-objects.md#obj-02-run-the-serveronly-elevatorplatform-graph-for-zone-129) |
-| OBJ-03 | Implement WZ/ZW gimmick packet handlers and senders | [world-objects](docs/tasks/world-objects.md#obj-03-implement-wzzw-gimmick-packet-handlers-and-senders) |
-| LUA-01 | Wire the existing AI Lua bindings into the scene bootstrap | [lua-api](docs/tasks/lua-api.md#lua-01-wire-the-existing-ai-lua-bindings-into-the-scene-bootstrap) |
-| LUA-02 | Implement the `ScriptBindUnit` Lua table (64 methods plus RACE_/GENDER_ globals) | [lua-api](docs/tasks/lua-api.md#lua-02-implement-the-scriptbindunit-lua-table-64-methods-plus-race_gender_-globals) |
-| LUA-04 | Dispatch the missing native-to-AI signals from the simulation | [lua-api](docs/tasks/lua-api.md#lua-04-dispatch-the-missing-native-to-ai-signals-from-the-simulation) |
-| CMB-01 | Verify the stat/vital path completes for a real first-entry character | [combat](docs/tasks/combat.md#cmb-01-verify-the-statvital-path-completes-for-a-real-first-entry-character) |
-| DB-01 | Add the missing global/config tables the first-entry path reads (constants, options, tags, return_points, sub_zones, characters) — **Partial** (readers + tests done; world_* config tables remain) | [content-db](docs/tasks/content-db.md#db-01-add-the-missing-globalconfig-tables-the-first-entry-path-reads-constants-options-tags-return_points-sub_zones-characters) |
-| OPS-01 | Refresh H1 status and prove `--host` end-to-end against an isolated World | [ops](docs/tasks/ops.md#ops-01-refresh-h1-status-and-prove---host-end-to-end-against-an-isolated-world) |
-| OPS-02 | Write the E1 client-entry runbook plus evidence-capture script | [ops](docs/tasks/ops.md#ops-02-write-the-e1-client-entry-runbook-plus-evidence-capture-script) |
-| RT-01 | Add ServerUnit / ServerCharacter / ServerUnitOwner class layer and CharacterManager | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-01-add-serverunit--servercharacter--serverunitowner-class-layer-and-charactermanager) |
+| ID | Task | Status | Area |
+| --- | --- | --- | --- |
+| WC-01 | Accept the native `-dedicated +cvar value` command line in the replacement host | Done | [world-contract](docs/tasks/world-contract.md#wc-01-accept-the-native--dedicated-cvar-value-command-line-in-the-replacement-host) |
+| WC-02 | Join with the `+instance` id and resolve the zone key from the `+zone` template name | Partial | [world-contract](docs/tasks/world-contract.md#wc-02-join-with-the-instance-id-and-resolve-the-zone-key-from-the-zone-template-name) |
+| WC-03 | Make World's launch preflight accept a non-native host | Partial | [world-contract](docs/tasks/world-contract.md#wc-03-make-worlds-launch-preflight-accept-a-non-native-host) |
+| WC-04 | Derive the runtime configuration from launch arguments and env instead of a json plus spawner-file per zone | Partial | [world-contract](docs/tasks/world-contract.md#wc-04-derive-the-runtime-configuration-from-launch-arguments-and-env-instead-of-a-json-plus-spawner-file-per-zone) |
+| WC-05 | Provide a launcher for static (continent) zones | Done | [world-contract](docs/tasks/world-contract.md#wc-05-provide-a-launcher-for-static-continent-zones) |
+| WC-06 | Align coordinate frames and the movement flag with World's default (continent on the wire) |  | [world-contract](docs/tasks/world-contract.md#wc-06-align-coordinate-frames-and-the-movement-flag-with-worlds-default-continent-on-the-wire) |
+| WZ-01 | Make WZ dispatch non-fatal and native-ordered for the first-entry path |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-01-make-wz-dispatch-non-fatal-and-native-ordered-for-the-first-entry-path) |
+| WZ-02 | Verify the end-to-end first-entry WZ sequence against native handlers |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-02-verify-the-end-to-end-first-entry-wz-sequence-against-native-handlers) |
+| ZW-01 | Emit ZWHeartbeat once per second from the scene tick | Done | [zw-outbound](docs/tasks/zw-outbound.md#zw-01-emit-zwheartbeat-once-per-second-from-the-scene-tick) |
+| SCN-01 | Bind or truthfully stub the remaining 148 IGame slots |  | [scene](docs/tasks/scene.md#scn-01-bind-or-truthfully-stub-the-remaining-148-igame-slots) |
+| SCN-02 | Port InitGameFactory (Player GOE + actor classes + 4 entity classes) |  | [scene](docs/tasks/scene.md#scn-02-port-initgamefactory-player-goe--actor-classes--4-entity-classes) |
+| SCN-03 | Confirm scene readiness and refresh TODO.md S1/S2 |  | [scene](docs/tasks/scene.md#scn-03-confirm-scene-readiness-and-refresh-todomd-s1s2) |
+| MOV-01 | Publish CPlayer through the RTTI class registry and bind the player-class owner |  | [movement](docs/tasks/movement.md#mov-01-publish-cplayer-through-the-rtti-class-registry-and-bind-the-player-class-owner) |
+| MOV-02 | Compose GameObject / ActorSystem / AnimatedCharacter for the player entity |  | [movement](docs/tasks/movement.md#mov-02-compose-gameobject--actorsystem--animatedcharacter-for-the-player-entity) |
+| MOV-04 | Close the pose-write seam: move a living body by the native action handler (or take ownership of the frame pump) |  | [movement](docs/tasks/movement.md#mov-04-close-the-pose-write-seam-move-a-living-body-by-the-native-action-handler-or-take-ownership-of-the-frame-pump) |
+| MOV-05 | Wire real physics step with player living-body parameters (dimensions, gravity, dynamics) and ground contact |  | [movement](docs/tasks/movement.md#mov-05-wire-real-physics-step-with-player-living-body-parameters-dimensions-gravity-dynamics-and-ground-contact) |
+| MOV-06 | Bind the production movement services (replace permissive leaves) and run prephase/step/postphase in the host loop |  | [movement](docs/tasks/movement.md#mov-06-bind-the-production-movement-services-replace-permissive-leaves-and-run-prephasesteppostphase-in-the-host-loop) |
+| MOV-07 | Complete ZWUnitMovements publication (flags, optional blobs, zone-owned authoritative state) |  | [movement](docs/tasks/movement.md#mov-07-complete-zwunitmovements-publication-flags-optional-blobs-zone-owned-authoritative-state) |
+| MOV-14 | Player admission, placement and re-entry end to end (P1 acceptance) |  | [movement](docs/tasks/movement.md#mov-14-player-admission-placement-and-re-entry-end-to-end-p1-acceptance) |
+| OBJ-01 | Bind real static gimmick/doodad entities as ground objects for movement |  | [world-objects](docs/tasks/world-objects.md#obj-01-bind-real-static-gimmickdoodad-entities-as-ground-objects-for-movement) |
+| OBJ-02 | Run the ServerOnly elevator/platform graph for zone 129 |  | [world-objects](docs/tasks/world-objects.md#obj-02-run-the-serveronly-elevatorplatform-graph-for-zone-129) |
+| OBJ-03 | Implement WZ/ZW gimmick packet handlers and senders |  | [world-objects](docs/tasks/world-objects.md#obj-03-implement-wzzw-gimmick-packet-handlers-and-senders) |
+| LUA-01 | Wire the existing AI Lua bindings into the scene bootstrap |  | [lua-api](docs/tasks/lua-api.md#lua-01-wire-the-existing-ai-lua-bindings-into-the-scene-bootstrap) |
+| LUA-02 | Implement the `ScriptBindUnit` Lua table (64 methods plus RACE_/GENDER_ globals) |  | [lua-api](docs/tasks/lua-api.md#lua-02-implement-the-scriptbindunit-lua-table-64-methods-plus-race_gender_-globals) |
+| LUA-04 | Dispatch the missing native-to-AI signals from the simulation |  | [lua-api](docs/tasks/lua-api.md#lua-04-dispatch-the-missing-native-to-ai-signals-from-the-simulation) |
+| CMB-01 | Verify the stat/vital path completes for a real first-entry character |  | [combat](docs/tasks/combat.md#cmb-01-verify-the-statvital-path-completes-for-a-real-first-entry-character) |
+| DB-01 | Add the missing global/config tables the first-entry path reads (constants, options, tags, return_points, sub_zones, characters) | Partial | [content-db](docs/tasks/content-db.md#db-01-add-the-missing-globalconfig-tables-the-first-entry-path-reads-constants-options-tags-return_points-sub_zones-characters) |
+| OPS-01 | Refresh H1 status and prove `--host` end-to-end against an isolated World | Partial | [ops](docs/tasks/ops.md#ops-01-refresh-h1-status-and-prove---host-end-to-end-against-an-isolated-world) |
+| OPS-02 | Write the E1 client-entry runbook plus evidence-capture script |  | [ops](docs/tasks/ops.md#ops-02-write-the-e1-client-entry-runbook-plus-evidence-capture-script) |
+| RT-01 | Add ServerUnit / ServerCharacter / ServerUnitOwner class layer and CharacterManager |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-01-add-serverunit--servercharacter--serverunitowner-class-layer-and-charactermanager) |
 
 ### P1 - basic gameplay in a zone
 
-| ID | Task | Area |
-| --- | --- | --- |
-| WC-07 | Detect early host death and size ReadyTimeout for the replacement | [world-contract](docs/tasks/world-contract.md#wc-07-detect-early-host-death-and-size-readytimeout-for-the-replacement) |
-| WC-08 | Handle `WZActivateNpcSpawnersInArea` (or prove NPCs spawn without it) | [world-contract](docs/tasks/world-contract.md#wc-08-handle-wzactivatenpcspawnersinarea-or-prove-npcs-spawn-without-it) |
-| WC-09 | Cover the World→Zone opcodes that are currently ignored | [world-contract](docs/tasks/world-contract.md#wc-09-cover-the-worldzone-opcodes-that-are-currently-ignored) |
-| WC-10 | Fill the ZW opcode gaps and sender coverage | [world-contract](docs/tasks/world-contract.md#wc-10-fill-the-zw-opcode-gaps-and-sender-coverage) |
-| WC-11 | Golden-test WZUnitState, WZNpcState and buff bodies against World's serializer | [world-contract](docs/tasks/world-contract.md#wc-11-golden-test-wzunitstate-wznpcstate-and-buff-bodies-against-worlds-serializer) |
-| WC-12 | Log to a file under `AAEMU_ZONE_SAVE_DIR` / `AAEMU_ZONE_LOG_NAME` and cope with no console | [world-contract](docs/tasks/world-contract.md#wc-12-log-to-a-file-under-aaemu_zone_save_dir--aaemu_zone_log_name-and-cope-with-no-console) |
-| WZ-03 | Implement the unit attach/hang/bond/posture/skill-controller family | [wz-inbound](docs/tasks/wz-inbound.md#wz-03-implement-the-unit-attachhangbondpostureskill-controller-family) |
-| WZ-04 | Skill / plot / combat-feedback packets | [wz-inbound](docs/tasks/wz-inbound.md#wz-04-skill--plot--combat-feedback-packets) |
-| WZ-05 | Forced movement / physics unit packets | [wz-inbound](docs/tasks/wz-inbound.md#wz-05-forced-movement--physics-unit-packets) |
-| WZ-06 | NPC / spawner control packets | [wz-inbound](docs/tasks/wz-inbound.md#wz-06-npc--spawner-control-packets) |
-| WZ-07 | Doodad, house and vegetation packets | [wz-inbound](docs/tasks/wz-inbound.md#wz-07-doodad-house-and-vegetation-packets) |
-| WZ-08 | Slave / vehicle / ship packets | [wz-inbound](docs/tasks/wz-inbound.md#wz-08-slave--vehicle--ship-packets) |
-| WZ-11 | GM, command and diagnostics packets | [wz-inbound](docs/tasks/wz-inbound.md#wz-11-gm-command-and-diagnostics-packets) |
-| ZW-02 | Send native-correct ZWJoin fields (sv_port, external IP, account/instance by server type) | [zw-outbound](docs/tasks/zw-outbound.md#zw-02-send-native-correct-zwjoin-fields-sv_port-external-ip-accountinstance-by-server-type) |
-| ZW-03 | Match native disconnect/lifecycle policy | [zw-outbound](docs/tasks/zw-outbound.md#zw-03-match-native-disconnectlifecycle-policy) |
-| ZW-04 | Implement ZWUnitLocation emission (replace the no-send UpdateUnitLocationReports) | [zw-outbound](docs/tasks/zw-outbound.md#zw-04-implement-zwunitlocation-emission-replace-the-no-send-updateunitlocationreports) |
-| ZW-05 | Add ZWEnterArea / ZWLeaveArea | [zw-outbound](docs/tasks/zw-outbound.md#zw-05-add-zwenterarea--zwleavearea) |
-| ZW-06 | Add skill ZW packets (StartSkill, StopSkill, StopCasting, SkillControllerState, LongDistSkillControllerCreated) | [zw-outbound](docs/tasks/zw-outbound.md#zw-06-add-skill-zw-packets-startskill-stopskill-stopcasting-skillcontrollerstate-longdistskillcontrollercreated) |
-| ZW-07 | Handle World requests that expect a ZW reply (ZoneStatus, CombatUnits, RayCasting, Mole checks, RunCommand) | [zw-outbound](docs/tasks/zw-outbound.md#zw-07-handle-world-requests-that-expect-a-zw-reply-zonestatus-combatunits-raycasting-mole-checks-runcommand) |
-| ZW-08 | Add unit-state and aggro ZW notifications (UnitFell, UnitModelPostureChanged, ChangeUnitFlyState, UnitCollision/Result, ErrorMsgToPlayer, AggroTargetChanged, KillNpc, ClearCombat, AggroRemove) | [zw-outbound](docs/tasks/zw-outbound.md#zw-08-add-unit-state-and-aggro-zw-notifications-unitfell-unitmodelposturechanged-changeunitflystate-unitcollisionresult-errormsgtoplayer-aggrotargetchanged-killnpc-clearcombat-aggroremove) |
-| SCN-04 | Implement level-start server construction (event 12/1) and max-unit CVars | [scene](docs/tasks/scene.md#scn-04-implement-level-start-server-construction-event-121-and-max-unit-cvars) |
-| SCN-05 | Implement ServerAreaManager::LoadAreas (quest_area.xml, district.xml) | [scene](docs/tasks/scene.md#scn-05-implement-serverareamanagerloadareas-quest_areaxml-districtxml) |
-| SCN-06 | Implement static-gimmick request pass from loaded entities | [scene](docs/tasks/scene.md#scn-06-implement-static-gimmick-request-pass-from-loaded-entities) |
-| SCN-07 | Server gimmick/doodad world objects and ZdModel physics models | [scene](docs/tasks/scene.md#scn-07-server-gimmickdoodad-world-objects-and-zdmodel-physics-models) |
-| SCN-08 | Join identity per server type, server-type and environment slots | [scene](docs/tasks/scene.md#scn-08-join-identity-per-server-type-server-type-and-environment-slots) |
-| SCN-09 | Derive npc_spawners.g from world+zone and honor native LoadSpawners gates | [scene](docs/tasks/scene.md#scn-09-derive-npc_spawnersg-from-worldzone-and-honor-native-loadspawners-gates) |
-| SCN-10 | Complete flow-node provider bindings (F1 table) | [scene](docs/tasks/scene.md#scn-10-complete-flow-node-provider-bindings-f1-table) |
-| SCN-14 | Native AI bounds and navigation load at level completion | [scene](docs/tasks/scene.md#scn-14-native-ai-bounds-and-navigation-load-at-level-completion) |
-| MOV-03 | Bind real player operations (sensor listeners, staging, link, draw-hidden) | [movement](docs/tasks/movement.md#mov-03-bind-real-player-operations-sensor-listeners-staging-link-draw-hidden) |
-| MOV-08 | Implement server-side movement verification (MoveHackChecker::MovementVerifier) | [movement](docs/tasks/movement.md#mov-08-implement-server-side-movement-verification-movehackcheckermovementverifier) |
-| MOV-09 | Implement fall damage, freefall and landing | [movement](docs/tasks/movement.md#mov-09-implement-fall-damage-freefall-and-landing) |
-| MOV-10 | Swim, water-volume and drowning movement | [movement](docs/tasks/movement.md#mov-10-swim-water-volume-and-drowning-movement) |
-| MOV-13 | Unit warp, impulse, teleport and forced-sync corrections | [movement](docs/tasks/movement.md#mov-13-unit-warp-impulse-teleport-and-forced-sync-corrections) |
-| MOV-15 | NPC path finding and movement controller | [movement](docs/tasks/movement.md#mov-15-npc-path-finding-and-movement-controller) |
-| MOV-18 | Movement test coverage and a headless movement simulator | [movement](docs/tasks/movement.md#mov-18-movement-test-coverage-and-a-headless-movement-simulator) |
-| OBJ-04 | Handle World doodad packets and unit attach/bond packets | [world-objects](docs/tasks/world-objects.md#obj-04-handle-world-doodad-packets-and-unit-attachbond-packets) |
-| OBJ-06 | Climb doodads and hanging units | [world-objects](docs/tasks/world-objects.md#obj-06-climb-doodads-and-hanging-units) |
-| AI-01 | Recover the CAISystem instance and unblock native AI construction | [npc-ai](docs/tasks/npc-ai.md#ai-01-recover-the-caisystem-instance-and-unblock-native-ai-construction) |
-| AI-02 | Decide and build the managed AI provider (TODO(managed-ai)) | [npc-ai](docs/tasks/npc-ai.md#ai-02-decide-and-build-the-managed-ai-provider-todomanaged-ai) |
-| AI-03 | Implement the ~25 unimplemented goal-pipe operations | [npc-ai](docs/tasks/npc-ai.md#ai-03-implement-the-25-unimplemented-goal-pipe-operations) |
-| AI-04 | Add the ScriptBindUnit NPC Lua API | [npc-ai](docs/tasks/npc-ai.md#ai-04-add-the-scriptbindunit-npc-lua-api) |
-| AI-05 | NPC locomotion, anchor/leash return, path-following and path-finder | [npc-ai](docs/tasks/npc-ai.md#ai-05-npc-locomotion-anchorleash-return-path-following-and-path-finder) |
-| AI-06 | Provide a concrete live IZoneNpcWorld / actor runtime for the scene | [npc-ai](docs/tasks/npc-ai.md#ai-06-provide-a-concrete-live-izonenpcworld--actor-runtime-for-the-scene) |
-| AI-07 | NPC skill selection and combat loop | [npc-ai](docs/tasks/npc-ai.md#ai-07-npc-skill-selection-and-combat-loop) |
-| AI-08 | Aggro gaps: acquisition, linked/shared aggro, sleep, cancel timers, retarget | [npc-ai](docs/tasks/npc-ai.md#ai-08-aggro-gaps-acquisition-linkedshared-aggro-sleep-cancel-timers-retarget) |
-| LUA-03 | Implement the remaining ~156 `AI.*` functions (prioritised) | [lua-api](docs/tasks/lua-api.md#lua-03-implement-the-remaining-156-ai-functions-prioritised) |
-| LUA-05 | Complete CAIHandler: character scripts, aiconfig, OnLoadAI/OnSaveAI, StartupBehaviour | [lua-api](docs/tasks/lua-api.md#lua-05-complete-caihandler-character-scripts-aiconfig-onloadaionsaveai-startupbehaviour) |
-| LUA-06 | Provide the entity-script host (entity tables and lifecycle callbacks) | [lua-api](docs/tasks/lua-api.md#lua-06-provide-the-entity-script-host-entity-tables-and-lifecycle-callbacks) |
-| LUA-07 | Implement remaining `Script.*` functions (timers, reload variants, dumps) | [lua-api](docs/tasks/lua-api.md#lua-07-implement-remaining-script-functions-timers-reload-variants-dumps) |
-| LUA-10 | Command-set / quest `RunCommandSet` path | [lua-api](docs/tasks/lua-api.md#lua-10-command-set--quest-runcommandset-path) |
-| CMB-02 | Add WZ message codecs and opcodes for the skill/damage/knockback/cooldown/plot packets | [combat](docs/tasks/combat.md#cmb-02-add-wz-message-codecs-and-opcodes-for-the-skilldamageknockbackcooldownplot-packets) |
-| CMB-03 | Add outbound ZW opcodes/messages the zone originates for combat | [combat](docs/tasks/combat.md#cmb-03-add-outbound-zw-opcodesmessages-the-zone-originates-for-combat) |
-| CMB-04 | Load full SkillDesc content (the `skills` table and companions) | [combat](docs/tasks/combat.md#cmb-04-load-full-skilldesc-content-the-skills-table-and-companions) |
-| CMB-05 | Implement the zone skill-state mirror (StartSkill/FireSkill/EndSkill/StopSkill/StopCasting) | [combat](docs/tasks/combat.md#cmb-05-implement-the-zone-skill-state-mirror-startskillfireskillendskillstopskillstopcasting) |
-| CMB-06 | Wire WZUnitDamaged/WZUnitHealed into NPC aggro and AI notification | [combat](docs/tasks/combat.md#cmb-06-wire-wzunitdamagedwzunithealed-into-npc-aggro-and-ai-notification) |
-| CMB-07 | Implement ZoneBuffMan create/destroy side effects on the unit | [combat](docs/tasks/combat.md#cmb-07-implement-zonebuffman-createdestroy-side-effects-on-the-unit) |
-| CMB-08 | Load the full BuffDesc (buffs table and companion tables) | [combat](docs/tasks/combat.md#cmb-08-load-the-full-buffdesc-buffs-table-and-companion-tables) |
-| CMB-09 | Implement unit crowd-control/status state consumers (stun, sleep, root, silence, walk-only, cannot-jump, blank-minded, glide) | [combat](docs/tasks/combat.md#cmb-09-implement-unit-crowd-controlstatus-state-consumers-stun-sleep-root-silence-walk-only-cannot-jump-blank-minded-glide) |
-| CMB-10 | Mirror the per-unit skill cooldown manager | [combat](docs/tasks/combat.md#cmb-10-mirror-the-per-unit-skill-cooldown-manager) |
-| CMB-11 | Implement the NPC AI skill pipeline (pick, can-use, use, stop) | [combat](docs/tasks/combat.md#cmb-11-implement-the-npc-ai-skill-pipeline-pick-can-use-use-stop) |
-| CMB-12 | Implement the Lua ScriptBindUnit combat API used by AI scripts | [combat](docs/tasks/combat.md#cmb-12-implement-the-lua-scriptbindunit-combat-api-used-by-ai-scripts) |
-| CMB-13 | Skill target/range/obstacle validation helpers | [combat](docs/tasks/combat.md#cmb-13-skill-targetrangeobstacle-validation-helpers) |
-| CMB-14 | Complete death/resurrection side effects on the unit | [combat](docs/tasks/combat.md#cmb-14-complete-deathresurrection-side-effects-on-the-unit) |
-| CMB-15 | Implement skill controllers (dash/leap/rope/impulse/floating/move/rotate/anchor/crawl/wandering/flowgraph) | [combat](docs/tasks/combat.md#cmb-15-implement-skill-controllers-dashleapropeimpulsefloatingmoverotateanchorcrawlwanderingflowgraph) |
-| CMB-16 | Handle knockback/impulse/blink/invisible packets | [combat](docs/tasks/combat.md#cmb-16-handle-knockbackimpulseblinkinvisible-packets) |
-| DB-02 | Introduce a unified DDCMS loader orchestrator mirroring sub_39BCA9A0 | [content-db](docs/tasks/content-db.md#db-02-introduce-a-unified-ddcms-loader-orchestrator-mirroring-sub_39bca9a0) |
-| DB-03 | Complete skills/buffs/effects data model (full skills+buffs columns, effects dispatch, skill_effects, buff_triggers, tick effects, 58 *_effects payload tables) | [content-db](docs/tasks/content-db.md#db-03-complete-skillsbuffseffects-data-model-full-skillsbuffs-columns-effects-dispatch-skill_effects-buff_triggers-tick-effects-58-_effects-payload-tables) |
-| DB-05 | Finish the NPC data set (interactions, initial buffs, nicknames, mount skills, doodad bindings, strafe params, grade configs, spawn-effect links, merchants) | [content-db](docs/tasks/content-db.md#db-05-finish-the-npc-data-set-interactions-initial-buffs-nicknames-mount-skills-doodad-bindings-strafe-params-grade-configs-spawn-effect-links-merchants) |
-| DB-06 | Add the doodad data model (doodad_almighties full columns, groups, funcs, phase funcs, 135 doodad_func_* tables, modifiers, bundles, place skins, gimmicks) | [content-db](docs/tasks/content-db.md#db-06-add-the-doodad-data-model-doodad_almighties-full-columns-groups-funcs-phase-funcs-135-doodad_func_-tables-modifiers-bundles-place-skins-gimmicks) |
-| DB-07 | Items, loot, crafting and economy tables beyond the stat subset | [content-db](docs/tasks/content-db.md#db-07-items-loot-crafting-and-economy-tables-beyond-the-stat-subset) |
-| DB-08 | World/zone metadata completion (world_groups, world_divisions, zone climates, map data, zone_group tables, resurrection times) | [content-db](docs/tasks/content-db.md#db-08-worldzone-metadata-completion-world_groups-world_divisions-zone-climates-map-data-zone_group-tables-resurrection-times) |
-| DB-09 | Load ServerAreaManager XMLs (quest_area, district) and return_point.g | [content-db](docs/tasks/content-db.md#db-09-load-serverareamanager-xmls-quest_area-district-and-return_pointg) |
-| DB-10 | Derive world file paths from zone id instead of CLI arguments | [content-db](docs/tasks/content-db.md#db-10-derive-world-file-paths-from-zone-id-instead-of-cli-arguments) |
-| WS-01 | Implement ZWEnterArea/ZWLeaveArea and ServerAreaManager (quest areas) | [world-state](docs/tasks/world-state.md#ws-01-implement-zwenterareazwleavearea-and-serverareamanager-quest-areas) |
-| WS-02 | Handle the remaining WZ world-state packets instead of counting them unimplemented | [world-state](docs/tasks/world-state.md#ws-02-handle-the-remaining-wz-world-state-packets-instead-of-counting-them-unimplemented) |
-| WS-04 | Emit the missing ZW world-state frames (ReportZoneStatus, Heartbeat loop, BackpackDropped, RemoveHouse) | [world-state](docs/tasks/world-state.md#ws-04-emit-the-missing-zw-world-state-frames-reportzonestatus-heartbeat-loop-backpackdropped-removehouse) — **Partial** |
-| WS-06 | Wire world-state consumers into gameplay (conflict state to PvP rules, siege and relation to combat, schedule to spawners) | [world-state](docs/tasks/world-state.md#ws-06-wire-world-state-consumers-into-gameplay-conflict-state-to-pvp-rules-siege-and-relation-to-combat-schedule-to-spawners) |
-| OPS-03 | Graceful shutdown, signal, and crash handling for the host — **Partial** | [ops](docs/tasks/ops.md#ops-03-graceful-shutdown-signal-and-crash-handling-for-the-host) |
-| OPS-04 | Add a ServerCVar configuration layer with the sim-affecting native CVars | [ops](docs/tasks/ops.md#ops-04-add-a-servercvar-configuration-layer-with-the-sim-affecting-native-cvars) |
-| OPS-06 | Implement the four unsupported zone-side GM selectors (49, 142, 143, 144) without crashing the session | [ops](docs/tasks/ops.md#ops-06-implement-the-four-unsupported-zone-side-gm-selectors-49-142-143-144-without-crashing-the-session) |
-| OPS-10 | Remove the hardcoded Lua library path and external-environment assumptions | [ops](docs/tasks/ops.md#ops-10-remove-the-hardcoded-lua-library-path-and-external-environment-assumptions) |
-| OPS-12 | CI pipeline (build + selected tests + warnings gate) | [ops](docs/tasks/ops.md#ops-12-ci-pipeline-build--selected-tests--warnings-gate) |
-| OPS-14 | Close test gaps for the highest-risk subsystems | [ops](docs/tasks/ops.md#ops-14-close-test-gaps-for-the-highest-risk-subsystems) |
-| RT-02 | Implement ServerAreaManager (area enter/leave) and EnvironmentManager | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-02-implement-serverareamanager-area-enterleave-and-environmentmanager) |
-| RT-03 | Port the skill-controller family and ZoneBuffMan | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-03-port-the-skill-controller-family-and-zonebuffman) |
-| RT-04 | Implement doodad runtime (Doodad, phase funcs, climb doodads) | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-04-implement-doodad-runtime-doodad-phase-funcs-climb-doodads) |
-| RT-09 | Add missing content readers for zone-relevant DescStorage types | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-09-add-missing-content-readers-for-zone-relevant-descstorage-types) |
-| RT-11 | Hook raycast/collision services to World packets | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-11-hook-raycastcollision-services-to-world-packets) |
-| RT-14 | Team/party/raid accessors for zone-side aggro sharing and friendly checks | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-14-teampartyraid-accessors-for-zone-side-aggro-sharing-and-friendly-checks) |
+| ID | Task | Status | Area |
+| --- | --- | --- | --- |
+| WC-07 | Detect early host death and size ReadyTimeout for the replacement |  | [world-contract](docs/tasks/world-contract.md#wc-07-detect-early-host-death-and-size-readytimeout-for-the-replacement) |
+| WC-08 | Handle `WZActivateNpcSpawnersInArea` (or prove NPCs spawn without it) |  | [world-contract](docs/tasks/world-contract.md#wc-08-handle-wzactivatenpcspawnersinarea-or-prove-npcs-spawn-without-it) |
+| WC-09 | Cover the World→Zone opcodes that are currently ignored |  | [world-contract](docs/tasks/world-contract.md#wc-09-cover-the-worldzone-opcodes-that-are-currently-ignored) |
+| WC-10 | Fill the ZW opcode gaps and sender coverage |  | [world-contract](docs/tasks/world-contract.md#wc-10-fill-the-zw-opcode-gaps-and-sender-coverage) |
+| WC-11 | Golden-test WZUnitState, WZNpcState and buff bodies against World's serializer |  | [world-contract](docs/tasks/world-contract.md#wc-11-golden-test-wzunitstate-wznpcstate-and-buff-bodies-against-worlds-serializer) |
+| WC-12 | Log to a file under `AAEMU_ZONE_SAVE_DIR` / `AAEMU_ZONE_LOG_NAME` and cope with no console |  | [world-contract](docs/tasks/world-contract.md#wc-12-log-to-a-file-under-aaemu_zone_save_dir--aaemu_zone_log_name-and-cope-with-no-console) |
+| WZ-03 | Implement the unit attach/hang/bond/posture/skill-controller family |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-03-implement-the-unit-attachhangbondpostureskill-controller-family) |
+| WZ-04 | Skill / plot / combat-feedback packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-04-skill--plot--combat-feedback-packets) |
+| WZ-05 | Forced movement / physics unit packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-05-forced-movement--physics-unit-packets) |
+| WZ-06 | NPC / spawner control packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-06-npc--spawner-control-packets) |
+| WZ-07 | Doodad, house and vegetation packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-07-doodad-house-and-vegetation-packets) |
+| WZ-08 | Slave / vehicle / ship packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-08-slave--vehicle--ship-packets) |
+| WZ-11 | GM, command and diagnostics packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-11-gm-command-and-diagnostics-packets) |
+| ZW-02 | Send native-correct ZWJoin fields (sv_port, external IP, account/instance by server type) | Partial | [zw-outbound](docs/tasks/zw-outbound.md#zw-02-send-native-correct-zwjoin-fields-sv_port-external-ip-accountinstance-by-server-type) |
+| ZW-03 | Match native disconnect/lifecycle policy |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-03-match-native-disconnectlifecycle-policy) |
+| ZW-04 | Implement ZWUnitLocation emission (replace the no-send UpdateUnitLocationReports) |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-04-implement-zwunitlocation-emission-replace-the-no-send-updateunitlocationreports) |
+| ZW-05 | Add ZWEnterArea / ZWLeaveArea |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-05-add-zwenterarea--zwleavearea) |
+| ZW-06 | Add skill ZW packets (StartSkill, StopSkill, StopCasting, SkillControllerState, LongDistSkillControllerCreated) |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-06-add-skill-zw-packets-startskill-stopskill-stopcasting-skillcontrollerstate-longdistskillcontrollercreated) |
+| ZW-07 | Handle World requests that expect a ZW reply (ZoneStatus, CombatUnits, RayCasting, Mole checks, RunCommand) |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-07-handle-world-requests-that-expect-a-zw-reply-zonestatus-combatunits-raycasting-mole-checks-runcommand) |
+| ZW-08 | Add unit-state and aggro ZW notifications (UnitFell, UnitModelPostureChanged, ChangeUnitFlyState, UnitCollision/Result, ErrorMsgToPlayer, AggroTargetChanged, KillNpc, ClearCombat, AggroRemove) |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-08-add-unit-state-and-aggro-zw-notifications-unitfell-unitmodelposturechanged-changeunitflystate-unitcollisionresult-errormsgtoplayer-aggrotargetchanged-killnpc-clearcombat-aggroremove) |
+| SCN-04 | Implement level-start server construction (event 12/1) and max-unit CVars |  | [scene](docs/tasks/scene.md#scn-04-implement-level-start-server-construction-event-121-and-max-unit-cvars) |
+| SCN-05 | Implement ServerAreaManager::LoadAreas (quest_area.xml, district.xml) |  | [scene](docs/tasks/scene.md#scn-05-implement-serverareamanagerloadareas-quest_areaxml-districtxml) |
+| SCN-06 | Implement static-gimmick request pass from loaded entities |  | [scene](docs/tasks/scene.md#scn-06-implement-static-gimmick-request-pass-from-loaded-entities) |
+| SCN-07 | Server gimmick/doodad world objects and ZdModel physics models |  | [scene](docs/tasks/scene.md#scn-07-server-gimmickdoodad-world-objects-and-zdmodel-physics-models) |
+| SCN-08 | Join identity per server type, server-type and environment slots |  | [scene](docs/tasks/scene.md#scn-08-join-identity-per-server-type-server-type-and-environment-slots) |
+| SCN-09 | Derive npc_spawners.g from world+zone and honor native LoadSpawners gates |  | [scene](docs/tasks/scene.md#scn-09-derive-npc_spawnersg-from-worldzone-and-honor-native-loadspawners-gates) |
+| SCN-10 | Complete flow-node provider bindings (F1 table) |  | [scene](docs/tasks/scene.md#scn-10-complete-flow-node-provider-bindings-f1-table) |
+| SCN-14 | Native AI bounds and navigation load at level completion |  | [scene](docs/tasks/scene.md#scn-14-native-ai-bounds-and-navigation-load-at-level-completion) |
+| MOV-03 | Bind real player operations (sensor listeners, staging, link, draw-hidden) |  | [movement](docs/tasks/movement.md#mov-03-bind-real-player-operations-sensor-listeners-staging-link-draw-hidden) |
+| MOV-08 | Implement server-side movement verification (MoveHackChecker::MovementVerifier) |  | [movement](docs/tasks/movement.md#mov-08-implement-server-side-movement-verification-movehackcheckermovementverifier) |
+| MOV-09 | Implement fall damage, freefall and landing |  | [movement](docs/tasks/movement.md#mov-09-implement-fall-damage-freefall-and-landing) |
+| MOV-10 | Swim, water-volume and drowning movement |  | [movement](docs/tasks/movement.md#mov-10-swim-water-volume-and-drowning-movement) |
+| MOV-13 | Unit warp, impulse, teleport and forced-sync corrections |  | [movement](docs/tasks/movement.md#mov-13-unit-warp-impulse-teleport-and-forced-sync-corrections) |
+| MOV-15 | NPC path finding and movement controller |  | [movement](docs/tasks/movement.md#mov-15-npc-path-finding-and-movement-controller) |
+| MOV-18 | Movement test coverage and a headless movement simulator |  | [movement](docs/tasks/movement.md#mov-18-movement-test-coverage-and-a-headless-movement-simulator) |
+| OBJ-04 | Handle World doodad packets and unit attach/bond packets |  | [world-objects](docs/tasks/world-objects.md#obj-04-handle-world-doodad-packets-and-unit-attachbond-packets) |
+| OBJ-06 | Climb doodads and hanging units |  | [world-objects](docs/tasks/world-objects.md#obj-06-climb-doodads-and-hanging-units) |
+| AI-01 | Recover the CAISystem instance and unblock native AI construction |  | [npc-ai](docs/tasks/npc-ai.md#ai-01-recover-the-caisystem-instance-and-unblock-native-ai-construction) |
+| AI-02 | Decide and build the managed AI provider (TODO(managed-ai)) |  | [npc-ai](docs/tasks/npc-ai.md#ai-02-decide-and-build-the-managed-ai-provider-todomanaged-ai) |
+| AI-03 | Implement the ~25 unimplemented goal-pipe operations |  | [npc-ai](docs/tasks/npc-ai.md#ai-03-implement-the-25-unimplemented-goal-pipe-operations) |
+| AI-04 | Add the ScriptBindUnit NPC Lua API |  | [npc-ai](docs/tasks/npc-ai.md#ai-04-add-the-scriptbindunit-npc-lua-api) |
+| AI-05 | NPC locomotion, anchor/leash return, path-following and path-finder |  | [npc-ai](docs/tasks/npc-ai.md#ai-05-npc-locomotion-anchorleash-return-path-following-and-path-finder) |
+| AI-06 | Provide a concrete live IZoneNpcWorld / actor runtime for the scene |  | [npc-ai](docs/tasks/npc-ai.md#ai-06-provide-a-concrete-live-izonenpcworld--actor-runtime-for-the-scene) |
+| AI-07 | NPC skill selection and combat loop |  | [npc-ai](docs/tasks/npc-ai.md#ai-07-npc-skill-selection-and-combat-loop) |
+| AI-08 | Aggro gaps: acquisition, linked/shared aggro, sleep, cancel timers, retarget |  | [npc-ai](docs/tasks/npc-ai.md#ai-08-aggro-gaps-acquisition-linkedshared-aggro-sleep-cancel-timers-retarget) |
+| LUA-03 | Implement the remaining ~156 `AI.*` functions (prioritised) |  | [lua-api](docs/tasks/lua-api.md#lua-03-implement-the-remaining-156-ai-functions-prioritised) |
+| LUA-05 | Complete CAIHandler: character scripts, aiconfig, OnLoadAI/OnSaveAI, StartupBehaviour |  | [lua-api](docs/tasks/lua-api.md#lua-05-complete-caihandler-character-scripts-aiconfig-onloadaionsaveai-startupbehaviour) |
+| LUA-06 | Provide the entity-script host (entity tables and lifecycle callbacks) |  | [lua-api](docs/tasks/lua-api.md#lua-06-provide-the-entity-script-host-entity-tables-and-lifecycle-callbacks) |
+| LUA-07 | Implement remaining `Script.*` functions (timers, reload variants, dumps) |  | [lua-api](docs/tasks/lua-api.md#lua-07-implement-remaining-script-functions-timers-reload-variants-dumps) |
+| LUA-10 | Command-set / quest `RunCommandSet` path |  | [lua-api](docs/tasks/lua-api.md#lua-10-command-set--quest-runcommandset-path) |
+| CMB-02 | Add WZ message codecs and opcodes for the skill/damage/knockback/cooldown/plot packets |  | [combat](docs/tasks/combat.md#cmb-02-add-wz-message-codecs-and-opcodes-for-the-skilldamageknockbackcooldownplot-packets) |
+| CMB-03 | Add outbound ZW opcodes/messages the zone originates for combat |  | [combat](docs/tasks/combat.md#cmb-03-add-outbound-zw-opcodesmessages-the-zone-originates-for-combat) |
+| CMB-04 | Load full SkillDesc content (the `skills` table and companions) |  | [combat](docs/tasks/combat.md#cmb-04-load-full-skilldesc-content-the-skills-table-and-companions) |
+| CMB-05 | Implement the zone skill-state mirror (StartSkill/FireSkill/EndSkill/StopSkill/StopCasting) |  | [combat](docs/tasks/combat.md#cmb-05-implement-the-zone-skill-state-mirror-startskillfireskillendskillstopskillstopcasting) |
+| CMB-06 | Wire WZUnitDamaged/WZUnitHealed into NPC aggro and AI notification |  | [combat](docs/tasks/combat.md#cmb-06-wire-wzunitdamagedwzunithealed-into-npc-aggro-and-ai-notification) |
+| CMB-07 | Implement ZoneBuffMan create/destroy side effects on the unit |  | [combat](docs/tasks/combat.md#cmb-07-implement-zonebuffman-createdestroy-side-effects-on-the-unit) |
+| CMB-08 | Load the full BuffDesc (buffs table and companion tables) |  | [combat](docs/tasks/combat.md#cmb-08-load-the-full-buffdesc-buffs-table-and-companion-tables) |
+| CMB-09 | Implement unit crowd-control/status state consumers (stun, sleep, root, silence, walk-only, cannot-jump, blank-minded, glide) |  | [combat](docs/tasks/combat.md#cmb-09-implement-unit-crowd-controlstatus-state-consumers-stun-sleep-root-silence-walk-only-cannot-jump-blank-minded-glide) |
+| CMB-10 | Mirror the per-unit skill cooldown manager |  | [combat](docs/tasks/combat.md#cmb-10-mirror-the-per-unit-skill-cooldown-manager) |
+| CMB-11 | Implement the NPC AI skill pipeline (pick, can-use, use, stop) |  | [combat](docs/tasks/combat.md#cmb-11-implement-the-npc-ai-skill-pipeline-pick-can-use-use-stop) |
+| CMB-12 | Implement the Lua ScriptBindUnit combat API used by AI scripts |  | [combat](docs/tasks/combat.md#cmb-12-implement-the-lua-scriptbindunit-combat-api-used-by-ai-scripts) |
+| CMB-13 | Skill target/range/obstacle validation helpers |  | [combat](docs/tasks/combat.md#cmb-13-skill-targetrangeobstacle-validation-helpers) |
+| CMB-14 | Complete death/resurrection side effects on the unit |  | [combat](docs/tasks/combat.md#cmb-14-complete-deathresurrection-side-effects-on-the-unit) |
+| CMB-15 | Implement skill controllers (dash/leap/rope/impulse/floating/move/rotate/anchor/crawl/wandering/flowgraph) |  | [combat](docs/tasks/combat.md#cmb-15-implement-skill-controllers-dashleapropeimpulsefloatingmoverotateanchorcrawlwanderingflowgraph) |
+| CMB-16 | Handle knockback/impulse/blink/invisible packets |  | [combat](docs/tasks/combat.md#cmb-16-handle-knockbackimpulseblinkinvisible-packets) |
+| DB-02 | Introduce a unified DDCMS loader orchestrator mirroring sub_39BCA9A0 |  | [content-db](docs/tasks/content-db.md#db-02-introduce-a-unified-ddcms-loader-orchestrator-mirroring-sub_39bca9a0) |
+| DB-03 | Complete skills/buffs/effects data model (full skills+buffs columns, effects dispatch, skill_effects, buff_triggers, tick effects, 58 *_effects payload tables) |  | [content-db](docs/tasks/content-db.md#db-03-complete-skillsbuffseffects-data-model-full-skillsbuffs-columns-effects-dispatch-skill_effects-buff_triggers-tick-effects-58-_effects-payload-tables) |
+| DB-05 | Finish the NPC data set (interactions, initial buffs, nicknames, mount skills, doodad bindings, strafe params, grade configs, spawn-effect links, merchants) |  | [content-db](docs/tasks/content-db.md#db-05-finish-the-npc-data-set-interactions-initial-buffs-nicknames-mount-skills-doodad-bindings-strafe-params-grade-configs-spawn-effect-links-merchants) |
+| DB-06 | Add the doodad data model (doodad_almighties full columns, groups, funcs, phase funcs, 135 doodad_func_* tables, modifiers, bundles, place skins, gimmicks) |  | [content-db](docs/tasks/content-db.md#db-06-add-the-doodad-data-model-doodad_almighties-full-columns-groups-funcs-phase-funcs-135-doodad_func_-tables-modifiers-bundles-place-skins-gimmicks) |
+| DB-07 | Items, loot, crafting and economy tables beyond the stat subset |  | [content-db](docs/tasks/content-db.md#db-07-items-loot-crafting-and-economy-tables-beyond-the-stat-subset) |
+| DB-08 | World/zone metadata completion (world_groups, world_divisions, zone climates, map data, zone_group tables, resurrection times) |  | [content-db](docs/tasks/content-db.md#db-08-worldzone-metadata-completion-world_groups-world_divisions-zone-climates-map-data-zone_group-tables-resurrection-times) |
+| DB-09 | Load ServerAreaManager XMLs (quest_area, district) and return_point.g |  | [content-db](docs/tasks/content-db.md#db-09-load-serverareamanager-xmls-quest_area-district-and-return_pointg) |
+| DB-10 | Derive world file paths from zone id instead of CLI arguments |  | [content-db](docs/tasks/content-db.md#db-10-derive-world-file-paths-from-zone-id-instead-of-cli-arguments) |
+| WS-01 | Implement ZWEnterArea/ZWLeaveArea and ServerAreaManager (quest areas) |  | [world-state](docs/tasks/world-state.md#ws-01-implement-zwenterareazwleavearea-and-serverareamanager-quest-areas) |
+| WS-02 | Handle the remaining WZ world-state packets instead of counting them unimplemented |  | [world-state](docs/tasks/world-state.md#ws-02-handle-the-remaining-wz-world-state-packets-instead-of-counting-them-unimplemented) |
+| WS-04 | Emit the missing ZW world-state frames (ReportZoneStatus, Heartbeat loop, BackpackDropped, RemoveHouse) | Partial | [world-state](docs/tasks/world-state.md#ws-04-emit-the-missing-zw-world-state-frames-reportzonestatus-heartbeat-loop-backpackdropped-removehouse) |
+| WS-06 | Wire world-state consumers into gameplay (conflict state to PvP rules, siege and relation to combat, schedule to spawners) |  | [world-state](docs/tasks/world-state.md#ws-06-wire-world-state-consumers-into-gameplay-conflict-state-to-pvp-rules-siege-and-relation-to-combat-schedule-to-spawners) |
+| OPS-03 | Graceful shutdown, signal, and crash handling for the host | Partial | [ops](docs/tasks/ops.md#ops-03-graceful-shutdown-signal-and-crash-handling-for-the-host) |
+| OPS-04 | Add a ServerCVar configuration layer with the sim-affecting native CVars |  | [ops](docs/tasks/ops.md#ops-04-add-a-servercvar-configuration-layer-with-the-sim-affecting-native-cvars) |
+| OPS-06 | Implement the four unsupported zone-side GM selectors (49, 142, 143, 144) without crashing the session |  | [ops](docs/tasks/ops.md#ops-06-implement-the-four-unsupported-zone-side-gm-selectors-49-142-143-144-without-crashing-the-session) |
+| OPS-10 | Remove the hardcoded Lua library path and external-environment assumptions |  | [ops](docs/tasks/ops.md#ops-10-remove-the-hardcoded-lua-library-path-and-external-environment-assumptions) |
+| OPS-12 | CI pipeline (build + selected tests + warnings gate) |  | [ops](docs/tasks/ops.md#ops-12-ci-pipeline-build--selected-tests--warnings-gate) |
+| OPS-14 | Close test gaps for the highest-risk subsystems |  | [ops](docs/tasks/ops.md#ops-14-close-test-gaps-for-the-highest-risk-subsystems) |
+| RT-02 | Implement ServerAreaManager (area enter/leave) and EnvironmentManager |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-02-implement-serverareamanager-area-enterleave-and-environmentmanager) |
+| RT-03 | Port the skill-controller family and ZoneBuffMan |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-03-port-the-skill-controller-family-and-zonebuffman) |
+| RT-04 | Implement doodad runtime (Doodad, phase funcs, climb doodads) |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-04-implement-doodad-runtime-doodad-phase-funcs-climb-doodads) |
+| RT-09 | Add missing content readers for zone-relevant DescStorage types |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-09-add-missing-content-readers-for-zone-relevant-descstorage-types) |
+| RT-11 | Hook raycast/collision services to World packets |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-11-hook-raycastcollision-services-to-world-packets) |
+| RT-14 | Team/party/raid accessors for zone-side aggro sharing and friendly checks |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-14-teampartyraid-accessors-for-zone-side-aggro-sharing-and-friendly-checks) |
 
 ### P2 - parity and later
 
-| ID | Task | Area |
-| --- | --- | --- |
-| WC-13 | Tolerate interleaved WZ frames during startup | [world-contract](docs/tasks/world-contract.md#wc-13-tolerate-interleaved-wz-frames-during-startup) |
-| WC-14 | Send the ZW heartbeat | [world-contract](docs/tasks/world-contract.md#wc-14-send-the-zw-heartbeat) |
-| WC-15 | Point the replacement at the same game data as `ZoneGameDataRoot` | [world-contract](docs/tasks/world-contract.md#wc-15-point-the-replacement-at-the-same-game-data-as-zonegamedataroot) |
-| WC-16 | Define shutdown and orphan behaviour | [world-contract](docs/tasks/world-contract.md#wc-16-define-shutdown-and-orphan-behaviour) |
-| WZ-09 | Gimmick packets | [wz-inbound](docs/tasks/wz-inbound.md#wz-09-gimmick-packets) |
-| WZ-10 | Siege/conflict extras and TowerDef | [wz-inbound](docs/tasks/wz-inbound.md#wz-10-siegeconflict-extras-and-towerdef) |
-| WZ-12 | Complete SetFaction/body-fidelity checks of already-dispatched handlers | [wz-inbound](docs/tasks/wz-inbound.md#wz-12-complete-setfactionbody-fidelity-checks-of-already-dispatched-handlers) |
-| WZ-13 | Add a generated WZ conformance table test | [wz-inbound](docs/tasks/wz-inbound.md#wz-13-add-a-generated-wz-conformance-table-test) |
-| ZW-09 | Add gimmick ZW packets (RequestSpawnStaticGimmick, Movement, JointBroken, ResetJoints, RemoveParts, Collided) | [zw-outbound](docs/tasks/zw-outbound.md#zw-09-add-gimmick-zw-packets-requestspawnstaticgimmick-movement-jointbroken-resetjoints-removeparts-collided) |
-| ZW-10 | Add anti-cheat and misc report packets (ReportMoveHack, ReportDoodadSurfaceHack, DoodadCollideUnit, BackpackDropped, RemoveHouse, TowerDefReportPlayability, DumpNpc, AiAggro, AiDebug, Sandbox*) | [zw-outbound](docs/tasks/zw-outbound.md#zw-10-add-anti-cheat-and-misc-report-packets-reportmovehack-reportdoodadsurfacehack-doodadcollideunit-backpackdropped-removehouse-towerdefreportplayability-dumpnpc-aiaggro-aidebug-sandbox) |
-| ZW-11 | Reconcile ZwOpcodes.cs with the full native list and add a coverage test | [zw-outbound](docs/tasks/zw-outbound.md#zw-11-reconcile-zwopcodescs-with-the-full-native-list-and-add-a-coverage-test) — **Done** |
-| ZW-12 | Record that CT*/TC*/StreamClient are out of scope for the zone | [zw-outbound](docs/tasks/zw-outbound.md#zw-12-record-that-cttcstreamclient-are-out-of-scope-for-the-zone) |
-| SCN-11 | Port X2::FlowGraphSkillController / FlowGraphWrapper (graph-driven skill controllers) | [scene](docs/tasks/scene.md#scn-11-port-x2flowgraphskillcontroller--flowgraphwrapper-graph-driven-skill-controllers) |
-| SCN-12 | Instance zones (indun) and per-world layout variants | [scene](docs/tasks/scene.md#scn-12-instance-zones-indun-and-per-world-layout-variants) |
-| SCN-13 | Multi-zone per process, zone reload and seamless streaming decision | [scene](docs/tasks/scene.md#scn-13-multi-zone-per-process-zone-reload-and-seamless-streaming-decision) |
-| SCN-15 | Prefab object loading used by level entities | [scene](docs/tasks/scene.md#scn-15-prefab-object-loading-used-by-level-entities) |
-| MOV-11 | Glider, ladder/climb, rope, and mount/passenger movement states | [movement](docs/tasks/movement.md#mov-11-glider-ladderclimb-rope-and-mountpassenger-movement-states) |
-| MOV-12 | Ship and vehicle movement controllers (server simulation) | [movement](docs/tasks/movement.md#mov-12-ship-and-vehicle-movement-controllers-server-simulation) |
-| MOV-16 | Finish the legacy navigation runtime (volume/flight/road/surface readers, quadtree build, A* search) | [movement](docs/tasks/movement.md#mov-16-finish-the-legacy-navigation-runtime-volumeflightroadsurface-readers-quadtree-build-a-search) |
-| MOV-17 | Nav-modifier prefab objects and dynamic regions from XML entities | [movement](docs/tasks/movement.md#mov-17-nav-modifier-prefab-objects-and-dynamic-regions-from-xml-entities) |
-| MOV-19 | Sight / visibility ownership decision (interest management) | [movement](docs/tasks/movement.md#mov-19-sight--visibility-ownership-decision-interest-management) |
-| OBJ-05 | Load doodad function content and zone doodad effects | [world-objects](docs/tasks/world-objects.md#obj-05-load-doodad-function-content-and-zone-doodad-effects) |
-| OBJ-07 | Housing state and build lifecycle | [world-objects](docs/tasks/world-objects.md#obj-07-housing-state-and-build-lifecycle) |
-| OBJ-08 | Slave lifecycle (spawn, master change, escape) | [world-objects](docs/tasks/world-objects.md#obj-08-slave-lifecycle-spawn-master-change-escape) |
-| OBJ-09 | Ship/vehicle simulation and control | [world-objects](docs/tasks/world-objects.md#obj-09-shipvehicle-simulation-and-control) |
-| OBJ-10 | Mounts, transfers, shipyards, portals | [world-objects](docs/tasks/world-objects.md#obj-10-mounts-transfers-shipyards-portals) |
-| AI-09 | Spawner leftovers: persistent/instance-saved spawners, population cap, TowerDef | [npc-ai](docs/tasks/npc-ai.md#ai-09-spawner-leftovers-persistentinstance-saved-spawners-population-cap-towerdef) |
-| AI-10 | Track patterns, strafe params, roaming areas and ai_commands | [npc-ai](docs/tasks/npc-ai.md#ai-10-track-patterns-strafe-params-roaming-areas-and-ai_commands) |
-| AI-11 | Client-driven NPC control and npc_ai_client_params | [npc-ai](docs/tasks/npc-ai.md#ai-11-client-driven-npc-control-and-npc_ai_client_params) |
-| AI-12 | AI debug/diagnostics parity | [npc-ai](docs/tasks/npc-ai.md#ai-12-ai-debugdiagnostics-parity) |
-| LUA-08 | Implement server-meaningful `System.*` and `Physics.*` | [lua-api](docs/tasks/lua-api.md#lua-08-implement-server-meaningful-system-and-physics) |
-| LUA-09 | Provide `Particle.*` and `Sound.*` stub tables | [lua-api](docs/tasks/lua-api.md#lua-09-provide-particle-and-sound-stub-tables) |
-| CMB-17 | Combat state lifecycle (engage timeout, ZWClearCombat, force-attack, duel) | [combat](docs/tasks/combat.md#cmb-17-combat-state-lifecycle-engage-timeout-zwclearcombat-force-attack-duel) |
-| CMB-18 | Implement ZonePlotMan (plot events mirror) | [combat](docs/tasks/combat.md#cmb-18-implement-zoneplotman-plot-events-mirror) |
-| CMB-19 | Fall damage and collision notifications to World | [combat](docs/tasks/combat.md#cmb-19-fall-damage-and-collision-notifications-to-world) |
-| CMB-20 | Stealth/detection and invisibility semantics | [combat](docs/tasks/combat.md#cmb-20-stealthdetection-and-invisibility-semantics) |
-| CMB-21 | Quest-driven and special combat packets | [combat](docs/tasks/combat.md#cmb-21-quest-driven-and-special-combat-packets) |
-| CMB-22 | Initial/system buffs applied by the zone (npc/slave initial buffs, safe-area, zone buffs) | [combat](docs/tasks/combat.md#cmb-22-initialsystem-buffs-applied-by-the-zone-npcslave-initial-buffs-safe-area-zone-buffs) |
-| DB-04 | Add plots (skill plot scripting) tables | [content-db](docs/tasks/content-db.md#db-04-add-plots-skill-plot-scripting-tables) |
-| DB-11 | Slaves, vehicles, transfers and butlers data | [content-db](docs/tasks/content-db.md#db-11-slaves-vehicles-transfers-and-butlers-data) |
-| DB-12 | ServerGimmick / ZdModelPrefab / ZdModelVegetation resources and Prefabs/*.xml | [content-db](docs/tasks/content-db.md#db-12-servergimmick--zdmodelprefab--zdmodelvegetation-resources-and-prefabsxml) |
-| DB-13 | Quest tables and quest-related zone hooks | [content-db](docs/tasks/content-db.md#db-13-quest-tables-and-quest-related-zone-hooks) |
-| DB-14 | Housing, instance/event/siege and game-rule tables | [content-db](docs/tasks/content-db.md#db-14-housing-instanceeventsiege-and-game-rule-tables) |
-| DB-15 | Table-schema drift guard (compare repo SELECT lists with native SQL strings) | [content-db](docs/tasks/content-db.md#db-15-table-schema-drift-guard-compare-repo-select-lists-with-native-sql-strings) |
-| DB-16 | Decide handling of client-only tables loaded by the shared loader | [content-db](docs/tasks/content-db.md#db-16-decide-handling-of-client-only-tables-loaded-by-the-shared-loader) |
-| WS-03 | Implement tower-defense WZ/ZW handling | [world-state](docs/tasks/world-state.md#ws-03-implement-tower-defense-wzzw-handling) |
-| WS-05 | Implement housing state (WZHouseState, HouseBuildProgress/Done, ZWRemoveHouse, housing-area test) | [world-state](docs/tasks/world-state.md#ws-05-implement-housing-state-wzhousestate-housebuildprogressdone-zwremovehouse-housing-area-test) |
-| WS-07 | Confirm and (if native) implement loot, achievement and appellation runtime ownership | [world-state](docs/tasks/world-state.md#ws-07-confirm-and-if-native-implement-loot-achievement-and-appellation-runtime-ownership) |
-| WS-08 | Document and verify absent zone-side recovery / transfer / weather behavior | [world-state](docs/tasks/world-state.md#ws-08-document-and-verify-absent-zone-side-recovery--transfer--weather-behavior) |
-| OPS-05 | Implement movement verification / hack checker (anti-cheat) or explicitly record it as out of scope | [ops](docs/tasks/ops.md#ops-05-implement-movement-verification--hack-checker-anti-cheat-or-explicitly-record-it-as-out-of-scope) |
-| OPS-07 | Provide a minimal server console (stdin) with the native command set | [ops](docs/tasks/ops.md#ops-07-provide-a-minimal-server-console-stdin-with-the-native-command-set) |
-| OPS-08 | Structured log levels, channels, and rotation | [ops](docs/tasks/ops.md#ops-08-structured-log-levels-channels-and-rotation) |
-| OPS-09 | Frame-time and tick metrics | [ops](docs/tasks/ops.md#ops-09-frame-time-and-tick-metrics) |
-| OPS-11 | Add `instance_id` / `instance_index` / external IP to the join and config | [ops](docs/tasks/ops.md#ops-11-add-instance_id--instance_index--external-ip-to-the-join-and-config) |
-| OPS-13 | Warnings and analyzers policy | [ops](docs/tasks/ops.md#ops-13-warnings-and-analyzers-policy) |
-| OPS-15 | Operations documentation | [ops](docs/tasks/ops.md#ops-15-operations-documentation) |
-| RT-05 | Implement gimmick (breakable/jointed physics prop) subsystem | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-05-implement-gimmick-breakablejointed-physics-prop-subsystem) |
-| RT-06 | Implement housing runtime (Housing, HousingManager) | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-06-implement-housing-runtime-housing-housingmanager) |
-| RT-07 | Implement ship/vehicle/slave simulation controllers | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-07-implement-shipvehicleslave-simulation-controllers) |
-| RT-08 | Implement MoveHackChecker and mole-miner/trader reports | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-08-implement-movehackchecker-and-mole-minertrader-reports) |
-| RT-10 | Implement instance/indun, battlefield and tower-defense zone logic | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-10-implement-instanceindun-battlefield-and-tower-defense-zone-logic) |
-| RT-12 | Determine need for TgwWorker / StreamClient / AuthClient / CryptoSystem | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-12-determine-need-for-tgwworker--streamclient--authclient--cryptosystem) |
-| RT-13 | Ranking snapshots and ReloadDesc handling | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-13-ranking-snapshots-and-reloaddesc-handling) |
-| RT-15 | Butler and Mate handling on the zone | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-15-butler-and-mate-handling-on-the-zone) |
+| ID | Task | Status | Area |
+| --- | --- | --- | --- |
+| WC-13 | Tolerate interleaved WZ frames during startup |  | [world-contract](docs/tasks/world-contract.md#wc-13-tolerate-interleaved-wz-frames-during-startup) |
+| WC-14 | Send the ZW heartbeat |  | [world-contract](docs/tasks/world-contract.md#wc-14-send-the-zw-heartbeat) |
+| WC-15 | Point the replacement at the same game data as `ZoneGameDataRoot` |  | [world-contract](docs/tasks/world-contract.md#wc-15-point-the-replacement-at-the-same-game-data-as-zonegamedataroot) |
+| WC-16 | Define shutdown and orphan behaviour |  | [world-contract](docs/tasks/world-contract.md#wc-16-define-shutdown-and-orphan-behaviour) |
+| WZ-09 | Gimmick packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-09-gimmick-packets) |
+| WZ-10 | Siege/conflict extras and TowerDef |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-10-siegeconflict-extras-and-towerdef) |
+| WZ-12 | Complete SetFaction/body-fidelity checks of already-dispatched handlers |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-12-complete-setfactionbody-fidelity-checks-of-already-dispatched-handlers) |
+| WZ-13 | Add a generated WZ conformance table test |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-13-add-a-generated-wz-conformance-table-test) |
+| ZW-09 | Add gimmick ZW packets (RequestSpawnStaticGimmick, Movement, JointBroken, ResetJoints, RemoveParts, Collided) |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-09-add-gimmick-zw-packets-requestspawnstaticgimmick-movement-jointbroken-resetjoints-removeparts-collided) |
+| ZW-10 | Add anti-cheat and misc report packets (ReportMoveHack, ReportDoodadSurfaceHack, DoodadCollideUnit, BackpackDropped, RemoveHouse, TowerDefReportPlayability, DumpNpc, AiAggro, AiDebug, Sandbox*) |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-10-add-anti-cheat-and-misc-report-packets-reportmovehack-reportdoodadsurfacehack-doodadcollideunit-backpackdropped-removehouse-towerdefreportplayability-dumpnpc-aiaggro-aidebug-sandbox) |
+| ZW-11 | Reconcile ZwOpcodes.cs with the full native list and add a coverage test | Done | [zw-outbound](docs/tasks/zw-outbound.md#zw-11-reconcile-zwopcodescs-with-the-full-native-list-and-add-a-coverage-test) |
+| ZW-12 | Record that CT*/TC*/StreamClient are out of scope for the zone |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-12-record-that-cttcstreamclient-are-out-of-scope-for-the-zone) |
+| SCN-11 | Port X2::FlowGraphSkillController / FlowGraphWrapper (graph-driven skill controllers) |  | [scene](docs/tasks/scene.md#scn-11-port-x2flowgraphskillcontroller--flowgraphwrapper-graph-driven-skill-controllers) |
+| SCN-12 | Instance zones (indun) and per-world layout variants |  | [scene](docs/tasks/scene.md#scn-12-instance-zones-indun-and-per-world-layout-variants) |
+| SCN-13 | Multi-zone per process, zone reload and seamless streaming decision |  | [scene](docs/tasks/scene.md#scn-13-multi-zone-per-process-zone-reload-and-seamless-streaming-decision) |
+| SCN-15 | Prefab object loading used by level entities |  | [scene](docs/tasks/scene.md#scn-15-prefab-object-loading-used-by-level-entities) |
+| MOV-11 | Glider, ladder/climb, rope, and mount/passenger movement states |  | [movement](docs/tasks/movement.md#mov-11-glider-ladderclimb-rope-and-mountpassenger-movement-states) |
+| MOV-12 | Ship and vehicle movement controllers (server simulation) |  | [movement](docs/tasks/movement.md#mov-12-ship-and-vehicle-movement-controllers-server-simulation) |
+| MOV-16 | Finish the legacy navigation runtime (volume/flight/road/surface readers, quadtree build, A* search) |  | [movement](docs/tasks/movement.md#mov-16-finish-the-legacy-navigation-runtime-volumeflightroadsurface-readers-quadtree-build-a-search) |
+| MOV-17 | Nav-modifier prefab objects and dynamic regions from XML entities |  | [movement](docs/tasks/movement.md#mov-17-nav-modifier-prefab-objects-and-dynamic-regions-from-xml-entities) |
+| MOV-19 | Sight / visibility ownership decision (interest management) |  | [movement](docs/tasks/movement.md#mov-19-sight--visibility-ownership-decision-interest-management) |
+| OBJ-05 | Load doodad function content and zone doodad effects |  | [world-objects](docs/tasks/world-objects.md#obj-05-load-doodad-function-content-and-zone-doodad-effects) |
+| OBJ-07 | Housing state and build lifecycle |  | [world-objects](docs/tasks/world-objects.md#obj-07-housing-state-and-build-lifecycle) |
+| OBJ-08 | Slave lifecycle (spawn, master change, escape) |  | [world-objects](docs/tasks/world-objects.md#obj-08-slave-lifecycle-spawn-master-change-escape) |
+| OBJ-09 | Ship/vehicle simulation and control |  | [world-objects](docs/tasks/world-objects.md#obj-09-shipvehicle-simulation-and-control) |
+| OBJ-10 | Mounts, transfers, shipyards, portals |  | [world-objects](docs/tasks/world-objects.md#obj-10-mounts-transfers-shipyards-portals) |
+| AI-09 | Spawner leftovers: persistent/instance-saved spawners, population cap, TowerDef |  | [npc-ai](docs/tasks/npc-ai.md#ai-09-spawner-leftovers-persistentinstance-saved-spawners-population-cap-towerdef) |
+| AI-10 | Track patterns, strafe params, roaming areas and ai_commands |  | [npc-ai](docs/tasks/npc-ai.md#ai-10-track-patterns-strafe-params-roaming-areas-and-ai_commands) |
+| AI-11 | Client-driven NPC control and npc_ai_client_params |  | [npc-ai](docs/tasks/npc-ai.md#ai-11-client-driven-npc-control-and-npc_ai_client_params) |
+| AI-12 | AI debug/diagnostics parity |  | [npc-ai](docs/tasks/npc-ai.md#ai-12-ai-debugdiagnostics-parity) |
+| LUA-08 | Implement server-meaningful `System.*` and `Physics.*` |  | [lua-api](docs/tasks/lua-api.md#lua-08-implement-server-meaningful-system-and-physics) |
+| LUA-09 | Provide `Particle.*` and `Sound.*` stub tables |  | [lua-api](docs/tasks/lua-api.md#lua-09-provide-particle-and-sound-stub-tables) |
+| CMB-17 | Combat state lifecycle (engage timeout, ZWClearCombat, force-attack, duel) |  | [combat](docs/tasks/combat.md#cmb-17-combat-state-lifecycle-engage-timeout-zwclearcombat-force-attack-duel) |
+| CMB-18 | Implement ZonePlotMan (plot events mirror) |  | [combat](docs/tasks/combat.md#cmb-18-implement-zoneplotman-plot-events-mirror) |
+| CMB-19 | Fall damage and collision notifications to World |  | [combat](docs/tasks/combat.md#cmb-19-fall-damage-and-collision-notifications-to-world) |
+| CMB-20 | Stealth/detection and invisibility semantics |  | [combat](docs/tasks/combat.md#cmb-20-stealthdetection-and-invisibility-semantics) |
+| CMB-21 | Quest-driven and special combat packets |  | [combat](docs/tasks/combat.md#cmb-21-quest-driven-and-special-combat-packets) |
+| CMB-22 | Initial/system buffs applied by the zone (npc/slave initial buffs, safe-area, zone buffs) |  | [combat](docs/tasks/combat.md#cmb-22-initialsystem-buffs-applied-by-the-zone-npcslave-initial-buffs-safe-area-zone-buffs) |
+| DB-04 | Add plots (skill plot scripting) tables |  | [content-db](docs/tasks/content-db.md#db-04-add-plots-skill-plot-scripting-tables) |
+| DB-11 | Slaves, vehicles, transfers and butlers data |  | [content-db](docs/tasks/content-db.md#db-11-slaves-vehicles-transfers-and-butlers-data) |
+| DB-12 | ServerGimmick / ZdModelPrefab / ZdModelVegetation resources and Prefabs/*.xml |  | [content-db](docs/tasks/content-db.md#db-12-servergimmick--zdmodelprefab--zdmodelvegetation-resources-and-prefabsxml) |
+| DB-13 | Quest tables and quest-related zone hooks |  | [content-db](docs/tasks/content-db.md#db-13-quest-tables-and-quest-related-zone-hooks) |
+| DB-14 | Housing, instance/event/siege and game-rule tables |  | [content-db](docs/tasks/content-db.md#db-14-housing-instanceeventsiege-and-game-rule-tables) |
+| DB-15 | Table-schema drift guard (compare repo SELECT lists with native SQL strings) |  | [content-db](docs/tasks/content-db.md#db-15-table-schema-drift-guard-compare-repo-select-lists-with-native-sql-strings) |
+| DB-16 | Decide handling of client-only tables loaded by the shared loader |  | [content-db](docs/tasks/content-db.md#db-16-decide-handling-of-client-only-tables-loaded-by-the-shared-loader) |
+| WS-03 | Implement tower-defense WZ/ZW handling |  | [world-state](docs/tasks/world-state.md#ws-03-implement-tower-defense-wzzw-handling) |
+| WS-05 | Implement housing state (WZHouseState, HouseBuildProgress/Done, ZWRemoveHouse, housing-area test) |  | [world-state](docs/tasks/world-state.md#ws-05-implement-housing-state-wzhousestate-housebuildprogressdone-zwremovehouse-housing-area-test) |
+| WS-07 | Confirm and (if native) implement loot, achievement and appellation runtime ownership |  | [world-state](docs/tasks/world-state.md#ws-07-confirm-and-if-native-implement-loot-achievement-and-appellation-runtime-ownership) |
+| WS-08 | Document and verify absent zone-side recovery / transfer / weather behavior |  | [world-state](docs/tasks/world-state.md#ws-08-document-and-verify-absent-zone-side-recovery--transfer--weather-behavior) |
+| OPS-05 | Implement movement verification / hack checker (anti-cheat) or explicitly record it as out of scope |  | [ops](docs/tasks/ops.md#ops-05-implement-movement-verification--hack-checker-anti-cheat-or-explicitly-record-it-as-out-of-scope) |
+| OPS-07 | Provide a minimal server console (stdin) with the native command set |  | [ops](docs/tasks/ops.md#ops-07-provide-a-minimal-server-console-stdin-with-the-native-command-set) |
+| OPS-08 | Structured log levels, channels, and rotation |  | [ops](docs/tasks/ops.md#ops-08-structured-log-levels-channels-and-rotation) |
+| OPS-09 | Frame-time and tick metrics |  | [ops](docs/tasks/ops.md#ops-09-frame-time-and-tick-metrics) |
+| OPS-11 | Add `instance_id` / `instance_index` / external IP to the join and config |  | [ops](docs/tasks/ops.md#ops-11-add-instance_id--instance_index--external-ip-to-the-join-and-config) |
+| OPS-13 | Warnings and analyzers policy |  | [ops](docs/tasks/ops.md#ops-13-warnings-and-analyzers-policy) |
+| OPS-15 | Operations documentation |  | [ops](docs/tasks/ops.md#ops-15-operations-documentation) |
+| RT-05 | Implement gimmick (breakable/jointed physics prop) subsystem |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-05-implement-gimmick-breakablejointed-physics-prop-subsystem) |
+| RT-06 | Implement housing runtime (Housing, HousingManager) |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-06-implement-housing-runtime-housing-housingmanager) |
+| RT-07 | Implement ship/vehicle/slave simulation controllers |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-07-implement-shipvehicleslave-simulation-controllers) |
+| RT-08 | Implement MoveHackChecker and mole-miner/trader reports |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-08-implement-movehackchecker-and-mole-minertrader-reports) |
+| RT-10 | Implement instance/indun, battlefield and tower-defense zone logic |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-10-implement-instanceindun-battlefield-and-tower-defense-zone-logic) |
+| RT-12 | Determine need for TgwWorker / StreamClient / AuthClient / CryptoSystem |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-12-determine-need-for-tgwworker--streamclient--authclient--cryptosystem) |
+| RT-13 | Ranking snapshots and ReloadDesc handling |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-13-ranking-snapshots-and-reloaddesc-handling) |
+| RT-15 | Butler and Mate handling on the zone |  | [rtti-inventory](docs/tasks/rtti-inventory.md#rt-15-butler-and-mate-handling-on-the-zone) |
