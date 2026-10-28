@@ -10,7 +10,7 @@ public enum ZoneBehaviorConstructorMode { Immediate, Deferred, Restore }
 /// <summary>Native CAIHandler script dispatch and behavior transitions. The actor phase serializes access.</summary>
 public sealed class ZoneNpcBehavior : IDisposable
 {
-    private readonly ZoneLuaRuntime _lua;
+    private readonly IZoneLuaRuntime _lua;
     private readonly IZoneNpcBehaviorServices _services;
     private readonly ZoneLuaReference _entity, _behaviors;
     private readonly ZoneLuaReference? _character, _defaultCharacter, _defaultBehavior, _available, _internal;
@@ -25,7 +25,7 @@ public sealed class ZoneNpcBehavior : IDisposable
     public bool IsDisposed { get; private set; }
 
     /// <summary>Inputs are borrowed. This owner retains its own references, released on actor removal.</summary>
-    public ZoneNpcBehavior(ZoneLuaRuntime lua, ZoneLuaReference entity, ZoneLuaReference behaviors,
+    public ZoneNpcBehavior(IZoneLuaRuntime lua, ZoneLuaReference entity, ZoneLuaReference behaviors,
         ZoneLuaReference? character, ZoneLuaReference? defaultCharacter, ZoneLuaReference? defaultBehavior,
         string defaultName, string firstName, IZoneNpcBehaviorServices services)
     {

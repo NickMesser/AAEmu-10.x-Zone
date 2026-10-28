@@ -34,6 +34,8 @@
     <PackageVersion Include="NLog.Extensions.Logging" Version="6.1.0" />
     <PackageVersion Include="NLua" Version="1.7.3" />
     <PackageVersion Include="NetCoreServer" Version="8.0.7" />
+    <!-- Stable 1.3.19 fails at Lua environment construction with .NET 10 LINQ signatures. -->
+    <PackageVersion Include="NeoLua" Version="1.3.20-beta.1" />
     <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.15.0" />
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.15.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.15.0" />

@@ -5,7 +5,7 @@ using System.Text;
 namespace AAEmu.Zone.Scripting;
 
 /// <summary>A serialized Lua 5.1 double+int64 state with protected script/managed calls and owned references.</summary>
-public sealed class ZoneLuaRuntime : IDisposable
+public sealed class ZoneLuaRuntime : IZoneLuaRuntime
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private readonly object _gate = new();
@@ -300,6 +300,13 @@ public sealed class ZoneLuaRuntime : IDisposable
         if (_library != 0) { NativeLibrary.Free(_library); _library = 0; }
         GC.KeepAlive(_callbacks); _callbacks.Clear();
     }
+
+    object? IZoneLuaRuntime.Get(ZoneLuaReference table, object key, int? expectedType) => Get(table, key, expectedType);
+    void IZoneLuaRuntime.Set(ZoneLuaReference table, object key, object? value) => Set(table, key, value);
+    Vector3? IZoneLuaRuntime.GetVector(ZoneLuaReference table) => GetVector(table);
+    ZoneLuaReference IZoneLuaRuntime.Retain(ZoneLuaReference reference) => Retain(reference);
+    void IZoneLuaRuntime.Release(ZoneLuaReference reference) => Release(reference);
+    T IZoneLuaRuntime.WithStack<T>(Func<T> operation) => WithStack(operation);
 
     ~ZoneLuaRuntime() => Close();
 }

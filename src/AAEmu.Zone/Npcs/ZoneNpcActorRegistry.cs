@@ -23,7 +23,7 @@ public sealed class ZoneNpcActorRegistry : IZoneNpcActorRuntime, IZoneEntityGoal
     private readonly Dictionary<object, ZoneNpcActorEntry> _objects = new(ReferenceEqualityComparer.Instance);
     private readonly Dictionary<ZoneGoalPipeController, ZoneNpcActorEntry> _pipes = [];
     private readonly ConditionalWeakTable<ZoneUnit, object> _knownUnits = new();
-    private readonly ZoneLuaRuntime _lua;
+    private readonly IZoneLuaRuntime _lua;
     private readonly ZoneAiObjectRegistry _index;
     private readonly IZoneNpcActorScene _scene;
 
@@ -31,7 +31,7 @@ public sealed class ZoneNpcActorRegistry : IZoneNpcActorRuntime, IZoneEntityGoal
     public bool IsDisposed { get; private set; }
     public int Count => _npcs.Count;
 
-    public ZoneNpcActorRegistry(ZoneLuaRuntime lua, ZoneAiObjectRegistry index, IZoneNpcActorScene scene)
+    public ZoneNpcActorRegistry(IZoneLuaRuntime lua, ZoneAiObjectRegistry index, IZoneNpcActorScene scene)
     {
         _lua = lua ?? throw new ArgumentNullException(nameof(lua));
         _index = index ?? throw new ArgumentNullException(nameof(index));

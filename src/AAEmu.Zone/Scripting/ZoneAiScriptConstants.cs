@@ -507,7 +507,7 @@ public static class ZoneAiScriptConstants
         ["AICPC_FLYTRAP"] = 7f,
     }.ToFrozenDictionary(StringComparer.Ordinal);
 
-    public static void Install(ZoneLuaRuntime lua)
+    public static void Install(IZoneLuaRuntime lua)
     {
         ArgumentNullException.ThrowIfNull(lua);
         lua.WithStack(() =>

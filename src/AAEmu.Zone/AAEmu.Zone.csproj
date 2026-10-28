@@ -8,6 +8,7 @@
     <ProjectReference Include="..\AAEmu.Zone.Protocol\AAEmu.Zone.Protocol.csproj" />
     <PackageReference Include="Microsoft.Data.Sqlite" />
     <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" />
+    <PackageReference Include="NeoLua" />
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="AAEmu.ZoneServer" />

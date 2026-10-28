@@ -5,15 +5,18 @@ namespace AAEmu.Zone.Scripting;
 /// <summary>CScriptSystem file execution and the corresponding Lua Script bindings.</summary>
 public sealed class ZoneScriptLoader
 {
-    private readonly ZoneLuaRuntime _lua;
+    private readonly IZoneLuaRuntime _lua;
     private readonly IZoneScriptSource _source;
     private readonly Action<string> _error;
     private readonly Func<int> _compiledMode;
     private readonly HashSet<string> _loaded = new(StringComparer.Ordinal);
     private int _forceDepth;
     private bool _bindingsInstalled;
+    /// <summary>All failed file executions, including nested loads whose caller ignores the return.</summary>
+    public long FailureCount { get; private set; }
+    public string? LastFailure { get; private set; }
 
-    public ZoneScriptLoader(ZoneLuaRuntime lua, IZoneScriptSource source, Action<string> error, Func<int> compiledMode)
+    public ZoneScriptLoader(IZoneLuaRuntime lua, IZoneScriptSource source, Action<string> error, Func<int> compiledMode)
     {
         _lua = lua ?? throw new ArgumentNullException(nameof(lua));
         _source = source ?? throw new ArgumentNullException(nameof(source));
@@ -93,16 +96,16 @@ public sealed class ZoneScriptLoader
         try { file = _source.Read(path); }
         catch (Exception error) when (error is IOException or UnauthorizedAccessException)
         {
-            if (raiseError) _error($"[Lua Error] Failed to load script file {path}: {error.Message}");
+            Failure($"[Lua Error] Failed to load script file {path}: {error.Message}", raiseError);
             return false;
         }
         if (file is null)
         {
-            if (raiseError) _error($"[Lua Error] Failed to load script file {path}");
+            Failure($"[Lua Error] Failed to load script file {path}", raiseError);
             return false;
         }
         var bytes = file.Bytes;
-        if (bytes.Length == 0) return false;
+        if (bytes.Length == 0) { Failure($"[Lua Error] Empty script file {path}", false); return false; }
         if (bytes.Span.StartsWith(new byte[] { 0xef, 0xbb, 0xbf })) bytes = bytes[3..];
         try
         {
@@ -113,9 +116,16 @@ public sealed class ZoneScriptLoader
         catch (ZoneLuaException error)
         {
             // raiseError only controls missing-file diagnostics, not compilation/execution errors.
-            _error($"[Lua Error] Failed to execute file {file.Filename}: {error.Message}");
+            Failure($"[Lua Error] Failed to execute file {file.Filename}: {error.Message}", true);
             return false;
         }
+    }
+
+    private void Failure(string message, bool report)
+    {
+        FailureCount = checked(FailureCount + 1);
+        LastFailure = message;
+        if (report) _error(message);
     }
 
     private static bool Flag(IReadOnlyList<object?> arguments, int index, bool fallback) =>

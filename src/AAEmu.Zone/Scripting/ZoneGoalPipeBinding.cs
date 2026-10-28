@@ -16,7 +16,7 @@ public sealed class ZoneGoalPipeBinding
         "animation", "animtarget", "usecover", "wait", "adjustaim", "proximity", "movetowards", "dodge",
         "useskill", "flyuseskill", "bind", "bindedUseskill"
     ];
-    private readonly ZoneLuaRuntime _lua;
+    private readonly IZoneLuaRuntime _lua;
     private readonly ZoneGoalPipeCatalog _catalog;
     private readonly Action<string> _diagnostic;
     private readonly Func<string, object?> _resolveTarget;

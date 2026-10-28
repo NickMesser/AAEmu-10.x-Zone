@@ -8,7 +8,7 @@ namespace AAEmu.Zone.Scripting;
 /// <summary>The four native AI track-pattern builder bindings, with one current descriptor per binding owner.</summary>
 public sealed class ZoneTrackPatternBinding
 {
-    private readonly ZoneLuaRuntime _lua;
+    private readonly IZoneLuaRuntime _lua;
     private readonly ZoneTrackPatternCatalog _catalog;
     private readonly Action<string> _diagnostic;
     public ZoneTrackPatternDefinition? Current { get; private set; }

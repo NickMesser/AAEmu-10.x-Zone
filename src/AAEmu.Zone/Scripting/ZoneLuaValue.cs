@@ -5,15 +5,15 @@ namespace AAEmu.Zone.Scripting;
 /// <summary>Native script handle, distinct from a Lua number even when the bits are identical.</summary>
 public readonly record struct ZoneLuaHandle(ulong Value);
 
-/// <summary>Owned registry reference. Dispose it or the owning runtime to release the native value.</summary>
+/// <summary>Owned VM reference. Dispose it or its owning runtime to release the retained value.</summary>
 public sealed class ZoneLuaReference : IDisposable
 {
-    internal ZoneLuaRuntime Runtime { get; }
+    internal IZoneLuaRuntime Runtime { get; }
     internal int RegistryId { get; private set; }
     public bool IsTable { get; }
     public bool IsFunction => !IsTable;
     public bool IsDisposed => RegistryId < 0 || Runtime.IsDisposed;
-    internal ZoneLuaReference(ZoneLuaRuntime runtime, int id, bool table)
+    internal ZoneLuaReference(IZoneLuaRuntime runtime, int id, bool table)
     { Runtime = runtime; RegistryId = id; IsTable = table; }
     public ZoneLuaReference Retain() => Runtime.Retain(this);
     public object? Get(object key) => Runtime.Get(this, key);
