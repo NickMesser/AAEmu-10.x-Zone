@@ -1,4 +1,5 @@
 using AAEmu.Zone.Protocol;
+using AAEmu.Zone.WorldState;
 
 namespace AAEmu.Zone.WorldLink;
 
@@ -27,6 +28,11 @@ public sealed partial class ZoneSession
     /// session counts as loaded once it owns an NPC simulation or schedule controller.
     /// </summary>
     public bool IsLevelLoaded => _scene is not null || Registry.Npcs is not null || GameSchedules is not null;
+
+    /// <summary>The scene's TowerDef manager; null for a session without a coordinated scene (and the test seam override).</summary>
+    public ZoneTowerDefController? TowerDefs => TowerDefsOverride ?? _scene?.TowerDefs;
+
+    internal ZoneTowerDefController? TowerDefsOverride { get; set; }
 
     /// <summary>Test seam: a session over a caller stream with no World join, scene or content.</summary>
     internal static ZoneSession CreateDetached(Stream connection) => new(connection);

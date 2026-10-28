@@ -97,6 +97,7 @@ public sealed class ZoneNpcSpawnerFactory : IDisposable
     public bool IsDisposed { get; private set; }
     public IReadOnlyList<ZoneNpcSpawnerRuntime> Spawners => _generation.Spawners.ToArray();
     public ZoneGameScheduleController GameSchedules { get; }
+    public ZoneTowerDefController TowerDefs { get; }
     /// <summary>Exact scene-owner liveness, independent of the native editor-disabled load gate.</summary>
     public bool HasLiveOwners => !IsDisposed && !_manager.IsDisposed && !_registry.IsDisposed &&
         !_registry.IsShuttingDown && !_registry.Npcs.IsStopped && ReferenceEquals(_registry.Npcs.Spawners, _registry);
@@ -112,6 +113,7 @@ public sealed class ZoneNpcSpawnerFactory : IDisposable
         if (!ReferenceEquals(registry.Npcs.Spawners, registry) || registry.IsShuttingDown || registry.Npcs.IsStopped)
             throw new ArgumentException("The factory requires the scene's attached accepting spawner registry.", nameof(registry));
         GameSchedules = new(this, registry);
+        TowerDefs = new(CountTypeOwners);
     }
 
     private bool Current(Generation generation) => HasLiveOwners && ReferenceEquals(_generation, generation);
@@ -120,6 +122,9 @@ public sealed class ZoneNpcSpawnerFactory : IDisposable
     internal IReadOnlyList<ZoneNpcSpawnerRegistration> GetTypeOwners(object generation, uint type) =>
         generation is Generation value && Current(value)
             ? value.TypeOwners.Where(owner => owner.SpawnerType == type && _registry.IsCurrent(owner)).ToArray() : [];
+
+    private int CountTypeOwners(uint type) =>
+        Current(_generation) ? _generation.TypeOwners.Count(owner => owner.SpawnerType == type && _registry.IsCurrent(owner)) : 0;
 
     /// <summary>Returns false when the editor gate or callback retirement stops this load.</summary>
     public bool Reload(ZoneNpcSpawnerPlacementContent content, ZoneNpcSpawnerPostLoadRelations relations)
@@ -142,6 +147,7 @@ public sealed class ZoneNpcSpawnerFactory : IDisposable
         var previous = _generation;
         var generation = _generation = new();
         GameSchedules.BeginReload(controllers);
+        TowerDefs.BeginReload(controllers);
         Retire(previous);
         if (!Current(generation)) return false;
         try
@@ -162,6 +168,7 @@ public sealed class ZoneNpcSpawnerFactory : IDisposable
             ApplyPostLoad(generation, project(generation.Spawners.Where(runtime => _registry.IsAccepting(runtime.Registration)).Select(runtime => runtime.Source.SpawnerType)));
             if (!Current(generation)) return false;
             GameSchedules.CompletePostLoad(generation);
+            TowerDefs.CompletePostLoad();
             var flag122 = _services.EnvironmentFlag122;
             if (!Current(generation)) return false;
             if (!flag122) Sort(generation);
@@ -392,6 +399,7 @@ public sealed class ZoneNpcSpawnerFactory : IDisposable
     private void Retire(Generation generation)
     {
         GameSchedules.RetireGeneration(generation);
+        TowerDefs.Retire();
         var owners = generation.Spawners.ToArray();
         generation.Spawners.Clear();
         generation.TypeOwners.Clear();
