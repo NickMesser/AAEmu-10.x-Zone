@@ -333,6 +333,10 @@ public sealed class ZoneSceneActivation : IDisposable
         }
         try
         {
+            // Idle point of the owner thread: restore the pre-update native state after frames, so brush
+            // retirement and the zero-time drain run exactly as at load. Not a recorded retirement phase.
+            try { _physics?.SettleForRetirement(); }
+            catch (Exception error) { failures.Add(new InvalidOperationException("Scene retirement could not settle the physics world.", error)); }
             Retire("RetireCellWindow", () => _window?.Dispose());
             Retire("RetireTerrainRegistration", () => _services?.Dispose());
             Retire("RetireTerrainResources", () => _resources?.Dispose());

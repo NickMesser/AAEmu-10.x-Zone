@@ -36,16 +36,16 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
     /// (FIRST_ENTRY_NOTES.md:1774-1779).</item>
     /// </list>
     ///
-    /// The drain therefore SELF-REFUSES once simulation time advances, structurally: its profile
-    /// runs before any early return (<c>ZoneNativeEngine.PhysicsCompletion.cs:33</c>) and throws
-    /// "Static loading completion requires valid native time normalization before the first
-    /// simulation frame" when <c>currentTime(world+0x680) != 0</c> (:73-77). Ordering falls out
-    /// naturally — all loading completion must finish before the first Step, which is exactly
-    /// what FIRST_ENTRY_NOTES.md:1810-1811 requires ("Positive-time actor frames and broader
+    /// The drain's profile (<c>ZoneNativeEngine.PhysicsCompletion.cs:62-87</c>) now admits any finite,
+    /// non-negative accumulated time (:73-77) so retirement-time drains still run after frames
+    /// (World-disconnect retirement; see <see cref="SettleForRetirement"/>). The drain stays
+    /// distinct from a step by its zero period, and loading completion still precedes the first
+    /// Step. FIRST_ENTRY_NOTES.md:1810-1811 ("Positive-time actor frames and broader
     /// maintenance producers still require their own phase/lifetime owner") and
-    /// FIRST_ENTRY_NOTES.md:1518-1519 restates ("callback/worker drain must extend this shared
-    /// owner's contract before stepping"). The external proof harness (turn 3) demonstrates both
-    /// directions: Step(0) refused by name, and the drain refused after the first nonzero Step.
+    /// FIRST_ENTRY_NOTES.md:1518-1519 ("callback/worker drain must extend this shared
+    /// owner's contract before stepping") still describe the step-side requirements. The
+    /// external proof harness (turn 3) shows Step(0) refused by name; the loading drain's own
+    /// early-return ordering is unchanged.
     /// </summary>
     /// <param name="elapsed">The scene frame period; must be strictly positive and finite. Scene creation validates the configured period &gt; 0 (Scene/ZoneSceneActivation.cs:81-82).</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="elapsed"/> is zero, negative, or does not cast to a positive finite float — "a zero-time drain is not a simulation step".</exception>
@@ -82,9 +82,9 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
 
     /// <summary>
     /// The accumulated native simulation time (world+0x680), in seconds. This value is ZERO
-    /// until the first positive <see cref="Step"/> and is exactly the field the loading drain's
-    /// profile requires to still be zero (<c>ZoneNativeEngine.PhysicsCompletion.cs:73-77</c>) —
-    /// reading it above zero is the observable evidence that the drain now self-refuses.
+    /// until the first positive <see cref="Step"/> and is the field the loading drain's
+    /// profile reads (<c>ZoneNativeEngine.PhysicsCompletion.cs:73-77</c>) —
+    /// reading it above zero shows a Step has run (retirement then settles the world first).
     /// Exposed for the external stepping proof harness; not a gameplay clock (the scene's
     /// clocks live on the movement frame record).
     /// </summary>
@@ -168,4 +168,29 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
     /// <summary>Same signature as <c>CompleteStaticPhysicsCall</c> (ZoneNativeEngine.PhysicsCompletion.cs:171-172): world vslot +0x100 → 3508BD10(world, fTime, flags).</summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     private delegate void TimeStepCall(nint world, float elapsedTime, uint flags);
+
+    /// <summary>
+    /// Settles the world for retirement after simulation frames: one zero-time TimeStep, the same
+    /// native call and flags as the loading drain, issued from the owner thread at the idle point
+    /// (no frame in progress, every native guard free). A completed positive step leaves the last
+    /// period in world+0x1a4, which the static-object owners treat as "inside a step" and refuse
+    /// brush retirement on; the zero-time call restores the idle pre-update state they require.
+    /// No-op before the first positive step (the world is already in that state).
+    /// </summary>
+    public void SettleForRetirement()
+    {
+        using var operation = Enter();
+        if (ReadNativeSimulationTime() == 0 && Marshal.ReadInt32(_world + 0x1a4) == 0) return;
+        foreach (var offset in new[] { 0x57dc, 0x57c4, 0x57e0, 0x57e8, 0x581c, 0x5814, 0x5804, 0x3f0, 0x60 })
+            if (Marshal.ReadInt32(_world + offset) != 0)
+                throw new InvalidOperationException(
+                    $"Native physics guard +0x{offset:X} is busy; retirement must run at the idle point after the frame completes.");
+        var table = Marshal.ReadIntPtr(_world);
+        if (Marshal.ReadIntPtr(table + 0x100) != _module.Handle + 0x8bd10)
+            throw new InvalidOperationException("The native physics time-step implementation changed.");
+        var timeStep = Marshal.GetDelegateForFunctionPointer<TimeStepCall>(_module.Handle + 0x8bd10);
+        try { timeStep(_world, 0f, TimeStepFlags); }
+        catch (Exception error) { NativeInvocationFailed(error); throw; }
+        CompleteCall();
+    }
 }

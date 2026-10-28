@@ -73,8 +73,8 @@ public sealed partial class ZoneNativeEngine
         var currentTime = BitConverter.Int32BitsToSingle(Marshal.ReadInt32(_physicsWorld + 0x680));
         if (!float.IsFinite(maximumStep) || maximumStep < 0 || !float.IsFinite(granularity) ||
             granularity < 0 || (granularity > 0 && !float.IsFinite(1f / granularity)) ||
-            currentTime != 0 || Marshal.ReadInt32(_physicsWorld + 0x698) != 0)
-            throw new NotSupportedException("Static loading completion requires valid native time normalization before the first simulation frame.");
+            !float.IsFinite(currentTime) || currentTime < 0 || (currentTime == 0 && Marshal.ReadInt32(_physicsWorld + 0x698) != 0))
+            throw new NotSupportedException("Static loading completion requires valid native time normalization and a finite non-negative accumulated native time.");
         foreach (var offset in new[] { 0x57dc, 0x57c4, 0x57e0, 0x57e8, 0x581c, 0x5814, 0x5804, 0x3f0, 0x60 })
             if (Marshal.ReadInt32(_physicsWorld + offset) != 0)
                 throw new InvalidOperationException($"Native physics guard +0x{offset:X} is busy; retain loading resources.");
