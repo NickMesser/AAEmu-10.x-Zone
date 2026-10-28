@@ -211,7 +211,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | MOV-18 | Movement test coverage and a headless movement simulator |  | [movement](docs/tasks/movement.md#mov-18-movement-test-coverage-and-a-headless-movement-simulator) |
 | OBJ-04 | Handle World doodad packets and unit attach/bond packets | Partial | [world-objects](docs/tasks/world-objects.md#obj-04-handle-world-doodad-packets-and-unit-attachbond-packets) |
 | OBJ-06 | Climb doodads and hanging units |  | [world-objects](docs/tasks/world-objects.md#obj-06-climb-doodads-and-hanging-units) |
-| AI-01 | Recover the CAISystem instance and unblock native AI construction |  | [npc-ai](docs/tasks/npc-ai.md#ai-01-recover-the-caisystem-instance-and-unblock-native-ai-construction) |
+| AI-01 | Recover the CAISystem instance and unblock native AI construction | Partial | [npc-ai](docs/tasks/npc-ai.md#ai-01-recover-the-caisystem-instance-and-unblock-native-ai-construction) |
 | AI-02 | Decide and build the managed AI provider (TODO(managed-ai)) |  | [npc-ai](docs/tasks/npc-ai.md#ai-02-decide-and-build-the-managed-ai-provider-todomanaged-ai) |
 | AI-03 | Implement the ~25 unimplemented goal-pipe operations |  | [npc-ai](docs/tasks/npc-ai.md#ai-03-implement-the-25-unimplemented-goal-pipe-operations) |
 | AI-04 | Add the ScriptBindUnit NPC Lua API |  | [npc-ai](docs/tasks/npc-ai.md#ai-04-add-the-scriptbindunit-npc-lua-api) |
