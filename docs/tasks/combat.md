@@ -45,6 +45,7 @@
 - Confidence: medium
 
 ### CMB-02: Add WZ message codecs and opcodes for the skill/damage/knockback/cooldown/plot packets
+- Status: **Partial** — codecs for 0x2B-0x31 and 0x3A-0x3D done in `src/AAEmu.Zone.Protocol/Messages/SkillMessages.cs`; knockback/blink/impulse/invisible/cooldown/controller packets still absent.
 - Priority: P1
 - Native evidence: registrars/handlers WZSkillStarted `39363460`, SkillFired `393634B0`, SkillEnded `39363510`, SkillStopped `39363530`, CastingStopped `39363550`, UnitDamaged `39363580`, UnitHealed `393635B0`, KnockBackUnit `393635D0`, BlinkUnit `39369B10`, ImpulseUnit `39363600`, UnitInvisible `39363660`, OnUnitBlinked `39363420`, SkillCooldownReset `39364D00`, CooldownReduce `393652F0`, ChangeChargeSkillCooldown `393653F0`, PlotEvent `393636D0`, PlotEnded `39363760`, PlotCastingStopped `39363780`, PlotChannelingStopped `393637B0`, CreateSkillController `39362F50`, SkillControllerState `39362F00`, ZombieCharacter `39364380`, AttackOnQuest `3936E3F0`, AttackFaction and FactionImmigrateNpcSpawnerCondition (last two registrars `39384D80` -> `39365450`, `393914B0` -> `3936E940`; assignment to packet name unverified). Registration order in `sub_3936F740`; note my registrar-order enumeration is 1 lower than repo numbering from 0x38 onward (offset-based check: SkillCooldownReset registrar stores at `a1+464` = 0x39), so keep repo `WzOpcodes` values and pair by packet type.
 - Repo state: `WzOpcodes.cs` declares most constants (0x2B-0x35, 0x39-0x3D, 0x86-0x89) but `AAEmu.Zone.Protocol/Messages/` has no codec for any of them; `ZoneSession.ReceiveCore` falls to the default "not implemented" counter.
@@ -69,6 +70,7 @@
 - Confidence: high
 
 ### CMB-05: Implement the zone skill-state mirror (StartSkill/FireSkill/EndSkill/StopSkill/StopCasting)
+- Status: **Partial** — `ZoneSkillState` mirrors active timelines and per-unit cast/casting flag (Start/Fire/End/Stop/StopCasting); controller install, AutoAttack toggles and cooldown start are not implemented.
 - Priority: P1
 - Native evidence: `39456D70` StartSkill ("invalid desc %u"), `39457170` FireSkill ("invalid desc %u"), `39456B20` EndSkill, `39456600`, `39456630`; global map `qword_3A78EBC8` keyed by skill timeline id (a3); per-unit fields +32280/+32284 (current skill id/tl), +32288/+32296 (last channel skill/flag), +32297 (casting flag); calls skill-controller factory on actor (vtable +32/+328/+344) and AutoAttack toggles; cooldown start `39BFA200` when `desc+400==const && desc+396!=0`.
 - Repo state: absent. `UnitCastAction.cs` only decodes the snapshot union (3938DAF0); no active-skill registry, no per-unit cast state on `ZoneUnit`.
@@ -77,6 +79,7 @@
 - Confidence: medium
 
 ### CMB-06: Wire WZUnitDamaged/WZUnitHealed into NPC aggro and AI notification
+- Status: **Partial** — UnitDamaged/UnitHealed decode and last-source/amount per target recorded in `ZoneSkillState`; not yet fed into `ZoneAggroTable`.
 - Priority: P1
 - Native evidence: `393225F0` (damage handler) -> `39321C80` -> `NpcAggroTable::AddAggro` `39321340`; `394576B0` HealUnit (distributes `heal * <float global at sub_390B11E0()+528> / count` aggro across the healed unit's aggressive-NPC list at unit +34432, logs "aggressiveNpcList changed in process"); `Npc::OnAffectedByDamage` `3933C8D0`; AI notify `39258BB0` (sets time +34156, AI vtable +1128); boss warning log `3931D120`.
 - Repo state: `ZoneAggroTable.Add/UpdateIncomingMultiplier` exist; `ZoneNpcSimulation` has no damage/heal entry point; opcodes 0x30/0x31 unhandled.
@@ -173,6 +176,7 @@
 - Confidence: low-medium
 
 ### CMB-18: Implement ZonePlotMan (plot events mirror)
+- Status: **Partial** — PlotEvent/PlotEnded/PlotCastingStopped/PlotChannelingStopped decoded and stored per timeline in `ZoneSkillState`; no effect execution or AI exposure.
 - Priority: P2
 - Native evidence: `39455730` ("X2::GameServer::ZonePlotMan::PlayEvent": invalid plot event type / plot type / skill type), `39455D20` (PlotEnded), `39455490` (PlotCastingStopped), `394555E0` (PlotChannelingStopped); plot loaders `39C74F90` (plots), plot_events/plot_conditions/plot_effects/plot_next_events/plot_aoe_conditions; WZPlotEvent body carries ~1000 bytes (offsets +32..+1021).
 - Repo state: absent (`UnitPlotCast` decode only).
