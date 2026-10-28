@@ -68,7 +68,7 @@ The NPC scripting/navigation slice passes **500 standalone tests**. The solution
 successfully; analyzer warnings remain.
 
 The final source-VM/tiled-navigation zone-129 replay also admits player 387, grounded at local
-`(1172.5996,1646.5,366.3365)`, emits its captured movement/location reports and retires on clean
+`(1172.5996,1646.5,366.3365)`, emits three movement reports and retires on clean
 World EOF. Its readiness inventory contains 80 modules and zero CryEngine/native Lua DLLs.
 The replay listener exits 0 and the zone exits 3 under its configured disconnect policy.
 Evidence: `script-entry-{zone.log,replay.log,modules.json,verification.json}` and
