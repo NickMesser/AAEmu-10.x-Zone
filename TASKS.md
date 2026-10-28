@@ -184,7 +184,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | WZ-04 | Skill / plot / combat-feedback packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-04-skill--plot--combat-feedback-packets) |
 | WZ-05 | Forced movement / physics unit packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-05-forced-movement--physics-unit-packets) |
 | WZ-06 | NPC / spawner control packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-06-npc--spawner-control-packets) |
-| WZ-07 | Doodad, house and vegetation packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-07-doodad-house-and-vegetation-packets) |
+| WZ-07 | Doodad, house and vegetation packets | Partial | [wz-inbound](docs/tasks/wz-inbound.md#wz-07-doodad-house-and-vegetation-packets) |
 | WZ-08 | Slave / vehicle / ship packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-08-slave--vehicle--ship-packets) |
 | WZ-11 | GM, command and diagnostics packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-11-gm-command-and-diagnostics-packets) |
 | ZW-02 | Send native-correct ZWJoin fields (sv_port, external IP, account/instance by server type) | Partial | [zw-outbound](docs/tasks/zw-outbound.md#zw-02-send-native-correct-zwjoin-fields-sv_port-external-ip-accountinstance-by-server-type) |
@@ -209,7 +209,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | MOV-13 | Unit warp, impulse, teleport and forced-sync corrections |  | [movement](docs/tasks/movement.md#mov-13-unit-warp-impulse-teleport-and-forced-sync-corrections) |
 | MOV-15 | NPC path finding and movement controller |  | [movement](docs/tasks/movement.md#mov-15-npc-path-finding-and-movement-controller) |
 | MOV-18 | Movement test coverage and a headless movement simulator |  | [movement](docs/tasks/movement.md#mov-18-movement-test-coverage-and-a-headless-movement-simulator) |
-| OBJ-04 | Handle World doodad packets and unit attach/bond packets |  | [world-objects](docs/tasks/world-objects.md#obj-04-handle-world-doodad-packets-and-unit-attachbond-packets) |
+| OBJ-04 | Handle World doodad packets and unit attach/bond packets | Partial | [world-objects](docs/tasks/world-objects.md#obj-04-handle-world-doodad-packets-and-unit-attachbond-packets) |
 | OBJ-06 | Climb doodads and hanging units |  | [world-objects](docs/tasks/world-objects.md#obj-06-climb-doodads-and-hanging-units) |
 | AI-01 | Recover the CAISystem instance and unblock native AI construction |  | [npc-ai](docs/tasks/npc-ai.md#ai-01-recover-the-caisystem-instance-and-unblock-native-ai-construction) |
 | AI-02 | Decide and build the managed AI provider (TODO(managed-ai)) |  | [npc-ai](docs/tasks/npc-ai.md#ai-02-decide-and-build-the-managed-ai-provider-todomanaged-ai) |
@@ -273,7 +273,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | WC-15 | Point the replacement at the same game data as `ZoneGameDataRoot` |  | [world-contract](docs/tasks/world-contract.md#wc-15-point-the-replacement-at-the-same-game-data-as-zonegamedataroot) |
 | WC-16 | Define shutdown and orphan behaviour |  | [world-contract](docs/tasks/world-contract.md#wc-16-define-shutdown-and-orphan-behaviour) |
 | WZ-09 | Gimmick packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-09-gimmick-packets) |
-| WZ-10 | Siege/conflict extras and TowerDef |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-10-siegeconflict-extras-and-towerdef) |
+| WZ-10 | Siege/conflict extras and TowerDef | Partial | [wz-inbound](docs/tasks/wz-inbound.md#wz-10-siegeconflict-extras-and-towerdef) |
 | WZ-12 | Complete SetFaction/body-fidelity checks of already-dispatched handlers |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-12-complete-setfactionbody-fidelity-checks-of-already-dispatched-handlers) |
 | WZ-13 | Add a generated WZ conformance table test |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-13-add-a-generated-wz-conformance-table-test) |
 | ZW-09 | Add gimmick ZW packets (RequestSpawnStaticGimmick, Movement, JointBroken, ResetJoints, RemoveParts, Collided) |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-09-add-gimmick-zw-packets-requestspawnstaticgimmick-movement-jointbroken-resetjoints-removeparts-collided) |
