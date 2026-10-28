@@ -55,11 +55,11 @@ public sealed record ZoneNativeAiDependency(string Name, bool IsResolved, string
 /// native conditional AI loader accepts an absent module (Native/Engine/ZoneNativeEngine.cs:171-173).</item>
 /// <item>CAISystem instance — AI init already runs from framework PostInit
 /// (FIRST_ENTRY_NOTES.md:722-724, direct-call chain PostInit 306F77A2 → AI 31049268 →
-/// 3100A8C4 reading the game service from gEnv+8; CSystem+0x58 == gEnv+8 at :766), and the
-/// CAISystem virtuals are known (virtual+38 global update policy,
+/// 3100A8C4 reading the game service from gEnv+8; CSystem+0x58 == gEnv+8 at :766). RESOLVED: the
+/// instance is gEnv+0x80, read and proven by <c>ZoneNativeEngine.TryReadAiSystem</c> (vtable in
+/// cryaisystem_dedicate.dll, vtable slot 3 == AI init 31049268). The CAISystem virtuals are known (virtual+38 global update policy,
 /// Npcs/IZoneNpcActorScene.cs:36; virtual368/310515F8 and virtual258/3104AA48,
-/// Npcs/ZoneNpcSpawnCollision.cs:37-39). TODO(native-ai): locate the CAISystem instance
-/// publication slot beside the gEnv+8 game-service slot; no evidence yet records the getter.</item>
+/// Npcs/ZoneNpcSpawnCollision.cs:37-39).</item>
 /// <item>Native NPC AI actor construction for a content model — the recovered chain is
 /// 39345000 (owner construction, Npcs/ZoneNpcSimulation.cs:107-110) and 39348440
 /// (actor initialization, :123-135), with stance selection at AI 31050598 accepting model
@@ -113,11 +113,14 @@ public sealed class ZoneNativeAiProvider : IZoneAiProvider, IZoneAiFramePump, ID
     private readonly Dictionary<ZoneActorHandle, Binding> _bindings = new();
     private bool _disposed;
 
-    public ZoneNativeAiProvider(IZoneNativeAiActorView actors)
+    /// <param name="actors">The scene admission view.</param>
+    /// <param name="engine">The ready engine whose environment publishes the CAISystem; null leaves the
+    /// CAISystem instance dependency unresolved (nothing native can run).</param>
+    public ZoneNativeAiProvider(IZoneNativeAiActorView actors, ZoneNativeEngine? engine = null)
     {
         ArgumentNullException.ThrowIfNull(actors);
         _actors = actors;
-        _native = new NativeAiAccess();
+        _native = new NativeAiAccess(engine);
     }
 
     /// <summary>
@@ -349,14 +352,25 @@ public sealed class ZoneNativeAiProvider : IZoneAiProvider, IZoneAiFramePump, ID
 
         internal readonly List<ZoneNativeAiDependency> Dependencies = [];
 
-        internal NativeAiAccess()
+        /// <summary>The borrowed CAISystem; valid for the engine generation that outlives this provider.</summary>
+        private readonly nint _aiSystem;
+
+        internal NativeAiAccess(ZoneNativeEngine? engine)
         {
             _aiModule = GetModuleHandleW("cryaisystem_dedicate.dll");
             _actionModule = GetModuleHandleW("cryaction_dedicate.dll");
             Dependencies.Add(new("cryaisystem_dedicate.dll module", _aiModule != 0,
                 "SHA-256 identity at Native/Engine/ZoneNativeEngine.Identities.cs:14; conditional native loader at Native/Engine/ZoneNativeEngine.cs:171-173."));
-            Dependencies.Add(new("CAISystem instance", false,
-                "TODO(native-ai): recover the CAISystem instance slot; AI init 31049268 already runs from framework PostInit (FIRST_ENTRY_NOTES.md:722-724, gEnv+8 observed at :766)."));
+            var aiResolved = false;
+            var aiEvidence = "no engine supplied; the CAISystem instance cannot be read.";
+            if (engine is not null)
+            {
+                aiResolved = engine.TryReadAiSystem(out _aiSystem, out var detail);
+                aiEvidence = aiResolved
+                    ? $"{detail} (Native/Engine/ZoneNativeEngine.AiSystem.cs:TryReadAiSystem)."
+                    : $"gEnv+0x{ZoneNativeEngine.AiSystemEnvironmentOffset:X} is not a proven CAISystem: {detail}.";
+            }
+            Dependencies.Add(new("CAISystem instance", aiResolved, aiEvidence));
             Dependencies.Add(new(ConstructDependency, false,
                 "TODO(native-ai): recover the callable construction ABI for the 39345000/39348440 chain (Npcs/ZoneNpcSimulation.cs:107, :123) and verify the 39…… module attribution against the preferred CryAI base 0x31000000 (FIRST_ENTRY_NOTES.md:721)."));
             Dependencies.Add(new(SignalDependency, false,
