@@ -915,7 +915,7 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
         _frameSeconds = (float)framePeriod.TotalSeconds;
         _notes = notes;
         notes.AddOnce("server-type-slot",
-            "server type: dedicated slot value 2 (no ZoneClient+8C accessor recovered) TODO(server-type-slot)");
+            $"server type: {ServerType} from the world name (393654B0: main_world = 3, instance worlds = 2); ZoneClient+140 itself is not read");
         notes.AddOnce("content-reload", "content reload (39331D30): no reload owner in this single-content scene TODO(content-reload)");
         notes.AddOnce("skill-contexts", "skill contexts (39456970): expire pass unowned — no skill runtime yet TODO(skill-contexts)");
         notes.AddOnce("deferred-removals",
