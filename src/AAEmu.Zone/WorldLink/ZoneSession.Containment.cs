@@ -1,3 +1,4 @@
+using AAEmu.Zone.Npcs;
 using AAEmu.Zone.Protocol;
 using AAEmu.Zone.WorldState;
 
@@ -33,6 +34,11 @@ public sealed partial class ZoneSession
     public ZoneTowerDefController? TowerDefs => TowerDefsOverride ?? _scene?.TowerDefs;
 
     internal ZoneTowerDefController? TowerDefsOverride { get; set; }
+
+    /// <summary>The scene's spawner factory; null for a session without a coordinated scene (and the test seam override).</summary>
+    public ZoneNpcSpawnerFactory? Spawners => SpawnersOverride ?? _scene?.Spawners;
+
+    internal ZoneNpcSpawnerFactory? SpawnersOverride { get; set; }
 
     /// <summary>Test seam: a session over a caller stream with no World join, scene or content.</summary>
     internal static ZoneSession CreateDetached(Stream connection) => new(connection);

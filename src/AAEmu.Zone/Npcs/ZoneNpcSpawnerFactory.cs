@@ -116,6 +116,38 @@ public sealed class ZoneNpcSpawnerFactory : IDisposable
         TowerDefs = new(CountTypeOwners);
     }
 
+    /// <summary>
+    /// Native 3933E7E0: every spawner not controlled by TowerDef (+353) or a game schedule (+354) that has
+    /// an authored point strictly inside the XY circle gets its active byte (+355) set to
+    /// <paramref name="active"/>. Only the flag changes; spawning follows from the ordinary scheduler update.
+    /// Z is ignored. Returns the number of spawners whose flag was written.
+    /// </summary>
+    public int ActivateInArea(System.Numerics.Vector3 center, float radius, bool active)
+    {
+        if (!HasLiveOwners) return 0;
+        var count = 0;
+        foreach (var runtime in _generation.Spawners.ToArray())
+        {
+            if (runtime.Events.TowerDefenseControlled || runtime.Events.GameScheduleControlled) continue;
+            if (!AnyPointInsideArea(runtime.Placement.Data.Points.Select(point => point.Position), center, radius)) continue;
+            runtime.Scheduler.Active = active;
+            count++;
+        }
+        return count;
+    }
+
+    /// <summary>3933E7E0's circle test: XY only, strictly inside (native loops while radius^2 &lt;= distance^2).</summary>
+    public static bool AnyPointInsideArea(IEnumerable<System.Numerics.Vector3> points, System.Numerics.Vector3 center, float radius)
+    {
+        foreach (var point in points)
+        {
+            var dx = point.X - center.X;
+            var dy = point.Y - center.Y;
+            if (!(radius * radius <= dx * dx + dy * dy)) return true;
+        }
+        return false;
+    }
+
     private bool Current(Generation generation) => HasLiveOwners && ReferenceEquals(_generation, generation);
 
     internal bool IsCurrentGeneration(object generation) => generation is Generation value && Current(value);

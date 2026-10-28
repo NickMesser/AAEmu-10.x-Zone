@@ -535,6 +535,13 @@ public sealed partial class ZoneSession
             case WzOpcodes.ForceAttackSet:
                 Registry.SetForceAttack(frame.Body.Span);
                 break;
+            case WzOpcodes.ActivateNpcSpawnersInArea:
+                var area = ActivateNpcSpawnersInArea.Read(frame.Body.Span);
+                Spawners?.ActivateInArea(area.Center, area.Radius, area.Activate);
+                break;
+            case WzOpcodes.UnitFlyingStateChanged:
+                Registry.ChangeFlyingState(frame.Body.Span);
+                break;
             case WzOpcodes.TargetChanged:
                 Registry.ChangeTarget(frame.Body.Span);
                 break;

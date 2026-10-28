@@ -329,4 +329,7 @@ public sealed class ZoneSceneCoordinator : IDisposable
 
     /// <summary>The scene's TowerDef manager (native 39359xxx); owned by the spawner factory like the game schedules.</summary>
     public ZoneTowerDefController TowerDefs => _components.Spawners.TowerDefs;
+
+    /// <summary>The scene's spawner factory (native spawner manager 3933E7E0 traversal target).</summary>
+    public ZoneNpcSpawnerFactory Spawners => _components.Spawners;
 }
