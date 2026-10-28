@@ -573,6 +573,17 @@ public sealed partial class ZoneSession
             case WzOpcodes.WorldGameTime:
                 Startup.Receive(frame);
                 break;
+            case WzOpcodes.SkillStarted: Skills.Start(SkillStarted.Read(frame.Body.Span)); break;
+            case WzOpcodes.SkillFired: Skills.Fire(SkillFired.Read(frame.Body.Span)); break;
+            case WzOpcodes.SkillEnded: Skills.End(SkillEnded.Read(frame.Body.Span)); break;
+            case WzOpcodes.SkillStopped: Skills.Stop(SkillStopped.Read(frame.Body.Span)); break;
+            case WzOpcodes.CastingStopped: Skills.StopCasting(CastingStopped.Read(frame.Body.Span)); break;
+            case WzOpcodes.UnitDamaged: Skills.Damage(UnitDamaged.Read(frame.Body.Span)); break;
+            case WzOpcodes.UnitHealed: Skills.Heal(UnitHealed.Read(frame.Body.Span)); break;
+            case WzOpcodes.PlotEvent: Skills.Plot(PlotEvent.Read(frame.Body.Span)); break;
+            case WzOpcodes.PlotEnded: Skills.PlotEnd(PlotEnded.Read(frame.Body.Span)); break;
+            case WzOpcodes.PlotCastingStopped: Skills.PlotCastingStop(PlotStopped.Read(frame.Body.Span)); break;
+            case WzOpcodes.PlotChannelingStopped: Skills.PlotChannelingStop(PlotStopped.Read(frame.Body.Span)); break;
             default:
                 // Named, counted refusal — see UnimplementedOpcodes. The first occurrence of each
                 // opcode is printed so the gap is visible in the live host log, and the session
@@ -588,6 +599,10 @@ public sealed partial class ZoneSession
 
     /// <summary>World's doodads (WZ 0x0073-0x0076); state only, declared after DispatchCore to keep line citations stable.</summary>
     public ZoneDoodadRegistry Doodads { get; } = new();
+
+    /// <summary>World's skill, plot and heal/damage feedback (WZ 0x002B-0x0031, 0x003A-0x003D); state only.</summary>
+    public ZoneSkillState Skills => _skills ??= new(id => Registry.Units.ContainsKey(id));
+    private ZoneSkillState? _skills;
 
     private ZoneNpcSimulation RequireNpcs() => Registry.Npcs ??
         throw new NotSupportedException("NPC simulation requires configured content and actor/spatial services.");
