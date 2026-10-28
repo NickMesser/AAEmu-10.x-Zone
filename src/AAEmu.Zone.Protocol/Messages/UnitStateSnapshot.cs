@@ -5,6 +5,9 @@ namespace AAEmu.Zone.Protocol.Messages;
 public sealed record UnitPackedState(uint PlotDebugLevel, uint Reserved7Fb0, uint Reserved7Fb4, uint Appellation,
     uint FactionId, uint ExpeditionId, uint FamilyId, uint EquipmentPublic, uint Offline, uint ExpeditionWarFactionId, uint PvpHonor);
 
+/// <summary>The independent uint16 admission fields at native snapshot +9080..9092.</summary>
+public readonly record struct UnitCastingFields(uint CastTimeline, uint CurrentSkill, uint ChannelTimeline, uint ChannelSkill);
+
 /// <summary>
 /// Complete native WZUnitState body. FUN_393932E0 serializes the shared body; FUN_39394CC0
 /// appends buffs and action. Read completes and validates the entire envelope before returning.
@@ -49,7 +52,17 @@ public sealed class UnitStateSnapshot
     public required ushort Flags { get; init; }
     public required byte AttackFactionFlags { get; init; }
     public required UnitFirstHitter? FirstHitter { get; init; }
+    /// <summary>
+    /// Legacy name for the four casting fields carried by flags bit7; these are not ability IDs.
+    /// Their order is cast timeline, current plot-skill ID, channel timeline, channel plot-skill ID.
+    /// </summary>
     public required IReadOnlyList<ushort> HighAbilities { get; init; }
+    public UnitCastingFields CastingFields => HighAbilities.Count switch
+    {
+        0 => default,
+        4 => new(HighAbilities[0], HighAbilities[1], HighAbilities[2], HighAbilities[3]),
+        _ => throw new InvalidDataException("A unit admission has either zero or four casting fields.")
+    };
     public required IReadOnlyList<sbyte> GmModes { get; init; }
     public required UnitCharacterData? Character { get; init; }
     public required UnitBuffs Buffs { get; init; }

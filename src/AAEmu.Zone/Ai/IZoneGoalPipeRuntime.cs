@@ -13,7 +13,7 @@ public interface IZoneGoalPipeRuntime
     void Diagnostic(string message);
 }
 
-public enum ZoneGoalPipeEvent { Deselected = 1, Finished = 2, Suspended = 3, Resumed = 4, Canceled = 5 }
+public enum ZoneGoalPipeEvent { Deselected = 1, Finished = 2, Suspended = 3, Resumed = 4, Canceled = 5, ReferencePointMoved = 7 }
 public enum ZoneGoalPopStatus { End = 0, Goal = 1, Yield = 2 }
 
 /// <summary>Actor services are bound at construction. Execute returns the native EGoalOpResult value.</summary>

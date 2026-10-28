@@ -140,6 +140,25 @@ public sealed class ManagedNpcGameScriptServicesTests
         await Assert.That(frames.Count).IsEqualTo(1);
     }
 
+    [Test]
+    public async Task RetirementDiscardsOnlyUnsentRequestsForItsExactScriptScope()
+    {
+        using var fixture = new ManagedNpcScriptEffectsTests.Fixture(); using var actor = fixture.Admit();
+        var registry = fixture.Admission.Registry;
+        while (registry.TryDequeueNotification(out _)) { }
+        var marker = new ZoneFrame(0xfffe, new byte[] { 1, 2, 3 });
+        registry.QueueNotification(marker, actor.Actor.Npc.Unit, new object());
+        var requests = new ZoneManagedNpcGameScriptRequests(registry, fixture.Admission.Catalog,
+            _ => throw new InvalidOperationException("Scoped requests must use the registry's exact owner queue."),
+            _ => new(17, 900, 23), queueWithActorScope: true);
+        requests.StopCasting(actor.Actor); requests.RemoveBuff(actor.Actor, 815);
+        fixture.Scene.Remove(actor.Actor.Handle);
+        requests.Retire(actor.Actor);
+        await Assert.That(registry.TryDequeueNotification(out var retained)).IsTrue();
+        await Assert.That(retained).IsEqualTo(marker);
+        await Assert.That(registry.TryDequeueNotification(out _)).IsFalse();
+    }
+
     private static (uint ObjectId, uint Timeline, uint Skill) ReadStop(ZoneFrame frame)
     {
         if (frame.Opcode != ZwOpcodes.StopCasting) throw new InvalidDataException("Wrong request opcode.");

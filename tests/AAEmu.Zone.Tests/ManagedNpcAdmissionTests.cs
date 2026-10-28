@@ -281,7 +281,7 @@ public sealed class ManagedNpcAdmissionTests
         }
 
         public ZoneNpc Npc(uint objectId = 0, uint npcId = 0, ZoneModelDefinition? model = null, uint? unitModelId = null,
-            UnitHeading? heading = null)
+            UnitHeading? heading = null, ZoneSkillContent? skillContent = null, bool cleanSkillState = false)
         {
             if (objectId == 0) objectId = _objectId;
             if (npcId == 0) npcId = _objectId + 1_000_000;
@@ -296,12 +296,13 @@ public sealed class ManagedNpcAdmissionTests
                 TargetId = source.TargetId, PreciseHealth = source.PreciseHealth, PreciseMana = source.PreciseMana,
                 Attachment = source.Attachment, Bonding = source.Bonding, Posture = source.Posture, ActiveWeapon = source.ActiveWeapon,
                 StateType = source.StateType, AppellationStamp = source.AppellationStamp, VehicleDyeing = source.VehicleDyeing,
-                TemporaryFaction = source.TemporaryFaction, Skills = source.Skills, PassiveBuffs = source.PassiveBuffs,
-                Heading = heading ?? source.Heading, RaceGender = source.RaceGender, PackedState = source.PackedState, Flags = source.Flags,
+                TemporaryFaction = source.TemporaryFaction, Skills = source.Skills, PassiveBuffs = cleanSkillState ? [] : source.PassiveBuffs,
+                Heading = heading ?? source.Heading, RaceGender = source.RaceGender, PackedState = source.PackedState, Flags = cleanSkillState ? (ushort)(source.Flags & ~2) : source.Flags,
                 AttackFactionFlags = source.AttackFactionFlags, FirstHitter = source.FirstHitter,
-                HighAbilities = source.HighAbilities, GmModes = source.GmModes, Character = null, Buffs = source.Buffs, Action = source.Action,
+                HighAbilities = cleanSkillState ? [] : source.HighAbilities, GmModes = source.GmModes, Character = null,
+                Buffs = cleanSkillState ? new([], [], []) : source.Buffs, Action = source.Action,
             };
-            var unit = new ZoneUnit(snapshot, null);
+            var unit = new ZoneUnit(snapshot, null, skillContent: skillContent);
             var spawn = new NpcStateMetadata(0, 0, 0, 0, new(ZoneUnitKind.Character), false, false, 0,
                 new(0), 0, new(0, 0, 0));
             var npc = new ZoneNpc(unit, spawn, 0, _simulation, new() { Id = 11 }, model ?? new() { Id = source.ModelId }, 0,

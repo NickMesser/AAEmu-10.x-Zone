@@ -1,8 +1,10 @@
 using System.Numerics;
 using System.Text;
 using AAEmu.Zone.Actors;
+using AAEmu.Zone.Ai;
 using AAEmu.Zone.Content;
 using AAEmu.Zone.Hosting;
+using AAEmu.Zone.Npcs;
 using AAEmu.Zone.Physics;
 using AAEmu.Zone.Scene;
 using AAEmu.Zone.Scripting;
@@ -189,6 +191,266 @@ public sealed class ManagedNpcRuntimeTests
         await Assert.That(fixture.Clock.GameMicroseconds).IsEqualTo(1_000_000L);
     }
 
+    [Test]
+    public async Task RealConstructionSamplesTheSceneEpochAndInstallsItsOwnDynamicsOnlyAfterTheResetFrame()
+    {
+        using var fixture = new Fixture(withConstruction: true);
+        await Assert.That(fixture.Runtime.PrePhysics(Frame(10), fixture.Admission.Provider.RemoveNpc).Count).IsEqualTo(0);
+        var npc = fixture.Admission.Npc(model: fixture.Model, heading: new()); fixture.Admission.Publish(npc);
+        fixture.Admission.World.Initialize(npc, null);
+        var handle = fixture.Admission.Catalog.TryGet(npc)!.Value;
+        var actor = RequireActor(fixture, handle);
+        var construction = fixture.Construction!.Find(handle)!;
+        var body = fixture.Bodies!.Find(handle)!;
+        var services = (ZoneManagedNpcSceneScriptServices)fixture.Runtime.ScriptServices;
+        var initial = services.CopyColliderState(actor);
+        await Assert.That(construction.PhysicalizedFrame).IsEqualTo((int?)10);
+        await Assert.That(initial.PhysicalizedFrame).IsEqualTo(10);
+        await Assert.That(initial.Frame).IsEqualTo(-1);
+        await Assert.That(initial.ForceRebuild).IsFalse();
+        await Assert.That(body.CopyState().AppliedDescription.LivingMovement!.Inertia).IsEqualTo(8f);
+        await Assert.That(body.CopyState().AppliedDescription.LivingMovement!.InertiaAcceleration).IsEqualTo(0f);
+        await Assert.That(services.GetActorHealth(actor)).IsEqualTo(0f);
+        await Assert.That(services.GetActorMaximumHealth(actor)).IsEqualTo(10f);
+        construction.Health.CopyFields(4, 17);
+        await Assert.That(services.GetActorHealth(actor)).IsEqualTo(4f);
+        await Assert.That(services.GetActorMaximumHealth(actor)).IsEqualTo(17f);
+        using (var result = fixture.Runtime.Lua.Execute("return observedEntity.actor:GetHealth(), observedEntity.actor:GetMaxHealth()"))
+        {
+            await Assert.That(Convert.ToSingle(result[0])).IsEqualTo(4f);
+            await Assert.That(Convert.ToSingle(result[1])).IsEqualTo(17f);
+        }
+        var before = body.CopyState();
+        await Assert.That(fixture.Runtime.PrePhysics(Frame(10), fixture.Admission.Provider.RemoveNpc).Count).IsEqualTo(0);
+        await Assert.That(services.CopyColliderState(actor).SelectedMode).IsEqualTo(0);
+        await Assert.That(body.CopyState().AppliedDescription.LivingMovement!.Inertia).IsEqualTo(8f);
+        await Assert.That(fixture.Runtime.PrePhysics(Frame(11), fixture.Admission.Provider.RemoveNpc).Count).IsEqualTo(0);
+        var applied = body.CopyState();
+        await Assert.That(services.CopyColliderState(actor).SelectedMode).IsEqualTo(4);
+        await Assert.That(services.CopyColliderState(actor).ForceRebuild).IsFalse();
+        await Assert.That(applied.AppliedDescription.LivingMovement!.Inertia).IsEqualTo(20f);
+        await Assert.That(applied.AppliedDescription.LivingMovement!.InertiaAcceleration).IsEqualTo(11f);
+        await Assert.That(applied.Status).IsEqualTo(before.Status);
+        await Assert.That(applied.Control).IsEqualTo(before.Control);
+        fixture.Admission.World.Remove(npc);
+        await Assert.That(construction.IsDisposed).IsTrue();
+        await Assert.That(fixture.Construction.Count).IsEqualTo(0);
+        await Assert.That(fixture.Poses!.Count).IsEqualTo(0);
+    }
+
+    [Test]
+    public async Task RealProxyEyePositionSurvivesSceneAndActorRefreshWhileLuaGetPosRetainsTheEntityOrigin()
+    {
+        using var fixture = new Fixture(withConstruction: true);
+        var npc = fixture.Admission.Npc(model: fixture.Model, heading: new()); fixture.Admission.Publish(npc);
+        fixture.Admission.World.Initialize(npc, null);
+        var handle = fixture.Admission.Catalog.TryGet(npc)!.Value;
+        var actor = RequireActor(fixture, handle);
+        var body = fixture.Bodies!.Find(handle)!;
+        var pose = fixture.Poses!.Find(handle)!;
+        var origin = body.CopyState().Status.Position;
+        var eye = origin + new Vector3(0, 0, 1.5f);
+        await Assert.That(pose.Last!.EntityPosition).IsEqualTo(origin);
+        await Assert.That(pose.Last.Position).IsEqualTo(eye);
+        await Assert.That(actor.AiObject.Position).IsEqualTo(eye);
+        fixture.Runtime.Actors.RefreshPositions();
+        fixture.Admission.Provider.Pump(1000); fixture.Admission.Provider.Pump(1020);
+        await Assert.That(actor.AiObject.Position).IsEqualTo(eye);
+        await Assert.That(body.CopyState().Status.Position).IsEqualTo(origin);
+        using (var result = fixture.Runtime.Lua.Execute("local p=observedEntity:GetPos();return p.x,p.y,p.z"))
+            await Assert.That(new Vector3(Convert.ToSingle(result[0]), Convert.ToSingle(result[1]), Convert.ToSingle(result[2]))).IsEqualTo(origin);
+        var sampled = pose.SampleCount;
+        await Assert.That(fixture.Runtime.PublishPose(handle, fixture.Admission.Provider.RemoveNpc).Count).IsEqualTo(0);
+        await Assert.That(pose.SampleCount).IsEqualTo(sampled + 1);
+        await Assert.That(actor.AiObject.Position).IsEqualTo(eye);
+        fixture.Admission.World.Remove(npc);
+        await Assert.That(pose.IsDisposed).IsTrue();
+        await Assert.That(fixture.Runtime.Actors.ProxyPoses!.Find(handle)).IsNull();
+    }
+
+    [Test]
+    public async Task UnsupportedGoalUpdateRetiresItsExactRuntimeBeforeBodyPreparationAndLeavesTheOtherActorRunning()
+    {
+        using var fixture = new Fixture(withConstruction: true);
+        fixture.Runtime.PrePhysics(Frame(10), fixture.Admission.Provider.RemoveNpc);
+        var npc = fixture.Admission.Npc(model: fixture.Model, heading: new()); fixture.Admission.Publish(npc);
+        fixture.Admission.World.Initialize(npc, null);
+        var handle = fixture.Admission.Catalog.TryGet(npc)!.Value;
+        var actor = RequireActor(fixture, handle);
+        var body = fixture.Bodies!.Find(handle)!;
+        var construction = fixture.Construction!.Find(handle)!;
+        var pose = fixture.Poses!.Find(handle)!;
+        var otherId = ManagedNpcAdmissionTests.Fixture.FreshObjectId();
+        var other = fixture.Admission.Npc(otherId, otherId + 1_000_000, fixture.Model, heading: new());
+        fixture.Admission.Publish(other); fixture.Admission.World.Initialize(other, null);
+        var otherHandle = fixture.Admission.Catalog.TryGet(other)!.Value;
+        var otherActor = RequireActor(fixture, otherHandle);
+        var otherBody = fixture.Bodies.Find(otherHandle)!;
+        var unsupported = fixture.Runtime.Actors.GoalPipes.Create("runtime_unowned_branch")!;
+        unsupported.Append(ZoneGoalOperation.Branch, false, ZoneGoalGrouping.None, new() { Integer = 7 },
+            message => throw new InvalidOperationException(message));
+        actor.Entry.Phase.Pipes.Select(ZoneGoalPipeFlags.RunOnce, unsupported.Name);
+        var supported = fixture.Runtime.Actors.GoalPipes.Create("runtime_owned_run")!;
+        supported.Append(ZoneGoalOperation.Run, false, ZoneGoalGrouping.None, new() { First = 1 },
+            message => throw new InvalidOperationException(message));
+        otherActor.Entry.Phase.Pipes.Select(ZoneGoalPipeFlags.RunOnce, supported.Name);
+        fixture.Admission.Provider.Pump(1000); fixture.Admission.Provider.Pump(1020);
+        await Assert.That(fixture.Runtime.Count).IsEqualTo(2); //Fault queued; no mid-update destruction.
+        await Assert.That(otherActor.Controls.MovementUrgency).IsEqualTo(1f);
+        body.RequestStanceSlot(3); otherBody.RequestStanceSlot(3);
+        IReadOnlyList<ZoneManagedNpcScriptFault> faults = [];
+        var diagnostics = new ZoneMovementDiagnostics();
+        using var phases = new ZoneManagedNpcMovementFramePhases(new BackendPhases(fixture.Backend!),
+            fixture.Admission.Registry, fixture.Admission.Catalog, fixture.Runtime.Actors, fixture.Bodies,
+            new(fixture.Admission.Registry, diagnostics, false), diagnostics,
+            prePhysics: frame => faults = fixture.Runtime.PrePhysics(frame, fixture.Admission.Provider.RemoveNpc),
+            publishPose: (current, _, _) => fixture.Runtime.PublishPose(current.Handle, fixture.Admission.Provider.RemoveNpc));
+        var frame = Frame(11);
+        await Assert.That(phases.PrePhase(frame)).IsEqualTo(1);
+        await Assert.That(faults.Count).IsEqualTo(1);
+        await Assert.That(faults[0].Actor).IsEqualTo(handle);
+        await Assert.That(faults[0].Message.Contains("branch predicate 7", StringComparison.Ordinal)).IsTrue();
+        await Assert.That(body.IsDisposed).IsTrue();
+        await Assert.That(body.CurrentStanceSlot).IsEqualTo(ZoneActorStanceCatalog.InitialSlot);
+        await Assert.That(otherBody.CurrentStanceSlot).IsEqualTo(3);
+        await Assert.That(construction.IsDisposed).IsTrue(); await Assert.That(pose.IsDisposed).IsTrue();
+        await Assert.That(fixture.Backend!.OwnedPhysics.TryReadPosition(handle, out _)).IsFalse();
+        await Assert.That(fixture.Admission.Catalog.GetAdmission(handle)!.Phase).IsEqualTo(ZoneSceneNpcAdmissionPhase.Refused);
+        await Assert.That(fixture.Runtime.Count).IsEqualTo(1); await Assert.That(fixture.Profiles.LiveCount).IsEqualTo(1);
+        await Assert.That(fixture.Construction.Count).IsEqualTo(1); await Assert.That(fixture.Poses.Count).IsEqualTo(1);
+        await Assert.That(fixture.Admission.Provider.Count).IsEqualTo(1);
+        phases.StepPhysics(frame.Elapsed); phases.PostPhase(frame);
+        await Assert.That(fixture.Bodies.Find(otherHandle)!.CopyState().CurrentStanceSlot).IsEqualTo(3);
+        await Assert.That(fixture.Runtime.PrePhysics(Frame(12), fixture.Admission.Provider.RemoveNpc).Count).IsEqualTo(0);
+        fixture.Admission.Provider.Pump(1040);
+        await Assert.That(otherActor.HasActor).IsTrue();
+    }
+
+    private static ZoneMovementFrame Frame(uint frame) => new(frame, TimeSpan.FromMilliseconds(20), frame * 20, frame * .02f);
+    private static ZoneManagedNpcActor RequireActor(Fixture fixture, ZoneActorHandle handle) => fixture.Runtime.Actors.Find(handle) ??
+        throw new InvalidOperationException(fixture.Admission.Catalog.GetAdmission(handle)?.Refusal ?? "The runtime actor was not admitted.");
+
+    private sealed class BackendPhases(ZoneManagedPhysicsBackend backend) : IZoneMovementFramePhases
+    {
+        public int PrePhase(in ZoneMovementFrame frame) => 0;
+        public void StepPhysics(TimeSpan elapsed) => backend.Step(elapsed);
+        public int PostPhase(in ZoneMovementFrame frame) => 0;
+    }
+
+    [Test]
+    [Arguments("group", true)]
+    [Arguments("position", false)]
+    public async Task RecordedIdleConstructorFailureRetiresBeforeTheNextPhysicalOrEffectBoundary(string dependency, bool beforePhysics)
+    {
+        using var fixture = new Fixture(withConstruction: true);
+        fixture.Runtime.Lua.SetGlobal("testTimer", true);
+        var npc = fixture.Admission.Npc(model: fixture.Model, heading: new()); fixture.Admission.Publish(npc);
+        fixture.Admission.World.Initialize(npc, null);
+        var handle = fixture.Admission.Catalog.TryGet(npc)!.Value;
+        var actor = RequireActor(fixture, handle);
+        var body = fixture.Bodies!.Find(handle)!;
+        var construction = fixture.Construction!.Find(handle)!;
+        var pose = fixture.Poses!.Find(handle)!;
+        using var entity = actor.Entry.RetainScript()!;
+        entity.Set("failIdleConstructor", dependency);
+        var otherId = ManagedNpcAdmissionTests.Fixture.FreshObjectId();
+        var other = fixture.Admission.Npc(otherId, otherId + 1_000_000, fixture.Model, heading: new());
+        fixture.Admission.Publish(other); fixture.Admission.World.Initialize(other, null);
+        var otherHandle = fixture.Admission.Catalog.TryGet(other)!.Value;
+        fixture.Admission.Provider.SendSignal(handle, new(0, "GO_TO_IDLE", 0, 0, null));
+        npc.AiSignals.Update(); //The original behavior error channel deliberately does not throw.
+        await Assert.That(actor.Behavior!.CurrentName).IsEqualTo("idle");
+        await Assert.That(entity.Get("idleConstructorStarted")).IsEqualTo(1L);
+        await Assert.That(entity.Get("idleConstructorFinished")).IsNull();
+        await Assert.That(fixture.Runtime.Count).IsEqualTo(2);
+        IReadOnlyList<ZoneManagedNpcScriptFault> faults;
+        if (beforePhysics) faults = fixture.Runtime.PrePhysics(Frame(11), fixture.Admission.Provider.RemoveNpc);
+        else
+        {
+            fixture.Clock.Advance(TimeSpan.FromMilliseconds(20));
+            faults = fixture.Runtime.TickScripts(TimeSpan.FromMilliseconds(20), fixture.Admission.Provider.RemoveNpc);
+            await Assert.That(fixture.Runtime.Lua.GetGlobal("timerCalls")).IsEqualTo(1L); //Only the healthy owner's due timer ran.
+        }
+        await Assert.That(faults.Count).IsEqualTo(1);
+        await Assert.That(faults[0].Actor).IsEqualTo(handle);
+        await Assert.That(faults[0].Callback).IsEqualTo("actor behavior callback");
+        await Assert.That(faults[0].Message.Contains(dependency == "group" ? "AI.GetGroupOf" : "NpcSetCheckPosContext", StringComparison.Ordinal)).IsTrue();
+        await Assert.That(body.IsDisposed).IsTrue(); await Assert.That(construction.IsDisposed).IsTrue(); await Assert.That(pose.IsDisposed).IsTrue();
+        await Assert.That(fixture.Runtime.Count).IsEqualTo(1); await Assert.That(fixture.Admission.Provider.Count).IsEqualTo(1);
+        await Assert.That(fixture.Profiles.LiveCount).IsEqualTo(1);
+        await Assert.That(fixture.Runtime.RefusedActors).IsEqualTo(1);
+        await Assert.That(fixture.Admission.World.HasSignalActor(npc)).IsFalse();
+        await Assert.That(fixture.Admission.World.HasSignalActor(other)).IsTrue();
+        await Assert.That(fixture.Bodies.Find(otherHandle)!.IsCurrent).IsTrue();
+        await Assert.That(fixture.Admission.Catalog.GetAdmission(handle)!.Phase).IsEqualTo(ZoneSceneNpcAdmissionPhase.Refused);
+        await Assert.That(fixture.Runtime.PrePhysics(Frame(12), fixture.Admission.Provider.RemoveNpc).Count).IsEqualTo(0);
+        await Assert.That(fixture.Runtime.TickScripts(TimeSpan.FromMilliseconds(20), fixture.Admission.Provider.RemoveNpc).Count).IsEqualTo(0);
+        await Assert.That(fixture.Runtime.RefusedActors).IsEqualTo(1);
+    }
+
+    [Test]
+    public async Task ActorUpdateObservesRecordedCallbackFailureWithoutReexecutingTheFailedOwner()
+    {
+        using var fixture = new Fixture(withConstruction: true);
+        var npc = fixture.Admission.Npc(model: fixture.Model, heading: new()); fixture.Admission.Publish(npc);
+        fixture.Admission.World.Initialize(npc, null);
+        var handle = fixture.Admission.Catalog.TryGet(npc)!.Value;
+        var actor = RequireActor(fixture, handle);
+        using var entity = actor.Entry.RetainScript()!; entity.Set("failIdleConstructor", "group");
+        var callbackCalls = 0;
+        //Declared goal callback exercises the production actor-update boundary; it claims
+        //no skill implementation. The actual Lua constructor supplies the swallowed error.
+        fixture.Runtime.Actors.OperationFactory = (current, _) => new CallbackGoal(() =>
+        { callbackCalls++; current.Behavior!.SetBehavior("idle"); });
+        var pipe = fixture.Runtime.Actors.GoalPipes.Create("recorded_constructor_failure")!;
+        pipe.Append(ZoneGoalOperation.UseSkill, false, ZoneGoalGrouping.None, new(),
+            message => throw new InvalidOperationException(message));
+        actor.Entry.Phase.Pipes.Select(ZoneGoalPipeFlags.RunOnce, pipe.Name);
+        fixture.Admission.Provider.Pump(1000); fixture.Admission.Provider.Pump(1020);
+        var callsInFirstPhase = callbackCalls; //The executor may start and revisit an active goal in this same phase.
+        await Assert.That(callsInFirstPhase).IsGreaterThan(0);
+        fixture.Admission.Provider.Pump(1040);
+        await Assert.That(callbackCalls).IsEqualTo(callsInFirstPhase);
+        await Assert.That(actor.Behavior!.CurrentName).IsEqualTo("idle");
+        await Assert.That(fixture.Runtime.Count).IsEqualTo(1); //Retirement remains at the next safe scene boundary.
+        var faults = fixture.Runtime.PrePhysics(Frame(11), fixture.Admission.Provider.RemoveNpc);
+        await Assert.That(faults.Count).IsEqualTo(1);
+        await Assert.That(faults[0].Callback).IsEqualTo("actor behavior callback");
+        await Assert.That(fixture.Runtime.RefusedActors).IsEqualTo(1);
+        await Assert.That(fixture.Runtime.Count + fixture.Bodies!.Count + fixture.Poses!.Count + fixture.Profiles.LiveCount).IsEqualTo(0);
+    }
+
+    [Test]
+    public async Task EffectEnteringAFailingBehaviorRetiresBeforeTheFollowingAiPump()
+    {
+        using var fixture = new Fixture(withConstruction: true);
+        fixture.Runtime.Lua.SetGlobal("testTimer", true);
+        var npc = fixture.Admission.Npc(model: fixture.Model, heading: new()); fixture.Admission.Publish(npc);
+        fixture.Admission.World.Initialize(npc, null);
+        var handle = fixture.Admission.Catalog.TryGet(npc)!.Value;
+        var actor = RequireActor(fixture, handle);
+        using var entity = actor.Entry.RetainScript()!;
+        entity.Set("failIdleConstructor", "group"); entity.Set("enterBehaviorOnTimer", true);
+        using var enter = fixture.Runtime.Lua.CreateFunction(_ => { actor.Behavior!.SetBehavior("idle"); return []; });
+        fixture.Runtime.Lua.SetGlobal("EnterRecordedFailure", enter);
+        fixture.Clock.Advance(TimeSpan.FromMilliseconds(20));
+        var faults = fixture.Runtime.TickScripts(TimeSpan.FromMilliseconds(20), fixture.Admission.Provider.RemoveNpc);
+        await Assert.That(entity.Get("afterBehaviorOnTimer")).IsEqualTo(true); //The entity timer itself returned normally.
+        await Assert.That(faults.Count).IsEqualTo(1);
+        await Assert.That(faults[0].Callback).IsEqualTo("actor behavior callback");
+        await Assert.That(fixture.Admission.Provider.Count + fixture.Runtime.Count + fixture.Bodies!.Count + fixture.Poses!.Count).IsEqualTo(0);
+        await Assert.That(fixture.Admission.World.HasSignalActor(npc)).IsFalse();
+        fixture.Admission.Provider.Pump(1000); fixture.Admission.Provider.Pump(1020);
+        await Assert.That(fixture.Runtime.RefusedActors).IsEqualTo(1);
+    }
+
+    private sealed class CallbackGoal(Action callback) : IZoneGoalOperation
+    {
+        public int Execute() { callback(); return 1; }
+        public void Reset() { }
+        public void Dispose() { }
+    }
+
     private sealed class Fixture : IDisposable
     {
         public ManagedNpcAdmissionTests.Fixture Admission { get; }
@@ -197,17 +459,23 @@ public sealed class ManagedNpcRuntimeTests
         public ZoneSceneScriptClock Clock { get; } = new();
         public ZoneManagedPhysicsBackend? Backend { get; }
         public ZoneManagedNpcPhysics? Bodies { get; }
+        public ZoneManagedNpcActorConstruction? Construction { get; }
+        public ZoneManagedNpcAiPose? Poses { get; }
         public ZoneModelDefinition Model { get; } = new() { Id = 42, Name = "runtime_fixture", Subtype = "ActorModel", SubtypeId = 9 };
-        public Fixture(bool withEffects = false, bool admitProfile = true, bool withComponents = false)
+        public Fixture(bool withEffects = false, bool admitProfile = true, bool withComponents = false, bool withConstruction = false)
         {
+            withComponents |= withConstruction;
             ZoneManagedNpcRuntime? runtime = null;
             Admission = new(handle => runtime!.CreateActor(handle));
             var models = new ZoneModelContent([Model], actorModels: new ZoneActorModelContent([new()
             {
                 Id = 9, ModelFile = "objects/fixture.chr", PhysicsLivingMass = 80, PhysicsLivingGravity = 25,
                 PhysicsLivingColliderMat = "mat_player_collider",
+                GameInertia = withConstruction ? 20 : 0, GameInertiaAccel = withConstruction ? 11 : 0,
+                PhysicsLivingMinSlideAngle = 45, PhysicsLivingMaxClimbAngle = 50, PhysicsLivingMinFallAngle = 50,
             }], Enumerable.Range(1, 9).Select(id => new ZoneGameStanceDefinition
-            { Id = (uint)id, ActorModelId = 9, StanceId = id, SizeX = .3f, SizeY = .3f, SizeZ = .3f, HeightCollider = 1.2f, HeightPivot = .1f, UseCapsule = true })));
+            { Id = (uint)id, ActorModelId = 9, StanceId = id, SizeX = .3f, SizeY = .3f, SizeZ = .3f, HeightCollider = 1.2f, HeightPivot = .1f, UseCapsule = true,
+                ViewOffsetZ = withConstruction ? 1.5f : 0 })));
             Vector3 Position(AAEmu.Zone.Units.ZoneUnit unit) => withComponents ? new(1100, 1100, 10.1f) : Vector3.Zero;
             Profiles = new(Admission.Registry, Admission.Catalog, Position, models);
             if (withComponents)
@@ -216,23 +484,28 @@ public sealed class ManagedNpcRuntimeTests
                 heights.LoadCell(1, 1, TerrainHeightFieldTests.CreateCell(10, 0));
                 Backend = new(new(heights)); Bodies = new(Backend, models, _ => 143);
             }
+            if (withConstruction) Construction = new(Admission.Registry, Admission.Catalog, models);
+            ZoneManagedNpcActorProfile CreateProfile(ZoneActorHandle actor, ZoneNpc npc, uint entityId) => Construction is { } construction
+                ? Profiles.CreateWithConstruction(actor, npc, entityId, construction) : Profiles.Create(actor, npc, entityId);
             var content = new ZoneNpcContent([new() { Id = 11, NpcAiParamId = 8 }], [], [], [], [],
                 aiParameters: [new(8, "delay=1.5")]);
             Runtime = runtime = new(Admission.Registry, Admission.Catalog, models, content, new Source(),
                 Position, () => Clock.GameMicroseconds, () => 1, () => DateTimeOffset.UnixEpoch,
-                TimeSpan.FromMilliseconds(20), createProfile: admitProfile ? Profiles.Create : null,
+                TimeSpan.FromMilliseconds(20), createProfile: admitProfile ? CreateProfile : null,
                 createScriptServices: withComponents ? lua => new ZoneManagedNpcSceneScriptServices(lua, models, new Assets(),
                     () => Bodies!, _ => new(0, 0), Position, () => Clock.GameMicroseconds, () => false,
                     ZoneCharacterAttachmentPublicationProfile.BoneOnly,
-                    combat: new(Admission.Registry, Admission.Catalog, value => Admission.Registry.QueueNotification(value))) :
+                    combat: new(Admission.Registry, Admission.Catalog, value => Admission.Registry.QueueNotification(value)),
+                    construction: Construction, poses: withConstruction ? () => Poses! : null) :
                     withEffects ? lua => new ZoneManagedNpcScriptEffects(lua, () => Clock.GameMicroseconds) : null);
+            if (withConstruction) Runtime.Actors.ProxyPoses = Poses = new(Runtime.Actors, Bodies!);
             if (Runtime.ScriptServices is ZoneManagedNpcSceneScriptServices components)
                 Runtime.Actors.SmartObjectStateConsumer = components.ModifySmartObjectStates;
             Admission.World.AttachAiRuntime(Runtime.Actors.Actors.AiRuntime);
             if (!Runtime.Bootstrap().Ready) throw new InvalidOperationException(Runtime.Scripts.BootstrapReport.Refusal);
         }
         public void Dispose()
-        { try { Admission.Dispose(); } finally { try { Runtime.Dispose(); } finally { try { Bodies?.Dispose(); } finally { Profiles.Dispose(); } } } }
+        { try { Admission.Dispose(); } finally { try { Runtime.Dispose(); } finally { try { Poses?.Dispose(); Construction?.Dispose(); Bodies?.Dispose(); } finally { Profiles.Dispose(); } } } }
     }
 
     private sealed class Source : IZoneScriptSource
@@ -247,13 +520,21 @@ public sealed class ManagedNpcRuntimeTests
                     AICharacter.default={AnyBehavior={GO_TO_SPAWN='spawning',GO_TO_IDLE='idle'},Constructor=function(self,e)
                       e.AI.constructed=true;function e.AI:SetParamX2(p)self.param=assert(loadstring('return {'..p..'}'))()end
                     end}
-                    AIBehaviour={AVAILABLE={},INTERNAL={},DEFAULT={},spawning={Name='spawning'},idle={Name='idle'}}
+                    AIBehaviour={AVAILABLE={},INTERNAL={},DEFAULT={},spawning={Name='spawning'},idle={Name='idle',Constructor=function(self,e)
+                      e.idleConstructorStarted=(e.idleConstructorStarted or 0)+1
+                      if e.failIdleConstructor=='group' then AI.GetGroupOf(e.id)end
+                      if e.failIdleConstructor=='position' then e.unit:NpcSetCheckPosContext(1)end
+                      e.idleConstructorFinished=true
+                    end}}
                     X2AI={commandSet={CanRunCommandSet=function()return false end,RunCommandSet=function()end,EndCommandSet=function()end}}
                     """,
                 "scripts/entities/actor/npc.lua" => """
                     BasicActor={ResetCommon=function(e)e.AI={commandSet=new(X2AI.commandSet)}end}
                     BasicAI={OnReset=function(e)BasicActor.ResetCommon(e)end}
-                    npc={ActorTemplate={Properties={soclasses_SmartObjectClass='Npc'},Server={OnTimer=function(e,id,ms)timerCalls=(timerCalls or 0)+1 end,OnUpdate=function(e)
+                    npc={ActorTemplate={Properties={soclasses_SmartObjectClass='Npc'},Server={OnTimer=function(e,id,ms)
+                      timerCalls=(timerCalls or 0)+1
+                      if e.enterBehaviorOnTimer then EnterRecordedFailure();e.afterBehaviorOnTimer=true end
+                    end,OnUpdate=function(e)
                       if failUpdate and e.failUpdate then System.Error('controlled update refusal')end
                     end,OnInit=function(e)
                       observedEntity=e;BasicAI.OnReset(e)

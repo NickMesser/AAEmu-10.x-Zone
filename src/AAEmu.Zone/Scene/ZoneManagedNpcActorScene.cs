@@ -30,10 +30,12 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     public ZoneNpcActorRegistry Actors { get; }
     public ZoneAiObjectRegistry Objects { get; } = new();
     public ZoneGoalPipeCatalog GoalPipes { get; }
+    public ZoneManagedNpcPointObjects Points { get; }
     public bool IsDisposed { get; private set; }
     public float FrameTimeSeconds { get; }
     public bool GlobalAiUpdateAlways { get; set; }
     public Action<ZoneManagedNpcActor, string>? SmartObjectStateConsumer { get; set; }
+    public Func<ZoneManagedNpcActor, ZoneGoalDefinition, IZoneGoalOperation>? OperationFactory { get; set; }
     public ulong EventCount { get; private set; }
     public IReadOnlyList<ZoneManagedNpcActorEvent> RecentEvents => _events.ToArray();
     public int Count => _actors.Count;
@@ -53,6 +55,7 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
         if (framePeriod <= TimeSpan.Zero || !float.IsFinite((float)framePeriod.TotalSeconds))
             throw new ArgumentOutOfRangeException(nameof(framePeriod));
         FrameTimeSeconds = (float)framePeriod.TotalSeconds;
+        Points = new(this);
         Actors = new(lua, Objects, this);
     }
 
@@ -104,12 +107,14 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
                 throw new InvalidOperationException("The NPC generation retired during actor admission.");
             managed.Attach(entry);
             _actors.Add(actor, managed);
+            managed.AttachPoints(Points.Bind(managed, npc.Unit.Snapshot.Name));
             // CPipeUser constructor 31163974 selects the catalog's real initial pipe.
             phase.Pipes.Select(0, "_first_");
         }
         catch (Exception failure)
         {
             _actors.Remove(actor);
+            managed.Points?.Dispose();
             managed.MarkRetired();
             try { if (entry is not null) Actors.Remove(entry); else phase.Dispose(); }
             catch (Exception cleanup) { throw new AggregateException(failure, cleanup); }
@@ -151,6 +156,7 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     {
         if (!_actors.Remove(actor, out var managed)) return false;
         managed.MarkRetired();
+        managed.Points?.Dispose();
         foreach (var other in _actors.Values.ToArray()) other.Services.RemoveTarget(managed.AiObject);
         try { Actors.Remove(managed.Entry); }
         finally { managed.Services.ReleaseTargets(); }
@@ -158,6 +164,10 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     }
 
     internal long FrameMicroseconds() => _frameMicroseconds();
+    internal void RetirePoint(ZoneAiObjectState point)
+    {
+        foreach (var actor in _actors.Values.ToArray()) actor.Services.RemoveTarget(point);
+    }
     internal uint NextRandom() => _random();
     internal void LoadScript(string name) => _loadScript(name);
     internal Vector3 Position(ZoneManagedNpcActor actor) { Require(actor); return _position(actor.Npc.Unit); }
@@ -165,7 +175,14 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     {
         ObjectDisposedException.ThrowIf(IsDisposed, this);
         foreach (var actor in _actors.Values.ToArray())
-            if (IsCurrent(actor)) actor.AiObject.Position = _position(actor.Npc.Unit);
+            if (IsCurrent(actor)) RefreshPosition(actor);
+    }
+    /// <summary>Borrowed proxy owner. Its frame publication owns eye position; entity queries retain their origin.</summary>
+    public ZoneManagedNpcAiPose? ProxyPoses { get; set; }
+    internal void RefreshPosition(ZoneManagedNpcActor actor)
+    {
+        Require(actor);
+        actor.AiObject.Position = ProxyPoses?.Find(actor.Handle)?.Last?.Position ?? _position(actor.Npc.Unit);
     }
     internal ZoneManagedNpcActor? ObjectOwner(object target) =>
         _actors.Values.FirstOrDefault(actor => ReferenceEquals(actor.AiObject, target) && IsCurrent(actor));
@@ -215,6 +232,7 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
         List<Exception>? errors = null;
         foreach (var actor in _actors.Keys.ToArray())
             try { Remove(actor); } catch (Exception error) { (errors ??= []).Add(error); }
+        try { Points.Dispose(); } catch (Exception error) { (errors ??= []).Add(error); }
         try { Actors.Dispose(); } catch (Exception error) { (errors ??= []).Add(error); }
         if (errors is not null) throw new AggregateException("Managed NPC actors failed to retire.", errors);
     }
@@ -231,6 +249,8 @@ public sealed class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcBehaviorS
     public ZoneActorHandle Handle { get; }
     public ZoneNpc Npc { get; }
     public ZoneAiObjectState AiObject { get; }
+    public ZoneActorLookState LookState { get; }
+    public ZoneManagedNpcPointLease? Points { get; private set; }
     public ZoneNpcActorEntry Entry { get; private set; } = null!;
     public ZoneActorControlState Controls => Services.Controls;
     public ZoneActorNavigationState Navigation => Services.Navigation;
@@ -248,9 +268,11 @@ public sealed class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcBehaviorS
         ZoneAiObjectState aiObject, ZoneActorControlState controls, bool isPuppet)
     {
         _scene = scene; Handle = handle; Npc = npc; AiObject = aiObject; IsPuppet = isPuppet;
+        LookState = new(controls);
         Services = new(scene, this, controls);
     }
     internal void Attach(ZoneNpcActorEntry entry) => Entry = entry;
+    internal void AttachPoints(ZoneManagedNpcPointLease points) => Points = points;
     internal void AttachBehavior(ZoneNpcBehavior behavior) => Behavior = behavior;
     internal void MarkRetired() { _retired = true; Behavior = null; }
     public void SetActive(bool active) { _scene.Require(this); AiObject.Enabled = active; }
@@ -271,7 +293,7 @@ public sealed class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcBehaviorS
         _scene.Require(this);
         if (!float.IsFinite(elapsedSeconds) || elapsedSeconds < 0) throw new ArgumentOutOfRangeException(nameof(elapsedSeconds));
         if (!AiObject.Enabled) return;
-        AiObject.Position = _scene.Position(this);
+        _scene.RefreshPosition(this);
         Entry.Phase.Update();
     }
     public void LoadScript(string filename) { _scene.Require(this); _scene.LoadScript(filename); }

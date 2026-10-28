@@ -23,18 +23,20 @@ public sealed class ZoneManagedNpcGameScriptRequests
     private readonly ZoneSceneNpcCatalog _catalog;
     private readonly Action<ZoneFrame> _send;
     private readonly Func<ZoneManagedNpcActor, ZoneNpcCastingRequestState> _castFields;
+    private readonly bool _queueWithActorScope;
     public ZoneManagedNpcGameScriptRequests(ZoneUnitRegistry units, ZoneSceneNpcCatalog catalog,
-        Action<ZoneFrame> send, Func<ZoneManagedNpcActor, ZoneNpcCastingRequestState> castFields)
+        Action<ZoneFrame> send, Func<ZoneManagedNpcActor, ZoneNpcCastingRequestState> castFields, bool queueWithActorScope = false)
     {
         _units = units ?? throw new ArgumentNullException(nameof(units)); _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
         _send = send ?? throw new ArgumentNullException(nameof(send)); _castFields = castFields ?? throw new ArgumentNullException(nameof(castFields));
+        _queueWithActorScope = queueWithActorScope;
     }
 
     /// <summary>39353020: request template removal with invalid instance0/reason10 and return Lua true.</summary>
     public bool RemoveBuff(ZoneManagedNpcActor actor, uint buffType)
     {
         Require(actor);
-        _send(new BuffRemovalRequest(actor.Npc.ObjectId, 0, buffType, 10).ToFrame());
+        Send(actor, new BuffRemovalRequest(actor.Npc.ObjectId, 0, buffType, 10).ToFrame());
         return true;
     }
 
@@ -46,10 +48,20 @@ public sealed class ZoneManagedNpcGameScriptRequests
     public void StopCasting(ZoneManagedNpcActor actor)
     {
         Require(actor); var fields = _castFields(actor); Require(actor);
-        if (fields.CurrentSkill != 0) _send(StopCastingFrame(actor.Npc.ObjectId, 0, fields.CurrentSkill));
+        if (fields.CurrentSkill != 0) Send(actor, StopCastingFrame(actor.Npc.ObjectId, 0, fields.CurrentSkill));
         Require(actor);
         var timeline = fields.CastTimeline != 0 ? fields.CastTimeline : fields.ChannelTimeline;
-        if (timeline != 0) _send(StopCastingFrame(actor.Npc.ObjectId, timeline, 0));
+        if (timeline != 0) Send(actor, StopCastingFrame(actor.Npc.ObjectId, timeline, 0));
+    }
+
+    /// <summary>Discard only unsent requests owned by this exact script actor generation.</summary>
+    public void Retire(ZoneManagedNpcActor actor)
+    { if (_queueWithActorScope) _units.DiscardNotifications(actor.Npc.Unit, actor); }
+    private void Send(ZoneManagedNpcActor actor, ZoneFrame frame)
+    {
+        Require(actor);
+        if (_queueWithActorScope) _units.QueueNotification(frame, actor.Npc.Unit, actor);
+        else _send(frame);
     }
 
     /// <summary>ZWStopCasting serializer39368F40: World Unit bc, uint32 timeline, uint32 skill.</summary>

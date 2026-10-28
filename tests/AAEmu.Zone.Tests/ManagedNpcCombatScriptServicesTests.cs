@@ -105,6 +105,53 @@ public sealed class ManagedNpcCombatScriptServicesTests
         await Assert.That(() => services.ClearCombat(actor.Actor)).Throws<InvalidOperationException>();
     }
 
+    [Test]
+    public async Task SaveUnitAttrCopiesActualFlyingAndPreservesTheIndependentPendingByte()
+    {
+        using var fixture = new ManagedNpcScriptEffectsTests.Fixture(); using var actor = fixture.Admit();
+        var frames = new List<ZoneFrame>(); var attributes = new ZoneNpcAiUnitAttributeRestoreState();
+        using var services = new ZoneManagedNpcCombatScriptServices(fixture.Admission.Registry, fixture.Admission.Catalog, frames.Add);
+        using var owner = services.Bind(actor.Actor, attributes);
+        actor.Actor.Npc.Unit.SetCombat(true);
+        var pose = actor.Actor.Npc.Unit.Pose;
+        services.SaveUnitAttr(actor.Actor, 0);
+        await Assert.That(attributes.Mode).IsEqualTo(3);
+        await Assert.That(attributes.OriginalFlying).IsFalse();
+        await Assert.That(attributes.RestorePending).IsFalse();
+        actor.Actor.Npc.Unit.IsFlying = true;
+        services.SaveUnitAttr(actor.Actor, 0);
+        await Assert.That(attributes.Mode).IsEqualTo(2);
+        await Assert.That(attributes.OriginalFlying).IsTrue();
+        await Assert.That(attributes.RestorePending).IsFalse();
+        attributes.CopyFields(3, true, false);
+        services.SaveUnitAttr(actor.Actor, -1);
+        await Assert.That(attributes.Mode).IsEqualTo(-1);
+        await Assert.That(attributes.OriginalFlying).IsTrue();
+        await Assert.That(attributes.RestorePending).IsTrue();
+        await Assert.That(actor.Actor.Npc.Unit.IsInCombat).IsTrue();
+        await Assert.That(actor.Actor.Npc.Unit.IsFlying).IsTrue();
+        await Assert.That(actor.Actor.Npc.Unit.Pose).IsEqualTo(pose);
+        await Assert.That(frames.Count).IsEqualTo(0);
+        await Assert.That(() => services.ClearCombat(actor.Actor)).Throws<NotSupportedException>();
+    }
+
+    [Test]
+    public async Task SaveUnitAttrRequiresTheExactBoundGenerationAndRetainsAllNonzeroOptionBits()
+    {
+        using var fixture = new ManagedNpcScriptEffectsTests.Fixture(); using var actor = fixture.Admit();
+        var attributes = new ZoneNpcAiUnitAttributeRestoreState();
+        using var services = new ZoneManagedNpcCombatScriptServices(fixture.Admission.Registry, fixture.Admission.Catalog, _ => { });
+        await Assert.That(() => services.SaveUnitAttr(actor.Actor, 2)).Throws<InvalidOperationException>();
+        using var owner = services.Bind(actor.Actor, attributes);
+        services.SaveUnitAttr(actor.Actor, int.MinValue);
+        await Assert.That(attributes.Mode).IsEqualTo(int.MinValue);
+        services.SaveUnitAttr(actor.Actor, 0x10002);
+        await Assert.That(attributes.Mode).IsEqualTo(0x10002);
+        fixture.Scene.Remove(actor.Actor.Handle);
+        await Assert.That(() => services.SaveUnitAttr(actor.Actor, 3)).Throws<InvalidOperationException>();
+        await Assert.That(attributes.Mode).IsEqualTo(0x10002);
+    }
+
     private static uint ReadUnit(ZoneFrame frame)
     { var reader = new ZoneReader(frame.Body.Span); var value = reader.ReadBc(); reader.EnsureFullyConsumed(); return value; }
 

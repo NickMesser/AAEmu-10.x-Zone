@@ -28,4 +28,7 @@ python -I tools/capture/wzdecode.py captures/ours.bin
 
 The replay does not react to the zone, so World-assigned ids in later frames only line up while the zone issues the same requests in the same order as the native zone did.
 
+Writes use a 60-second timeout independently of the short receive poll. End-to-end timing still
+includes startup and receive backlog; a successful replay does not establish throughput parity.
+
 Captures contain your World's live data. Keep them out of the repository.

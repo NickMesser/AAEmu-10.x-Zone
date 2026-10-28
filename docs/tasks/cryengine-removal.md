@@ -22,8 +22,8 @@ queries. They do not remove CryEngine. Existing configurations retain their orig
 | `cry3dengine_dedicate.dll` | World/cell selection, authored heightmaps/surfaces/seams, decoded placements, default/picking CGF proxies including referenced source streams and curved primitives | Vegetation, visibility/area behavior, water volumes and procedural objects |
 | `cryphysics_dedicate.dll` | True upright capsule/cylinder queries, authored dimensions/dynamics, queued stances, requested/actual velocity ownership, mapped slope/air/landing response, no-platform network corrections, terrain/static recovery, shared-mesh BVHs, affine instances and material IDs | Complete stair/suspension and retained support behavior, native recovery fallback/contact state, world speed caps, friction, rigid bodies, swimming, vehicles, ragdolls and exact tangent conformance |
 | `cryentitysystem_dedicate.dll` | Player/NPC generations, registry/spatial membership, model-class generation, original entity-script initialization, owned entity timers/updates, initial character slots and collider event43 receiver | Bound/dynamic attachments, remaining event receivers, general components, areas and complete entity state |
-| `cryaction_dedicate.dll` | Player movement/frame pipeline, real managed goal/control phases, authored behavior construction and signal bindings | Complete NPC service admission, game-object actions and FlowGraphs |
-| `cryaisystem_dedicate.dll` | Provider/actor/proxy ownership, signals, scheduled NPC AI timers, tiled authored graph import, bounded A*, physical query adapter and wish-only path follower | Full Puppet parameters, perception, physical NPC route admission, steering, leash and combat decisions |
+| `cryaction_dedicate.dll` | Player movement/frame pipeline, descriptor-written NPC construction, installed collider parameters, accepted-stance proxy poses, real managed goal/control phases, authored behavior construction and signal bindings | Complete animated-character/gameplay state, NPC service admission, game-object actions and FlowGraphs |
+| `cryaisystem_dedicate.dll` | Provider/actor/proxy ownership, reference/look dummies, signals, scheduled NPC AI timers, bounded skill selection/request/ACK execution, tiled authored graph import, bounded A*, physical query adapter and wish-only path follower | Full Puppet parameters, group/perception services, physical NPC route admission, steering, leash and complete combat decisions |
 | `cryscriptsystem.dll` | Managed source VM, LNUM compatibility transforms, original 73-file NPC bootstrap and explicit game bindings; no native Lua DLL | Full Lua 5.1/bytecode/library compatibility and remaining actor/game APIs |
 | `cryanimation.dll` | Authored model/stance dimensions, CDF/compiled-bone inventory, unbound bone visibility and bounded posture/action cache | Bound objects, skeleton collision, full animation graphs/events and motion driven by animation |
 | `cryrendernull.dll` | Managed host is headless and never constructs a renderer | No renderer is required; retain checks that no rendering service enters the server path |
@@ -51,8 +51,8 @@ comparison; managed scene startup never constructs them.
 - [x] **CE-04 — Managed AI ownership and execution seam.** Fresh behavior state per generation,
   exclusion across managed/native providers, deterministic wrapped-clock scheduling, target
   retirement, callback-safe cancellation and disposal, and an adapter to existing goal pipes.
-  The production host loads the original source and admits authored construction only when a
-  supported actor profile is supplied; known incomplete profiles refuse before expensive work.
+  The production host loads the original source and defers original NPC construction to at most
+  one generation per frame, with actual component owners and exact refusal retirement.
   Signal-ready actors can consume their scheduled AI timers independently of the still-closed full
   gameplay gate. Remaining service dependencies retain named admission refusals.
 - [x] **CE-05 — Evidence without engine modules.** Synthetic host integration checks join,
@@ -66,6 +66,21 @@ character-shape implementation passed 272 standalone tests. The overlap/support 
 terrain implementation passed 329; the current stance/movement slice passes **411 standalone tests**.
 The NPC scripting/navigation slice passes **500 standalone tests**. The solution builds
 successfully; analyzer warnings remain.
+
+The current NPC construction/casting/skill slice passes **663 standalone tests**. Production now
+queues real per-generation construction, installs descriptor-written animated parameters, and
+owns accepted-stance proxy poses, reference/look dummies, saved AI attributes and bounded skill
+requests/acknowledgments. Recorded Lua constructor failures retire before subsequent physical
+preparation or script effects. Initial construction passes for all five sampled original NPC
+profiles; their idle group/position-check dependencies remain explicit failures under CE-08.
+
+A fresh recorded entry with this composition admits player387 grounded at the accepted local
+position, performs NPC construction and retires cleanly. The post-player inventory contains
+80 modules and zero CryEngine/native-Lua modules. All three player movement payloads match
+the previous accepted capture after normalizing only their server timestamps. The control takes
+110.766seconds; continuous ingress fairness and sustained real-client/NPC gameplay remain open.
+Evidence uses `npc-ingress-budget-entry-*`, `captures/npc-ingress-budget-entry-output.bin` and
+`research/npc-native-free-batch-evidence.json` under the runtime directory.
 
 The final source-VM/tiled-navigation zone-129 replay also admits player 387, grounded at local
 `(1172.5996,1646.5,366.3365)`, emits three movement reports and retires on clean
@@ -373,9 +388,10 @@ Implemented: the original 73-file NPC source bootstrap, actual AI character/beha
 database parameter closures, source-ordered database model-class generation, cached original
 `npc:Create`, original `common.new`, server initialization, character and spawning constructors.
 The composition supports real actor/goal/proxy owners and unwinds refused generations.
-Production refuses its incomplete actor profile before model-class compilation or per-entity
-cloning/initialization. Repeated known-failing attachment calls caused receive backlog
-in the first real-entry control; unsupported profiles must not block player admission.
+Production performs at most one queued original initialization per frame without World packet
+dispatch since the previous frame. Existing simulation continues during packet bursts. Pending generations
+have no script/body ownership and cannot receive signals. Exact readiness and refusal transitions
+remain separate from the full gameplay gate; a work-count limit is not a wall-clock performance claim.
 Entity IDs and proxy keys are allocated independently of World/NPC IDs. Signals and original
 scheduled AI time events use exact script ownership; the full gameplay gate remains closed.
 
@@ -399,21 +415,30 @@ after argument decoding and is implemented accordingly.
   active state, inertia and actual target geometry-bit query filters.
 - [ ] Complete other collider modes, non-pushable auxiliary lifetime, type26 and collision-type
   consumers, and a unified native command order when wishes/stances/corrections are already queued.
-- [ ] Connect actual animated-character frame, physicalization and reset producers to the
-  controller's frame/force fields. A loaded body alone does not establish those constructor events.
+- [x] Install CActor-derived animated dynamics after exact body physicalization and sample the
+  actual construction/reset frame and entity29 pre-physics frame. Initial body creation does not
+  invent a force-rebuild event. Serialization reset and later reset/rephysicalization remain separate.
 - [x] Own actual smart-object class/state registration, literal set/add, expression modify,
   first Busy-link propagation and native state-filter evaluation. This does not execute rules.
 - [x] Route actual Unit combat transitions, including death, into entity44 script-proxy interval
   selection. Preserve script-versus-WZ attack-faction-flag order and retire the subscription.
 - [x] Own bounded fresh/no-target ClearCombat and its native AI-unit restore record. Preserve
   attention and reject saved-flying/nonempty-threat effects until their actual consumers exist.
-- [ ] Complete Puppet/GameParams, persistent stick, indexed reference/look objects, actor-health
-  update producers, script-state switching and full combat/flying restoration.
+- [x] Own descriptor-written CActor/GameParams, derived class selection, constructor health,
+  reference/look dummy inventory and live accepted-stance AI eye/body/move/view pose publication.
+  The dummy inventory stays separate from the nearest-object type index.
+- [ ] Complete Puppet parameters, persistent stick, actor-health update producers, look/movement
+  request generation, script-state switching and full combat/flying restoration.
 - [x] Implement source-backed RemoveBuff/StopCasting World request serialization and bounded
   default-posture/action-cache semantics with explicit construction/dependency profiles.
-- [ ] Attach posture, casting, buff, combat and position-check services used by each admitted
-  behavior. Supply actual cast/current-skill/channel fields, animation driver/actions and resolved
-  NPC idle-skill inventory. ClearCombat restores saved flight attributes before its other effects;
+- [x] Own SaveUnitAttr's actual mode/original-flying record without inventing pending restoration.
+  Admission and World flying changes preserve the independent packed bit9 producer.
+- [x] Own independent cast/current-skill/channel fields from actual admission and World handlers,
+  ordered skill callbacks, authored NPC child lists, the common skill-pattern picker/request/ACK
+  path and original ordinary-actor aim-sphere range/height checks.
+- [ ] Complete posture, buff, combat and position-check dependencies used by every behavior,
+  animation driver/actions, compound aim volumes, obstacle rays, controllers and locomotion.
+  ClearCombat restores saved flight attributes before its other effects;
   it must not be replaced with a guessed attention/movement reset. Unsupported operations refuse.
 
 Remove the `HasAiActor` gameplay gate only for admitted behaviors whose dependencies are present.
@@ -421,20 +446,50 @@ Do not flip it globally: several reachable leaves still refuse.
 
 Next admission sequence from the original-resource control:
 
-1. Finish the actual CActor/Puppet/GameParams producers, including installed animated-character
-   dynamics and health update fields. The control's explicit constructor-zero dynamics and partial
-   proxy profile are not production construction evidence.
-2. Supply the real skill-pattern executor used by templates7987 (`flytrap`),8173 (`almighty_npc`)
-   and8177 (`big_monster_roaming`); their character constructors currently refuse `AI.SetSkillUsePattern`.
-3. Own independent cast/current-skill/channel fields, the position-check consumer and complete
-   posture driver/action/idle-skill inventory, then exercise scheduled callbacks and goal execution.
+1. Finish the remaining Puppet, physical look/movement and actor-health update producers. The
+   current descriptor construction and eye-position owners do not implement perception or turning.
+2. Expand actual skill execution beyond the bounded self/in-range ordinary-actor profiles:
+   persistent stick/approach, base attacks, special targeting, compound volumes, obstacles,
+   equipment/modifier resolution, controllers and complete effect/plot handling.
+3. Complete the position-check consumer, posture driver/actions and remaining original behavior
+   APIs, then exercise sustained scheduled callbacks and combat against World acknowledgments.
 4. Admit complete CActor movement metadata and native NPC replication cadence before enabling
    NPC wire output. Continue physical query/route, perception, hostility, leash and combat controls.
 
-Templates562/5941 already execute original initialization and `GO_TO_IDLE` transitions into
-`hold_position`/`roaming` with the explicit partial control profile. All five real-recorded control
-generations release their character, body, smart-object, script and proxy owners; unsupported
-profiles remain refusals. This is a narrower result than complete NPC gameplay admission.
+Measure cold-construction cost and admission fairness under continuous World traffic. The
+current work-count/ingress policy is explicit replacement scheduling, not native throughput parity.
+
+The next group/position-check work has these concrete prerequisites from the original10.x path:
+
+- Own the actual AI group record. CGame392ADC00 reads `Properties.groupid`, then
+  `PropertiesInstance.groupid`; fresh AIParams defaults0. Registration310063BC applies it.
+  NPC39346960 can later apply the real spawn group's type, ID and member index. Verify both
+  producers before admitting a bounded ungrouped profile; do not substitute a constant0 for
+  unknown membership. Group-leader31049B58 queries the actual group map and exact AI identity.
+- Resolve the real current-region query used by3933D0E0. Rectangular scene bounds alone do not
+  establish that region lookup or its missing-cell/boundary behavior.
+- Consume actual `AI.idlePos`, `talkPos` and `spawnPos` in their context-specific 3D checks.
+  The apparent movement gate is the group record at AIObject+212, not locomotion. Outside-region
+  spawn recovery is suppressed by actual Puppet alertness2, not an attention-target type.
+- Port the full relocation producer3925A7C0→39269040: physical Action4 reset, Action10 payload,
+  actual model/entity transform, Unit/spatial publication and generation invalidation. A raw
+  AI-position assignment or the initial body teleport omits required effects.
+- Own the per-NPC replication sampler reset and required default-posture restoration. The
+  global movement gate and a cached context integer do not implement those consumers.
+
+Start with original ungrouped, upright, unparented NPCs. Exercise HOLD/ROAMING/TALK thresholds,
+grouped nonleaders, missing regions, alertness2, physical reset order, posture and retirement
+before opening the position-check API. The local source audit is
+`research/npc-group-position-next.md`; original resources stay outside the repository.
+
+The current original-resource construction control admits initial scripts for all five sampled
+templates562/5941/7987/8173/8177 using actual construction, body, character, health, pose and skill
+owners. GO_TO_IDLE still fails on AI group services for562/7987 and the position-check consumer
+for5941/8173/8177. Recorded constructor errors now retire the exact generation before subsequent
+physical preparation or script effects. A changed behavior name is not a successful constructor.
+All nine owner families retire and no engine/native-Lua module loads. Evidence is
+`research/npc-components-construction-control.json` under the runtime directory; its unstepped
+bodies do not establish terrain, perception, combat or full gameplay admission.
 
 Acceptance: an authored idle/talk NPC executes its initialization and a named signal; a hostile
 NPC runs its actual authored state transitions; missing behavior remains a named admission
@@ -459,7 +514,7 @@ following policies remain explicit replacements, not recovered X2 walkability/st
 - [ ] Supply actual copied CActor replication fields and the NPC manager's original cadence/CVars.
   Missing metadata suppresses encoding. Controls with declared copied fields cover real fall,
   spatial crossing, wall stop, wire conversion and100frames/100sharedsteps; production route
-  admission, steering and full actor construction remain gated.
+  admission, steering and complete Puppet/actor movement producers remain gated.
 - [ ] Supply truthful full-region terrain/brush/entity/vegetation coverage to route and visibility
   queries. Missing owners cannot be represented as clear space.
 - [ ] Recover/compare X2 walkability, native route costs, steering, stairs and moving support.

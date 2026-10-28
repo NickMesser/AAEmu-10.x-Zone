@@ -158,6 +158,26 @@ public sealed class ManagedLuaRuntimeTests
     }
 
     [Test]
+    public async Task NestedParameterClosuresRetainTheActualMissingServiceMessage()
+    {
+        using var lua = new ZoneManagedLuaRuntime();
+        using var missing = lua.CreateFunction(_ => throw new NotSupportedException("unit.SaveUnitAttr needs its actual owner"));
+        lua.SetGlobal("missing_service", missing);
+        using var nested = lua.Execute("""
+            local entity={AI={}}
+            function entity.AI:SetParamX2(text)
+                local f=assert(loadstring('return function() '..text..' end'))()
+                f()
+            end
+            return function() entity.AI:SetParamX2('missing_service()') end
+            """);
+        string? message = null;
+        try { lua.Invoke((ZoneLuaReference)nested[0]!); }
+        catch (ZoneLuaException error) { message = error.Message; }
+        await Assert.That(message is not null && message.Contains("unit.SaveUnitAttr needs its actual owner", StringComparison.Ordinal)).IsTrue();
+    }
+
+    [Test]
     public async Task CoroutineCallbacksCanReadOwnedTablesAndRuntimeCannotCloseDuringACall()
     {
         using var lua = new ZoneManagedLuaRuntime();

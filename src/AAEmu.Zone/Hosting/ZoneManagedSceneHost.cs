@@ -46,6 +46,8 @@ public static class ZoneManagedSceneHost
             ZoneManagedNpcRuntime? scripts = null;
             ZoneManagedNpcSceneScriptServices? npcComponents = null;
             ZoneManagedNpcPhysics? npcPhysics = null;
+            ZoneManagedNpcAiPose? npcPoses = null;
+            ZoneManagedNpcAdmissionQueue? admissions = null;
             ZoneNavigationTiledGraph? navigation = null;
             ZoneManagedPhysicsBackend? backend = null;
             ZoneSceneResourceScope? scope = null;
@@ -61,27 +63,59 @@ public static class ZoneManagedSceneHost
                 IZoneScriptSource source = inputs.Configuration.ScriptRoot is { } scriptRoot
                     ? new ZoneDirectoryScriptSource(scriptRoot) : new ZoneAssetScriptSource(inputs.Assets);
                 var random = new Random();
+                uint NextRandom() => (uint)random.NextInt64(1L << 32);
+                var construction = resources.Own(new ZoneManagedNpcActorConstruction(registry, catalog, inputs.Models));
+                var profiles = resources.Own(new ZoneManagedNpcProfileFactory(registry, catalog, Position, inputs.Models));
+                IZoneManagedNpcScriptServices ScriptServices(IZoneLuaRuntime lua)
+                {
+                    ZoneManagedNpcSkillPatterns? skills = null;
+                    skills = new ZoneManagedNpcSkillPatterns(lua, registry, catalog,
+                        inputs.NpcSkills ?? throw new InvalidOperationException("Managed NPC admission requires loaded NPC skill content."),
+                        inputs.Stats, value => registry.QueueNotification(value), NextRandom, () => clock.GameMicroseconds,
+                        new ZoneManagedNpcSkillGeometry(registry, inputs.Models, unit => npcComponents!.CopyModelTransform(unit)),
+                        (actor, value) => registry.QueueNotification(value, actor.Npc.Unit, skills!.GetRequestScope(actor)));
+                    try
+                    {
+                        return npcComponents = new ZoneManagedNpcSceneScriptServices(lua,
+                            inputs.Models, inputs.Assets, () => npcPhysics ?? throw new InvalidOperationException("NPC physics has not loaded."),
+                            _ => throw new InvalidOperationException("The CActor construction owner must install collider dynamics before binding."),
+                            Position, () => clock.GameMicroseconds,
+                            () => inputs.Startup.EngineCVars.GetBool("g_spectatorcollisions", false),
+                            ZoneCharacterAttachmentPublicationProfile.BoneOnly,
+                            new ZoneManagedNpcGameScriptRequests(registry, catalog, value => registry.QueueNotification(value), actor =>
+                            {
+                                var state = actor.Npc.Unit.Casting.CopySnapshot();
+                                return new(state.CastTimeline, state.CurrentSkill, state.ChannelTimeline);
+                            }, queueWithActorScope: true),
+                            inputs.Trace, new ZoneManagedNpcCombatScriptServices(registry, catalog, value => registry.QueueNotification(value)),
+                            construction, () => npcPoses ?? throw new InvalidOperationException("NPC proxy pose owner has not loaded."), skills);
+                    }
+                    catch { skills.Dispose(); throw; }
+                }
                 scripts = resources.Own(new ZoneManagedNpcRuntime(registry, catalog, inputs.Models, inputs.Npcs,
                     source, Position, () => clock.GameMicroseconds,
-                    () => (uint)random.NextInt64(1L << 32), () => DateTimeOffset.UtcNow, period, inputs.Trace,
-                    // Components are real scene owners. Complete CActor/GameParams construction
-                    // and required behavior services still gate CreateProfile before Lua cloning.
-                    createScriptServices: lua => npcComponents = new ZoneManagedNpcSceneScriptServices(lua,
-                        inputs.Models, inputs.Assets, () => npcPhysics ?? throw new InvalidOperationException("NPC physics has not loaded."),
-                        _ => throw new NotSupportedException("The complete CActor/GameParams producer must install actual animated-character dynamics before NPC admission."),
-                        Position, () => clock.GameMicroseconds,
-                        () => inputs.Startup.EngineCVars.GetBool("g_spectatorcollisions", false),
-                        ZoneCharacterAttachmentPublicationProfile.BoneOnly,
-                        new ZoneManagedNpcGameScriptRequests(registry, catalog, value => registry.QueueNotification(value),
-                            _ => throw new NotSupportedException("NPC casting requests require the independent cast, current-skill and channel field owner.")),
-                        inputs.Trace, new ZoneManagedNpcCombatScriptServices(registry, catalog, value => registry.QueueNotification(value)))));
+                    NextRandom, () => DateTimeOffset.UtcNow, period, inputs.Trace,
+                    createProfile: (handle, npc, entityId) => profiles.CreateWithConstruction(handle, npc, entityId, construction),
+                    createScriptServices: ScriptServices));
                 scripts.Actors.SmartObjectStateConsumer = npcComponents!.ModifySmartObjectStates;
-                notes.AddOnce("managed-npc-profile", "NPC script initialization profile remains unadmitted: " +
-                    "initial character slots, collider receiver, ground body and smart-object state owners are available; " +
-                    "complete actor parameters and required behavior/gameplay services still need admission. " +
+                scripts.Actors.OperationFactory = npcComponents.CreateUseSkillGoal;
+                notes.AddOnce("managed-npc-profile", "Original NPC construction and supported script services are admitted per generation, at most one initialization per frame. " +
+                    "Unsupported profiles retire with a named refusal; complete perception, locomotion and combat remain gated. " +
                     ZoneManagedNpcProfileFactory.CapabilitySummary);
-                ai = resources.Own(new ZoneManagedAiProvider(Kind, scripts.CreateActor));
-                var world = new ZoneSceneNpcWorld(registry, inputs.Startup, inputs.Npcs, Position,
+                ZoneSceneNpcWorld? world = null;
+                ulong admittedCount = 0;
+                admissions = resources.Own(new ZoneManagedNpcAdmissionQueue(scripts.CreateActor,
+                    handle => catalog.Find(handle) is { } npc && catalog.GetAdmission(handle)?.Phase != ZoneSceneNpcAdmissionPhase.Refused &&
+                        registry.Units.TryGetValue(npc.ObjectId, out var unit) && ReferenceEquals(unit, npc.Unit),
+                    (handle, error) => { ai!.RemoveNpc(handle); world!.RecordAiAdmissionRefusal(handle, error.Message); },
+                    handle =>
+                    {
+                        catalog.SetAdmission(handle, ZoneSceneNpcAdmissionPhase.Scheduled); admittedCount++;
+                        if (admittedCount <= 5 && catalog.Find(handle) is { } npc)
+                            inputs.Trace($"Managed NPC admitted unit={npc.ObjectId} template={npc.TemplateId} gen={handle.Generation}; script/constructor ready, gameplay parity=false.");
+                    }));
+                ai = resources.Own(new ZoneManagedAiProvider(Kind, admissions.Enqueue));
+                world = new ZoneSceneNpcWorld(registry, inputs.Startup, inputs.Npcs, Position,
                     () => backend, catalog, ai, clock, period, notes, inputs.Trace);
                 world.AttachAiRuntime(scripts.Actors.Actors.AiRuntime);
                 return new(world, new ZoneSceneUnitUpdateServices(registry, inputs.Startup, notes),
@@ -111,6 +145,8 @@ public static class ZoneManagedSceneHost
                         var materials = activation.SurfaceContent?.Catalog ?? ZonePhysicalSurfaceCatalog.DefaultOnly;
                         npcPhysics = resources.Own(new ZoneManagedNpcPhysics(backend, inputs.Models,
                             name => (ushort)materials.Resolve(name).Id));
+                        npcPoses = resources.Own(new ZoneManagedNpcAiPose(scripts!.Actors, npcPhysics));
+                        scripts.Actors.ProxyPoses = npcPoses;
                         var bootstrap = scripts!.Bootstrap();
                         inputs.Trace($"Managed original NPC script bootstrap ready={bootstrap.Ready}; files={scripts.Loader.LoadedScripts.Count}" +
                             (bootstrap.Refusal is { } refusal ? $"; {refusal}" : ""));
@@ -138,21 +174,26 @@ public static class ZoneManagedSceneHost
                     frameClock, diagnostics, bindings, origin);
                 var npcPhases = scope!.Own(new ZoneManagedNpcMovementFramePhases(phases, scene.Registry, catalog,
                     scripts!.Actors, npcPhysics ?? throw new InvalidOperationException("NPC physical owner has not loaded."),
-                    new ZoneMovementOutgoing(scene.Registry, diagnostics, localOnWire: false), diagnostics, origin));
+                    new ZoneMovementOutgoing(scene.Registry, diagnostics, localOnWire: false), diagnostics, origin,
+                    prePhysics: sample =>
+                    {
+                        TraceFaults(scripts!.PrePhysics(sample, ai!.RemoveNpc));
+                        //Cold Lua/model construction must not run once per queued World packet:
+                        //the fair packet+tick loop would otherwise throttle the entire entry burst.
+                        if (frame is { WorldPacketProcessed: false }) admissions!.Pump(1);
+                    },
+                    publishPose: (actor, _, _) => TraceFaults(scripts!.PublishPose(actor.Handle, ai!.RemoveNpc))));
                 frame = new(npcPhases, backend, players, ai, movement, scene.Simulation, inputs.Startup, period, inputs.Trace,
                     elapsed =>
                     {
-                        foreach (var fault in scripts!.TickScripts(elapsed, ai!.RemoveNpc))
-                        {
-                            inputs.Trace($"Managed NPC script callback refused actor={fault.Actor} {fault.Callback}: {fault.Message}");
-                        }
+                        TraceFaults(scripts!.TickScripts(elapsed, ai!.RemoveNpc));
                     }, beginFrame: clock.Advance);
                 scene.Frame = frame;
                 scope!.Own(frame);
                 inputs.Trace($"Zone ready: phase={scene.Phase}, engine=managed, terrainReady={activation!.Report!.TerrainReady}, cells={inputs.Layout.Cells.Count}; full feature parity=false");
                 inputs.Trace(scripts!.ScriptingStatus);
                 inputs.Trace(NavigationStatus());
-                inputs.Trace($"Managed AI: {ai!.Count} admitted script generations; perception, physical NPC admission and combat remain gated.");
+                inputs.Trace($"Managed AI: ready={admissions!.ReadyCount}, pending={admissions.PendingCount}, refused={admissions.RefusedCount}; perception, locomotion and full combat remain gated.");
                 inputs.Trace($"Managed physics supports authored terrain, {activation.Collision!.Geometry.InstanceCount} admitted static proxies and upright box/capsule/cylinder queries; " +
                     "living dimensions, queued stances, pivot, gravity and movement dynamics are authored. Suspension, vegetation, vehicles and rigid-body dynamics remain incomplete.");
                 foreach (var note in notes.Lines) inputs.Trace($"Partial leaf: {note}");
@@ -170,6 +211,11 @@ public static class ZoneManagedSceneHost
                 $"Managed navigation: tiles={navigation.Snapshot.TileLoads.Count(tile => tile.Status == ZoneNavigationTileLoadStatus.Loaded)}/{navigation.Snapshot.TileLoads.Count}, " +
                 $"nodes={navigation.Snapshot.Nodes.Count}, pairedLinks={navigation.Snapshot.AllocatedLinkPairCount}; " +
                 "topology search is available; physical NPC route admission remains gated.";
+            void TraceFaults(IReadOnlyList<ZoneManagedNpcScriptFault> faults)
+            {
+                foreach (var fault in faults)
+                    inputs.Trace($"Managed NPC callback refused actor={fault.Actor} {fault.Callback}: {fault.Message}");
+            }
         }
 
         ZoneSession AdoptSession(ZoneSceneCoordinator loaded) => ZoneSession.AdoptScene(loaded,

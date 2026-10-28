@@ -113,7 +113,7 @@ public sealed class ZoneManagedNpcPhysics : IDisposable
             Backend.AddActor(actor, admission.Description); added = true;
             RequireCurrent();
             Backend.Teleport(actor, localPosition, orientation);
-            var body = new ZoneManagedNpcBodyLease(this, actor, admission, exactOwnerCurrent);
+            var body = new ZoneManagedNpcBodyLease(this, actor, npc, admission, exactOwnerCurrent);
             _bodies.Add(actor, body);
             return body;
         }
@@ -181,6 +181,7 @@ public sealed class ZoneManagedNpcBodyLease : IZoneNavigationLocomotion, IZoneAn
     private readonly Func<bool> _exactOwnerCurrent;
     private bool _checking, _preparing;
     public ZoneActorHandle Actor { get; }
+    public ZoneNpc Npc { get; }
     public ZoneManagedNpcBodyAdmission Admission { get; }
     public int CurrentStanceSlot { get; private set; } = ZoneActorStanceCatalog.InitialSlot;
     public int DesiredStanceSlot { get; private set; } = ZoneActorStanceCatalog.InitialSlot;
@@ -206,9 +207,9 @@ public sealed class ZoneManagedNpcBodyLease : IZoneNavigationLocomotion, IZoneAn
             finally { _checking = false; }
         }
     }
-    internal ZoneManagedNpcBodyLease(ZoneManagedNpcPhysics owner, ZoneActorHandle actor,
+    internal ZoneManagedNpcBodyLease(ZoneManagedNpcPhysics owner, ZoneActorHandle actor, ZoneNpc npc,
         ZoneManagedNpcBodyAdmission admission, Func<bool> current)
-    { _owner = owner; Actor = actor; Admission = admission; _exactOwnerCurrent = current; }
+    { _owner = owner; Actor = actor; Npc = npc; Admission = admission; _exactOwnerCurrent = current; }
 
     /// <summary>World-local meters/second, not an actual velocity or pose. Native modes0/3 remain distinct.</summary>
     public void RequestVelocity(Vector3 velocity, ZonePhysicsLivingVelocityMode mode = ZonePhysicsLivingVelocityMode.Normal)

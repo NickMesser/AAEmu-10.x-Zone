@@ -51,7 +51,7 @@ public sealed class ZoneAnimatedColliderController : IDisposable
     public string? EffectRefusal => _effectRefusal;
 
     public ZoneAnimatedColliderController(Func<bool> isCurrent, IZoneAnimatedColliderBodyEffects body,
-        float inertia, float inertiaAcceleration, Func<bool> spectatorCollisions)
+        float inertia, float inertiaAcceleration, Func<bool> spectatorCollisions, int initialResetFrame = 0)
     {
         _isCurrent = isCurrent ?? throw new ArgumentNullException(nameof(isCurrent));
         _body = body ?? throw new ArgumentNullException(nameof(body));
@@ -59,6 +59,9 @@ public sealed class ZoneAnimatedColliderController : IDisposable
         if (!float.IsFinite(inertia) || !float.IsFinite(inertiaAcceleration))
             throw new ArgumentException("Animated collider dynamics must be actual finite actor values.");
         _inertia = inertia; _inertiaAcceleration = inertiaAcceleration;
+        //30660860 samples CSystem's current frame into+468 during construction/reset.
+        //The historical PhysicalizedFrame name is retained for existing snapshot consumers.
+        _physicalizedFrame = initialResetFrame;
     }
 
     public ZoneAnimatedColliderState CopyState() => new(Array.AsReadOnly((int[])_requests.Clone()),

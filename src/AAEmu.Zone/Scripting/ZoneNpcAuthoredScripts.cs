@@ -220,7 +220,7 @@ public sealed class ZoneNpcAuthoredScripts : IDisposable
     /// to refuse readiness without replacing the authored validation/error branch.
     /// </summary>
     public ZoneNpcAuthoredScriptReadiness Initialize(ZoneNpcAuthoredEntity entity, Func<bool> current,
-        Func<string?>? initializationError = null)
+        Func<string?>? initializationError = null, Action? afterEntityInitialization = null)
     {
         RequireBootstrap();
         ArgumentNullException.ThrowIfNull(entity); ArgumentNullException.ThrowIfNull(current);
@@ -240,6 +240,10 @@ public sealed class ZoneNpcAuthoredScripts : IDisposable
             using (var commands = Table(ai, "commandSet", "entity.AI.commandSet after Server.OnInit"))
             using (var canRun = Function(commands, "CanRunCommandSet", "entity.AI.commandSet.CanRunCommandSet")) { }
             entity.Progress = entity.Progress with { EntityInitialized = true };
+
+            phase = "authored NPC child installation";
+            afterEntityInitialization?.Invoke();
+            CheckCurrent(); CheckCallbackErrors();
 
             phase = $"AICharacter.{entity.CharacterName}.Constructor";
             entity.Behavior.QueueCharacterConstructor();

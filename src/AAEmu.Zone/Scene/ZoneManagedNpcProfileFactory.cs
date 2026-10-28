@@ -74,6 +74,26 @@ public sealed class ZoneManagedNpcProfileFactory : IDisposable
         return new(aiObject, 5, owner.AllocationKey, true, controls, owner);
     }
 
+    public ZoneManagedNpcActorProfile CreateWithConstruction(ZoneActorHandle actor, ZoneNpc npc, uint entityId,
+        ZoneManagedNpcActorConstruction construction)
+    {
+        ArgumentNullException.ThrowIfNull(construction);
+        var state = construction.Create(actor, npc);
+        try
+        {
+            var profile = Create(actor, npc, entityId);
+            return profile with { Lifetime = new ConstructedLifetime((ZoneManagedNpcProxyOwner)profile.Lifetime!, state) };
+        }
+        catch { state.Dispose(); throw; }
+    }
+
+    private sealed class ConstructedLifetime(ZoneManagedNpcProxyOwner proxy, ZoneManagedNpcActorConstructionLease construction)
+        : IZoneManagedNpcProfileLifetime
+    {
+        public void Attach(ZoneManagedNpcActor actor) => proxy.Attach(actor);
+        public void Dispose() { try { construction.Dispose(); } finally { proxy.Dispose(); } }
+    }
+
     internal void Retire(ZoneManagedNpcProxyOwner owner)
     {
         if (!_live.TryGetValue(owner.Actor, out var current) || !ReferenceEquals(current, owner)) return;
@@ -97,7 +117,7 @@ public sealed class ZoneManagedNpcProfileFactory : IDisposable
 /// the actual registry entry whose cadence state consumes this key; retirement seals that owner.
 /// The enclosing runtime separately owns entity-script timers, Lua references and physics.
 /// </summary>
-public sealed class ZoneManagedNpcProxyOwner : IDisposable
+public sealed class ZoneManagedNpcProxyOwner : IZoneManagedNpcProfileLifetime
 {
     private readonly ZoneManagedNpcProfileFactory _factory;
     private readonly ZoneAiObjectState _object;

@@ -13,7 +13,7 @@ public sealed class ZoneCooldownTests
 {
     private static ZoneSkillContent Content() => new(
     [
-        new(1, 0),
+        new(1, 0) { TimingId = 1 },
         new(2, 0) { CooldownTagId = 10, SecondCooldownTagId = 11 },
         new(3, 0) { CooldownTagId = 10, SwitchToSkillCooldown = true },
         new(4, 0) { CooldownTagId = 11 },
@@ -179,7 +179,7 @@ public sealed class ZoneCooldownTests
         var snapshot = UnitStateSnapshot.Read(Convert.FromHexString(UnitStateSnapshotTests.PlayerEnterBody));
         var unit = new ZoneUnit(snapshot, null, skillContent: Content());
         session.Registry.AddPrepared(unit);
-        session.Skills.Start(new(1, 17, new(0, snapshot.ObjectId, 0, 0, 0, 0), new(0, snapshot.ObjectId), 0));
+        session.Registry.ApplySkillStarted(new(1, 17, new(0, snapshot.ObjectId, 0, 0, 0, 0), new(0, snapshot.ObjectId), 1000));
         byte[] Body(short timeline)
         {
             var writer = new ZoneWriter(); writer.WriteBc(snapshot.ObjectId); writer.WriteInt16(timeline);
@@ -199,11 +199,15 @@ public sealed class ZoneCooldownTests
         using var command = connection.CreateCommand();
         command.CommandText = """
             CREATE TABLE skills (id, ability_id, cooldown_time, cooldown_tag_id, second_cooldown_tag_id,
-                third_cooldown_tag_id, charge_count, charge_cooldown_time, switch_to_skill_cooldown);
+                third_cooldown_tag_id, charge_count, charge_cooldown_time, switch_to_skill_cooldown, timing_id, channeling_time);
             CREATE TABLE levels (id, total_exp);
             CREATE TABLE tagged_skills (skill_id, tag_id);
-            INSERT INTO skills VALUES (1, 2, 1500, '--- :null', NULL, NULL, 3, 1000, 't');
-            INSERT INTO skills VALUES (2, 3, 5000, 10, 11, 12, 0, 0, 'f');
+            CREATE TABLE plots (id);
+            CREATE TABLE plot_events (id, plot_id);
+            INSERT INTO skills VALUES (1, 2, 1500, '--- :null', NULL, NULL, 3, 1000, 't', 1, 4000);
+            INSERT INTO skills VALUES (2, 3, 5000, 10, 11, 12, 0, 0, 'f', 0, NULL);
+            INSERT INTO plots VALUES (7);
+            INSERT INTO plot_events VALUES (8, 7);
             INSERT INTO tagged_skills VALUES (1, 10), (1, 10), (2, 10), (NULL, 10), (99, 10);
             """;
         command.ExecuteNonQuery();
@@ -211,6 +215,11 @@ public sealed class ZoneCooldownTests
         await Assert.That(content.Skills[1].CooldownTagId).IsEqualTo(0u);
         await Assert.That(content.Skills[1].SwitchToSkillCooldown).IsTrue();
         await Assert.That(content.Skills[1].ChargeCount).IsEqualTo(3u);
+        await Assert.That(content.Skills[1].TimingId).IsEqualTo(1u);
+        await Assert.That(content.Skills[1].ChannelingMilliseconds).IsEqualTo(4000);
+        await Assert.That(content.Skills[2].ChannelingMilliseconds).IsEqualTo(0);
+        await Assert.That(content.PlotEvents[8].PlotId).IsEqualTo(7u);
+        await Assert.That(content.PlotIds.Contains(7)).IsTrue();
         await Assert.That(content.Skills[2].ThirdCooldownTagId).IsEqualTo(12u);
         await Assert.That(content.SkillsWithTag(10).Order().SequenceEqual(new uint[] { 1, 2 })).IsTrue();
         await Assert.That(content.TagsForSkill(1).Count).IsEqualTo(1);

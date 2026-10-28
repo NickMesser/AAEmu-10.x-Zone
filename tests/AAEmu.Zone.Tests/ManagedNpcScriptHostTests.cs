@@ -70,6 +70,57 @@ public sealed class ManagedNpcScriptHostTests
     }
 
     [Test]
+    public async Task SaveUnitAttributeRequiresTheOriginalNumericArgumentBeforeInvokingItsOwner()
+    {
+        var effects = new Effects(); using var fixture = new Fixture(effects); using var actor = fixture.Admit();
+        fixture.Lua.SetGlobal("entity", actor.Prepared.EntityScript);
+        using var results = fixture.Lua.Execute("""
+            local absent=select('#',entity.unit:SaveUnitAttr())
+            local invalid=select('#',entity.unit:SaveUnitAttr('invalid'))
+            local numeric=select('#',entity.unit:SaveUnitAttr(123.9))
+            return absent,invalid,numeric
+            """);
+        for (var index = 0; index < 3; index++) await Assert.That(results[index]).IsEqualTo(0L);
+        await Assert.That(effects.SavedOptions.Count).IsEqualTo(1);
+        await Assert.That(effects.SavedOptions[0]).IsEqualTo(123);
+    }
+
+    [Test]
+    public async Task ReferencePositionUsesOwnedAttentionNumericEntityAndVectorOverloads()
+    {
+        using var fixture = new Fixture(new Effects()); using var actor = fixture.Admit(); using var target = fixture.Admit();
+        fixture.Lua.SetGlobal("entity", actor.Prepared.EntityScript);
+        fixture.Lua.SetGlobal("targetEntity", target.Prepared.EntityScript);
+        fixture.Lua.SetGlobal("targetEntityNumber", (double)target.Actor.AiObject.EntityId);
+        target.Actor.AiObject.Position = new(11, 22, 33);
+        using var values = fixture.Lua.Execute("""
+            local absent=select('#',AI.SetRefPointPosition(entity.id))
+            AI.SetAttentionTargetOf(entity.id,targetEntity.id)
+            local attention=AI.SetRefPointPosition(entity.id,nil)
+            local a=AI.GetRefPointPosition(entity.id)
+            local numeric=AI.SetRefPointPosition(entity.id,targetEntityNumber)
+            local b=AI.GetRefPointPosition(entity.id)
+            local vector=AI.SetRefPointPosition(entity.id,{x=4,y=5,z=6})
+            local c=AI.GetRefPointPosition(entity.id)
+            local direction=AI.SetRefPointDirection(entity.id,{x=0,y=4,z=3})
+            local d=AI.GetRefPointDirection(entity.id)
+            return absent,attention,a.x,a.y,a.z,numeric,b.z,vector,c.x,c.y,c.z,direction,d.y,d.z,
+                select('#',AI.SetRefPointPosition(entity.id,-1))
+            """);
+        await Assert.That(values[0]).IsEqualTo(0L);
+        foreach (var index in new[] { 1, 5, 7, 11 }) await Assert.That(Convert.ToDouble(values[index])).IsEqualTo(1d);
+        await Assert.That(values[2]).IsEqualTo(11L); await Assert.That(values[3]).IsEqualTo(22L);
+        await Assert.That(values[4]).IsEqualTo(33L); await Assert.That(values[6]).IsEqualTo(33L);
+        await Assert.That(values[8]).IsEqualTo(4L); await Assert.That(values[9]).IsEqualTo(5L); await Assert.That(values[10]).IsEqualTo(6L);
+        await Assert.That(Math.Abs(Convert.ToDouble(values[12]) - .8)).IsLessThan(.000001d);
+        await Assert.That(Math.Abs(Convert.ToDouble(values[13]) - .6)).IsLessThan(.000001d);
+        await Assert.That(values[14]).IsEqualTo(0L);
+        target.Binding.Dispose();
+        using var missing = fixture.Lua.Execute("return select('#',AI.SetRefPointPosition(entity.id,targetEntityNumber))");
+        await Assert.That(missing[0]).IsEqualTo(0L);
+    }
+
+    [Test]
     public async Task DedicatedMovementTargetValidatesArgumentsWithoutUsingServicesOrChangingPose()
     {
         //Every service in this profile refuses. The original dedicated leaf needs none of them.
@@ -157,11 +208,17 @@ public sealed class ManagedNpcScriptHostTests
         public int ScriptProxyResets { get; private set; }
         public float CombatInterval { get; private set; }
         public float PeaceInterval { get; private set; }
+        public List<int> SavedOptions { get; } = [];
+        public void SaveUnitAttr(ZoneManagedNpcActor actor, int option) => SavedOptions.Add(option);
         public float GetActorMaximumHealth(ZoneManagedNpcActor actor) => 731;
         public void SetEntityTimer(ZoneManagedNpcActor actor, int timerId, int milliseconds) => EntityTimers[(actor.Handle, timerId)] = milliseconds;
         public void SetScriptUpdateRate(ZoneManagedNpcActor actor, float combatInterval, float peaceInterval)
         { ScriptProxyResets++; CombatInterval = combatInterval; PeaceInterval = peaceInterval; }
         public void SetSmartObjectState(ZoneManagedNpcActor actor, string state, bool modify) => States[actor.Handle] = state;
+        public void SetReferencePosition(ZoneManagedNpcActor actor, Vector3 position) => actor.Scene.Points.SetReferencePosition(actor, position);
+        public void SetReferenceDirection(ZoneManagedNpcActor actor, Vector3 direction) => actor.Scene.Points.SetReferenceDirection(actor, direction);
+        public Vector3 GetReferencePosition(ZoneManagedNpcActor actor) => actor.Scene.Points.GetReferencePoint(actor).Position;
+        public Vector3 GetReferenceDirection(ZoneManagedNpcActor actor) => actor.Scene.Points.GetReferencePoint(actor).MoveDirection;
     }
 
     private sealed class Fixture : IDisposable

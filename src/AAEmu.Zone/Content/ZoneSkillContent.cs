@@ -7,6 +7,10 @@ namespace AAEmu.Zone.Content;
 
 public sealed record SkillDefinition(uint Id, uint AbilityId)
 {
+    /// <summary>Native descriptor +396; successful StartSkill records a cast only for timing_id == 1.</summary>
+    public uint TimingId { get; init; }
+    /// <summary>Signed descriptor +88; FireSkill starts a channel timeline only when greater than zero.</summary>
+    public int ChannelingMilliseconds { get; init; }
     public uint CooldownMilliseconds { get; init; }
     public uint CooldownTagId { get; init; }
     public uint SecondCooldownTagId { get; init; }
@@ -17,20 +21,26 @@ public sealed record SkillDefinition(uint Id, uint AbilityId)
 }
 
 public readonly record struct SkillTagDefinition(uint SkillId, uint TagId);
+public readonly record struct SkillPlotEventDefinition(uint Id, uint PlotId);
 
 /// <summary>Skill ownership and native ability experience thresholds from the configured content.</summary>
 public sealed class ZoneSkillContent
 {
     public static ZoneSkillContent Empty { get; } = new([], []);
     public IReadOnlyDictionary<uint, SkillDefinition> Skills { get; }
+    public IReadOnlySet<uint> PlotIds { get; }
+    public IReadOnlyDictionary<uint, SkillPlotEventDefinition> PlotEvents { get; }
     private readonly FrozenDictionary<byte, int> _experience;
     private readonly FrozenDictionary<uint, IReadOnlySet<uint>> _tagsBySkill;
     private readonly FrozenDictionary<uint, IReadOnlySet<uint>> _skillsByTag;
 
     public ZoneSkillContent(IEnumerable<SkillDefinition> skills, IEnumerable<KeyValuePair<byte, int>> experience,
-        IEnumerable<SkillTagDefinition>? tags = null)
+        IEnumerable<SkillTagDefinition>? tags = null, IEnumerable<uint>? plotIds = null,
+        IEnumerable<SkillPlotEventDefinition>? plotEvents = null)
     {
         Skills = skills.ToDictionary(v => v.Id).ToFrozenDictionary();
+        PlotIds = (plotIds ?? []).ToFrozenSet();
+        PlotEvents = (plotEvents ?? []).ToDictionary(v => v.Id).ToFrozenDictionary();
         _experience = experience.ToDictionary().ToFrozenDictionary();
         var links = (tags ?? []).Where(v => v.TagId != 0 && Skills.ContainsKey(v.SkillId)).ToArray();
         _tagsBySkill = links.GroupBy(v => v.SkillId).ToFrozenDictionary(g => g.Key,
@@ -70,7 +80,7 @@ public sealed class ZoneSkillContent
             command.CommandText = """
                 SELECT id, ability_id, cooldown_time, COALESCE(CAST(cooldown_tag_id AS INTEGER), 0),
                        COALESCE(CAST(second_cooldown_tag_id AS INTEGER), 0), COALESCE(CAST(third_cooldown_tag_id AS INTEGER), 0),
-                       charge_count, charge_cooldown_time, switch_to_skill_cooldown FROM skills
+                       charge_count, charge_cooldown_time, switch_to_skill_cooldown, timing_id, channeling_time FROM skills
                 """;
             using var reader = command.ExecuteReader();
             while (reader.Read())
@@ -82,7 +92,9 @@ public sealed class ZoneSkillContent
                     ThirdCooldownTagId = checked((uint)reader.GetInt64(5)),
                     ChargeCount = checked((uint)reader.GetInt64(6)),
                     ChargeCooldownMilliseconds = checked((uint)reader.GetInt64(7)),
-                    SwitchToSkillCooldown = NativeContentReader.Boolean(reader, 8)
+                    SwitchToSkillCooldown = NativeContentReader.Boolean(reader, 8),
+                    TimingId = NativeContentReader.UInt32(reader, 9),
+                    ChannelingMilliseconds = NativeContentReader.Int32(reader, 10)
                 });
         }
         var experience = new Dictionary<byte, int>();
@@ -99,6 +111,11 @@ public sealed class ZoneSkillContent
             using var reader = command.ExecuteReader();
             while (reader.Read()) tags.Add(new(checked((uint)reader.GetInt64(0)), checked((uint)reader.GetInt64(1))));
         }
-        return new(skills, experience, tags);
+        var plots = new List<uint>();
+        NativeContentReader.Read(connection, "SELECT id FROM plots", reader => plots.Add(NativeContentReader.UInt32(reader, 0)));
+        var events = new List<SkillPlotEventDefinition>();
+        NativeContentReader.Read(connection, "SELECT id, plot_id FROM plot_events",
+            reader => events.Add(new(NativeContentReader.UInt32(reader, 0), NativeContentReader.UInt32(reader, 1))));
+        return new(skills, experience, tags, plots, events);
     }
 }

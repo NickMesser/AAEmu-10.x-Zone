@@ -242,6 +242,7 @@ public sealed partial class ZoneSession
         Task<ZoneFrame?>? incoming = null;
         Task<uint?>? tick = null;
         Exception? processingError = null;
+        var worldPacketProcessed = false;
         try
         {
             while (true)
@@ -258,6 +259,7 @@ public sealed partial class ZoneSession
                     incoming = null;
                     if (message is null) return;
                     Receive(message.Value);
+                    worldPacketProcessed = true;
                     if (_scene?.IsRetired == true) return;
                     await FlushNotificationsAsync(stop.Token).ConfigureAwait(PreserveOwnerContext);
                 }
@@ -278,12 +280,13 @@ public sealed partial class ZoneSession
                         // the simulation tick (ZoneSceneRunner), which is what makes this branch
                         // reachable at all; without a tick a scene keeps the bare NPC update.
                         if (_scene is null) simulation.Update(frame.Value);
-                        else if (_frame is not null) _scene.Dispatch(() => _frame.RunFrame(frame.Value), ticking: true);
+                        else if (_frame is not null) _scene.Dispatch(() => _frame.RunFrame(frame.Value, worldPacketProcessed), ticking: true);
                         else _scene.Dispatch(() => simulation.Update(frame.Value), ticking: true);
                         if (_scene?.IsRetired == true) return;
                         if (simulation.IsDisposed) return;
                     }
                     await FlushNotificationsAsync(stop.Token).ConfigureAwait(PreserveOwnerContext);
+                    worldPacketProcessed = false;
                 }
             }
         }
@@ -580,15 +583,30 @@ public sealed partial class ZoneSession
             case WzOpcodes.WorldGameTime:
                 Startup.Receive(frame);
                 break;
-            case WzOpcodes.SkillStarted: Skills.Start(SkillStarted.Read(frame.Body.Span)); break;
-            case WzOpcodes.SkillFired: Skills.Fire(SkillFired.Read(frame.Body.Span)); break;
-            case WzOpcodes.SkillEnded: Skills.End(SkillEnded.Read(frame.Body.Span)); break;
-            case WzOpcodes.SkillStopped: Skills.Stop(SkillStopped.Read(frame.Body.Span)); break;
+            case WzOpcodes.SkillStarted:
+            {
+                var message = SkillStarted.Read(frame.Body.Span);
+                Registry.ApplySkillStarted(message); Skills.Start(message); break;
+            }
+            case WzOpcodes.SkillFired:
+            {
+                var message = SkillFired.Read(frame.Body.Span);
+                Registry.ApplySkillFired(message); Skills.Fire(message); break;
+            }
+            case WzOpcodes.SkillEnded:
+            {
+                var message = SkillEnded.Read(frame.Body.Span);
+                Registry.ApplySkillEnded(message); Skills.End(message); break;
+            }
+            case WzOpcodes.SkillStopped:
+            {
+                var message = SkillStopped.Read(frame.Body.Span);
+                Registry.ApplySkillStopped(message); Skills.Stop(message); break;
+            }
             case WzOpcodes.CastingStopped:
             {
                 var message = CastingStopped.Read(frame.Body.Span);
-                if (Skills.Casts.TryGetValue(message.ObjectId, out var cast) && cast.Timeline == (ushort)message.Timeline)
-                    Registry.StartStoppedCastingCooldown(message);
+                Registry.ApplyCastingStopped(message);
                 Skills.StopCasting(message);
                 break;
             }
@@ -597,10 +615,26 @@ public sealed partial class ZoneSession
             case WzOpcodes.ChangeChargeSkillCooldown: Registry.ChangeChargeCooldown(ChargeSkillCooldownChange.Read(frame.Body.Span)); break;
             case WzOpcodes.UnitDamaged: Skills.Damage(UnitDamaged.Read(frame.Body.Span)); break;
             case WzOpcodes.UnitHealed: Skills.Heal(UnitHealed.Read(frame.Body.Span)); break;
-            case WzOpcodes.PlotEvent: Skills.Plot(PlotEvent.Read(frame.Body.Span)); break;
-            case WzOpcodes.PlotEnded: Skills.PlotEnd(PlotEnded.Read(frame.Body.Span)); break;
-            case WzOpcodes.PlotCastingStopped: Skills.PlotCastingStop(PlotStopped.Read(frame.Body.Span)); break;
-            case WzOpcodes.PlotChannelingStopped: Skills.PlotChannelingStop(PlotStopped.Read(frame.Body.Span)); break;
+            case WzOpcodes.PlotEvent:
+            {
+                var message = PlotEvent.Read(frame.Body.Span);
+                Registry.ApplyPlotEvent(message); Skills.Plot(message); break;
+            }
+            case WzOpcodes.PlotEnded:
+            {
+                var message = PlotEnded.Read(frame.Body.Span);
+                Registry.ApplyPlotEnded(message); Skills.PlotEnd(message); break;
+            }
+            case WzOpcodes.PlotCastingStopped:
+            {
+                var message = PlotStopped.Read(frame.Body.Span);
+                Registry.ApplyPlotCastingStopped(message); Skills.PlotCastingStop(message); break;
+            }
+            case WzOpcodes.PlotChannelingStopped:
+            {
+                var message = PlotStopped.Read(frame.Body.Span);
+                Registry.ApplyPlotChannelingStopped(message); Skills.PlotChannelingStop(message); break;
+            }
             default:
                 // Named, counted refusal — see UnimplementedOpcodes. The first occurrence of each
                 // opcode is printed so the gap is visible in the live host log, and the session

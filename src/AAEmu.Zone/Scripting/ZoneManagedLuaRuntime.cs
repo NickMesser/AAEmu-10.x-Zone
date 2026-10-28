@@ -183,7 +183,7 @@ public sealed partial class ZoneManagedLuaRuntime : IZoneLuaRuntime
                     return new LuaResult(returned.Select(Push).ToArray()!);
                 });
             }
-            catch (Exception error) { throw new LuaRuntimeException(error.Message, 1, true); }
+            catch (Exception error) { throw new LuaRuntimeException(InvocationMessage(error), 1, true); }
             finally { _callbackScopes.Pop(); }
         }), false));
     }
@@ -298,7 +298,15 @@ public sealed partial class ZoneManagedLuaRuntime : IZoneLuaRuntime
         try { return operation(); }
         catch (LuaException error) { throw new ZoneLuaException(error.Message); }
         catch (TargetInvocationException error) when (error.InnerException is { } inner)
-        { throw new ZoneLuaException(inner.Message); }
+        { throw new ZoneLuaException(InvocationMessage(inner)); }
+    }
+    private static string InvocationMessage(Exception error)
+    {
+        //Nested compiled Lua callbacks can introduce several reflection wrappers. Retain
+        //the real service refusal before crossing the VM boundary instead of flattening
+        //an outer TargetInvocationException into an unrecoverable generic message.
+        while (error is TargetInvocationException { InnerException: { } inner }) error = inner;
+        return error.Message;
     }
     private void Release(ZoneLuaReference reference)
     {

@@ -64,20 +64,34 @@ constructors run; every callback rechecks the exact catalog, Unit, actor and bin
 Failed initialization releases effects, bindings, behavior, entity references and proxy ownership.
 Signals cannot keep operating on a removed actor or a replacement with the same numeric Unit ID.
 
-Production currently refuses the incomplete actor profile before model-class compilation,
-per-entity cloning or `OnInit`. An initial real-entry control repeatedly reached the same
-missing attachment service, causing enough receive backlog to time out the replay sender before
-player entry. A subsequent control proved model-class construction but exposed its cold compilation
-cost before an already-known refusal. The earliest admission check avoids both costs. Fully configured
-test/service compositions exercise the complete initialization and teardown path; the production
-gate stays closed until complete actor parameters and each behavior's remaining dependencies
-are owned. Initial character, collider, ground-body and smart-object component owners now exist.
+Production queues each incoming generation and performs at most one original initialization per
+scene frame. Pending wrappers own no Lua entity, body or behavior and cannot receive signals.
+The queue preserves received activation/target requests, publishes readiness after actual
+construction, and cancels callbacks from retired generations. This scheduling policy keeps a
+large incoming NPC batch from invoking all Lua constructors synchronously. It is a replacement
+work-count bound, not a recovered native scheduling algorithm or a per-frame time guarantee.
+Cold admissions also yield when a World packet was dispatched since the previous frame; current
+physics/scripts/AI continue on those frames. Continuous ingress fairness remains performance work.
+See [admission ownership](managed-npc-admission-queue.md).
+
+The production construction profile now composes actual descriptor-written CActor parameters,
+installed animated dynamics, independent health, character slots, collider events, smart objects,
+AI proxy poses and supported skill request/acknowledgment owners. Unsupported profiles unwind
+with their precise dependency. A script-ready owner still does not open the full gameplay gate.
 
 Initial type-5 CPuppet identity/control state is explicit partial admission. The independent
 AI-object radius starts at zero, as in its constructor; model radius, collider radius and AI graph
 pass radius are distinct. Complete Puppet parameter blocks, its persistent stick operation,
 full animated-character state and perception remain unfinished. Ground bodies and the verified
 initial collider profiles have independent owners, described below.
+
+The descriptor and frame contracts are detailed in
+[actor construction](managed-npc-actor-construction.md),
+[AI proxy pose](managed-npc-ai-pose.md),
+[reference/look objects](managed-npc-point-objects.md),
+[casting fields](managed-unit-casting.md),
+[skill execution](managed-npc-skill-patterns.md) and
+[skill geometry](managed-npc-skill-geometry.md).
 
 ## Real services and frame execution
 
@@ -230,10 +244,10 @@ movement rows for387. All three timestamp-normalized payloads match the previous
 replay (SHA256 `180C555000D965425C7528522AE2A5462F916907EBECCA95B4BFC1A2231EBCD8`).
 The final stream contains no partial frame and no UnitLocation debug rows. World/listener exit0
 and zone exit3 match the configured disconnect policy; frame/terrain/session retirement is ordered.
-Artifacts use the separate `npc-components-accepted-entry-*` prefix and
+Artifacts use the separate historical `npc-components-accepted-entry-*` prefix and
 `captures/npc-components-accepted-entry-output.bin`. The original-resource NPC control and final
-558-test run cover the separate component/behavior boundaries; production NPC CreateProfile is
-still refused before class compilation until the remaining admission dependencies are supplied.
+558-test run cover the separate component/behavior boundaries. That build still refused
+production NPC CreateProfile before class compilation; queued construction now replaces that gate.
 
 Local evidence is under `D:/aaemu-runtime/research`: `zone129-original-script-controls.json`,
 `zone129-original-script-comparison.json`, `zone129-production-script-host-bootstrap.json`,
@@ -243,12 +257,42 @@ Local evidence is under `D:/aaemu-runtime/research`: `zone129-original-script-co
 Local component evidence additionally includes `character-zone129-managed-validation.json`,
 `npc-collider-native-controls.json` and `npc-components-original-control.json`. The last control
 uses recorded WZNpcState and original resources with an explicit partial CPuppet/constructor-zero
-animated dynamics profile. Templates562/5941 complete original initialization and the GO_TO_IDLE
-transition to hold_position/roaming. Templates7987/8173/8177 refuse the missing skill-pattern executor.
+animated dynamics profile. Templates562/5941 complete original initialization; the old control
+observed state names after GO_TO_IDLE without treating a swallowed constructor failure as a
+failed transition. Templates7987/8173/8177 refused the then-missing skill-pattern executor.
 All component owners retire and no engine/native-Lua module loads. Unstepped control bodies do not
 establish terrain, perception, combat or complete gameplay admission.
 
-Next: finish original NPC constructor/GameParams producers and collider command interleaving;
+The newer `npc-components-construction-control.json` uses actual descriptor construction,
+installed animated parameters, shared health, AI proxy poses, loaded skill content and independent
+casting fields. All five templates complete initial original-script construction. Their GO_TO_IDLE
+constructors still require AI group services (562/7987) or the position-check consumer
+(5941/8173/8177). Those callback errors now retire the exact provider generation at the next
+safe boundary. The control releases all nine owner families and loads zero engine/native-Lua
+modules. This is initial construction evidence with unstepped bodies, not successful idle gameplay.
+
+The construction/casting/skill batch passes663 standalone tests. The final analyzer build has
+zero errors; warnings remain. Independent original-instruction controls cover42 casting cases
+(34 complete handler/association comparisons plus8 helper controls),29 skill-geometry cases,
+18 reference-direction/similarity cases and21 saved-attribute cases. Each oracle records its
+explicit callbacks and admitted scope; these counts are not a full native gameplay comparison.
+
+The fresh ingress-budget entry control completes in110.766seconds: player387 is grounded at
+local `(1172.5996,1646.5,366.3365)`, NPC construction runs, and the post-player inventory contains
+80 modules with zero forbidden engine/native-Lua modules. There is one ZoneLoaded, three movement
+rows for387, no UnitLocation debug row and no partial final frame. All three movement payloads
+match the previous accepted capture after normalizing only the server timestamp. World/listener
+exits0 and zone exits3 with ordered retirement. The final analyzer-built application assembly is
+identical to the replayed assembly; this is one stationary entry control, not a throughput benchmark
+or sustained NPC gameplay test.
+
+Runtime artifacts are `npc-native-free-final-{build,tests}.log`,
+`npc-ingress-budget-entry-{zone.log,replay.log,modules.json,verification.json}`,
+`captures/npc-ingress-budget-entry-output.bin`,
+`research/npc-native-free-entry-movement-comparison.jsonl` and
+`research/npc-native-free-batch-evidence.json`.
+
+Next: finish Puppet/group, position-check and animated movement producers and collider command interleaving;
 connect AI navigation wishes to the single scene movement authority with actual CActor outgoing
 metadata; complete posture/casting/combat dependencies, perception, acquisition and leash; then
 admit each supported behavior based on its actual dependencies. Keep general

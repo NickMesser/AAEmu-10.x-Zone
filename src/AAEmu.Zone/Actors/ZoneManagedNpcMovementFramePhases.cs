@@ -23,6 +23,8 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
     private readonly ZoneMovementDiagnostics _diagnostics;
     private readonly ZoneActorMovementWorldOrigin _origin;
     private readonly Func<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame, ZoneActorMovementState?>? _movementState;
+    private readonly Action<ZoneMovementFrame>? _prePhysics;
+    private readonly Action<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame>? _publishPose;
     private readonly Dictionary<ZoneActorHandle, Staged> _staged = [];
     private readonly Dictionary<ZoneActorHandle, Staged> _tracked = [];
     private readonly Dictionary<ZoneActorHandle, string> _refusals = [];
@@ -46,7 +48,9 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
         ZoneSceneNpcCatalog catalog, ZoneManagedNpcActorScene actorScene, ZoneManagedNpcPhysics npcPhysics,
         ZoneMovementOutgoing outgoing, ZoneMovementDiagnostics diagnostics,
         ZoneActorMovementWorldOrigin worldOrigin = default,
-        Func<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame, ZoneActorMovementState?>? movementState = null)
+        Func<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame, ZoneActorMovementState?>? movementState = null,
+        Action<ZoneMovementFrame>? prePhysics = null,
+        Action<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame>? publishPose = null)
     {
         _inner = inner ?? throw new ArgumentNullException(nameof(inner));
         _units = registry ?? throw new ArgumentNullException(nameof(registry));
@@ -55,7 +59,7 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
         _physics = npcPhysics ?? throw new ArgumentNullException(nameof(npcPhysics));
         _outgoing = outgoing ?? throw new ArgumentNullException(nameof(outgoing));
         _diagnostics = diagnostics ?? throw new ArgumentNullException(nameof(diagnostics));
-        _origin = worldOrigin; _movementState = movementState;
+        _origin = worldOrigin; _movementState = movementState; _prePhysics = prePhysics; _publishPose = publishPose;
     }
 
     public int PrePhase(in ZoneMovementFrame frame)
@@ -70,6 +74,8 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
         {
             //Prepare NPC actor-local requests before opening the inner frame. This operation
             //samples no clock and calls no Step; a refusal cannot strand an inner open frame.
+            _prePhysics?.Invoke(frame);
+            ObjectDisposedException.ThrowIf(IsDisposed, this);
             _physics.PrepareFrame();
             ObjectDisposedException.ThrowIf(IsDisposed, this);
             PruneRetired();
@@ -133,7 +139,10 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
                 if (!IsCurrent(staged)) { Discard(staged); continue; }
                 _units.UpdateSpatialMembership(unit); //Never creates spatial membership implicitly.
                 if (!IsCurrent(staged)) { Discard(staged); continue; }
-                staged.Actor.AiObject.Position = ZoneMovementPoseMath.ToLocalMeters(unit.Pose.Position, _origin);
+                if (_publishPose is null)
+                    staged.Actor.AiObject.Position = ZoneMovementPoseMath.ToLocalMeters(unit.Pose.Position, _origin);
+                else _publishPose(staged.Actor, snapshot, frame);
+                if (!IsCurrent(staged)) { Discard(staged); continue; }
                 LastPublishedCount++;
                 if (_movementState is null)
                 {

@@ -332,10 +332,10 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
                     "No AI provider is wired for this scene.");
             _ai.CreateNpc(handle);
             _catalog.SetAdmission(handle, ZoneSceneNpcAdmissionPhase.ActorBound);
-            if (_ai is ZoneManagedAiProvider)
+            if (_ai is ZoneManagedAiProvider managed)
             {
                 _ai.SetUpdateSchedule(handle, _framePeriod);
-                _catalog.SetAdmission(handle, ZoneSceneNpcAdmissionPhase.Scheduled);
+                _catalog.SetAdmission(handle, managed.IsReady(handle) ? ZoneSceneNpcAdmissionPhase.Scheduled : ZoneSceneNpcAdmissionPhase.Queued);
                 _notes.AddOnce("managed-npc-behavior",
                     "Managed NPC actor lifecycle, script admission and scheduling are active; perception, physical locomotion and combat remain capability gated.");
             }
@@ -596,6 +596,15 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
         _ = previousTargetId;
         _notes.AddOnce("aggro-notify",
             "aggro selection notifications: reverse membership real; region-observer/AI notification skipped (no observers, TODO(native-ai))");
+    }
+
+    internal void RecordAiAdmissionRefusal(ZoneActorHandle actor, string message)
+    {
+        if (_catalog.Find(actor) is not { } npc) return;
+        _catalog.SetAdmission(actor, ZoneSceneNpcAdmissionPhase.Refused, message);
+        _aiBindRefusals.Add((npc.ObjectId, message));
+        if (_aiBindRefusals.Count <= 5)
+            _trace?.Invoke($"NPC AI admission refused unit={npc.ObjectId} npcId={npc.Id} gen={actor.Generation}: {message}");
     }
 
     /// <summary>

@@ -16,7 +16,7 @@ public enum UnitCreationResult { Created, Duplicate }
 /// Native physics, buff execution and spatial presence remain unfinished systems.
 /// All access belongs to the session's sequential dispatch loop.
 /// </summary>
-public sealed class ZoneUnitRegistry
+public sealed partial class ZoneUnitRegistry
 {
     private readonly Dictionary<uint, ZoneUnit> _units = new();
     private readonly Queue<(Protocol.ZoneFrame Frame, object? Owner, object? Scope)> _notifications = [];
@@ -209,6 +209,7 @@ public sealed class ZoneUnitRegistry
     {
         if (!IsCurrent(unit)) return;
         _units.Remove(unit.Snapshot.ObjectId);
+        RetireCastingUnit(unit);
         Spatial?.Remove(unit);
         Updates?.Remove(unit);
         unit.MovementModel?.Retire();
@@ -310,10 +311,7 @@ public sealed class ZoneUnitRegistry
 
     /// <summary>39456630: World supplies the resolved cooldown when a matching casting timeline stops.</summary>
     public bool StartStoppedCastingCooldown(CastingStopped message)
-    {
-        if (message.Duration == 0 || !_units.TryGetValue(message.ObjectId, out var unit)) return false;
-        return unit.Cooldowns.StartSkill(unchecked((uint)message.SkillId), unchecked((uint)message.Duration));
-    }
+        => ApplyCastingStopped(message);
 
     public bool UpdatePoints(ReadOnlySpan<byte> body)
     {

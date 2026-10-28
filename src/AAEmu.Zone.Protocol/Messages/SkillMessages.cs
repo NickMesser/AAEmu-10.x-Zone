@@ -52,27 +52,34 @@ public readonly record struct SkillTargetRef(byte Type, uint ObjectId)
     }
 }
 
+/// <summary>Copied native result tail: byte +0, uint16 +2, uint32 +4, bool +8. Code zero is success.</summary>
+public readonly record struct SkillCastResult(byte Code, ushort Detail, uint Parameter, bool Flag)
+{
+    public static SkillCastResult Success => new(0, 0, 0, true);
+}
+
 internal static class SkillWire
 {
     /// <summary>World WriteSkillCastTail: flag byte, then u8 (bit0), u16 (bit1), u32 (bit2), bool (bit3).</summary>
-    internal static void SkipCastTail(ref ZoneReader reader)
+    internal static SkillCastResult ReadCastTail(ref ZoneReader reader)
     {
         var flags = reader.ReadByte();
-        if ((flags & 1) != 0) reader.ReadByte();
-        if ((flags & 2) != 0) reader.ReadUInt16();
-        if ((flags & 4) != 0) reader.ReadUInt32();
-        if ((flags & 8) != 0) reader.ReadBoolean();
+        return new((flags & 1) != 0 ? reader.ReadByte() : (byte)0,
+            (flags & 2) != 0 ? reader.ReadUInt16() : (ushort)0,
+            (flags & 4) != 0 ? reader.ReadUInt32() : 0,
+            (flags & 8) == 0 || reader.ReadBoolean());
     }
 }
 
 /// <summary>WZ SkillStarted 0x002B (native 39363460 -> StartSkill 39456D70): skill id, timeline, caster, target, cast time, cast tail.</summary>
 public readonly record struct SkillStarted(uint SkillId, ushort Timeline, SkillCasterRef Caster, SkillTargetRef Target, uint CastTime)
 {
+    public SkillCastResult Result { get; init; } = SkillCastResult.Success;
     public static SkillStarted Read(ReadOnlySpan<byte> body)
     {
         var reader = new ZoneReader(body);
         var value = new SkillStarted(reader.ReadUInt32(), reader.ReadUInt16(), SkillCasterRef.Read(ref reader), SkillTargetRef.Read(ref reader), reader.ReadUInt32());
-        SkillWire.SkipCastTail(ref reader);
+        value = value with { Result = SkillWire.ReadCastTail(ref reader) };
         reader.EnsureFullyConsumed();
         return value;
     }
@@ -81,6 +88,7 @@ public readonly record struct SkillStarted(uint SkillId, ushort Timeline, SkillC
 /// <summary>WZ SkillFired 0x002C (native 393634B0 -> FireSkill 39457170): skill id, timeline, caster, target, cast tail, trailing bool.</summary>
 public readonly record struct SkillFired(uint SkillId, ushort Timeline, SkillCasterRef Caster, SkillTargetRef Target, bool Flag)
 {
+    public SkillCastResult Result { get; init; } = SkillCastResult.Success;
     public static SkillFired Read(ReadOnlySpan<byte> body)
     {
         var reader = new ZoneReader(body);
@@ -88,8 +96,8 @@ public readonly record struct SkillFired(uint SkillId, ushort Timeline, SkillCas
         var timeline = reader.ReadUInt16();
         var caster = SkillCasterRef.Read(ref reader);
         var target = SkillTargetRef.Read(ref reader);
-        SkillWire.SkipCastTail(ref reader);
-        var value = new SkillFired(skillId, timeline, caster, target, reader.ReadBoolean());
+        var result = SkillWire.ReadCastTail(ref reader);
+        var value = new SkillFired(skillId, timeline, caster, target, reader.ReadBoolean()) { Result = result };
         reader.EnsureFullyConsumed();
         return value;
     }
@@ -107,9 +115,11 @@ public readonly record struct SkillEnded(ushort Timeline, SkillCasterRef Caster)
     }
 }
 
-/// <summary>WZ SkillStopped 0x002E (native 39363530 -> 39456600): bc unit, i32 timeline.</summary>
-public readonly record struct SkillStopped(uint ObjectId, int Timeline)
+/// <summary>WZ SkillStopped 0x002E (native 39363530 -> 39456600): bc unit, i32 skill type (not a timeline).</summary>
+public readonly record struct SkillStopped(uint ObjectId, int SkillId)
 {
+    /// <summary>Legacy misnomer. The wire member is skillType/type, and native compares it to skill type 2.</summary>
+    public int Timeline => SkillId;
     public static SkillStopped Read(ReadOnlySpan<byte> body)
     {
         var reader = new ZoneReader(body);
@@ -122,6 +132,8 @@ public readonly record struct SkillStopped(uint ObjectId, int Timeline)
 /// <summary>WZ CastingStopped 0x002F (native 39363550 -> 39456630): bc unit, i16 timeline, i32 type (skill id), i32 duration.</summary>
 public readonly record struct CastingStopped(uint ObjectId, short Timeline, int SkillId, int Duration)
 {
+    /// <summary>Native initializes a uint32 to zero and reads uint16 into it; the wire bits are not sign-extended.</summary>
+    public uint TimelineId => unchecked((ushort)Timeline);
     public static CastingStopped Read(ReadOnlySpan<byte> body)
     {
         var reader = new ZoneReader(body);
@@ -156,6 +168,8 @@ public readonly record struct PlotEvent(
     ushort Timeline, uint EventId, uint SkillId, PlotObjectRef Caster, PlotObjectRef Target, ulong ItemId, uint ObjectId,
     uint CastTimeMs, uint ChannelingTimeMs, bool ConditionOk, bool Last, uint[] TargetUnitIds)
 {
+    /// <summary>The second bc ID before channeling time; native retains it separately from ObjectId.</summary>
+    public uint ChannelingObjectId { get; init; }
     public static PlotEvent Read(ReadOnlySpan<byte> body)
     {
         var reader = new ZoneReader(body);
@@ -167,7 +181,7 @@ public readonly record struct PlotEvent(
         var itemId = reader.ReadUInt64();
         var objectId = reader.ReadBc();
         var castTime = reader.ReadUInt32();
-        reader.ReadBc(); // second bc, always written as 0 by World
+        var channelingObjectId = reader.ReadBc();
         var channeling = reader.ReadUInt32();
         var condition = reader.ReadBoolean();
         var last = reader.ReadBoolean();
@@ -175,7 +189,8 @@ public readonly record struct PlotEvent(
         var targets = new uint[count];
         for (var i = 0; i < count; i++) targets[i] = reader.ReadBc();
         reader.EnsureFullyConsumed();
-        return new(timeline, eventId, skillId, caster, target, itemId, objectId, castTime, channeling, condition, last, targets);
+        return new(timeline, eventId, skillId, caster, target, itemId, objectId, castTime, channeling, condition, last, targets)
+            { ChannelingObjectId = channelingObjectId };
     }
 }
 

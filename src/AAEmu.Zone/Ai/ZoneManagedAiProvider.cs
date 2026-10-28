@@ -35,6 +35,11 @@ public sealed class ZoneManagedAiProvider : IZoneAiProvider, IZoneAiFramePump, I
     private bool _disposed, _pumping;
 
     public int Count => _bindings.Count;
+    public bool IsReady(ZoneActorHandle actor)
+    {
+        var binding = RequireBinding(actor);
+        return binding.Behavior is not IZoneManagedAiActorReadiness readiness || readiness.IsReady;
+    }
 
     /// <param name="getKind">Resolves live scene generations; throws InvalidOperationException for retired or unknown handles.</param>
     /// <param name="createActor">Constructs fresh behavior state for an admitted NPC. Ownership transfers on return.</param>
@@ -176,6 +181,8 @@ public sealed class ZoneManagedAiProvider : IZoneAiProvider, IZoneAiFramePump, I
                 catch (InvalidOperationException) { Retire(handle); continue; }
                 RefreshTarget(handle, binding);
                 if (!IsCurrent(handle, binding) || !binding.Active || binding.Period is null) continue;
+                if (binding.Behavior is IZoneManagedAiActorReadiness readiness && !readiness.IsReady)
+                { binding.ScheduleArmed = false; continue; }
                 if (!binding.ScheduleArmed)
                 {
                     binding.NextDue = unchecked(timeMilliseconds + binding.PeriodMilliseconds);

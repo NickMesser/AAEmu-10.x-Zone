@@ -81,7 +81,8 @@ public sealed class ManagedSceneHostTests
             new ZoneNpcSpawnerControllerContent([], [], [], [], [], [], []),
             new ZoneWorldContent([]), new ZoneAchievementContent([], [], [], [], []), new ZoneLootContent([], [], [], [], []),
             new ZoneSceneContent([], [], [], [], []), new ZoneContent(1, 129, "test", 0, ""), false,
-            startup, configuration, ZoneSceneBackendSelection.NativeFree, ZoneNpcSpawnerPlacementContent.Read("\n"u8), trace.Enqueue);
+            startup, configuration, ZoneSceneBackendSelection.NativeFree, ZoneNpcSpawnerPlacementContent.Read("\n"u8), trace.Enqueue,
+            ZoneNpcSkillContent.Empty);
         var host = ZoneSceneHost.RunAsync(inputs, zoneStream, stop.Token);
         try
         {

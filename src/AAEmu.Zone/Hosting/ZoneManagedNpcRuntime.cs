@@ -17,6 +17,11 @@ namespace AAEmu.Zone.Hosting;
 public sealed record ZoneManagedNpcActorProfile(ZoneAiObjectState Object, short ObjectType,
     ulong ProxyAllocationKey, bool IsPuppet, ZoneActorControlState Controls, IDisposable? Lifetime = null);
 
+public interface IZoneManagedNpcProfileLifetime : IDisposable
+{
+    void Attach(ZoneManagedNpcActor actor);
+}
+
 /// <summary>
 /// One managed scene's original NPC script composition. Bootstrap and model classes execute
 /// without engine modules. Per-NPC initialization additionally requires real actor construction
@@ -130,7 +135,7 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
             // The replacement entity allocator owns this name, separately from all numeric IDs.
             binding = Scripts.BindEntity(prepared, actor, npc.Unit.Snapshot.Name);
             Actors.Adopt(actor, profile.ObjectType, profile.ProxyAllocationKey, prepared.EntityScript);
-            if (profile.Lifetime is ZoneManagedNpcProxyOwner proxy) proxy.Attach(actor);
+            if (profile.Lifetime is IZoneManagedNpcProfileLifetime lifetime) lifetime.Attach(actor);
             var behavior = prepared.DetachBehavior();
             try { Actors.RegisterBehavior(actor, behavior); }
             catch { behavior.Dispose(); throw; }
@@ -165,12 +170,48 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
         }
     }
 
+    private readonly Queue<ZoneManagedNpcScriptFault> _pendingFaults = [];
+    private IReadOnlyList<ZoneManagedNpcScriptFault> RetirePendingFaults(Action<ZoneActorHandle> retireProviderActor)
+    {
+        //CAIHandler reports callback failures without throwing; a behavior transition may
+        //already have changed CurrentName even though its constructor did not complete.
+        //Signals also drain outside OwnedActor.Update, so observe every live owner before
+        //either effects or physical preparation can reuse that partially initialized state.
+        foreach (var owner in _live.Values) owner.ObserveScriptError();
+        var faults = _pendingFaults.ToArray(); _pendingFaults.Clear();
+        return ConsumeFaults(faults, retireProviderActor);
+    }
+
     /// <summary>The scene calls this once after physical publication and before its AI pump.</summary>
     public IReadOnlyList<ZoneManagedNpcScriptFault> TickScripts(TimeSpan elapsed, Action<ZoneActorHandle> retireProviderActor)
     {
         ObjectDisposedException.ThrowIf(IsDisposed, this);
         ArgumentNullException.ThrowIfNull(retireProviderActor);
+        var pending = RetirePendingFaults(retireProviderActor);
         var faults = ScriptServices is IZoneManagedNpcScriptLifecycle components ? components.Tick(elapsed) : [];
+        var callbacks = ConsumeFaults(faults, retireProviderActor);
+        //An effect can enter a behavior whose constructor records rather than throws its
+        //failure. Retire it before the subsequent AI pump, as for directly raised faults.
+        return pending.Concat(callbacks).Concat(RetirePendingFaults(retireProviderActor)).ToArray();
+    }
+
+    public IReadOnlyList<ZoneManagedNpcScriptFault> PrePhysics(ZoneMovementFrame frame, Action<ZoneActorHandle> retireProviderActor)
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        var pending = RetirePendingFaults(retireProviderActor);
+        return pending.Concat(ConsumeFaults(ScriptServices is IZoneManagedNpcFrameLifecycle components ? components.PrePhysics(frame) : [], retireProviderActor)).ToArray();
+    }
+
+    public IReadOnlyList<ZoneManagedNpcScriptFault> PublishPose(ZoneActorHandle actor, Action<ZoneActorHandle> retireProviderActor)
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        return ConsumeFaults(ScriptServices is IZoneManagedNpcFrameLifecycle components ? components.PublishPose(actor) : [], retireProviderActor);
+    }
+
+    private IReadOnlyList<ZoneManagedNpcScriptFault> ConsumeFaults(IReadOnlyList<ZoneManagedNpcScriptFault> faults,
+        Action<ZoneActorHandle> retireProviderActor)
+    {
+        ArgumentNullException.ThrowIfNull(retireProviderActor);
         foreach (var fault in faults)
         {
             if (!_live.ContainsKey(fault.Actor)) continue;
@@ -211,6 +252,7 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
         ZoneNpcAuthoredEntity prepared, ZoneManagedNpcScriptBinding binding, ZoneManagedNpcActorProfile profile,
         IDisposable? effects) : IZoneManagedAiActor
     {
+        private bool _faulted;
         internal ZoneManagedNpcActor Actor { get; } = actor;
         internal ZoneNpcAuthoredEntity Prepared { get; } = prepared;
         internal ZoneManagedNpcScriptBinding Binding { get; } = binding;
@@ -219,7 +261,28 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
         public void SetActive(bool active) => Actor.SetActive(active);
         public void SetTarget(ZoneActorHandle? target) => Actor.SetTarget(target);
         public void SendSignal(ZoneAiSignal signal) => Actor.SendSignal(signal);
-        public void Update(uint timeMilliseconds, float elapsedSeconds) => Actor.Update(timeMilliseconds, elapsedSeconds);
+        internal void ObserveScriptError()
+        {
+            if (!_faulted && Prepared.FirstScriptError is { } error)
+                QueueFault("actor behavior callback", error);
+        }
+        private void QueueFault(string callback, string message)
+        {
+            if (_faulted) return;
+            _faulted = true;
+            runtime._pendingFaults.Enqueue(new(Actor.Handle, callback, message));
+        }
+        public void Update(uint timeMilliseconds, float elapsedSeconds)
+        {
+            ObserveScriptError();
+            if (_faulted) return;
+            try { Actor.Update(timeMilliseconds, elapsedSeconds); }
+            catch (Exception error) when (error is NotSupportedException or ZoneLuaException or InvalidDataException)
+            {
+                QueueFault("actor goal/signal update", error.Message);
+            }
+            ObserveScriptError();
+        }
         public void Dispose() => runtime.Remove(this);
     }
 }

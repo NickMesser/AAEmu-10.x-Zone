@@ -19,6 +19,8 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
         Array.AsReadOnly(snapshot.GmModes.Count == 0 ? new sbyte[9] : snapshot.GmModes.ToArray());
     public ZoneProgressionState Progression { get; private set; } = progression ?? ZoneProgressionState.FromSnapshot(snapshot);
     public ZoneCooldownManager Cooldowns { get; } = new(skillContent ?? ZoneSkillContent.Empty);
+    internal ZoneSkillContent SkillContent { get; } = skillContent ?? ZoneSkillContent.Empty;
+    public ZoneUnitCastingState Casting { get; } = new(snapshot);
     public long PreciseHealth { get; private set; } = snapshot.PreciseHealth;
     public long PreciseMana { get; private set; } = snapshot.PreciseMana;
     public ZoneUnitPose Pose { get; private set; } = ZoneUnitPose.FromSnapshot(snapshot);
@@ -26,9 +28,14 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
     // Native server unit +A59C, set by EscapeSlave and initialized to zero on admission.
     public uint MovementBlockedUntil { get; internal set; }
     // Native server unit +8009 (32777), written by WZUnitFlyingStateChanged 393636A0 via 39258C90.
-    public bool IsFlying { get; internal set; }
+    public bool IsFlying { get; internal set; } = (snapshot.Flags & (1 << 9)) != 0;
     public ZoneUnitScaleState Scale { get; } = new(snapshot.Scale);
-    public ushort Flags { get; private set; } = snapshot.Flags;
+    private ushort _flags = snapshot.Flags;
+    public ushort Flags
+    {
+        get => (ushort)((_flags & ~(2 | (1 << 9))) | (Casting.Casting ? 2 : 0) | (IsFlying ? 1 << 9 : 0));
+        private set => _flags = value;
+    }
     public byte AttackFactionFlags { get; private set; } = snapshot.AttackFactionFlags;
     public uint FactionId { get; private set; } = snapshot.PackedState.FactionId;
     public uint ExpeditionId { get; private set; } = snapshot.PackedState.ExpeditionId;
@@ -111,7 +118,10 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
         //3935D490 first marks dead through3925B2C0, then invokes the actual combat
         //setter+184/39258800 (and entity44), preserving attack-faction flags.
         IsDead = true;
+        Casting.ClearCastingFlag(); //3935D490 clears this byte before combat's entity event44.
+        Flags = (ushort)(Flags & ~(1 << 10)); //The adjacent byte is cleared by the same native WORD write.
         SetCombatFlag(false);
+        Casting.ClearIdentifiers(); //The four identifiers clear after that callback, independently.
         Flags = (ushort)(Flags & ~((1 << 1) | (1 << 10)));
         if (Snapshot.Identity.Kind != ZoneUnitKind.Character) TargetId = 0;
         Stats = stats;
@@ -126,6 +136,8 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
         var health = Math.Max(0, unchecked(stats.MaximumHealth * 100));
         var mana = Math.Max(0, unchecked(stats.MaximumMana * 100));
         var pose = ZoneUnitPose.FromResurrection(message);
+        Casting.Reset(); //3925E8E0 clears all four identifiers and the casting byte before refilling.
+        Flags = (ushort)(Flags & ~(1 << 10));
         Stats = stats;
         PreciseHealth = health;
         PreciseMana = mana;

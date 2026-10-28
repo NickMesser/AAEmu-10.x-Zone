@@ -8,7 +8,7 @@ namespace AAEmu.Zone.Scene;
 public sealed record ZoneManagedNpcDevaluation(object Target, bool Flag, long ExpiresMicroseconds);
 
 internal sealed class ZoneManagedNpcActorServices : IZoneActorGoalPhaseServices, IZoneActorControlGoalServices,
-    IZoneActorNavigationScene, IZoneLocateGoalServices, IZoneDevalueGoalServices, IZoneSignalGoalServices
+    IZoneActorNavigationScene, IZoneLocateGoalServices, IZoneDevalueGoalServices, IZoneSignalGoalServices, IZoneLookAtGoalServices
 {
     private readonly ZoneManagedNpcActorScene _scene;
     private readonly ZoneManagedNpcActor _actor;
@@ -18,6 +18,7 @@ internal sealed class ZoneManagedNpcActorServices : IZoneActorGoalPhaseServices,
     public ZoneActorControlState Controls { get; }
     public ZoneActorNavigationState Navigation { get; }
     public ZoneActorContinuationState Continuation { get; } = new();
+    public ZoneActorLookState LookState => _actor.LookState;
     public bool IsPuppet => _actor.IsPuppet;
     public object? Argument => _targets.Argument;
     public object Actor => _actor.AiObject;
@@ -30,16 +31,16 @@ internal sealed class ZoneManagedNpcActorServices : IZoneActorGoalPhaseServices,
     {
         _scene = scene; _actor = actor; Controls = controls;
         Navigation = new(this);
-        _targets = new(actor.AiObject, scene.Objects, (_, _) => throw ZoneManagedNpcActorScene.Missing("named/special target resolution"));
+        _targets = new(actor.AiObject, scene.Objects, (name, _) => scene.Points.ResolveSpecial(actor, name));
     }
 
     public IZoneGoalOperation CreateOperation(ZoneGoalDefinition definition, ZoneGoalExecutor executor)
     {
         _scene.Require(_actor);
-        if (definition.Operation == ZoneGoalOperation.LookAt)
-            throw ZoneManagedNpcActorScene.Missing("look-target generation and look-at output");
+        if (definition.Operation == ZoneGoalOperation.UseSkill)
+            return (_scene.OperationFactory ?? throw ZoneManagedNpcActorScene.Missing("skill goal execution"))(_actor, definition);
         return new ZoneGoalOperationFactory(executor, _scene.FrameMicroseconds, _scene.NextRandom,
-            this, signals: this, controls: this, location: this, continuation: Continuation).Create(definition);
+            this, signals: this, controls: this, location: this, continuation: Continuation, looking: this).Create(definition);
     }
     public uint NextRandom() => _scene.NextRandom();
     public bool EvaluateBranch(ZoneGoalParameters parameters) =>
@@ -79,7 +80,7 @@ internal sealed class ZoneManagedNpcActorServices : IZoneActorGoalPhaseServices,
     public void ReportInsertionChain(IReadOnlyList<ZoneGoalPipeInstance> chain) =>
         Diagnostic($"NPC {_actor.Handle} insertion chain: {string.Join('/', chain.Select(pipe => pipe.Name))}.");
 
-    public object? ResolveTarget(string name) => throw ZoneManagedNpcActorScene.Missing($"named target '{name}'");
+    public object? ResolveTarget(string name) => _scene.Points.ResolveSpecial(_actor, name);
     public void SetAttentionTarget(object? target)
     {
         _scene.Require(_actor);
@@ -95,7 +96,15 @@ internal sealed class ZoneManagedNpcActorServices : IZoneActorGoalPhaseServices,
     public ZoneCharacterStrafeSettings? GetCharacterStrafeSettings(object characterSystem, uint key) =>
         throw ZoneManagedNpcActorScene.Missing("character strafe settings");
     public bool CanStrafe() => throw ZoneManagedNpcActorScene.Missing("character locomotion strafe query");
-    public Vector3 GetPosition() { _scene.Require(_actor); return _scene.Position(_actor); }
+    public Vector3 GetPosition()
+    { _scene.Require(_actor); return _scene.ProxyPoses?.Find(_actor.Handle)?.Last?.Position ?? _scene.Position(_actor); }
+    public Vector3 GetMoveDirection() { _scene.Require(_actor); return _actor.AiObject.MoveDirection; }
+    public Vector3 GetBodyDirection() { _scene.Require(_actor); return _actor.AiObject.BodyDirection; }
+    public Vector3 GetViewDirection() { _scene.Require(_actor); return _actor.AiObject.ViewDirection; }
+    public object? GetReferencePoint() => _scene.Points.GetReferencePoint(_actor);
+    public Vector3 GetTargetBodyDirection(object target) => target is ZoneAiObjectState state ? state.BodyDirection :
+        throw new ArgumentException("Target body directions require actual AI-object state.", nameof(target));
+    public void SetLookAtPoint(Vector3 position) => _scene.Points.SetLookAtPoint(_actor, position);
     public object? GetAttentionTarget() => _attention;
     public Vector3 GetTargetPosition(object target) => target is ZoneAiObjectState state ? state.Position :
         throw new ArgumentException("Target positions require actual AI-object state.", nameof(target));
@@ -134,7 +143,8 @@ internal sealed class ZoneManagedNpcActorServices : IZoneActorGoalPhaseServices,
         if (ReferenceEquals(_attention, target)) _attention = null;
         if (ReferenceEquals(_targets.Argument, target)) _targets.SetArgument(null);
         if (ReferenceEquals(SelectionTarget, target)) SelectionTarget = null;
+        if (ReferenceEquals(LookState.LooseAttentionTarget, target)) LookState.SetLooseAttentionTarget(null);
         _devalued.Remove(target);
     }
-    internal void ReleaseTargets() { _attention = null; _targets.SetArgument(null); _devalued.Clear(); }
+    internal void ReleaseTargets() { _attention = null; _targets.SetArgument(null); _devalued.Clear(); LookState.SetLooseAttentionTarget(null); }
 }

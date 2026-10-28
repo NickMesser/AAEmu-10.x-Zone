@@ -1,0 +1,470 @@
+{
+  "sourceSha256": "a676fb8c6355f8225cde0590501ad169fc275c62170b15e29b0dffce2b27c05b",
+  "scope": "Original CryAction normalization and similarity instructions. Script argument/results and entity/AI/refpoint lookups/setter are explicit ABI callbacks. No engine DLL is loaded; this does not establish the CryAI setter/event implementation.",
+  "controls": [
+    {
+      "kind": "direction",
+      "direction": [
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "view": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "calls": [],
+      "result": 1.0
+    },
+    {
+      "kind": "direction",
+      "direction": [
+        4,
+        0,
+        3
+      ],
+      "reference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "view": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "calls": [
+        {
+          "position": [
+            7.0,
+            8.0,
+            9.0
+          ],
+          "direction": [
+            0.800000011920929,
+            0.0,
+            0.6000000238418579
+          ]
+        }
+      ],
+      "result": 1.0
+    },
+    {
+      "kind": "direction",
+      "direction": [
+        1,
+        2,
+        3
+      ],
+      "reference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "view": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "calls": [
+        {
+          "position": [
+            7.0,
+            8.0,
+            9.0
+          ],
+          "direction": [
+            0.26726123690605164,
+            0.5345224738121033,
+            0.8017836809158325
+          ]
+        }
+      ],
+      "result": 1.0
+    },
+    {
+      "kind": "direction",
+      "direction": [
+        -4,
+        0,
+        -3
+      ],
+      "reference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "view": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "calls": [
+        {
+          "position": [
+            7.0,
+            8.0,
+            9.0
+          ],
+          "direction": [
+            -0.800000011920929,
+            0.0,
+            -0.6000000238418579
+          ]
+        }
+      ],
+      "result": 1.0
+    },
+    {
+      "kind": "direction",
+      "direction": [
+        1e-40,
+        0,
+        0
+      ],
+      "reference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "view": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "calls": [
+        {
+          "position": [
+            7.0,
+            8.0,
+            9.0
+          ],
+          "direction": [
+            9.223322323907681e-22,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "result": 1.0
+    },
+    {
+      "kind": "direction",
+      "direction": [
+        1e-20,
+        0,
+        0
+      ],
+      "reference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "view": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "calls": [
+        {
+          "position": [
+            7.0,
+            8.0,
+            9.0
+          ],
+          "direction": [
+            0.09184388816356659,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "result": 1.0
+    },
+    {
+      "kind": "direction",
+      "direction": [
+        1e+20,
+        2e+20,
+        -3e+20
+      ],
+      "reference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "view": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "calls": [
+        {
+          "position": [
+            7.0,
+            8.0,
+            9.0
+          ],
+          "direction": [
+            0.0,
+            0.0,
+            -0.0
+          ]
+        }
+      ],
+      "result": 1.0
+    },
+    {
+      "kind": "direction",
+      "direction": [
+        1,
+        1e-07,
+        0
+      ],
+      "reference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "view": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "calls": [
+        {
+          "position": [
+            7.0,
+            8.0,
+            9.0
+          ],
+          "direction": [
+            1.0,
+            1.0000000116860974e-07,
+            0.0
+          ]
+        }
+      ],
+      "result": 1.0
+    },
+    {
+      "kind": "direction",
+      "direction": [
+        -0.0,
+        2.0,
+        -0.0
+      ],
+      "reference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "view": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "calls": [
+        {
+          "position": [
+            7.0,
+            8.0,
+            9.0
+          ],
+          "direction": [
+            -0.0,
+            1.0,
+            -0.0
+          ]
+        }
+      ],
+      "result": 1.0
+    },
+    {
+      "kind": "similar",
+      "direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": [
+        1,
+        0,
+        9
+      ],
+      "view": [
+        1,
+        0,
+        -7
+      ],
+      "calls": [],
+      "result": true
+    },
+    {
+      "kind": "similar",
+      "direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": [
+        1,
+        0,
+        0
+      ],
+      "view": [
+        0,
+        1,
+        0
+      ],
+      "calls": [],
+      "result": false
+    },
+    {
+      "kind": "similar",
+      "direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": [
+        0,
+        0,
+        1
+      ],
+      "view": [
+        0,
+        0,
+        1
+      ],
+      "calls": [],
+      "result": false
+    },
+    {
+      "kind": "similar",
+      "direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": [
+        0.0001,
+        0,
+        0
+      ],
+      "view": [
+        1,
+        0,
+        0
+      ],
+      "calls": [],
+      "result": false
+    },
+    {
+      "kind": "similar",
+      "direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": [
+        1,
+        0,
+        0
+      ],
+      "view": [
+        0.98,
+        0.19899748,
+        0
+      ],
+      "calls": [],
+      "result": false
+    },
+    {
+      "kind": "similar",
+      "direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": [
+        1,
+        0,
+        0
+      ],
+      "view": [
+        0.980001,
+        0.19899255,
+        0
+      ],
+      "calls": [],
+      "result": true
+    },
+    {
+      "kind": "similar",
+      "direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": [
+        1,
+        0,
+        0
+      ],
+      "view": [
+        0.979999,
+        0.1990024,
+        0
+      ],
+      "calls": [],
+      "result": false
+    },
+    {
+      "kind": "similar",
+      "direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": [
+        3,
+        4,
+        5
+      ],
+      "view": [
+        6,
+        8,
+        9
+      ],
+      "calls": [],
+      "result": true
+    },
+    {
+      "kind": "similar",
+      "direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": [
+        -1,
+        0,
+        0
+      ],
+      "view": [
+        1,
+        0,
+        0
+      ],
+      "calls": [],
+      "result": false
+    }
+  ]
+}

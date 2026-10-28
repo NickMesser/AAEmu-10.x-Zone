@@ -5,7 +5,7 @@ namespace AAEmu.Zone.Units;
 /// <summary>A skill timeline World started for a caster (native map keyed by timeline id, StartSkill 39456D70).</summary>
 public sealed record ZoneActiveSkill(ushort Timeline, uint SkillId, uint CasterId, SkillTargetRef Target, uint CastTime, int FireCount);
 
-/// <summary>Per-unit cast fields mirrored from native unit +32280 (skill timeline), +32297 (casting flag).</summary>
+/// <summary>Legacy observed Start packet, not the authoritative independent fields in ZoneUnit.Casting.</summary>
 public sealed record ZoneUnitCast(ushort Timeline, uint SkillId, bool Casting);
 
 /// <summary>A plot timeline World is playing (ZonePlotMan state, PlayEvent 39455730).</summary>
@@ -50,6 +50,7 @@ public sealed class ZoneSkillState(Func<uint, bool> isKnownUnit)
 
     public void Start(SkillStarted message)
     {
+        if (message.Result.Code != 0) { Known(message.Caster.ObjectId); return; }
         _active[message.Timeline] = new(message.Timeline, message.SkillId, message.Caster.ObjectId, message.Target, message.CastTime, 0);
         if (Known(message.Caster.ObjectId))
             _casts[message.Caster.ObjectId] = new(message.Timeline, message.SkillId, true);
@@ -58,6 +59,7 @@ public sealed class ZoneSkillState(Func<uint, bool> isKnownUnit)
 
     public void Fire(SkillFired message)
     {
+        if (message.Result.Code != 0) { Known(message.Caster.ObjectId); return; }
         // Native FireSkill also resolves the timeline from the map; a fire for an unknown timeline is kept as a fresh entry.
         _active.TryGetValue(message.Timeline, out var current);
         _active[message.Timeline] = (current ?? new(message.Timeline, message.SkillId, message.Caster.ObjectId, message.Target, 0, 0))
@@ -73,11 +75,11 @@ public sealed class ZoneSkillState(Func<uint, bool> isKnownUnit)
         Known(message.Caster.ObjectId);
     }
 
-    /// <summary>Native 39456600: clears the casting flag (+32297) only when the timeline matches the unit's current one.</summary>
+    /// <summary>Native39456600 clears the independent casting byte only for skill type2; this view records that observation.</summary>
     public void Stop(SkillStopped message)
     {
         if (!Known(message.ObjectId)) return;
-        if (_casts.TryGetValue(message.ObjectId, out var cast) && cast.Timeline == (ushort)message.Timeline)
+        if (message.SkillId == 2 && _casts.TryGetValue(message.ObjectId, out var cast))
             _casts[message.ObjectId] = cast with { Casting = false };
     }
 

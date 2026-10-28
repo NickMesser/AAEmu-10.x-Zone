@@ -94,9 +94,9 @@ public sealed class ZoneSkillTests
         await Assert.That(state.ActiveSkills[0x0B].SkillId).IsEqualTo(0x2E03u);
         await Assert.That(state.Casts[0x01B3]).IsEqualTo(new ZoneUnitCast(0x0B, 0x2E03, true));
 
-        state.Stop(new SkillStopped(0x01B3, 0x0C)); // other timeline: ignored (native 39456600 compares)
+        state.Stop(new SkillStopped(0x01B3, 0x0B)); // a timeline-shaped value is not the skill-type-2 control.
         await Assert.That(state.Casts[0x01B3].Casting).IsTrue();
-        state.Stop(new SkillStopped(0x01B3, 0x0B));
+        state.Stop(new SkillStopped(0x01B3, 2));
         await Assert.That(state.Casts[0x01B3].Casting).IsFalse();
         state.StopCasting(new CastingStopped(0x01B3, 0x0B, 0x2E03, 0));
         await Assert.That(state.Casts.ContainsKey(0x01B3)).IsFalse();

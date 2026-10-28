@@ -170,9 +170,11 @@ public sealed class ManagedNpcScriptEffectsTests
             Host = new(Lua, loader, content, Scene, configureServices?.Invoke(this) ?? Effects, () => Now, () => DateTimeOffset.UnixEpoch);
             if (!Host.Bootstrap().Ready) throw new InvalidOperationException(Host.BootstrapReport.Refusal);
         }
-        public Admitted Admit(uint entityId = 0, ZoneModelDefinition? model = null, uint? unitModelId = null)
+        public Admitted Admit(uint entityId = 0, ZoneModelDefinition? model = null, uint? unitModelId = null,
+            ZoneSkillContent? skillContent = null, bool cleanSkillState = false)
         {
-            var npc = Admission.Npc((uint)Interlocked.Increment(ref _nextUnit), model: model, unitModelId: unitModelId); Admission.Publish(npc);
+            var npc = Admission.Npc((uint)Interlocked.Increment(ref _nextUnit), model: model, unitModelId: unitModelId,
+                skillContent: skillContent, cleanSkillState: cleanSkillState); Admission.Publish(npc);
             var handle = Admission.Catalog.Register(npc);
             var actor = Scene.Prepare(handle, new() { EntityId = entityId == 0 ? (uint)Interlocked.Increment(ref _nextEntity) : entityId },
                 ZoneManagedNpcActorScene.CreatePipeUserControls(), true);

@@ -89,6 +89,9 @@ def main():
                 delay = (t - base) / a.speed - (time.time() - start)
                 if delay > 0:
                     time.sleep(delay)
+            # pump's 1 ms receive poll is not a send deadline. Restore a bounded transfer
+            # timeout before writing, so ordinary TCP backpressure does not reset the zone.
+            sock.settimeout(60)
             sock.sendall(raw)
             pump(sock)
 

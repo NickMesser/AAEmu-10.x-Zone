@@ -13,6 +13,12 @@ public sealed class ZoneAiObjectState : IZoneAiObjectSearchCandidate
     public bool Enabled { get; set; } = true;
     public float Radius { get; set; }
     public uint EntityId { get; set; }
+    //3103E638 names+132 predicted position,+144 body,+156 move,+168 view; ctor zeros all.
+    //Their scene producers must copy actual AI/proxy values, not infer them from desired motion.
+    public Vector3 MoveDirection { get; set; }
+    public Vector3 ViewDirection { get; set; }
+    public Vector3 BodyDirection { get; set; }
+    public Vector3 PredictedPosition { get; set; }
     // CAIObject+E0: 3100992C writes, 31009934 reads, 3103D7F8 initializes false.
     // COPUseSkill 310E6B68 uses it to report stalled AI; it is not an update-enable flag.
     public bool DiagnosticsEnabled { get; set; }

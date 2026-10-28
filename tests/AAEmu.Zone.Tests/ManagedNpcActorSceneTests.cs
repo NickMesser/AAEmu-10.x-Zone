@@ -163,7 +163,7 @@ public sealed class ManagedNpcActorSceneTests
         bool blocking = false) => pipe.Append(operation, blocking, ZoneGoalGrouping.None, parameters,
             message => throw new InvalidOperationException(message));
 
-    private sealed class Fixture : IDisposable
+    internal sealed class Fixture : IDisposable
     {
         private static int _nextUnit = 600_000;
         private ulong _nextProxy = 0x1_0000;

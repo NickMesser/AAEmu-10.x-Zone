@@ -77,7 +77,8 @@ public static class ZoneServerStartup
         var hostInputs = new ZoneSceneHost.ZoneHostInputs(
             engineInputs.Options, loaded.Models, engineInputs.Auxiliary, layout, assets, loaded.Stats, loaded.Npcs,
             loaded.SpawnerControllers, loaded.World, loaded.Achievements, loaded.Loot, loaded.Scene, zone, battlefield,
-            startup, configuration, configuration.Backends, placements, trace);
+            startup, configuration, configuration.Backends, placements, trace,
+            configuration.Backends == ZoneSceneBackendSelection.NativeFree ? content.LoadNpcSkillContent() : null);
         await ZoneSceneHost.RunAsync(hostInputs, client.GetStream(), shutdown).ConfigureAwait(false);
         trace(configuration.Backends.Engine == ZoneEngineBackendKind.Managed
             ? "Managed host session retired in order (frame -> loading -> tick -> spawners -> terrain)."

@@ -10,5 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Fixtures\npc-collider-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-reference-native-controls.json" />
   </ItemGroup>
 </Project>

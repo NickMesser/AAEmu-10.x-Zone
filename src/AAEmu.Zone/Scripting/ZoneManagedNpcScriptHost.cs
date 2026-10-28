@@ -25,12 +25,17 @@ public interface IZoneManagedNpcScriptServices
     void SetSmartObjectState(ZoneManagedNpcActor actor, string state, bool modify) => throw Missing("unit.SetSoState / smart-object state owner");
     void SetDefaultPosture(ZoneManagedNpcActor actor, bool enabled) => throw Missing("unit.SetDefaultPosture / authored posture owner");
     void ClearCombat(ZoneManagedNpcActor actor) => throw Missing("unit.ClearCombat / combat owner and notifications");
+    void SaveUnitAttr(ZoneManagedNpcActor actor, int changeOption) => throw Missing("unit.SaveUnitAttr / independent AI-unit restoration record");
     void StopCasting(ZoneManagedNpcActor actor) => throw Missing("unit.StopCasting / casting owner");
     bool RemoveBuff(ZoneManagedNpcActor actor, uint buffType) => throw Missing("unit.RemoveBuff / buff-type removal request");
     void SetPositionCheckContext(ZoneManagedNpcActor actor, int context) => throw Missing("unit.NpcSetCheckPosContext / position-check owner");
     void SetSkillUsePattern(ZoneManagedNpcActor actor, int pattern) => throw Missing("AI.SetSkillUsePattern / skill executor");
+    void SetSkillList(ZoneManagedNpcActor actor, ZoneLuaReference list) => throw Missing("unit.NpcSetSkillList / skill executor");
     void SetReferencePosition(ZoneManagedNpcActor actor, Vector3 value) => throw Missing("AI.SetRefPointPosition / indexed reference-point owner");
     void SetReferenceDirection(ZoneManagedNpcActor actor, Vector3 value) => throw Missing("AI.SetRefPointDirection / reference-point orientation");
+    Vector3 GetReferencePosition(ZoneManagedNpcActor actor) => throw Missing("AI.GetRefPointPosition / indexed reference-point owner");
+    Vector3 GetReferenceDirection(ZoneManagedNpcActor actor) => throw Missing("AI.GetRefPointDirection / indexed reference-point owner");
+    void SetReferenceRadius(ZoneManagedNpcActor actor, float radius) => throw Missing("AI.SetRefPointRadius / indexed reference-point owner");
     bool IsSimilarReferenceDirection(ZoneManagedNpcActor actor) => throw Missing("AI.IsSimilarRefPointDirection / reference-point orientation");
     int GetGroupId(ZoneManagedNpcActor actor) => throw Missing("AI.GetGroupOf / AI group membership");
     ZoneManagedNpcActor? GetGroupLeader(int groupId) => throw Missing("AI.GetLeader / AI group membership");
@@ -134,8 +139,9 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
         });
         Bind(ai, "GetAttentionTargetOf", args => Actor(args, 0, "AI.GetAttentionTargetOf").Actor.AttentionTarget is { } target
             ? [new ZoneLuaHandle(target.EntityId)] : []);
-        Bind(ai, "SetRefPointPosition", args => { _services.SetReferencePosition(Actor(args, 0, "AI.SetRefPointPosition").Actor, Vector(args, 1, "AI.SetRefPointPosition")); return []; });
-        Bind(ai, "SetRefPointDirection", args => { _services.SetReferenceDirection(Actor(args, 0, "AI.SetRefPointDirection").Actor, Vector(args, 1, "AI.SetRefPointDirection")); return []; });
+        Bind(ai, "SetRefPointPosition", SetReferencePosition);
+        Bind(ai, "SetRefPointDirection", args => { _services.SetReferenceDirection(Actor(args, 0, "AI.SetRefPointDirection").Actor, Vector(args, 1, "AI.SetRefPointDirection")); return [1d]; });
+        Bind(ai, "SetRefPointRadius", args => { _services.SetReferenceRadius(Actor(args, 0, "AI.SetRefPointRadius").Actor, Number(args, 1, "AI.SetRefPointRadius")); return [1d]; });
         Bind(ai, "IsSimilarRefPointDirection", args => [_services.IsSimilarReferenceDirection(Actor(args, 0, "AI.IsSimilarRefPointDirection").Actor)]);
         Bind(ai, "SetSkillUsePattern", args => { _services.SetSkillUsePattern(Actor(args, 0, "AI.SetSkillUsePattern").Actor, Integer(args, 1, "AI.SetSkillUsePattern")); return []; });
         Bind(ai, "IsMoving", args => [_services.IsMoving(Actor(args, 0, "AI.IsMoving").Actor, args.Count > 1 ? Number(args, 1, "AI.IsMoving") : 0)]);
@@ -144,6 +150,8 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
                 local x,y,z=f(self,...);return {x=x,y=y,z=z}
             end end
             """, "=zone-npc-vector-binding")) _vectorFactory = ((ZoneLuaReference)factory[0]!).Retain();
+        BindVector(ai, "GetRefPointPosition", args => _services.GetReferencePosition(Actor(args, 0, "AI.GetRefPointPosition").Actor));
+        BindVector(ai, "GetRefPointDirection", args => _services.GetReferenceDirection(Actor(args, 0, "AI.GetRefPointDirection").Actor));
         RefuseMissing(ai, "AI"); RefuseMissing(system, "System"); RefuseMissing(clock, "os");
         _installed = true;
     }
@@ -179,8 +187,8 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
                 Entity(bound, name, args => { using var result = _lua.Call(original, args.ToArray()); return result.ToArray(); });
             }
             Entity(bound, "GetName", _ => [bound.EntityName]);
-            EntityVector(bound, "GetPos", _ => bound.Actor.Services.GetPosition());
-            EntityVector(bound, "GetWorldPos", _ => bound.Actor.Services.GetPosition());
+            EntityVector(bound, "GetPos", _ => bound.Actor.Scene.Position(bound.Actor));
+            EntityVector(bound, "GetWorldPos", _ => bound.Actor.Scene.Position(bound.Actor));
             EntityVector(bound, "GetDirectionVector", args => _services.GetDirectionVector(actor,
                 ZoneManagedEntityOrientation.AxisFromScriptArgument(args.Count > 1 ? args[1] : null)));
             // 32031030 only validates its argument and returns: there is no native state write.
@@ -231,6 +239,19 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
             Method(bound, unit, "StopCasting", worldId, _ => { _services.StopCasting(actor); return []; });
             Method(bound, unit, "RemoveBuff", worldId, args => [_services.RemoveBuff(actor, unchecked((uint)Integer(args, 1, "unit.RemoveBuff")))]);
             Method(bound, unit, "NpcSetCheckPosContext", worldId, args => { _services.SetPositionCheckContext(actor, Integer(args, 1, "unit.NpcSetCheckPosContext")); return []; });
+            Method(bound, unit, "NpcSetSkillList", worldId, args =>
+            {
+                if (args.Count <= 1 || args[1] is not ZoneLuaReference { IsTable: true } list)
+                    throw new ArgumentException("unit.NpcSetSkillList requires its actual skill table.");
+                _services.SetSkillList(actor, list); return [];
+            });
+            Method(bound, unit, "SaveUnitAttr", bound.Actor.Npc.ObjectId, args =>
+            {
+                //395DA0B0 does not invoke39351510 when the numeric argument is absent.
+                if (args.Count > 1 && args[1] is long or double)
+                    _services.SaveUnitAttr(bound.Actor, Integer(args, 1, "unit.SaveUnitAttr"));
+                return [];
+            });
             RefuseMissing(unit, "unit"); bound.Script.Set("unit", unit);
             return bound;
         }
@@ -242,7 +263,12 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
         Check(); binding.RequireOwner(this); binding.RequireCurrent();
         var previous = _executing; _executing = binding;
         binding.InitializationError = null;
-        try { return Scripts.Initialize(binding.Prepared, () => binding.IsCurrent, () => binding.InitializationError); }
+        try
+        {
+            var children = _services as IZoneManagedNpcAuthoredChildren;
+            return Scripts.Initialize(binding.Prepared, () => binding.IsCurrent, () => binding.InitializationError,
+                children is { HasAuthoredChildren: true } ? () => children.InstallAuthoredChildren(binding) : null);
+        }
         finally { _executing = previous; }
     }
 
@@ -282,6 +308,31 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
         return [];
     }
 
+    private object?[] SetReferencePosition(IReadOnlyList<object?> args)
+    {
+        //30524ED0 returns no values for missing entity/AI/attention lookups. Entity IDs in
+        //the numeric target overload pass through the original single-precision conversion.
+        if (args.Count == 0 || args[0] is not ZoneLuaHandle id || Find(id) is not { } bound) return [];
+        Vector3 position;
+        if (args.Count < 2 || args[1] is null)
+        {
+            if (bound.Actor.AttentionTarget is not { } attention) return [];
+            position = attention.Position;
+        }
+        else if (args[1] is long or double)
+        {
+            var entity = unchecked((uint)ZoneStatMath.ToInt32(Scalar(args[1])));
+            if (Find(new ZoneLuaHandle(entity)) is not { } target) return [];
+            position = target.Actor.AiObject.Position;
+        }
+        else if (args[1] is string name)
+            throw new NotSupportedException($"AI.SetRefPointPosition named/formation target '{ZoneAiSignalName.CString(name)}' requires its actual scene name/formation owner.");
+        else if (args[1] is ZoneLuaReference { IsTable: true } table && _lua.GetVector(table) is { } vector)
+            position = vector;
+        else return [];
+        bound.RequireCurrent(); _services.SetReferencePosition(bound.Actor, position); return [1d];
+    }
+
     private void Entity(ZoneManagedNpcScriptBinding bound, string name, Func<IReadOnlyList<object?>, object?[]> callback) =>
         Method(bound, bound.Script, name, bound.Actor.AiObject.EntityId, callback);
     private void EntityVector(ZoneManagedNpcScriptBinding bound, string name, Func<IReadOnlyList<object?>, Vector3> callback)
@@ -301,6 +352,12 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
     {
         using var function = _lua.CreateFunction(args => { Check(); return callback(args); });
         table.Set(name, function);
+    }
+    private void BindVector(ZoneLuaReference table, string name, Func<IReadOnlyList<object?>, Vector3> callback)
+    {
+        using var function = _lua.CreateFunction(args => { Check(); var value = callback(args); return [value.X, value.Y, value.Z]; });
+        using var wrapped = _lua.Call(_vectorFactory!, function);
+        table.Set(name, wrapped[0]);
     }
     private void RefuseMissing(ZoneLuaReference table, string domain)
     {

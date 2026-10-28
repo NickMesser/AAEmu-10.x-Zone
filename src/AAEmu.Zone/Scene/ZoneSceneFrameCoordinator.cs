@@ -64,7 +64,7 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
     private readonly Action<string>? _trace;
     private readonly Action<TimeSpan>? _scriptTick;
     private readonly Action<TimeSpan>? _beginFrame;
-    private bool _disposed;
+    private bool _disposed, _running;
 
     /// <param name="phases">The scene's one Agent-3 concrete triple coordinator (PrePhase/StepPhysics/PostPhase).</param>
     /// <param name="backend">The scene's one physics adapter; StepPhysics maps 1:1 onto its single Step.</param>
@@ -105,6 +105,12 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
     public ZonePlayerActorFactory PlayerActors => _playerActors;
     /// <summary>The scene's selected AI pump, sharing the frame clock.</summary>
     public IZoneAiFramePump? AiPump => _ai;
+    /// <summary>
+    /// True only during a frame preceded by a World packet since the previous frame.
+    /// Optional cold construction may yield; existing physics, scripts and AI still run.
+    /// This is replacement scheduling context, not a native gameplay field.
+    /// </summary>
+    public bool WorldPacketProcessed { get; private set; }
 
     /// <summary>
     /// Runs ONE complete global frame on the scene owner thread (inside Dispatch, which is
@@ -112,9 +118,19 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
     /// PrePhase → StepPhysics → PostPhase → Pump → ZoneSimulationTick. Throws nothing benign;
     /// any failure propagates through Dispatch and retires the exact scene + connection.
     /// </summary>
-    public void RunFrame(uint frame)
+    public void RunFrame(uint frame) => RunFrame(frame, worldPacketProcessed: false);
+
+    public void RunFrame(uint frame, bool worldPacketProcessed)
     {
         ObjectDisposedException.ThrowIf(_disposed, this);
+        if (_running) throw new InvalidOperationException("The scene frame coordinator cannot run recursively.");
+        _running = true; WorldPacketProcessed = worldPacketProcessed;
+        try { RunFrameCore(frame); }
+        finally { WorldPacketProcessed = false; _running = false; }
+    }
+
+    private void RunFrameCore(uint frame)
+    {
         // ONE sample for every leaf of this frame (pump discipline, IZoneAiFramePump.cs:8-12).
         var serverMs = _startup.WorldGameClock.GetTime();
         var gameSeconds = serverMs / 1000f; // same documented millisecond domain, seconds view

@@ -8,7 +8,8 @@ namespace AAEmu.Zone.Scripting;
 /// <summary>
 /// Actual CPipeUser AI-unit attribute record.31163974 initializes mode3 and pending/original
 /// flying bytes0 at full+3592/+3596/+3597 (IAIActor interface+1288/+1292/+1293).
-/// Fly-skill producers must copy their actual record; no saved state is inferred from the Unit.
+/// SaveUnitAttr31159914 snapshots the actual Unit flying byte; pending writes belong to the
+/// separate fly-skill producers and are not invented by saving the record.
 /// </summary>
 public sealed class ZoneNpcAiUnitAttributeRestoreState
 {
@@ -17,6 +18,13 @@ public sealed class ZoneNpcAiUnitAttributeRestoreState
     public bool OriginalFlying { get; private set; }
     public void CopyFields(int mode, bool pending, bool originalFlying)
     { Mode = mode; RestorePending = pending; OriginalFlying = originalFlying; }
+
+    internal void Save(int changeOption, bool flying)
+    {
+        Mode = changeOption == 0 ? flying ? 2 : 3 : changeOption;
+        OriginalFlying = flying;
+        //31159914 writes+1288/+1293 only. In particular, +1292 is unchanged.
+    }
 }
 
 /// <summary>
@@ -66,6 +74,19 @@ public sealed class ZoneManagedNpcCombatScriptServices : IDisposable
         actor.Npc.Unit.ClearCombatFromScript(); RequireActor(actor);
         var writer = new ZoneWriter(); writer.WriteBc(actor.Npc.ObjectId);
         _send(new(ZwOpcodes.ClearCombat, writer.ToArray()));
+    }
+
+    /// <summary>
+    ///39351510 -> IAIActor+424/31159914: retain the signed32-bit change option (zero chooses
+    /// mode2 for flying,3 otherwise), then save actual Unit.IsFlying. This does not arm a
+    /// restore, change flying/navigation/physics, clear combat, or send a World request.
+    /// </summary>
+    public void SaveUnitAttr(ZoneManagedNpcActor actor, int changeOption)
+    {
+        Check(); RequireActor(actor);
+        if (!_actors.TryGetValue(actor.Handle, out var owner) || !ReferenceEquals(owner.Actor, actor) || !owner.IsCurrent)
+            throw new InvalidOperationException("SaveUnitAttr requires its exact owned AI-unit attribute record.");
+        owner.Attributes.Save(changeOption, actor.Npc.Unit.IsFlying);
     }
 
     private void RequireActor(ZoneManagedNpcActor actor)
