@@ -66,7 +66,7 @@ public sealed class ManagedStaticBackendTests
     {
         var statics = new ZoneManagedStaticGeometry();
         statics.AddInstance(Floor(0), Matrix4x4.Identity);
-        statics.AddInstance(new(
+        statics.AddInstance(new ZoneManagedTriangleMesh(
             [new(3, -100, 0), new(3, 100, 0), new(3, 100, 10), new(3, -100, 10)],
             [0, 1, 2, 0, 2, 3], [23, 23]), Matrix4x4.Identity);
         var (backend, actor) = Character(statics, new(0, 0, 0));
@@ -110,7 +110,7 @@ public sealed class ManagedStaticBackendTests
     public async Task WalkableStaticSlopeSuppliesRisingSupportWithoutBlockingForwardMotion()
     {
         var statics = new ZoneManagedStaticGeometry();
-        statics.AddInstance(new(
+        statics.AddInstance(new ZoneManagedTriangleMesh(
             [new(-20, -20, -10), new(20, -20, 10), new(20, 20, 10), new(-20, 20, -10)],
             [0, 1, 2, 0, 2, 3], [31, 31]), Matrix4x4.Identity);
         var (backend, actor) = Character(statics, Vector3.Zero);
@@ -147,7 +147,7 @@ public sealed class ManagedStaticBackendTests
     public async Task DiagonalJumpCannotCrossAnOverhangMissedBySeparateAxisCasts()
     {
         var statics = new ZoneManagedStaticGeometry();
-        statics.AddInstance(new([new(1, -2, 2), new(3, -2, 2), new(3, 2, 2), new(1, 2, 2)],
+        statics.AddInstance(new ZoneManagedTriangleMesh([new(1, -2, 2), new(3, -2, 2), new(3, 2, 2), new(1, 2, 2)],
             [0, 1, 2, 0, 2, 3]), Matrix4x4.Identity);
         var (backend, actor) = Character(statics, Vector3.Zero, new(.1f, .1f, .5f));
         backend.ApplyVelocity(actor, new(40, 0, 40));
@@ -162,7 +162,7 @@ public sealed class ManagedStaticBackendTests
     public async Task JumpAboveALowWallDoesNotBlockAtTheOldHorizontalHeight()
     {
         var statics = new ZoneManagedStaticGeometry();
-        statics.AddInstance(new([new(1, -2, 0), new(1, 2, 0), new(1, 2, .3f), new(1, -2, .3f)],
+        statics.AddInstance(new ZoneManagedTriangleMesh([new(1, -2, 0), new(1, 2, 0), new(1, 2, .3f), new(1, -2, .3f)],
             [0, 1, 2, 0, 2, 3]), Matrix4x4.Identity);
         var (backend, actor) = Character(statics, Vector3.Zero, new(.1f));
         backend.ApplyVelocity(actor, new(40, 0, 40));
@@ -176,7 +176,7 @@ public sealed class ManagedStaticBackendTests
     public async Task FallingUnderAPlatformCannotSnapUpToItsEndpointColumn()
     {
         var statics = new ZoneManagedStaticGeometry();
-        statics.AddInstance(new([new(.45f, -2, 1.9f), new(2, -2, 1.9f), new(2, 2, 1.9f), new(.45f, 2, 1.9f)],
+        statics.AddInstance(new ZoneManagedTriangleMesh([new(.45f, -2, 1.9f), new(2, -2, 1.9f), new(2, 2, 1.9f), new(.45f, 2, 1.9f)],
             [0, 1, 2, 0, 2, 3]), Matrix4x4.Identity);
         var (backend, actor) = Character(statics, new(0, 0, 2), new(.05f, .05f, .5f));
         backend.ApplyVelocity(actor, new(10, 0, -30));
@@ -208,7 +208,7 @@ public sealed class ManagedStaticBackendTests
     public async Task OrdinaryCorrectionsRespectWallsWhileExplicitTeleportsRemainAuthoritative()
     {
         var statics = new ZoneManagedStaticGeometry();
-        statics.AddInstance(new([new(3, -10, -10), new(3, 10, -10), new(3, 10, 10), new(3, -10, 10)],
+        statics.AddInstance(new ZoneManagedTriangleMesh([new(3, -10, -10), new(3, 10, -10), new(3, 10, 10), new(3, -10, 10)],
             [0, 1, 2, 0, 2, 3]), Matrix4x4.Identity);
         var (backend, actor) = Character(statics, Vector3.Zero);
         backend.ApplyPose(actor, new(5, 2, 0), Quaternion.Identity);
@@ -219,5 +219,34 @@ public sealed class ManagedStaticBackendTests
         backend.Teleport(actor, new(5, 2, 0), Quaternion.Identity);
         backend.CopyStatus(actor, out var teleported);
         await Assert.That(teleported.Position).IsEqualTo(new Vector3(5, 2, 0));
+    }
+
+    [Test]
+    public async Task PlayerLandsOnAnAnalyticCylinderAndJumpStopsAtASphericalCeiling()
+    {
+        var statics = new ZoneManagedStaticGeometry();
+        statics.AddInstance(new ZoneManagedPrimitiveGeometry(ZoneManagedPrimitiveKind.Cylinder,
+            Vector3.Zero, Vector3.UnitZ, 5, 1, 41), Matrix4x4.CreateTranslation(4000, 4000, -1));
+        statics.AddInstance(new ZoneManagedPrimitiveGeometry(ZoneManagedPrimitiveKind.Sphere,
+            Vector3.Zero, Vector3.Zero, 1, 0, 42), Matrix4x4.CreateTranslation(4000, 4000, 5));
+        var (backend, actor) = Character(statics, new(4000, 4000, 1), new(.4f, .4f, .5f));
+        backend.Step(TimeSpan.FromSeconds(1));
+        backend.CopyStatus(actor, out var standing);
+        await Assert.That(standing.IsGrounded).IsTrue();
+        await Assert.That(MathF.Abs(standing.Position.Z)).IsLessThan(.002f);
+        await Assert.That(backend.GroundMaterialFor(actor)).IsEqualTo((ushort?)41);
+        backend.ApplyImpulse(actor, new(0, 0, 12));
+        var maximum = 0f;
+        for (var frame = 0; frame < 120; frame++)
+        {
+            backend.Step(TimeSpan.FromMilliseconds(33));
+            backend.CopyStatus(actor, out var status);
+            maximum = MathF.Max(maximum, status.Position.Z);
+        }
+        await Assert.That(maximum).IsGreaterThan(2.9f);
+        await Assert.That(maximum).IsLessThanOrEqualTo(3.002f);
+        backend.CopyStatus(actor, out var landed);
+        await Assert.That(landed.IsGrounded).IsTrue();
+        await Assert.That(MathF.Abs(landed.Position.Z)).IsLessThan(.002f);
     }
 }

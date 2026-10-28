@@ -234,7 +234,7 @@ public sealed class ManagedStaticGeometryTests
     public async Task MeshVertexAndDiagonalBoundaryContactsRemainBounded()
     {
         var geometry = new ZoneManagedStaticGeometry();
-        geometry.AddInstance(new([new(0, 0, 0), new(4, 0, 0), new(0, 4, 0)], [0, 1, 2]), Matrix4x4.Identity);
+        geometry.AddInstance(new ZoneManagedTriangleMesh([new(0, 0, 0), new(4, 0, 0), new(0, 4, 0)], [0, 1, 2]), Matrix4x4.Identity);
         await Assert.That(geometry.Raycast(new(4, 0, 3), new(0, 0, -6), out _)).IsTrue();
         await Assert.That(geometry.Raycast(new(2, 2, 3), new(0, 0, -6), out _)).IsTrue();
         await Assert.That(geometry.Raycast(new(2.001f, 2.001f, 3), new(0, 0, -6), out _)).IsFalse();
@@ -295,7 +295,7 @@ public sealed class ManagedStaticGeometryTests
         await Assert.That(Vector3.Distance(hit.Normal, -Vector3.UnitX)).IsLessThan(.0001f);
         await Assert.That(MathF.Abs(hit.Distance - displacement.Length() * .45f)).IsLessThan(.001f);
         var downward = new ZoneManagedStaticGeometry();
-        downward.AddInstance(new([new(-10, -10, 0), new(10, -10, 0), new(0, 10, 0)], [0, 2, 1]), Matrix4x4.Identity);
+        downward.AddInstance(new ZoneManagedTriangleMesh([new(-10, -10, 0), new(10, -10, 0), new(0, 10, 0)], [0, 2, 1]), Matrix4x4.Identity);
         await Assert.That(downward.Raycast(new(0, 0, 2), new(0, 0, -4), out var underside)).IsTrue();
         await Assert.That(underside.Normal).IsEqualTo(-Vector3.UnitZ);
         await Assert.That(downward.TryGround(new(0, 0, 2), 4, out _)).IsFalse();

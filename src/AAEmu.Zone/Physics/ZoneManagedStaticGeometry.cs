@@ -8,18 +8,25 @@ public readonly record struct ZoneManagedStaticInstanceHandle(ulong Value);
 public readonly record struct ZoneManagedStaticQueryStatistics(int InstanceBoundsTests, int CandidateInstances, int TriangleTests);
 
 /// <summary>
-/// A managed collision scene of immutable shared triangle meshes and affine instances. A spatial
-/// bucket index selects instances, each resource's local-space BVH selects triangles, and exact
-/// world-space triangle tests account for rotation, shear and nonuniform/mirrored scale.
+/// A managed collision scene of shared triangle meshes, analytic convex primitives and affine
+/// instances. Spatial buckets select instances; mesh BVHs select authored triangles, while curved
+/// proxies retain analytic rays and support maps. Queries account for rotation, shear and
+/// nonuniform/mirrored scale without replacing curved targets with bounding boxes.
 /// </summary>
 /// <remarks>
 /// General triangles are two-sided surfaces: space below a bridge or inside a building stays
-/// empty. Explicitly flagged closed convex proxies also contain their interior volume. Query
-/// boxes are axis aligned; capsule queries conservatively use their bounding boxes.
+/// empty. Explicitly flagged closed convex meshes and analytic primitives contain their interior
+/// volume. Query boxes are axis aligned; capsule queries conservatively use their bounding boxes.
 /// This supplies static collision queries, not rigid-body, vehicle, animation or breakage dynamics.
 /// </remarks>
 public sealed class ZoneManagedStaticGeometry
 {
+    /// <summary>
+    /// World-space separation tolerance for analytic overlap/sweep contacts, in meters. This is
+    /// not a bound on distance traveled before a grazing contact: a small normal separation can
+    /// span a longer interval along a nearly tangent trajectory. Raw ray solutions do not use it.
+    /// </summary>
+    public const float AnalyticContactTolerance = ZoneManagedPrimitiveQueries.ContactTolerance;
     private const float BucketSize = 64;
     private const int MaximumInstanceBuckets = 512;
     private const int MaximumQueryBuckets = 4096;
@@ -40,8 +47,20 @@ public sealed class ZoneManagedStaticGeometry
     public ZoneManagedStaticInstanceHandle AddInstance(ZoneManagedTriangleMesh mesh, Matrix4x4 localToWorld)
     {
         ArgumentNullException.ThrowIfNull(mesh);
+        return AddInstanceCore(mesh, null, localToWorld);
+    }
+
+    public ZoneManagedStaticInstanceHandle AddInstance(ZoneManagedPrimitiveGeometry primitive, Matrix4x4 localToWorld)
+    {
+        ArgumentNullException.ThrowIfNull(primitive);
+        return AddInstanceCore(null, primitive, localToWorld);
+    }
+
+    private ZoneManagedStaticInstanceHandle AddInstanceCore(ZoneManagedTriangleMesh? mesh,
+        ZoneManagedPrimitiveGeometry? primitive, Matrix4x4 localToWorld)
+    {
         ValidateTransform(localToWorld, out var worldToLocal);
-        var bounds = new ZoneManagedBounds(mesh.BoundsMinimum, mesh.BoundsMaximum).Transform(localToWorld);
+        var bounds = (mesh is not null ? new ZoneManagedBounds(mesh.BoundsMinimum, mesh.BoundsMaximum) : primitive!.Bounds).Transform(localToWorld);
         ZoneManagedTerrainGeometry.ValidateFinite(bounds.Minimum, nameof(localToWorld));
         ZoneManagedTerrainGeometry.ValidateFinite(bounds.Maximum, nameof(localToWorld));
         var (minimum, maximum, bucketCount) = BucketRange(bounds);
@@ -50,7 +69,7 @@ public sealed class ZoneManagedStaticGeometry
         {
             if (_nextIdentity == ulong.MaxValue) throw new InvalidOperationException("Static instance identities are exhausted.");
             var handle = new ZoneManagedStaticInstanceHandle(++_nextIdentity);
-            _instances.Add(handle, new(mesh, localToWorld, worldToLocal, bounds, keys));
+            _instances.Add(handle, new(mesh, primitive, localToWorld, worldToLocal, bounds, keys));
             if (keys.Length == 0) _oversized.Add(handle);
             foreach (var key in keys)
             {
@@ -101,9 +120,10 @@ public sealed class ZoneManagedStaticGeometry
     }
 
     /// <summary>
-    /// Finds the nearest bounded two-sided triangle hit. Normals preserve the transformed authored
-    /// winding on both sides, matching captured static scene rays. Optional normal filtering occurs
-    /// before nearest-hit selection; character support can exclude downward authored faces.
+    /// Finds the nearest bounded static hit. Mesh normals preserve transformed authored winding
+    /// on both sides; analytic primitive normals point outward, including exits from an interior
+    /// origin. Normal filters apply to candidate mesh faces and analytic roots before selecting
+    /// the nearest eligible hit. Nominal tangent decisions can differ from native float rounding.
     /// </summary>
     public bool Raycast(Vector3 origin, Vector3 displacement, out ZonePhysicsHit hit,
         float minimumNormalZ = -1, float maximumNormalZ = 1)
@@ -116,13 +136,24 @@ public sealed class ZoneManagedStaticGeometry
             if (displacement == Vector3.Zero) { _lastQuery = default; return false; }
             var end = origin + displacement;
             CollectCandidates(new(Vector3.Min(origin, end), Vector3.Max(origin, end)), out var boundsTests);
-            var best = float.PositiveInfinity;
+            var best = double.PositiveInfinity;
             var triangleTests = 0;
             foreach (var instance in _queryInstances)
             {
                 var localOrigin = Vector3.Transform(origin, instance.WorldToLocal);
                 var localDisplacement = Vector3.TransformNormal(displacement, instance.WorldToLocal);
-                instance.Mesh.QueryRay(localOrigin, localDisplacement, _queryTriangles);
+                if (instance.Primitive is { } primitive)
+                {
+                    var normalTransform = Matrix4x4.Transpose(instance.WorldToLocal);
+                    if (!primitive.RaycastLocal(localOrigin, localDisplacement, out var fraction, out var position, out var localNormal,
+                        normalTransform, minimumNormalZ, maximumNormalZ)) continue;
+                    var normal = Vector3.Normalize(Vector3.TransformNormal(localNormal, normalTransform));
+                    if (fraction >= best || normal.Z < minimumNormalZ || normal.Z > maximumNormalZ) continue;
+                    best = fraction;
+                    hit = new((float)(fraction * displacement.Length()), Vector3.Transform(position, instance.LocalToWorld), normal, primitive.PhysicalMaterialId);
+                    continue;
+                }
+                instance.Mesh!.QueryRay(localOrigin, localDisplacement, _queryTriangles);
                 foreach (var triangle in _queryTriangles)
                 {
                     triangleTests++;
@@ -134,7 +165,7 @@ public sealed class ZoneManagedStaticGeometry
                 }
             }
             _lastQuery = new(boundsTests, _queryInstances.Count, triangleTests);
-            return float.IsFinite(best);
+            return double.IsFinite(best);
         }
     }
 
@@ -153,11 +184,16 @@ public sealed class ZoneManagedStaticGeometry
     }
 
     /// <summary>
-    /// Continuously sweeps an axis-aligned box (or capsule bounds) against surface triangles.
+    /// Continuously sweeps an axis-aligned box (or capsule bounds) against mesh surfaces and
+    /// analytic convex targets. Analytic contacts use the declared separation tolerance; this
+    /// does not promise the same tolerance in distance traveled at a grazing contact.
     /// Filtering contact normals before selecting the nearest hit lets callers skip walkable
     /// floors while retaining a farther wall, or select downward ceiling normals.
     /// Tangential/outward travel from an existing face contact is clear; inward travel from an
     /// existing overlap reports distance zero. TryCollide reports overlap independent of motion.
+    /// Each analytic convex target has one approaching entry; a rejected entry does not substitute
+    /// an exit. Other instances remain candidates. Numerical exhaustion throws a named failure;
+    /// penetration recovery and a minimum-translation normal for embedded shapes are not supplied.
     /// </summary>
     public bool TrySweep(ZonePhysicsShape shape, Vector3 origin, Vector3 displacement, out ZonePhysicsHit hit,
         float minimumNormalZ = -1, float maximumNormalZ = 1)
@@ -178,7 +214,16 @@ public sealed class ZoneManagedStaticGeometry
             var triangleTests = 0;
             foreach (var instance in _queryInstances)
             {
-                instance.Mesh.QueryBounds(worldBounds.Transform(instance.WorldToLocal), _queryTriangles);
+                if (instance.Primitive is { } primitive)
+                {
+                    if (!ZoneManagedPrimitiveQueries.Sweep(primitive, instance.LocalToWorld, origin, shape.HalfExtents, displacement,
+                        out var fraction, out var normal, out var position) || fraction >= best ||
+                        normal.Z < minimumNormalZ || normal.Z > maximumNormalZ) continue;
+                    best = fraction;
+                    hit = new(fraction * displacement.Length(), position, normal, primitive.PhysicalMaterialId);
+                    continue;
+                }
+                instance.Mesh!.QueryBounds(worldBounds.Transform(instance.WorldToLocal), _queryTriangles);
                 foreach (var triangle in _queryTriangles)
                 {
                     triangleTests++;
@@ -209,7 +254,13 @@ public sealed class ZoneManagedStaticGeometry
             var collided = false;
             foreach (var instance in _queryInstances)
             {
-                if (instance.Mesh.ContainsSolidPoint(Vector3.Transform(position, instance.WorldToLocal)))
+                if (instance.Primitive is { } primitive)
+                {
+                    collided = ZoneManagedPrimitiveQueries.Overlaps(primitive, instance.LocalToWorld, position, shape.HalfExtents);
+                    if (collided) break;
+                    continue;
+                }
+                if (instance.Mesh!.ContainsSolidPoint(Vector3.Transform(position, instance.WorldToLocal)))
                 {
                     collided = true;
                     break;
@@ -256,7 +307,7 @@ public sealed class ZoneManagedStaticGeometry
 
     private static void WorldTriangle(Instance instance, int triangle, out Vector3 a, out Vector3 b, out Vector3 c, out ushort material)
     {
-        instance.Mesh.GetTriangle(triangle, out a, out b, out c, out material);
+        instance.Mesh!.GetTriangle(triangle, out a, out b, out c, out material);
         a = Vector3.Transform(a, instance.LocalToWorld);
         b = Vector3.Transform(b, instance.LocalToWorld);
         c = Vector3.Transform(c, instance.LocalToWorld);
@@ -302,7 +353,7 @@ public sealed class ZoneManagedStaticGeometry
             if (!float.IsFinite(value)) throw new ArgumentException("The inverse collision transform must be finite.", nameof(matrix));
     }
 
-    private sealed record Instance(ZoneManagedTriangleMesh Mesh, Matrix4x4 LocalToWorld,
+    private sealed record Instance(ZoneManagedTriangleMesh? Mesh, ZoneManagedPrimitiveGeometry? Primitive, Matrix4x4 LocalToWorld,
         Matrix4x4 WorldToLocal, ZoneManagedBounds Bounds, Bucket[] Buckets);
     private readonly record struct Bucket(int X, int Y, int Z);
 }

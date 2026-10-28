@@ -48,6 +48,7 @@ public sealed class ZoneCgfNode
     /// <summary>301DB9A0's helper classification applied to an authored mesh object.</summary>
     public bool IsHelperMesh { get; }
     public bool IsOrdinaryMesh { get; }
+    public bool IsPhysicsProxy { get; }
     /// <summary>Raw node TM converted to System.Numerics row-vector meters; rotation/scale are retained.</summary>
     public Matrix4x4 LocalTransform { get; }
     /// <summary>Local * parent.Local * ancestor.Local, as native301D1B70 composes the authored hierarchy.</summary>
@@ -57,9 +58,11 @@ public sealed class ZoneCgfNode
     /// <summary>Whether native per-node helper/main admission permits ordinary brush physics publication.</summary>
     public bool IsCollisionSource => CollisionExclusionReason is null;
     public string? CollisionExclusionReason { get; internal set; }
+    /// <summary>Decoded default physical data, independently of where native publication uses it.</summary>
+    public bool IsPhysicalDataComplete => Diagnostics.Count == 0 &&
+        PhysicsParts.All(part => part.PhysicsSlot != 0 || part.Geometry is not null);
     /// <summary>Completeness of default blocking geometry only; nonblocking slots remain individually reported.</summary>
-    public bool IsCollisionComplete => !IsCollisionSource || (Diagnostics.Count == 0 &&
-        PhysicsParts.All(part => part.PhysicsSlot != 0 || part.Geometry is not null));
+    public bool IsCollisionComplete => !IsCollisionSource || IsPhysicalDataComplete;
 
     internal ZoneCgfNode(int id, string name, int parent, int objectId, int materialId,
         Matrix4x4 local, List<ZoneCgfPhysicsPart> parts, List<string> diagnostics, bool isMesh)
@@ -67,10 +70,10 @@ public sealed class ZoneCgfNode
         ChunkId = id; Name = name; ParentId = parent; ObjectChunkId = objectId; MaterialChunkId = materialId;
         LocalTransform = WorldTransform = local;
         PhysicsParts = parts.AsReadOnly(); Diagnostics = diagnostics.AsReadOnly();
-        IsHelperMesh = isMesh && (name.StartsWith('$') ||
-            name.Contains("PhysicsProxy", StringComparison.OrdinalIgnoreCase) ||
+        IsPhysicsProxy = name.Contains("PhysicsProxy", StringComparison.OrdinalIgnoreCase) ||
             name.Contains("$collision", StringComparison.OrdinalIgnoreCase) ||
-            name.Contains("$physics_proxy", StringComparison.OrdinalIgnoreCase));
+            name.Contains("$physics_proxy", StringComparison.OrdinalIgnoreCase);
+        IsHelperMesh = isMesh && (name.StartsWith('$') || IsPhysicsProxy);
         IsOrdinaryMesh = isMesh && !IsHelperMesh;
         // CStatObj::LoadCGF30030D90 publishes these helper meshes to renderer/LOD owners,
         // bypassing their own ordinary subobject/physical-geometry publication chain. Helper
@@ -79,11 +82,14 @@ public sealed class ZoneCgfNode
             CollisionExclusionReason = "Authored occlusion helper geometry is renderer-only.";
         else if (IsHelperMesh && name.Contains("$lod", StringComparison.OrdinalIgnoreCase))
             CollisionExclusionReason = "Authored LOD helper geometry belongs to the visual LOD array.";
+        else if (IsHelperMesh && name.StartsWith("$aimpoint", StringComparison.OrdinalIgnoreCase))
+            CollisionExclusionReason = "Authored aimpoint helper does not create an independent child static object.";
     }
 }
 
 /// <summary>
-/// Managed CGF0x744/0x745 container, Node0823, Mesh0800, MtlName0800 and MeshPhysicsData0800 readers.
+/// Managed CGF0x744/0x745 container, Node0823, Mesh0800, MtlName0800, MeshPhysicsData0800,
+/// DataStream0800, Subset0800 and ExportFlags1 readers.
 /// Physical parts come exclusively from serialized physical chunks. Render streams, AABBs and
 /// display meshes are never substituted for missing collision. Unknown versions remain explicit.
 /// </summary>
@@ -99,7 +105,17 @@ public sealed class ZoneCgfContent
     public IReadOnlyList<ZoneCgfNode> Nodes { get; }
     public IReadOnlyList<ZoneCgfMaterial> Materials { get; }
     public IReadOnlyList<string> Diagnostics { get; }
-    public bool IsCollisionComplete => Diagnostics.Count == 0 && Nodes.All(node => node.IsCollisionComplete);
+    /// <summary>ExportFlags v1 word16; missing export metadata keeps native constructor default bit0=1.</summary>
+    public uint ExportFlags { get; }
+    public bool IsCompound { get; }
+    public bool HasOrdinaryMesh { get; }
+    /// <summary>Raw native root physical source, selected before visual helper/main admission.</summary>
+    public ZoneCgfNode? DirectPhysicsSource { get; }
+    public int? DirectPhysicsNodeId => DirectPhysicsSource?.ChunkId;
+    /// <summary>Raw root physical data presence, including unsupported decoded shapes and nondefault slots.</summary>
+    public bool HasDirectPhysicsGeometry { get; }
+    public bool IsCollisionComplete => Diagnostics.Count == 0 && Nodes.All(node => node.IsCollisionComplete) &&
+        (DirectPhysicsSource?.IsPhysicalDataComplete ?? true);
 
     private ZoneCgfContent(byte[] file)
     {
@@ -148,6 +164,20 @@ public sealed class ZoneCgfContent
         Chunks = Array.AsReadOnly(chunks);
         var byId = chunks.ToDictionary(chunk => chunk.Id);
         var diagnostics = new List<string>();
+        var exports = chunks.Where(chunk => chunk.Type == 0xcccc0015).ToArray();
+        if (exports.Length > 1) throw new InvalidDataException("CGF has ambiguous repeated export flags.");
+        ExportFlags = 1;
+        if (exports.Length == 1)
+        {
+            var flags = exports[0];
+            if (flags.Version != 1)
+                diagnostics.Add($"Export flags chunk {flags.Id} version 0x{flags.Version:X} is not implemented.");
+            else
+            {
+                ValidateHeader(flags, 180);
+                ExportFlags = UInt(flags.Data, 16);
+            }
+        }
         var materials = new List<ZoneCgfMaterial>();
         foreach (var chunk in chunks.Where(chunk => chunk.Type == MaterialType))
         {
@@ -163,7 +193,9 @@ public sealed class ZoneCgfContent
         }
         Materials = materials.AsReadOnly();
 
-        var geometry = new Dictionary<int, (ZoneCgfPhysicsGeometry? Value, string? Diagnostic)>();
+        var geometry = new Dictionary<(int Physics, int Mesh), (ZoneCgfPhysicsGeometry? Value, string? Diagnostic)>();
+        var positions = new Dictionary<int, Vector3[]>();
+        var sources = new Dictionary<(int Mesh, bool Triangles), ZoneCgfPhysicsSource>();
         var nodes = new List<ZoneCgfNode>();
         foreach (var chunk in chunks.Where(chunk => chunk.Type == NodeType))
         {
@@ -188,7 +220,8 @@ public sealed class ZoneCgfContent
                     {
                         var physicsId = Int(mesh.Data, 108 + slot * 4);
                         if (physicsId <= 0) continue; // Native301D3A30 loads only positive references.
-                        if (!geometry.TryGetValue(physicsId, out var parsed))
+                        var geometryKey = (physicsId, mesh.Id);
+                        if (!geometry.TryGetValue(geometryKey, out var parsed))
                         {
                             try
                             {
@@ -203,11 +236,12 @@ public sealed class ZoneCgfContent
                                     throw new InvalidDataException("CGF physical data size exceeds its chunk.");
                                 if (tetraSize != 0)
                                     throw new NotSupportedException("CGF tetrahedral physical geometry is not implemented.");
-                                parsed = (ZoneCgfPhysicsGeometry.Read(physics.Data.Slice(40, size)), null);
+                                parsed = (ZoneCgfPhysicsGeometry.Read(physics.Data.Slice(40, size),
+                                    triangles => ResolveSource(mesh, triangles)), null);
                             }
                             catch (Exception error) when (error is InvalidDataException or NotSupportedException or OverflowException)
                             { parsed = (null, error.Message); }
-                            geometry.Add(physicsId, parsed);
+                            geometry.Add(geometryKey, parsed);
                         }
                         parts.Add(new(slot, physicsId, parsed.Value, parsed.Diagnostic));
                     }
@@ -236,6 +270,24 @@ public sealed class ZoneCgfContent
             foreach (var node in nodes.Where(node => node.IsOrdinaryMesh &&
                 !node.Name.Equals("main", StringComparison.OrdinalIgnoreCase)))
                 node.CollisionExclusionReason = "An ordinary mesh named main suppresses this non-main ordinary mesh (native subobject flag2).";
+        var ordinary = nodes.Where(node => node.IsOrdinaryMesh).ToArray();
+        HasOrdinaryMesh = ordinary.Length != 0;
+        if (!HasOrdinaryMesh)
+            diagnostics.Add("Native CStatObj::LoadCGF requires an ordinary mesh before root physical selection; helper-only geometry cannot load as a static object.");
+        var joint = nodes.Any(node => !node.IsOrdinaryMesh &&
+            (node.Name.StartsWith("$joint", StringComparison.Ordinal) || node.Name.StartsWith("$cutdown", StringComparison.Ordinal)));
+        IsCompound = (ExportFlags & 1) == 0 && (ordinary.Length > 1 || joint);
+        if (!IsCompound && HasOrdinaryMesh)
+        {
+            var selected = nodes.FirstOrDefault(node => node.IsPhysicsProxy) ?? ordinary.FirstOrDefault();
+            DirectPhysicsSource = selected;
+            HasDirectPhysicsGeometry = selected?.PhysicsParts.Any(part =>
+                byId.TryGetValue(part.PhysicsChunkId, out var physical) && physical.Type == PhysicsType &&
+                physical.Version == 0x800 && physical.Length >= 40 && Int(physical.Data, 16) > 0) == true;
+        }
+        if (!IsCompound)
+            foreach (var node in ordinary)
+                node.CollisionExclusionReason ??= "Direct-root mode does not independently publish ordinary mesh subobjects.";
         var nodeById = nodes.ToDictionary(node => node.ChunkId);
         foreach (var node in nodes)
         {
@@ -256,6 +308,15 @@ public sealed class ZoneCgfContent
         }
         Nodes = nodes.AsReadOnly();
         Diagnostics = diagnostics.AsReadOnly();
+
+        ZoneCgfPhysicsSource ResolveSource(ZoneCgfChunk mesh, bool triangles)
+        {
+            var key = (mesh.Id, triangles);
+            if (sources.TryGetValue(key, out var cached)) return cached;
+            var source = ReadPhysicsSource(mesh, byId, triangles, positions);
+            sources.Add(key, source);
+            return source;
+        }
     }
 
     public static ZoneCgfContent Read(Stream input)
@@ -284,6 +345,84 @@ public sealed class ZoneCgfContent
         if (data.Length < minimum || UInt(data, 0) != chunk.Type || UInt(data, 4) != chunk.Version ||
             Int(data, 8) != chunk.Offset || Int(data, 12) != chunk.Id)
             throw new InvalidDataException($"CGF chunk {chunk.Id} has a truncated or inconsistent local header.");
+    }
+
+    private static ZoneCgfPhysicsSource ReadPhysicsSource(ZoneCgfChunk mesh,
+        Dictionary<int, ZoneCgfChunk> chunks, bool requireTriangles,
+        Dictionary<int, Vector3[]> positions)
+    {
+        // CLoaderCGF301E0090/301E0340 selects Mesh0800 stream0/5. Positions are already
+        // meters. Only the physical serialization's foreign map chooses collision faces.
+        var vertexCount = Int(mesh.Data, 24);
+        if ((uint)vertexCount > ZoneCgfPhysicsGeometry.MaximumVertexCount)
+            throw new InvalidDataException($"CGF mesh {mesh.Id} source vertex count exceeds the managed bound.");
+        if (!positions.TryGetValue(mesh.Id, out var vertices))
+        {
+            var data = Stream(0, vertexCount, 12);
+            vertices = new Vector3[vertexCount];
+            for (var index = 0; index < vertexCount; index++)
+            {
+                var at = 40 + index * 12;
+                vertices[index] = new(Float(data.Data, at), Float(data.Data, at + 4), Float(data.Data, at + 8));
+            }
+            positions.Add(mesh.Id, vertices);
+        }
+        if (!requireTriangles) return new(vertices, [], []);
+        var indexCount = Int(mesh.Data, 28);
+        if (indexCount < 0 || indexCount % 3 != 0 || indexCount / 3 > ZoneCgfPhysicsGeometry.MaximumTriangleCount)
+            throw new InvalidDataException($"CGF mesh {mesh.Id} source index count is invalid or exceeds the managed bound.");
+        var indexStream = Stream(5, indexCount, 2);
+        var indices = new int[indexCount];
+        for (var index = 0; index < indices.Length; index++)
+        {
+            indices[index] = BinaryPrimitives.ReadUInt16LittleEndian(indexStream.Data.Slice(40 + index * 2, 2));
+            if (indices[index] >= vertexCount)
+                throw new InvalidDataException($"CGF mesh {mesh.Id} source index is outside its vertex stream.");
+        }
+        var materialSlots = new int?[indexCount / 3];
+        var subsetId = Int(mesh.Data, 36);
+        var subsetCount = Int(mesh.Data, 32);
+        if ((uint)subsetCount > MaximumChunkCount)
+            throw new InvalidDataException($"CGF mesh {mesh.Id} source subset count exceeds the managed bound.");
+        if (subsetCount != 0)
+        {
+            if (subsetId <= 0 || !chunks.TryGetValue(subsetId, out var subsets))
+                throw new NotSupportedException($"CGF mesh {mesh.Id} requires absent subset chunk {subsetId} for referenced physical materials.");
+            if (subsets.Type != 0xcccc0017 || subsets.Version != 0x800)
+                throw new NotSupportedException($"CGF mesh {mesh.Id} subset chunk {subsetId} has an unsupported type/version.");
+            ValidateHeader(subsets, 32);
+            if (Int(subsets.Data, 20) != subsetCount || 32L + subsetCount * 36L > subsets.Length)
+                throw new InvalidDataException($"CGF mesh {mesh.Id} subset records are truncated or inconsistent.");
+            for (var index = 0; index < subsetCount; index++)
+            {
+                var at = 32 + index * 36;
+                var firstIndex = Int(subsets.Data, at);
+                var count = Int(subsets.Data, at + 4);
+                if (firstIndex < 0 || count < 0 || firstIndex % 3 != 0 || count % 3 != 0 ||
+                    (long)firstIndex + count > indexCount)
+                    throw new InvalidDataException($"CGF mesh {mesh.Id} subset index range is not a bounded triangle range.");
+                var material = unchecked((sbyte)Int(subsets.Data, at + 16));
+                // Native30047F40 overwrites ranges in source order. Uncovered scratch bytes
+                // can retain a previous CGF's data, so they remain unknown rather than zero.
+                for (var triangle = firstIndex / 3; triangle < (firstIndex + count) / 3; triangle++)
+                    materialSlots[triangle] = material;
+            }
+        }
+        return new(vertices, indices, materialSlots);
+
+        ZoneCgfChunk Stream(int type, int count, int elementSize)
+        {
+            var id = Int(mesh.Data, 44 + type * 4);
+            if (id <= 0 || !chunks.TryGetValue(id, out var stream))
+                throw new NotSupportedException($"CGF mesh {mesh.Id} requires absent source stream {type}, chunk {id}.");
+            if (stream.Type != 0xcccc0016 || stream.Version != 0x800)
+                throw new NotSupportedException($"CGF mesh {mesh.Id} source stream {type} has unsupported type/version 0x{stream.Type:X}/0x{stream.Version:X}.");
+            ValidateHeader(stream, 40);
+            if (Int(stream.Data, 20) != type || Int(stream.Data, 24) != count || Int(stream.Data, 28) != elementSize ||
+                40L + count * (long)elementSize > stream.Length)
+                throw new InvalidDataException($"CGF mesh {mesh.Id} source stream {type} has inconsistent type, count, element size or length.");
+            return stream;
+        }
     }
 
     private static int PositiveOffset(uint value, int maximum, string description) => value <= maximum

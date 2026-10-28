@@ -19,8 +19,8 @@ queries. They do not remove CryEngine. Existing configurations retain their orig
 | Module | Managed replacement in this change | Remaining capability gaps |
 | --- | --- | --- |
 | `crysystem.dll` | Configured assets, content, clocks, scene owner, startup/frame/shutdown composition | Finish diagnostics, platform checks and capability policies across every scene type |
-| `cry3dengine_dedicate.dll` | World/cell selection, authored heightmaps/surfaces/seams, decoded placements, instantiated default/picking CGF collision proxies | Referenced mesh streams, curved primitives, vegetation, visibility/area behavior, water volumes and procedural objects |
-| `cryphysics_dedicate.dll` | Character integration, terrain and static triangle queries, shared-mesh BVHs, affine instances, combined movement sweeps, reachable ground/ceiling support, actor bounds and material IDs | Exact capsules, complete stance/step behavior, friction, rigid bodies, swimming, vehicles and ragdolls |
+| `cry3dengine_dedicate.dll` | World/cell selection, authored heightmaps/surfaces/seams, decoded placements, default/picking CGF proxies including referenced source streams and curved primitives | Vegetation, visibility/area behavior, water volumes and procedural objects |
+| `cryphysics_dedicate.dll` | Character integration, terrain/static triangle and analytic primitive queries, shared-mesh BVHs, affine instances, combined movement sweeps, reachable ground/ceiling support, actor bounds and material IDs | Exact character capsules, complete stance/step behavior, friction, rigid bodies, swimming, vehicles, ragdolls and exact tangent conformance |
 | `cryentitysystem_dedicate.dll` | Player/NPC identity generations, registry/spatial membership and managed player lifecycle | General entity proxies, components, areas, attachments and entity-script state |
 | `cryaction_dedicate.dll` | Player movement controller/frame pipeline and managed goal-pipe execution adapter | Authored behavior construction, game-object actions, signal bindings and FlowGraphs |
 | `cryaisystem_dedicate.dll` | Provider ownership, active/target state, signals, generation retirement and deterministic update scheduling | Perception, authored behavior admission, navigation, locomotion, leash and combat decisions |
@@ -58,7 +58,7 @@ comparison; managed scene startup never constructs them.
   admits captured player 387 with `physicalId=0`, emits movement/location reports and retires.
 
 The first native-free milestone passed 172 standalone tests, including 31 new configuration,
-physics, AI and scene/host cases. The subsequent static-collision work passes all 219 tests.
+physics, AI and scene/host cases. Static collision and referenced/curved proxy work pass all 247 tests.
 The solution builds successfully; existing analyzer warnings remain.
 
 Real-content replay evidence is kept outside the repository: `managed-entry-verified-zone.log`,
@@ -74,27 +74,36 @@ session remains an acceptance check; replay alone does not prove that interactio
 
 ### CE-06 — Authored static mesh collision (P0, in progress)
 
-Implemented: bounded CGF 0x744/0x745 container and authored physical-geometry readers for boxes
-and inline triangle meshes, including parent/node transforms, material mappings, signed material
-sentinels, default vs picking proxy profiles, helper/LOD/occlusion exclusion and the native `main`
-mesh rule. Static instances share immutable mesh resources and per-mesh BVHs; scene buckets prune
-instances. Rays, box sweeps and overlaps handle affine transforms. General triangle meshes
-preserve empty interiors; authored box primitives retain their solid convex overlap volume.
-The managed host loads these proxies automatically and clears them before terrain retirement.
+Implemented: bounded CGF 0x744/0x745 containers and authored physical readers for boxes,
+inline and referenced triangle meshes, spheres, cylinders and capsules. Referenced proxies use
+the precise Mesh0800 position/index streams, serialized foreign-triangle selection, vertex remap
+and source subset materials. A display mesh is never substituted for missing collision data.
+Curved proxies retain analytic surfaces; they are not tessellated. Character query capsules still
+use conservative bounds and remain CE-07 work.
 
-Validation: all 512 referenced zone-129 object/big-object CGFs parse, with 458 complete default
-collision resources and 516 admitted default parts containing 132,606 triangles. These are source
-resource counts; placed-instance and material-variant counts are reported separately. Missing and
-unsupported parts retain named diagnostics. Visual helper nodes are excluded even if they carry
-physical chunks. Synthetic tests cover spatial pruning, unloading, materials, picking profiles,
-wall sliding, diagonal ceiling collisions and reachable landing support.
+Static instances share immutable resources and mesh BVHs, with scene buckets pruning candidates.
+Analytic rays and convex-support overlap/sweep queries compose with existing triangle queries.
+Curved overlap/sweep contact uses a declared 1 mm separation tolerance; grazing time-of-impact
+error is not bounded to 1 mm of travel. Numerical convergence failure is explicit. General
+triangle meshes preserve empty interiors; authored boxes retain their solid convex volume.
 
-The final six-cell scene contains 5,462 character-collision instances and 5,691 picking instances
-across 5,012 brushes with admitted default collision. The report identifies 719 brushes with
-remaining collision gaps; this count includes partially supported brushes and is not disjoint from
-the admitted count. Another 932 brushes have no admitted default collider. Vegetation and other
-entity placements still need their own owners. All 219 standalone tests pass, including 47 new
-CGF, geometry, scene-loading and character/static integration cases.
+Native root selection, export flags, helper/LOD/occlusion/aimpoint admission, the `main` mesh rule,
+default vs picking profiles and signed material mappings are preserved. Direct-root physical
+geometry uses identity instead of the render node TM. Independently admitted helpers retain
+their node transforms. Native direct bodies reject nonuniform brush scales when either Y or Z
+differs from X by more than 0.01; compound bodies use the separate multipart path. Malformed
+placements and unsupported data keep named diagnostics.
+
+Validation: all 512 zone-129 object/big-object CGFs decode completely: 605 default physical parts,
+including 41 referenced-source meshes and 48 analytic curved primitives. Their triangle resources
+contain 149,434 authored faces. These are source counts; material variants and placements are
+reported separately. The six-cell scene contains 6,317 character proxies (6,037 triangle instances
+and 280 analytic instances) and 6,579 picking proxies across 5,456 brushes. No brush resource has
+an unsupported decoded proxy. Another 229 brushes have picking-only collision, and 704 have no
+admitted character or picking proxy, including the one native-rejected nonuniform direct placement.
+Ray-only coverage is reported separately, and one failed placement does not mark later valid
+placements of the same resource unsupported. The 119,728 other placements still require their
+own owners; `FullSceneCollisionReady` remains false. All 247 standalone tests pass.
 
 The production movement pipeline also rejects repeated client pose corrections through a wall,
 publishing the blocked authoritative pose back to World. Explicit scene teleports bypass that
@@ -103,6 +112,12 @@ at local `(1172.5996,1646.5,366.33502)`, then retires player and terrain owners 
 The host uses no engine/Lua paths; module-inventory tests and the real-scene inventory confirm
 no CryEngine modules. Runtime artifacts include `static-entry-final-zone.log`,
 `static-entry-verified-modules.json` and `captures/static-entry-output-final.bin`.
+
+The referenced/curved build also replays the real entry, confirms player 387 grounded at that
+same local position, and retires on clean World EOF. Its inventory again contains 76 modules
+and zero CryEngine/Lua modules. The measured zone exit code is 3, matching its configured
+main-world disconnect policy. Evidence: `curved-entry-zone.log`, `curved-entry-replay.log`,
+`curved-entry-modules.json` and `captures/curved-entry-output.bin`.
 
 Independent rays through authored wall, roof, stair and bridge placements agree with the original
 physics engine on all 21 hit/miss decisions and all 17 hit material IDs; the maximum distance
@@ -113,17 +128,28 @@ difference is 0.0000398 m. The comparison exposed and corrected the native adapt
 The maximum copied-position difference is 0.0001 m and maximum normal-vector difference is
 0.0000276. These measurements cover the selected controls, not every decoded resource.
 
+The expanded 108-ray oracle adds referenced meshes with nonidentity foreign-triangle maps,
+source-subset materials, direct-root transforms, uniform/nonuniform admission and curved
+entry/inside-exit/near-tangent controls. All 103 controls outside the five nominal exact-tangent
+diagnostics agree on hit/miss and all 74 hit material IDs. Maximum distance difference is
+0.000502 m, copied-position difference 0.000633 m and normal-vector difference 0.00442.
+The five exact-tangent diagnostics remain in the output: two have different native/managed
+hit decisions and one shared hit differs by 0.002448 m in travel. Those are unresolved native
+float-transform/intersection conformance cases, not successful parity checks. Nearby scene
+proxies also intercept some rays; independent source evidence identifies those controls.
+Artifacts: `curved-native-probe-results.json`, `curved-managed-probe-results.json`,
+`curved-parity-summary.json` and `research/static-final-scene-probe-manifest.json`.
+
 Use `--check-managed-scene --config zone.json --collision-report coverage.json` to inspect actual
 coverage. Both scene checks accept `--scene-probes rays.json --scene-probe-output hits.json`.
 Each input ray has `name`, three-component `origin` and three-component `displacement` arrays in
 zone-local meters. The native comparison uses `--check-scene` and the native configuration.
 
-Remaining: external/referenced source triangles, analytic cylinders/spheres/capsules, vegetation
-and entity collision owners, visibility-imported geometry and complete scene-instance admission.
-One authored nonuniform brush is currently among the unsupported external meshes; its native
-physicalization gate must be retained when that format lands. Curved primitives must receive
-appropriate collision algorithms rather than an undisclosed tessellation. Full collision coverage
-remains false while any required source is unsupported. See [CGF format evidence](../cgf-physics-format.md).
+Remaining: vegetation and entity collision owners, visibility-imported geometry, water/procedural
+owners and complete scene-instance admission. Exact nominal tangencies remain sensitive to native
+float transforms and intersection rounding; keep those controls visible rather than declaring
+bit-exact conformance. The current catalog's `BrushCoverageComplete` reports decoded/admitted brush
+coverage only. See [CGF format evidence](../cgf-physics-format.md).
 
 `ZoneManagedSceneActivation.Report.Cells[*].Objects` retains the remaining vegetation/entity
 descriptions. Extend the existing resource cache and instance index with their verified physical
@@ -147,6 +173,14 @@ Extend movement for swimming, gliding, ladders, mounts and moving platforms as t
 Acceptance: recorded stance sizes and jump arcs, slope ascent/descent, stair climbing, a low
 ceiling and a capsule passing a corner behave correctly; re-entry cannot reuse a retired body.
 Run meaningful terrain and static-mesh cases rather than comparing an implementation to itself.
+
+Native sweep/overlap acceptance needs a direct primitive-query oracle: the current native backend
+adapter uses ray approximations and is not an exact shape reference. The original synchronous
+`IPhysicalWorld` slot 65 (`+0x208`, target `35093100`) and its writable 96-byte request/contact ABI
+have been recovered and PE-checked, but have not been executed as a shape parity check. The local
+research profile is `research/native-primitive-world-query-profile.md`. Implement a narrow isolated
+diagnostic, verify contact copying/material mapping and initial overlap behavior, then compare
+the same authored surfaces with real box and capsule requests.
 
 ### CE-08 — Authored NPC behavior admission (P0)
 

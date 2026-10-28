@@ -20,6 +20,9 @@ The supported content profiles are:
 | Material name | `0xCCCC0014` | `0x800` | name at 24, physicalization type at 152, submaterial count at 156, up to 32 submaterial chunk IDs at 160; fixed size 424 |
 | Mesh | `0xCCCC0000` | `0x800` | four physical-data chunk IDs at 108; fixed size 276 |
 | Physical data | `0xCCCC0018` | `0x800` | serialized byte count at 16; serialized bytes start at 40 |
+| Export flags | `0xCCCC0015` | `1` | flags at 16; fixed size 180 |
+| Data stream | `0xCCCC0016` | `0x800` | stream type at 20, count at 24, element size at 28, data at 40 |
+| Mesh subsets | `0xCCCC0017` | `0x800` | count at 20, 36-byte subset records at 32 |
 
 `CLoaderCGF` at `301D3A30` loads only positive physical-data references. Slot 0 becomes native
 geometry type 4096, the default blocking geometry. Slot 1 is 4097, nocollide; slot 2 is 4098,
@@ -47,6 +50,8 @@ and names containing `$lod` to the visual LOD array. The matching function `301D
 the entire name, not only its prefix. Those nodes must not publish ordinary blocking instances
 even when their meshes contain physical-data references. The reader retains their data and
 exposes `IsCollisionSource` and `CollisionExclusionReason`. Physical proxy helpers remain eligible.
+Helper names starting with case-insensitive `$aimpoint` do not create an independent child
+static object and are also excluded from independent collision publication.
 
 When any ordinary mesh has the literal case-insensitive name `main`, `30030D90` sets subobject
 flag 2 on all other ordinary meshes. Physicalization at `300442F0` skips those ordinary meshes;
@@ -54,6 +59,31 @@ helpers bypass that flag test. Both rules apply per node. Descendants are evalua
 and retain their complete authored ancestor transforms. There are no ordinary `main` meshes in
 the 512 inspected zone-129 resources, so this rule changes future-resource admission without
 changing that zone's coverage.
+
+The direct root and ordinary subobject physical sources are separate. Export flags bit 0 forces
+direct mode. With that bit clear, more than one ordinary mesh, or a helper/nonmesh `$joint` or
+`$cutdown` node, selects compound mode. An absent export-flags chunk retains the native
+constructor's bit-0 default of 1. Direct mode selects the first special physical proxy helper
+(`PhysicsProxy`, `$collision` or `$physics_proxy`), otherwise the first ordinary mesh. Selection
+precedes visual helper admission and the `main` flag pass. `HasDirectPhysicsGeometry` therefore
+reports raw selected physical data, including undecoded shapes and nondefault slots.
+
+An ordinary mesh must exist before this root selection; native `LoadCGF` refuses helper-only
+files. The reader retains their decoded data, publishes `HasOrdinaryMesh=false`, and records
+that admission failure. Direct mode does not independently publish ordinary subobjects. It
+publishes the selected raw root once, while independently admitted helpers retain their own
+node transforms; a selected special helper can therefore supply both the raw root and its
+separately transformed child. Visual helper exclusion affects the child publication, not the
+earlier root registration. `DirectPhysicsSource` and `IsPhysicalDataComplete` keep these two
+publication contexts separate.
+
+Native direct-root publication uses the selected serialized physical geometry without its node
+TM. `30047F40` passes untransformed source vertices and the serialized blob to the physical
+loader; direct brush physicalization supplies identity local parameters. A 36-ray native oracle
+check over five selected roots with nonidentity TMs confirmed this behavior. The reader retains
+the authored `WorldTransform`; the scene applies identity for the selected direct root and the
+authored transform for separately admitted subobjects. A nonuniform brush over native direct
+physical geometry still requires its native admission gate.
 
 Material loader `301C4750` uses a compiled material name containing `/` directly. Otherwise it
 prepends the CGF file's directory. For example `old/box_a.cgf` names `learning_ob01`, resolving to
@@ -80,9 +110,8 @@ Reserved/pointer words in the wrapper can contain uninitialized storage and are 
 The quaternion and origin are inertial properties, not another placement transform. Applying
 the wrapper origin to a decoded box would move its center twice.
 
-Verified type IDs are 0 box, 1 triangle mesh, 4 sphere, 5 cylinder, and 6 capsule. The current
-reader supports exact boxes and inline triangle meshes. Other types produce explicit per-part
-coverage diagnostics.
+Verified supported type IDs are 0 box, 1 triangle mesh, 4 sphere, 5 cylinder, and 6 capsule.
+Other types produce explicit per-part coverage diagnostics.
 
 ### Boxes
 
@@ -92,6 +121,19 @@ multiplies by the transpose of the stored world-to-box basis, then adds the cent
 unoriented box ignores the basis. Triangulating these six authored box faces is exact; this is
 not the CGF model's render AABB. Native single-box acceleration data follows the primitive and
 is replaced by the managed geometry index.
+
+### Curved primitives
+
+`CSphereGeom::Load` at `351AFC60` reads 16 bytes: center `Vec3` and radius. The cylinder loader
+at `35144D40`, also inherited by capsules, reads 32 bytes: center `Vec3`, axis `Vec3`, radius,
+and half-height, followed by a retained 32-bit tessellation count. A 68-byte single-box
+acceleration tree follows. Capsule containment at `3513F7A0` confirms that its half-height is
+the center-segment half-length; the spherical caps extend its axial bounds by another radius.
+
+The reader publishes immutable `ZoneCgfPhysicsPrimitive` descriptors, retaining the authored
+axis, center and dimensions. A sphere's unused axis and half-height are zero. Curved primitives
+have no generated vertices or triangle indices. Analytic queries belong to the physics provider;
+the content reader never approximates them with a faceted mesh or their bounds.
 
 ### Triangle meshes
 
@@ -110,16 +152,38 @@ default slot, then resolves it through the selected CGF/brush material mapping. 
 out-of-range mapped slot uses mapping entry zero.
 
 If a foreign map exists and flags do not include `0x400000`, geometry refers to external source
-triangles. Flag bit 0 similarly selects external vertices. These cases require their exact
-reference reconstruction and are currently refused; display geometry is never used as a
-fallback. The trailing native BVH is not imported. The managed backend builds its own BVH from
-the decoded authored triangles.
+triangles. This branch has no inline vertices, indices or material-presence byte. For each
+serialized foreign triangle `F`, native `351D83B0` selects `sourceIndices[3F..3F+2]` and the
+source triangle's signed material byte, then applies the optional vertex map. Flag bit 0 can
+also select external vertices while indices and materials remain inline.
+
+The verified references come from the same Mesh0800: source position stream 0 is referenced at
+mesh offset 44, source index stream 5 at offset 64, and the subset chunk at offset 36. Loaders
+`301E0090` and `301E0340` require DataStream0800, matching counts, 12-byte `Vec3` positions and
+2-byte indices. The source positions are already meters. Each Subset0800 record contains first
+index at 0, index count at 4, first vertex at 8, vertex count at 12 and material ID at 16.
+Physicalizer `30047F40` assigns the low material byte over each subset's triangle range.
+
+Only the serialized foreign faces become collision triangles; unrelated source faces are never
+used as a fallback. Source buffers are resolved lazily and cached by mesh identity, while decoded
+physical geometry is cached by both physical chunk and source mesh identity. Missing streams,
+unsupported element profiles, out-of-bounds foreign indices and remaps remain named failures.
+Subset gaps are also explicit: native material scratch storage is process-global and uncovered
+bytes can retain a previously loaded CGF's values, so they cannot be reconstructed as a stable
+authored default. The decoder requires authored material coverage for each selected foreign face.
+
+The trailing native BVH is not imported. The managed backend builds its own BVH from the decoded
+authored triangles.
 
 ## Positive controls and limits
 
 The six zone-129 object/big-object tables reference 512 unique CGF resources in the inspected
-10.0.2.13 client. The reader admitted every container without a file/parser failure. Verified
-inline default-proxy controls include:
+10.0.2.13 client. The reader admitted every container without a file/parser failure and decoded
+all their blocking proxy parts: 605 parts, including 41 referenced-source meshes and 48 curved
+primitives. The triangle resources contain 149,434 authored faces; curved primitives are not
+tessellated. This is content coverage, not a claim that every scene placement passes native
+physicalization or that every engine collision feature has been replaced. Verified inline
+default-proxy controls include:
 
 | Resource suffix | Physical vertices | Physical triangles |
 | --- | ---: | ---: |
@@ -131,6 +195,6 @@ inline default-proxy controls include:
 The container reader bounds file size, chunk count, overlapping ranges, duplicate IDs, fixed
 records, property strings and hierarchy depth/cycles. The physical reader bounds allocations,
 remaps and triangle indices, presence flags and finite coordinates. Unsupported versions,
-external buffers, tetrahedral resources and unsupported primitive types remain visible in
+source element profiles, tetrahedral resources and unsupported primitive types remain visible in
 coverage reports. These controls validate format decoding; native-query parity and scene-wide
 collision completeness are separate acceptance criteria.

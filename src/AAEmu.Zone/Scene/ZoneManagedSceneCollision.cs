@@ -6,11 +6,15 @@ using AAEmu.Zone.Terrain;
 namespace AAEmu.Zone.Scene;
 
 public sealed record ZoneManagedCollisionResourceReport(string AssetPath, string? MaterialOverride,
-    int RequestedBrushes, int LoadedBrushes, int DefaultPhysicsParts, int MeshInstances,
-    int SkippedNonDefaultParts, int RayInstances, string? NonBlockingReason, IReadOnlyList<string> Diagnostics);
+    int RequestedBrushes, int LoadedBrushes, int RayOnlyBrushes, int FailedPlacements, int DefaultPhysicsParts, int MeshInstances,
+    int PrimitiveInstances, int SkippedNonDefaultParts, int RayInstances, int SkippedNonUniformBrushes,
+    string? NonBlockingReason, IReadOnlyList<string> Diagnostics)
+{
+    public int CollisionInstances => MeshInstances + PrimitiveInstances;
+}
 
 public sealed record ZoneManagedSceneCollisionReport(int BrushCount, int LoadedBrushCount,
-    int RenderOnlyBrushCount, int UnsupportedBrushCount, int OtherPlacementCount,
+    int RayOnlyBrushCount, int RenderOnlyBrushCount, int UnsupportedBrushCount, int OtherPlacementCount,
     IReadOnlyList<ZoneManagedCollisionResourceReport> Resources)
 {
     /// <summary>Only the default physical proxies of the brush catalog; other entity systems are separate.</summary>
@@ -21,7 +25,7 @@ public sealed record ZoneManagedSceneCollisionReport(int BrushCount, int LoadedB
 
 /// <summary>
 /// Instantiates decoded default CGF collision proxies at authored brush transforms. Render bounds
-/// are never used as collision geometry. Meshes/BVHs are shared by resource and material identity;
+/// are never used as collision geometry. Meshes/BVHs and analytic primitives are shared by resource and material identity;
 /// missing or unsupported physical data remains in the coverage report.
 /// </summary>
 public sealed class ZoneManagedSceneCollision : IDisposable
@@ -43,7 +47,7 @@ public sealed class ZoneManagedSceneCollision : IDisposable
         var vehicleOnlySurfaces = materials.SurfaceContent?.Surfaces
             .Where(surface => surface.Flags.HasFlag(ZonePhysicalSurfaceFlags.VehicleOnlyCollisions))
             .Select(surface => surface.Id).ToHashSet() ?? [];
-        var brushes = 0; var loaded = 0; var renderOnly = 0; var unsupported = 0; var other = 0;
+        var brushes = 0; var loaded = 0; var rayOnly = 0; var renderOnly = 0; var unsupported = 0; var other = 0;
         foreach (var cell in cells)
         {
             if (cell.Placement.InvalidLocalX || cell.Placement.InvalidLocalY) continue;
@@ -52,9 +56,9 @@ public sealed class ZoneManagedSceneCollision : IDisposable
             other += cell.Objects.Vegetation?.Instances.Count ?? 0;
             other += cell.Objects.Entities?.Entities.Count ?? 0;
         }
-        Report = new(brushes, loaded, renderOnly, unsupported, other,
+        Report = new(brushes, loaded, rayOnly, renderOnly, unsupported, other,
             resources.Values.Select(resource => resource.Snapshot()).ToArray());
-        trace?.Invoke($"Managed static collision: {loaded}/{brushes} brushes have collision, {renderOnly} authored render-only, " +
+        trace?.Invoke($"Managed static collision: {loaded}/{brushes} brushes block characters, {rayOnly} are ray-only, {renderOnly} authored render-only, " +
             $"{unsupported} unsupported, {Geometry.InstanceCount} proxy instances, {resources.Count} resource/material variants; " +
             $"{other} other placements require their own collision owners.");
         foreach (var resource in Report.Resources.Where(row => row.Diagnostics.Count != 0).Take(12))
@@ -93,6 +97,7 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                     {
                         resource = new(model, material);
                         resource.Diagnostics.Add(error.Message);
+                        resource.HasContentFailure = true;
                         resources.Add(key, resource);
                     }
                 }
@@ -101,12 +106,26 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                     placement.EngineCell.X * 1024f, placement.EngineCell.Y * 1024f, 0)));
                 var handles = new List<ZoneManagedStaticInstanceHandle>();
                 var rayHandles = new List<ZoneManagedStaticInstanceHandle>();
+                var primitiveInstances = 0;
+                var placementFailed = false;
                 try
                 {
+                    if (resource.RequiresUniformScale && !HasNativeUniformScale(matrix))
+                    {
+                        // CBrush30111970 compares axis lengths only for a direct root phys_geom;
+                        // compound statobjs take the multipart physicalization path instead.
+                        renderOnly++;
+                        resource.SkippedNonUniformBrushes++;
+                        continue;
+                    }
                     foreach (var part in resource.Parts)
                     {
-                        if (part.BlocksCharacters) handles.Add(Geometry.AddInstance(part.Mesh, part.Transform * matrix));
-                        if (part.CollidesRay) rayHandles.Add(RayGeometry.AddInstance(part.Mesh, part.Transform * matrix));
+                        if (part.BlocksCharacters)
+                        {
+                            handles.Add(part.AddInstance(Geometry, matrix));
+                            if (part.Primitive is not null) primitiveInstances++;
+                        }
+                        if (part.CollidesRay) rayHandles.Add(part.AddInstance(RayGeometry, matrix));
                     }
                 }
                 catch (Exception error) when (AssetFailure(error))
@@ -115,15 +134,20 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                     foreach (var handle in rayHandles) RayGeometry.RemoveInstance(handle);
                     handles.Clear();
                     rayHandles.Clear();
+                    placementFailed = true;
+                    resource.FailedPlacements++;
                     if (!resource.Diagnostics.Contains(error.Message)) resource.Diagnostics.Add(error.Message);
                 }
                 if (handles.Count != 0)
                 {
-                    loaded++; resource.Loaded++; resource.Instances += handles.Count;
+                    loaded++; resource.Loaded++;
+                    resource.MeshInstances += handles.Count - primitiveInstances;
+                    resource.PrimitiveInstances += primitiveInstances;
                 }
-                else if (resource.Diagnostics.Count == 0) renderOnly++;
+                else if (rayHandles.Count != 0) { rayOnly++; resource.RayOnly++; }
+                else if (!resource.HasContentFailure && !placementFailed) renderOnly++;
                 resource.RayInstances += rayHandles.Count;
-                if (resource.Diagnostics.Count != 0) unsupported++;
+                if (resource.HasContentFailure || placementFailed) unsupported++;
             }
         }
 
@@ -146,12 +170,27 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                     cgf = ZoneCgfContent.Read(input);
                     content.Add(path, cgf);
                 }
+                if (!cgf.HasOrdinaryMesh)
+                    throw new NotSupportedException("The original CGF loader refuses a resource without an ordinary mesh node.");
+                resource.RequiresUniformScale = cgf.HasDirectPhysicsGeometry;
                 resource.Diagnostics.AddRange(cgf.Diagnostics);
                 foreach (var node in cgf.Nodes)
                 {
-                    if (!node.IsCollisionSource) continue;
+                    // Direct mode registers one raw root before helper/visual admission. Its
+                    // ordinary nodes never become child statobjs. Helpers are independently
+                    // published, so a selected helper can supply both root and child geometry.
+                    var publishRoot = !cgf.IsCompound && cgf.DirectPhysicsNodeId == node.ChunkId;
+                    var publishChild = node.IsCollisionSource &&
+                        (node.IsHelperMesh || cgf.IsCompound && node.IsOrdinaryMesh);
+                    if (!publishRoot && !publishChild) continue;
                     resource.Diagnostics.AddRange(node.Diagnostics);
                     var material = ResolveMaterial(path, materialOverride, cgf, node.MaterialChunkId);
+                    // Native direct statobjs register the selected blob on the root with an
+                    // identity local transform. Its node TM belongs to the render hierarchy;
+                    // compound subobjects retain their composed authored transforms instead.
+                    Matrix4x4[] physicsTransforms = publishRoot
+                        ? publishChild ? [Matrix4x4.Identity, node.WorldTransform] : [Matrix4x4.Identity]
+                        : [node.WorldTransform];
                     var firstPart = resource.Parts.Count;
                     var nodeVehicleOnly = false;
                     var hasPickingProxy = node.PhysicsParts.Any(part => part.PhysicsSlot == 1);
@@ -160,44 +199,61 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                         // Native CStatObj maps these slots to 4096=default, 4097=nocollide,
                         // 4098=obstruct and 4099. Slot1 is a ray proxy, despite its legacy name;
                         // when it exists the default part loses geom_colltype_ray (0x8000).
-                        if (part.PhysicsSlot != 0) resource.Skipped++;
-                        if (part.PhysicsSlot > 1) continue;
+                        if (part.PhysicsSlot > 1) { resource.Skipped++; continue; }
                         if (part.PhysicsSlot == 0) resource.DefaultParts++;
                         if (part.Geometry is not { } geometry)
                         {
                             resource.Diagnostics.Add(part.Diagnostic ?? $"Unsupported default physics chunk {part.PhysicsChunkId}.");
                             continue;
                         }
-                        var indices = geometry.TriangleIndices.ToArray();
-                        if (indices.Length == 0) continue;
-                        var triangleMaterials = new ushort[indices.Length / 3];
-                        for (var triangle = 0; triangle < triangleMaterials.Length; triangle++)
+                        if (geometry.Primitive is { } primitive)
                         {
-                            var slot = geometry.MaterialSlots.Count == 0 ? geometry.DefaultMaterialSlot : geometry.MaterialSlots[triangle];
-                            // CTriMesh ids are signed bytes. Native 35037930 replaces a negative
-                            // triangle id with the part's surface_idx, then maps out-of-range ids
-                            // through submaterial zero instead of treating them as missing geometry.
+                            var surface = Surface(geometry.DefaultMaterialSlot);
+                            var kind = primitive.Kind switch
+                            {
+                                ZoneCgfPhysicsGeometryKind.Sphere => ZoneManagedPrimitiveKind.Sphere,
+                                ZoneCgfPhysicsGeometryKind.Cylinder => ZoneManagedPrimitiveKind.Cylinder,
+                                ZoneCgfPhysicsGeometryKind.Capsule => ZoneManagedPrimitiveKind.Capsule,
+                                _ => throw new NotSupportedException($"Unknown analytic physical primitive {primitive.Kind}.")
+                            };
+                            var shape = new ZoneManagedPrimitiveGeometry(kind, primitive.Center, primitive.Axis,
+                                primitive.Radius, primitive.HalfHeight, surface);
+                            foreach (var physicsTransform in physicsTransforms)
+                                resource.Parts.Add(new(null, shape, physicsTransform, part.PhysicsSlot == 0,
+                                    part.PhysicsSlot == 1 || !hasPickingProxy, part.PhysicsSlot));
+                        }
+                        else
+                        {
+                            var indices = geometry.TriangleIndices.ToArray();
+                            if (indices.Length == 0) continue;
+                            var triangleMaterials = new ushort[indices.Length / 3];
+                            for (var triangle = 0; triangle < triangleMaterials.Length; triangle++)
+                                triangleMaterials[triangle] = Surface(geometry.MaterialSlots.Count == 0
+                                    ? geometry.DefaultMaterialSlot : geometry.MaterialSlots[triangle]);
+                            var mesh = new ZoneManagedTriangleMesh(geometry.Vertices.ToArray(), indices, triangleMaterials,
+                                solidConvex: geometry.Kind == ZoneCgfPhysicsGeometryKind.Box);
+                            foreach (var physicsTransform in physicsTransforms)
+                                resource.Parts.Add(new(mesh, null, physicsTransform, part.PhysicsSlot == 0,
+                                    part.PhysicsSlot == 1 || !hasPickingProxy, part.PhysicsSlot));
+                        }
+
+                        ushort Surface(int slot)
+                        {
+                            // Signed triangle ids use surface_idx; out-of-range mapping ids use
+                            // submaterial zero. Analytic proxies use the same wrapper surface_idx.
                             if (slot < 0) slot = geometry.DefaultMaterialSlot;
                             var selected = material;
                             if (IsMultiMaterial(selected))
                             {
                                 if ((uint)slot >= (uint)selected.SubMaterialCount) slot = 0;
-                                if (selected.GetSubMaterial(slot) is not { } child)
-                                {
-                                    triangleMaterials[triangle] = 0;
-                                    continue;
-                                }
+                                if (selected.GetSubMaterial(slot) is not { } child) return 0;
                                 selected = child;
                             }
                             if ((uint)selected.PhysicalSurfaceId > ushort.MaxValue)
                                 throw new InvalidDataException("A collision material id does not fit the World physics contract.");
-                            triangleMaterials[triangle] = (ushort)selected.PhysicalSurfaceId;
                             if (part.PhysicsSlot == 0 && VehicleOnly(selected.PhysicalSurfaceId)) nodeVehicleOnly = true;
+                            return (ushort)selected.PhysicalSurfaceId;
                         }
-                        var mesh = new ZoneManagedTriangleMesh(geometry.Vertices.ToArray(), indices, triangleMaterials,
-                            solidConvex: geometry.Kind == ZoneCgfPhysicsGeometryKind.Box);
-                        resource.Parts.Add(new(mesh, node.WorldTransform, part.PhysicsSlot == 0,
-                            part.PhysicsSlot == 1 || !hasPickingProxy, part.PhysicsSlot));
                     }
                     if (nodeVehicleOnly)
                     {
@@ -214,6 +270,7 @@ public sealed class ZoneManagedSceneCollision : IDisposable
             {
                 resource.Diagnostics.Add(error.Message);
             }
+            resource.HasContentFailure = resource.Diagnostics.Count != 0;
             return resource;
         }
 
@@ -245,6 +302,19 @@ public sealed class ZoneManagedSceneCollision : IDisposable
         value.M00, value.M10, value.M20, 0, value.M01, value.M11, value.M21, 0,
         value.M02, value.M12, value.M22, 0, value.M03, value.M13, value.M23, 1);
 
+    private static bool HasNativeUniformScale(Matrix4x4 matrix)
+    {
+        var x = new Vector3(matrix.M11, matrix.M12, matrix.M13).Length();
+        var y = new Vector3(matrix.M21, matrix.M22, matrix.M23).Length();
+        var z = new Vector3(matrix.M31, matrix.M32, matrix.M33).Length();
+        if (!float.IsFinite(x) || !float.IsFinite(y) || !float.IsFinite(z) ||
+            x <= 0 || y <= 0 || z <= 0 || !Matrix4x4.Invert(matrix, out _) ||
+            !float.IsFinite(matrix.M41) || !float.IsFinite(matrix.M42) || !float.IsFinite(matrix.M43))
+            throw new ArgumentException("A direct collision placement requires a finite, invertible transform with nonzero scale.");
+        // Native compares both other axes to X; it does not compare Y against Z.
+        return MathF.Abs(x - y) <= .01f && MathF.Abs(x - z) <= .01f;
+    }
+
     private static string AssetPath(string path)
     {
         var normalized = path.Replace('\\', '/');
@@ -263,8 +333,13 @@ public sealed class ZoneManagedSceneCollision : IDisposable
         RayGeometry.Clear();
     }
 
-    private sealed record Part(ZoneManagedTriangleMesh Mesh, Matrix4x4 Transform,
-        bool BlocksCharacters, bool CollidesRay, int PhysicsSlot);
+    private sealed record Part(ZoneManagedTriangleMesh? Mesh, ZoneManagedPrimitiveGeometry? Primitive,
+        Matrix4x4 Transform, bool BlocksCharacters, bool CollidesRay, int PhysicsSlot)
+    {
+        public ZoneManagedStaticInstanceHandle AddInstance(ZoneManagedStaticGeometry target, Matrix4x4 placement)
+            => Primitive is { } primitive ? target.AddInstance(primitive, Transform * placement)
+                : target.AddInstance(Mesh!, Transform * placement);
+    }
     private sealed class Resource(string path, string? material)
     {
         public string Path { get; } = path;
@@ -272,8 +347,10 @@ public sealed class ZoneManagedSceneCollision : IDisposable
         public List<Part> Parts { get; } = [];
         public List<string> Diagnostics { get; } = [];
         public string? NonBlockingReason;
-        public int Requested, Loaded, DefaultParts, Instances, Skipped, RayInstances;
-        public ZoneManagedCollisionResourceReport Snapshot() => new(Path, Material, Requested, Loaded,
-            DefaultParts, Instances, Skipped, RayInstances, NonBlockingReason, Diagnostics.Distinct().ToArray());
+        public bool RequiresUniformScale, HasContentFailure;
+        public int Requested, Loaded, RayOnly, FailedPlacements, DefaultParts, MeshInstances, PrimitiveInstances, Skipped, RayInstances, SkippedNonUniformBrushes;
+        public ZoneManagedCollisionResourceReport Snapshot() => new(Path, Material, Requested, Loaded, RayOnly, FailedPlacements,
+            DefaultParts, MeshInstances, PrimitiveInstances, Skipped, RayInstances, SkippedNonUniformBrushes,
+            NonBlockingReason, Diagnostics.Distinct().ToArray());
     }
 }

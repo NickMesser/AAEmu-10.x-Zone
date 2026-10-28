@@ -30,7 +30,7 @@ public sealed class ManagedStaticMovementTests
         var start = actor.Position;
         var wallX = start.X + .5f;
         var statics = new ZoneManagedStaticGeometry();
-        statics.AddInstance(new(
+        statics.AddInstance(new ZoneManagedTriangleMesh(
             [new(wallX, start.Y - 10, start.Z - 10), new(wallX, start.Y + 10, start.Z - 10),
              new(wallX, start.Y + 10, start.Z + 10), new(wallX, start.Y - 10, start.Z + 10)],
             [0, 1, 2, 0, 2, 3]), Matrix4x4.Identity);

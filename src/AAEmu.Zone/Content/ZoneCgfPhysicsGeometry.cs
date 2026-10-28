@@ -3,7 +3,19 @@ using System.Numerics;
 
 namespace AAEmu.Zone.Content;
 
-public enum ZoneCgfPhysicsGeometryKind { Box = 0, TriangleMesh = 1 }
+public enum ZoneCgfPhysicsGeometryKind { Box = 0, TriangleMesh = 1, Sphere = 4, Cylinder = 5, Capsule = 6 }
+
+/// <summary>
+/// Exact curved physical primitive. Cylinder half-height is its axial half-length; capsule
+/// half-height is the center-segment half-length, excluding its spherical caps. A sphere has
+/// no axis/segment and publishes zero for those unused fields. No tessellation is supplied.
+/// </summary>
+public sealed record ZoneCgfPhysicsPrimitive(ZoneCgfPhysicsGeometryKind Kind, Vector3 Center,
+    Vector3 Axis, float Radius, float HalfHeight);
+
+// Exact source buffers selected by Mesh0800's stream references. Only serialized foreign
+// triangles select faces from them; this context is never substituted for a missing proxy.
+internal sealed record ZoneCgfPhysicsSource(Vector3[] Vertices, int[] TriangleIndices, int?[] TriangleMaterials);
 
 /// <summary>
 /// Authored physical geometry from a version-1 CryPhysics serialization, not a render mesh or a
@@ -20,11 +32,14 @@ public sealed class ZoneCgfPhysicsGeometry
     public IReadOnlyList<int> MaterialSlots { get; }
     public int DefaultMaterialSlot { get; }
     public int SerializationFlags { get; }
+    public ZoneCgfPhysicsPrimitive? Primitive { get; }
+    public bool UsesReferencedSource { get; }
     /// <summary>Serialized native acceleration data is retained by the source chunk, not used for managed queries.</summary>
     public int UnreadAccelerationBytes { get; }
 
     private ZoneCgfPhysicsGeometry(ZoneCgfPhysicsGeometryKind kind, Vector3[] vertices, int[] indices,
-        int[] materials, int defaultMaterial, int flags, int accelerationBytes)
+        int[] materials, int defaultMaterial, int flags, int accelerationBytes,
+        ZoneCgfPhysicsPrimitive? primitive = null, bool referencedSource = false)
     {
         Kind = kind;
         Vertices = Array.AsReadOnly(vertices);
@@ -33,14 +48,20 @@ public sealed class ZoneCgfPhysicsGeometry
         DefaultMaterialSlot = defaultMaterial;
         SerializationFlags = flags;
         UnreadAccelerationBytes = accelerationBytes;
+        Primitive = primitive;
+        UsesReferencedSource = referencedSource;
     }
 
     /// <summary>
-    /// CGeomManager 3514B340/3514B070 and CTriMesh 351D83B0. External source-mesh references,
-    /// unsupported primitives and unknown versions are refused explicitly. Native BVH bytes are
-    /// not a geometry substitute: the decoded authored triangles feed a new managed spatial tree.
+    /// CGeomManager3514B340/3514B070 and CTriMesh351D83B0. Referenced meshes require the exact
+    /// CGF source context; missing buffers, unsupported profiles and unknown types are refused.
+    /// Native BVHs are not geometry substitutes: triangles feed a new managed spatial tree and
+    /// curved shapes retain their analytic descriptors without tessellation.
     /// </summary>
-    public static ZoneCgfPhysicsGeometry Read(ReadOnlySpan<byte> bytes)
+    public static ZoneCgfPhysicsGeometry Read(ReadOnlySpan<byte> bytes) => Read(bytes, null);
+
+    internal static ZoneCgfPhysicsGeometry Read(ReadOnlySpan<byte> bytes,
+        Func<bool, ZoneCgfPhysicsSource>? sourceResolver)
     {
         var reader = new Reader(bytes);
         if (reader.Int32() != 1) throw new NotSupportedException("Only version-1 serialized CGF physical geometry is supported.");
@@ -51,8 +72,9 @@ public sealed class ZoneCgfPhysicsGeometry
         return type switch
         {
             0 => ReadBox(ref reader, defaultMaterial),
-            1 => ReadTriangleMesh(ref reader, defaultMaterial),
-            _ => throw new NotSupportedException($"Serialized CGF physical geometry type {type} is not implemented (supported: box 0, triangle mesh 1).")
+            1 => ReadTriangleMesh(ref reader, defaultMaterial, sourceResolver),
+            4 or 5 or 6 => ReadPrimitive(ref reader, (ZoneCgfPhysicsGeometryKind)type, defaultMaterial),
+            _ => throw new NotSupportedException($"Serialized CGF physical geometry type {type} is not implemented.")
         };
     }
 
@@ -97,7 +119,29 @@ public sealed class ZoneCgfPhysicsGeometry
         return new(ZoneCgfPhysicsGeometryKind.Box, vertices, indices, materials, material, 0, reader.Remaining);
     }
 
-    private static ZoneCgfPhysicsGeometry ReadTriangleMesh(ref Reader reader, int material)
+    private static ZoneCgfPhysicsGeometry ReadPrimitive(ref Reader reader, ZoneCgfPhysicsGeometryKind kind, int material)
+    {
+        // CSphereGeom351AFC60 reads center/radius. CCylinderGeom35144D40 (also inherited by
+        // CCapsuleGeom) reads center/axis/radius/half-height and one rendering tessellation word.
+        var center = reader.Vector3();
+        var axis = kind == ZoneCgfPhysicsGeometryKind.Sphere ? Vector3.Zero : reader.Vector3();
+        var radius = reader.Single();
+        var halfHeight = kind == ZoneCgfPhysicsGeometryKind.Sphere ? 0 : reader.Single();
+        if (radius <= 0 || halfHeight < 0)
+            throw new InvalidDataException("CGF curved physical primitive requires a positive radius and non-negative half-height.");
+        if (kind != ZoneCgfPhysicsGeometryKind.Sphere)
+        {
+            if (Math.Abs(axis.LengthSquared() - 1f) > .002f)
+                throw new NotSupportedException("CGF curved physical primitive has a non-unit authored axis.");
+            reader.Skip(4); // Retained tessellation count, not part of the analytic collision shape.
+        }
+        reader.Require(68); // Native single-box acceleration tree; managed queries build their own.
+        var primitive = new ZoneCgfPhysicsPrimitive(kind, center, axis, radius, halfHeight);
+        return new(kind, [], [], [], material, 0, reader.Remaining, primitive);
+    }
+
+    private static ZoneCgfPhysicsGeometry ReadTriangleMesh(ref Reader reader, int material,
+        Func<bool, ZoneCgfPhysicsSource>? sourceResolver)
     {
         var vertexCount = reader.Count(MaximumVertexCount, "vertices");
         var triangleCount = reader.Count(MaximumTriangleCount, "triangles");
@@ -116,27 +160,64 @@ public sealed class ZoneCgfPhysicsGeometry
             }
         }
         var foreignTriangleMap = reader.Boolean();
-        if (foreignTriangleMap) reader.Skip(checked(triangleCount * 2));
-        if (foreignTriangleMap && (flags & 0x400000) == 0)
-            throw new NotSupportedException("CGF physical mesh references external render-source triangles; no render-mesh fallback is allowed.");
-        if ((flags & 1) != 0)
-            throw new NotSupportedException("CGF physical mesh references an external vertex buffer; no render-mesh fallback is allowed.");
-
-        reader.Require(checked(vertexCount * 12 + triangleCount * 6 + 1));
+        ushort[]? foreign = null;
+        if (foreignTriangleMap)
+        {
+            reader.Require(checked(triangleCount * 2));
+            foreign = new ushort[triangleCount];
+            for (var index = 0; index < foreign.Length; index++) foreign[index] = reader.UInt16();
+        }
+        var referencedTriangles = foreignTriangleMap && (flags & 0x400000) == 0;
+        var referencedVertices = referencedTriangles || (flags & 1) != 0;
+        ZoneCgfPhysicsSource? source = null;
+        if (referencedVertices)
+            source = sourceResolver?.Invoke(referencedTriangles) ?? throw new NotSupportedException(
+                "CGF physical mesh requires its exact referenced source buffers; no geometry fallback is allowed.");
         var vertices = new Vector3[vertexCount];
-        for (var index = 0; index < vertexCount; index++) vertices[index] = reader.Vector3();
+        if (source is not null)
+        {
+            if (vertexCount > source.Vertices.Length)
+                throw new InvalidDataException("CGF physical vertex count exceeds its referenced source vertex stream.");
+            source.Vertices.AsSpan(0, vertexCount).CopyTo(vertices);
+        }
+        else
+        {
+            reader.Require(checked(vertexCount * 12));
+            for (var index = 0; index < vertexCount; index++) vertices[index] = reader.Vector3();
+        }
         var indices = new int[checked(triangleCount * 3)];
+        var materials = new int[triangleCount];
+        if (referencedTriangles)
+        {
+            // CTriMesh351D83B0's foreign branch has no inline vertices, indices, or material
+            // presence byte. Each serialized foreign triangle selects exactly three source
+            // indices and its source subset material, then reaches the common vertex remap.
+            for (var triangle = 0; triangle < triangleCount; triangle++)
+            {
+                var selected = foreign![triangle];
+                if (selected >= source!.TriangleMaterials.Length ||
+                    (long)selected * 3 + 3 > source.TriangleIndices.Length)
+                    throw new InvalidDataException("CGF serialized foreign triangle refers outside its source index stream.");
+                materials[triangle] = source.TriangleMaterials[selected] ?? throw new NotSupportedException(
+                    $"CGF referenced triangle {selected} has no authored subset material; native process-global scratch bytes are not reproducible content.");
+                for (var corner = 0; corner < 3; corner++) indices[triangle * 3 + corner] = source.TriangleIndices[selected * 3 + corner];
+            }
+        }
+        else
+        {
+            reader.Require(checked(triangleCount * 6 + 1));
+            for (var index = 0; index < indices.Length; index++) indices[index] = reader.UInt16();
+            var hasMaterials = reader.Boolean();
+            if (hasMaterials)
+                for (var index = 0; index < triangleCount; index++) materials[index] = unchecked((sbyte)reader.Byte());
+            else Array.Fill(materials, material);
+        }
         for (var index = 0; index < indices.Length; index++)
         {
-            var value = reader.UInt16();
-            if (value >= vertexCount) throw new InvalidDataException("CGF physical triangle refers outside its vertex array.");
+            var value = indices[index];
+            if ((uint)value >= (uint)vertexCount) throw new InvalidDataException("CGF physical triangle refers outside its vertex array.");
             indices[index] = vertexMap is null ? value : vertexMap[value];
         }
-        var hasMaterials = reader.Boolean();
-        var materials = new int[triangleCount];
-        if (hasMaterials)
-            for (var index = 0; index < triangleCount; index++) materials[index] = unchecked((sbyte)reader.Byte());
-        else Array.Fill(materials, material);
 
         // CTriMesh's unrelated retained bookkeeping and accelerator follow the geometry payload.
         // Validate their fixed header, then leave the native tree opaque: queries build their own.
@@ -149,7 +230,8 @@ public sealed class ZoneCgfPhysicsGeometry
             if (treeType is < 0 or > 2)
                 throw new NotSupportedException($"CGF physical mesh acceleration type {treeType} is not recognized.");
         }
-        return new(ZoneCgfPhysicsGeometryKind.TriangleMesh, vertices, indices, materials, material, flags, reader.Remaining);
+        return new(ZoneCgfPhysicsGeometryKind.TriangleMesh, vertices, indices, materials, material, flags, reader.Remaining,
+            referencedSource: referencedVertices);
     }
 
     private ref struct Reader(ReadOnlySpan<byte> bytes)
