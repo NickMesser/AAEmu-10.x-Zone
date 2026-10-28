@@ -898,6 +898,7 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
     private readonly float _frameSeconds;
     private readonly ZoneSceneReadinessNotes _notes;
     private readonly ZoneHeartbeatEmitter _heartbeat;
+    private readonly ZoneUnitLocationReporter _locations;
 
     public ZoneSceneTickServices(ZoneUnitRegistry registry, ZoneStartupState startup, ZoneNpcManager manager,
         ZoneSceneScriptClock scriptClock, TimeSpan framePeriod, ZoneSceneReadinessNotes notes, bool oceanSimulateOnZone = false)
@@ -912,6 +913,7 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
         _registry = registry;
         _startup = startup;
         _manager = manager;
+        _locations = new(registry, startup.EngineCVars.GetBool(ZoneEngineCVars.UnitLocationDebug, false));
         _scriptClock = scriptClock;
         _frameSeconds = (float)framePeriod.TotalSeconds;
         _notes = notes;
@@ -980,15 +982,15 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
     }
 
     /// <summary>
-    /// REAL 3935E7E0: re-cache spatial membership for the scene's registered units. Runs AFTER
-    /// PostPhase inside RunFrame precisely so it reads what postphase published
-    /// (IZoneMovementFramePhases.cs:70-74). Membership presence is checked by the registry
-    /// itself (:281), so unregistered/pre-bounds units are naturally skipped.
+    /// Refresh spatial membership, then perform native 3935E7E0's debug report pass.
+    /// Runs after postphase, so both readers observe the live authoritative pose.
+    /// Native unit_location_debug defaults to zero; spatial refresh is independent of that gate.
     /// </summary>
     public void UpdateUnitLocationReports()
     {
         foreach (var unit in _registry.Units.Values.ToArray())
             _registry.UpdateSpatialMembership(unit);
+        _locations.Update();
     }
 
     /// <summary>

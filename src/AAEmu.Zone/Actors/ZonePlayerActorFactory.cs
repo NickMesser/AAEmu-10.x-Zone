@@ -102,6 +102,7 @@ public sealed class ZonePlayerActorFactory : IZoneActorLifecycle
     private readonly Dictionary<uint, uint> _generations = [];
     private readonly List<ZonePlayerPhysicalIdCollision> _physicalIdCollisions = [];
     private readonly ZoneModelContent _models;
+    private readonly ZoneActorMovementWorldOrigin _worldOrigin;
     private ZoneNativeEntityServices? _entities;
     private ZoneNativeTerrainPhysicsWorld? _physics;
     private ZoneNativeEngine? _engine;
@@ -117,6 +118,21 @@ public sealed class ZonePlayerActorFactory : IZoneActorLifecycle
 
     /// <summary>Generations that are live right now (retired and rolled-back admissions excluded).</summary>
     public int LiveCount => _live.Count;
+
+    /// <summary>Retire every admitted generation before scene terrain/entities; remove its backend registration first.</summary>
+    internal void RetireAll(IZonePhysicsBackend backend)
+    {
+        ArgumentNullException.ThrowIfNull(backend);
+        List<Exception>? errors = null;
+        foreach (var handle in _live.Keys.ToArray())
+        {
+            try { backend.RemoveActor(handle); }
+            catch (Exception error) { (errors ??= []).Add(error); }
+            try { Retire(handle); }
+            catch (Exception error) { (errors ??= []).Add(error); }
+        }
+        if (errors is not null) throw new AggregateException("Player scene retirement failed.", errors);
+    }
     /// <summary>B1 retired counter: completed seals, including rolled-back admissions.</summary>
     public int RetiredCount => _retired;
     /// <summary>F3: native entity spawns attempted for physical-ID admission across all generations.</summary>
@@ -136,7 +152,7 @@ public sealed class ZonePlayerActorFactory : IZoneActorLifecycle
     /// </param>
     public ZonePlayerActorFactory(ZoneModelContent models, ZoneNativeEntityServices? entities = null,
         ZoneNativeTerrainPhysicsWorld? physics = null, ZoneNativeEngine? engine = null,
-        Func<string, ushort?>? physicalSurfaceResolver = null)
+        Func<string, ushort?>? physicalSurfaceResolver = null, ZoneActorMovementWorldOrigin worldOrigin = default)
     {
         ArgumentNullException.ThrowIfNull(models);
         var nativeCount = (entities is null ? 0 : 1) + (physics is null ? 0 : 1) + (engine is null ? 0 : 1);
@@ -146,6 +162,7 @@ public sealed class ZonePlayerActorFactory : IZoneActorLifecycle
         if (nativeCount == 0 && physicalSurfaceResolver is not null)
             throw new ArgumentException("A physical-surface resolver requires the native physics world it belongs to.", nameof(physicalSurfaceResolver));
         _models = models;
+        _worldOrigin = worldOrigin;
         _entities = entities;
         _physics = physics;
         _engine = engine;
@@ -256,9 +273,7 @@ public sealed class ZonePlayerActorFactory : IZoneActorLifecycle
         if (snapshot.Identity.Kind != Protocol.Units.ZoneUnitKind.Character)
             throw new ArgumentException($"Player admission accepts Character snapshots only; unit {snapshot.ObjectId} is {snapshot.Identity.Kind}.", nameof(snapshot));
         var pose = ZoneUnitPose.FromSnapshot(snapshot);
-        const double fixedToWorld = 5.684341886080802e-14; // 2^-54; conversion precedent ZoneActorMovementCorrectionMath.World :21-22
-        var position = new Vector3((float)(pose.Position.FixedX * fixedToWorld),
-            (float)(pose.Position.FixedY * fixedToWorld), pose.Position.Z);
+        var position = ZoneMovementPoseMath.ToLocalMeters(pose.Position, _worldOrigin);
         var handle = Create(new ZoneActorCreationRequest(snapshot.ObjectId, ZoneActorKind.Player, snapshot.ModelId,
             position, pose.Rotation, snapshot.Scale));
         var actor = _live[handle];
@@ -676,6 +691,7 @@ public sealed class ZonePlayerActorFactory : IZoneActorLifecycle
 public sealed class ZonePlayerActor
 {
     private readonly ZonePlayerActorFactory _factory;
+    private IZonePhysicsBackend? _physicsAuthority;
 
     internal ZonePlayerActor(ZonePlayerActorFactory factory, ZoneActorHandle handle, ZoneActorModel model,
         Vector3 position, Quaternion orientation, float scale)
@@ -691,7 +707,7 @@ public sealed class ZonePlayerActor
     /// <summary>(UnitObjectId, Generation) — the physics/AI key; equality never survives retirement.</summary>
     public ZoneActorHandle Handle { get; }
     public ZoneActorModel Model { get; }
-    /// <summary>Admission pose in the WZUnitState world frame; fixed for this generation.</summary>
+    /// <summary>Admission pose in engine zone-local meters; fixed for this generation.</summary>
     public Vector3 Position { get; }
     public Quaternion Orientation { get; }
     public float Scale { get; }
@@ -736,15 +752,19 @@ public sealed class ZonePlayerActor
     }
 
     /// <summary>
-    /// Copies the live body's physical status (IZonePhysicsBackend.CopyStatus value semantics:
-    /// snapshots only, no backend state retained). Returns false for retired generations and for
-    /// managed-only admissions, which have no native body; a disposed world still surfaces its
-    /// own ObjectDisposedException rather than a fabricated result.
+    /// Copies the selected movement authority's zone-local status. Before backend registration,
+    /// reads the native body; once bound, every movement consumer observes the same backend.
+    /// Returns false for retired generations or an unbound admission without a native body.
     /// </summary>
     public bool TryCopyStatus(out ZonePhysicsActorStatus status)
     {
         status = default;
         if (!IsLive) return false;
+        if (_physicsAuthority is { } authority)
+        {
+            authority.CopyStatus(Handle, out status);
+            return IsLive;
+        }
         var body = Body;
         if (body is null) return false;
         var native = body.GetStatus();
@@ -753,6 +773,16 @@ public sealed class ZonePlayerActor
         status = new ZonePhysicsActorStatus(native.Position, native.Orientation, native.Velocity,
             !native.IsFlying, native.IsFlying);
         return true;
+    }
+
+    /// <summary>Bind once after AddActor/Teleport succeeded; changing authority requires a fresh actor generation.</summary>
+    internal void BindPhysicsAuthority(IZonePhysicsBackend authority)
+    {
+        ArgumentNullException.ThrowIfNull(authority);
+        if (!IsLive) throw new ObjectDisposedException(nameof(ZonePlayerActor));
+        if (_physicsAuthority is not null && !ReferenceEquals(_physicsAuthority, authority))
+            throw new InvalidOperationException("A live player generation already has a physics authority.");
+        _physicsAuthority = authority;
     }
 
     /// <summary>
@@ -765,9 +795,7 @@ public sealed class ZonePlayerActor
         if (!IsLive)
             throw new InvalidOperationException($"Generation {Handle} is retired; its pose can no longer be published.");
         var entity = Entity;
-        var body = Body;
-        if (entity is null || body is null) return;
-        var status = body.GetStatus();
+        if (entity is null || !TryCopyStatus(out var status)) return;
         entity.PublishPose(status.Position, status.Orientation);
     }
 

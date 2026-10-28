@@ -67,7 +67,7 @@ Framing/session: `ZoneFrame.cs` (u16 LE length including the opcode, u16 opcode,
 | StreamClient / TC* / CT* (CTJoin, CTRequestCell, CTUcc*, CTUploadEmblemStream, TCDoodadStream, TCDoodadIds, TCCharInfoQueried, TCHouseFarm, TCEmblem*, TCItemUcc*) | StreamClient vftable in 0x3987C750/0x3987C8C0 (client region), strings "stream: connected to world server", UI error `error_failed_to_connect_to_server`, `ClientUnit::InitClientOnlyUseStream`, `HousingManager::OnUnitModelStreamComplete`; the zone only constructs `ZoneClient` (vftable 0x3A67FF80) | Client->World stream connection; client-only leftovers in the shared DLL, not served by the zone process | not needed |
 | CS*/SC* | thousands of client<->World packets | not on the zone wire | n/a |
 
-First-entry requirements (player enters 129, walks, logs out): ZWHeartbeat (time sync), ZWZoneLoaded (done), ZWUnitMovements (wired, unproven live), ZWTimeOfDay/Detailed (done), ZWUnitLocation, ZWEnterArea/LeaveArea (area triggers while walking), ZWUnitFell and ZWErrorMsgToPlayer (walk/jump edge cases), and WZ UnitRemoved handling on logout (already in ZoneSession). Nothing zone-sent is needed for logout itself.
+First-entry requirements (player enters 129, walks, logs out): ZWHeartbeat (time sync), ZWZoneLoaded (done), ZWUnitMovements (wired, unproven live), ZWTimeOfDay/Detailed (server-type gated), ZWEnterArea/LeaveArea (area triggers while walking), ZWUnitFell and ZWErrorMsgToPlayer (walk/jump edge cases), and WZ UnitRemoved handling on logout (already in ZoneSession). Nothing zone-sent is needed for logout itself. `ZWUnitLocation` is optional debug traffic (`unit_location_debug` defaults to 0), not a required first-entry report.
 
 ### Tasks
 
@@ -108,11 +108,13 @@ First-entry requirements (player enters 129, walks, logs out): ZWHeartbeat (time
 - Confidence: medium
 
 ### ZW-04: Implement ZWUnitLocation emission (replace the no-send UpdateUnitLocationReports)
+- Status: **Done** — `ZoneUnitLocation` and `ZoneUnitLocationReporter` send the live published World pose from the post-movement tick when `unit_location_debug` is enabled. The CVar defaults off, matching native. Spatial refresh remains independent. Tests verify the 23-byte wire body, gate, live pose and removal. Real-World consumption of this optional debug packet is not established.
 - Priority: P1
 - Native evidence: 0x3935E7E0 (called from the frame tick, line 678449): if the enable flag (qword_3A638EA0, vtbl+16) is non-zero, iterate the registered unit list (qword_3A638F70..F78) and send ZWUnitLocation (0x35: unit id + vec3 = local position + cell origin * 1024) per unit via sub_39362B70.
-- Repo state: `ZwOpcodes.UnitLocation` unused; `ZoneSceneProviders.cs:958 UpdateUnitLocationReports()` calls `UpdateSpatialMembership` and sends nothing (its doc comment equates it with 0x3935E7E0, which is incorrect).
+- Recovered evidence (2026-10-28): CVar table entry `3A518550` names `unit_location_debug` (`39FDC8C0`), stores its pointer in `3A638EA0`, and defaults to 0. RTTI identifies vtable `39FE4F58`; serializer slot +0x10 is `3936D380`, which writes a **three-byte bc ID + two signed i64 fixed-point coordinates + float Z** through `3937F0F0` and `39B113A0`. The original audit's u32/three-float wire description was incorrect.
+- Repo state: implemented behind the recovered native gate.
 - Work:
-  - Add a `ZoneUnitLocation` message (u32 unit id, 3 floats) to Protocol/Messages.
+  - Add a `ZoneUnitLocation` message (bc unit id and uncompressed `UnitWorldPosition`) to Protocol/Messages.
   - Trace what populates the native list and the flag (xrefs to qword_3A638F70 / qword_3A638EA0) and port that.
   - Keep spatial membership update separate; do not conflate.
 - Depends on: ZW-01 queue pattern, unit registry

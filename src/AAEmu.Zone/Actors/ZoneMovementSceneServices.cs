@@ -149,9 +149,8 @@ public sealed class ZoneMovementDiagnostics
 /// correction origin is the region-granularity step <c>Origin(x, y) = x &lt;&lt; 54</c> with
 /// local conversion at scale 2^-44 (<c>Actors/ZoneActorMovementCorrectionMath.cs:14-22</c>;
 /// origin units are 1024 m regions — <c>ZoneUnitSpatialIndex.cs:9</c>).
-/// The body-status frame and the model-pose frame are the same frame by construction: the
-/// factory admits the body at the model pose (<c>Actors/ZonePlayerActorFactory.cs:548-563</c>),
-/// so <c>CopyStatus</c> floats convert here with NO extra origin step.
+/// Body-status poses use zone-local meters; committing a World pose adds the scene origin.
+/// The unshifted helpers remain useful when the caller already has World-meter coordinates.
 /// </summary>
 public static class ZoneMovementPoseMath
 {
@@ -165,6 +164,19 @@ public static class ZoneMovementPoseMath
     /// <summary>Committed model pose → engine-frame meters (UnitIdentity.cs:77-83).</summary>
     public static Vector3 ToMeters(UnitWorldPosition position) =>
         new((float)(position.FixedX / FixedScale), (float)(position.FixedY / FixedScale), position.Z);
+
+    /// <summary>World fixed-point pose to the engine's zone-local meters; each origin cell is 1024 meters.</summary>
+    public static Vector3 ToLocalMeters(UnitWorldPosition position, ZoneActorMovementWorldOrigin origin) =>
+        new((float)(unchecked(position.FixedX - ((long)origin.X << 54)) / FixedScale),
+            (float)(unchecked(position.FixedY - ((long)origin.Y << 54)) / FixedScale), position.Z);
+
+    /// <summary>Engine zone-local meters to the World pose, preserving fixed-point precision at the boundary.</summary>
+    public static UnitWorldPosition ToWorldPosition(Vector3 localPosition, ZoneActorMovementWorldOrigin origin)
+    {
+        var local = ToUnitWorldPosition(localPosition);
+        return new(unchecked(local.FixedX + ((long)origin.X << 54)),
+            unchecked(local.FixedY + ((long)origin.Y << 54)), local.Z);
+    }
 
     /// <summary>CVTTSD2SI semantics of the native conversion: overflow/NaN → long.MinValue (CorrectionMath.cs:23, same rule as ZoneActorMovementInterpolation.NativeInt64, Sampling.cs:126-129).</summary>
     private static long NativeTruncate(double value) =>

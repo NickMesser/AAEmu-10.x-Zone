@@ -19,6 +19,9 @@ public sealed class ZoneEngineCVars
     /// </summary>
     public const string TimeOfDayEngineUpdate = "e_time_of_day_engine_update";
 
+    /// <summary>Native registration 3A518550 -> 3A638EA0, default 0; enables ZWUnitLocation each frame.</summary>
+    public const string UnitLocationDebug = "unit_location_debug";
+
     private readonly Dictionary<string, string> _values = new(StringComparer.OrdinalIgnoreCase);
 
     public static ZoneEngineCVars Empty => new();

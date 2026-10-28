@@ -103,7 +103,7 @@ public sealed class ZoneOwnedPhysicsBackend : IZonePhysicsBackend, IZonePhysicsM
         // authority never integrates through a wall. Without this the actor walked straight through
         // solid geometry: the owned authority resolved GROUND but nothing consulted the shape query
         // the backend already holds, so "collision" was only true for terrain.
-        BlockHorizontalMotion();
+        BlockHorizontalMotion((float)elapsed.TotalSeconds);
         _physics.Step(elapsed);
         // Integration evidence: a periodic owned-position line proves the authority is the thing
         // stepping, without tracing every frame (which is the flooding mistake again).
@@ -129,7 +129,7 @@ public sealed class ZoneOwnedPhysicsBackend : IZonePhysicsBackend, IZonePhysicsM
     /// HORIZONTAL motion is adjusted: vertical belongs to gravity and the ground clamp, and a sweep
     /// that starts inside geometry is skipped rather than resolved by invention.
     /// </summary>
-    private void BlockHorizontalMotion()
+    private void BlockHorizontalMotion(float elapsedSeconds)
     {
         if (_shapeQueries is null) return; // no engine query attached: refuse to invent a wall
         foreach (var (actor, description) in _actors)
@@ -138,7 +138,7 @@ public sealed class ZoneOwnedPhysicsBackend : IZonePhysicsBackend, IZonePhysicsM
             _physics.TryReadVelocity(actor, out var velocity);
             var horizontal = new Vector3(velocity.X, velocity.Y, 0f);
             if (horizontal.LengthSquared() <= 1e-8f) continue;
-            if (!_shapeQueries.TrySweep(description.Shape, position, horizontal, actor, out var hit)) continue;
+            if (!_shapeQueries.TrySweep(description.Shape, position, horizontal * elapsedSeconds, actor, out var hit)) continue;
             // Slide, not stop: remove only the INTO-SURFACE component so the actor keeps moving
             // along the wall, which is what a character controller does and what the game expects.
             var into = Vector3.Dot(horizontal, hit.Normal);

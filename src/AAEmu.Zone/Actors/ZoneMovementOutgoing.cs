@@ -381,9 +381,9 @@ public sealed class ZoneMovementOutgoing
     private static bool VelocityLooksMoving(in QuantizedPose pose)
     {
         const float threshold = 0.05f * (32767f / 60f);
-        return Math.Abs(pose.VelocityX) >= threshold ||
-               Math.Abs(pose.VelocityY) >= threshold ||
-               Math.Abs(pose.VelocityZ) >= threshold;
+        return Math.Abs((int)pose.VelocityX) >= threshold ||
+               Math.Abs((int)pose.VelocityY) >= threshold ||
+               Math.Abs((int)pose.VelocityZ) >= threshold;
     }
 
     /// <summary>Mirror of MathUtil.ConvertRadianToDirection (AAEmu.Game Utils/MathUtil.cs:313-322), including its −2π caller shift (PositionAndRotation.cs:110-114) and the res &gt; 85 correction — this file cannot reference AAEmu.Game, so the arithmetic is quoted, not linked.</summary>

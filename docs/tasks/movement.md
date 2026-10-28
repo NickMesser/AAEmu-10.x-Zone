@@ -75,6 +75,7 @@ Caveat: the repo has no tests for movement. The test project has only Navigation
 - Confidence: medium
 
 ### MOV-04: Close the pose-write seam: move a living body by the native action handler (or take ownership of the frame pump)
+- Status: **Partial** — the selected backend's status is bound to the player generation and read by input, correction, pose publication and entity mirroring. Owned physics no longer steps while movement readers sample the separate native body. `ZoneOwnedMovementMotion` preserves integrated height/vertical velocity across ordinary client corrections; jump impulses, gravity and landing remain authoritative. Explicit teleports still use the backend directly. Native living-body action/teleport remains unresolved.
 - Priority: P0
 - Native evidence: cryphysics 3502A300 (inline path only when body+0x47 > 6, otherwise deferred); queued producers 35023200/35023650; SetParams 35028BF0, GetStatus 35029A30, vtable +0x48/+0x50.
 - Repo state: `TODO(pose-write)` in IZonePhysicsMotion.cs:38,77, ZoneNativePhysicsBackendAdapter.cs:142, ZoneMovementSceneServices.cs:65,175,313, ZoneActorMovementCorrection.cs:540. ZonePoseWriteProbe.cs is an evidence mode only. ZoneOwnedPlayerPhysics.cs is a managed substitute with its own authority.
@@ -87,6 +88,8 @@ Caveat: the repo has no tests for movement. The test project has only Navigation
 - Confidence: medium
 
 ### MOV-05: Wire real physics step with player living-body parameters (dimensions, gravity, dynamics) and ground contact
+- Status: **Partial** — owned movement now uses the selected backend's status; its native ground adapter converts endpoint pairs to displacements, so ground rays remain vertical. Horizontal collision sweeps cover velocity times the actual frame duration. Native actor composition, full living dynamics and authored per-actor gravity remain open.
+- Validation (2026-10-28): real six-cell zone-129 replay admits unit 387 and records `grounded=True` at local `(1172.5996, 1646.5, 366.33508)` on repeated owned steps. The native terrain query at `(512,512)` returns that same horizontal column after the endpoint/displacement fix. Player resources retire before terrain on World EOF; the process exits with the expected code 3.
 - Priority: P0
 - Native evidence: cryphysics living entity param types; CLivingEntity action string "CLivingEntity:Action(action_move)"; "velRequested" at +0x1C0 in the state export (vtable +0x78); cvars in x2game.cvar*.txt (`pl_*`).
 - Repo state: ZoneNativeTerrainPhysicsWorld.Living.cs:114-128 binds only the simulation/flag/dimensions/dynamics buffers. Step is in ZoneNativeTerrainPhysicsWorld.Step.cs. Terrain collision is in the scene check (real ground query verified). Deferred static objects, skeleton and articulated bodies are not admitted (TODO.md S2).
@@ -98,6 +101,7 @@ Caveat: the repo has no tests for movement. The test project has only Navigation
 - Confidence: medium
 
 ### MOV-06: Bind the production movement services (replace permissive leaves) and run prephase/step/postphase in the host loop
+- Status: **Partial** — the production prephase/step/postphase loop publishes the selected backend's live pose. Admission binds the movement model immediately, so idle actors publish physics before their first movement packet. Spatial queries read the committed pose instead of the entry snapshot. Native model/eligibility flags and interpolation CVars remain open.
 - Priority: P0
 - Native evidence: 39270A40 (model+140 guard), 392515E0 (model+488 / actor+90C), 39232570 (physical attachment), 39253D00 (time admission), 3936A010 (UpdateMovementBuffers), 39333110 (tick).
 - Repo state: ZoneMovementFramePhases.cs and ZoneMovementSceneServices.cs exist. `TODO(model-guard)`, `TODO(model-488-90C)`, `TODO(movement-interpolation-config)`, `TODO(model-flags)`, `TODO(updated-latch)`, `TODO(buffered-turn-jump)`, `TODO(actor-flag-100)`, `TODO(facing-control)`, `TODO(native-input-state)`. No persistent host calls the coordinator (H1).
@@ -110,6 +114,7 @@ Caveat: the repo has no tests for movement. The test project has only Navigation
 - Confidence: medium
 
 ### MOV-07: Complete ZWUnitMovements publication (flags, optional blobs, zone-owned authoritative state)
+- Status: **Partial** — backend poses convert from engine zone-local meters to continent coordinates at publication, matching World's default wire policy. A captured-entry regression verifies the outgoing packet and live spatial position together. Fall, ground, climb and push optional blobs remain open.
 - Priority: P0
 - Native evidence: `ZWUnitMovementsPacket` vftable 3937F430; buffer 3936E720 (3 x 336 KiB buffers); update 3936A010; "movement queue over flowed" 392578D0/3933A820.
 - Repo state: ZoneMovementOutgoing.cs (437 lines) encodes default-style actor movement only, with the low-5 ActorFlags bits. ZoneMovementOutgoing.cs:63 has `TODO(world-seed-check)` on the coordinate frame policy. The UnitMovement record has Vehicle/Ship/Push/Ground variants (Protocol/Messages/UnitMovement.cs:51-67).
@@ -227,6 +232,7 @@ Caveat: the repo has no tests for movement. The test project has only Navigation
 - Confidence: low
 
 ### MOV-18: Movement test coverage and a headless movement simulator
+- Status: **Partial** — `ZoneMovementAuthorityTests` drives captured player admission through owned physics, physical input, prephase/step/postphase, live spatial membership and ZW movement decoding. It checks idle publication, retirement, and a complete jump/fall/landing despite repeated stale client poses. Terrain is synthetic in these tests; real-client walk/jump/re-entry and other movement modes still require validation.
 - Priority: P1
 - Native evidence: n/a (parity harness); the controller and phases cite 39253D00/392578D0.
 - Repo state: AAEmu.Zone.Tests has no test for ZoneActorMovementController, ZoneMovementFramePhases, ZoneMovementOutgoing, ZoneUnitSpatialIndex or ZoneUnitRegistry.

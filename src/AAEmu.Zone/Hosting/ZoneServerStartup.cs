@@ -63,8 +63,9 @@ public static class ZoneServerStartup
         Console.WriteLine($"Startup synchronized: {startup.Factions.Count} factions, {startup.Relations.Count} relations, {startup.Spawners.Count} saved spawners, {startup.ContentFilter!.Categories.Count} content filter categories.");
 
         startup.WorldName = configuration.WorldName;
+        startup.EngineCVars = ZoneEngineCVars.Load(assets, launch.CVars);
         startup.TimeOfDayState.EngineUpdateEnabled =
-            ZoneEngineCVars.Load(assets, launch.CVars).GetBool(ZoneEngineCVars.TimeOfDayEngineUpdate, true);
+            startup.EngineCVars.GetBool(ZoneEngineCVars.TimeOfDayEngineUpdate, true);
         Console.WriteLine($"{ZoneEngineCVars.TimeOfDayEngineUpdate} = {(startup.TimeOfDayState.EngineUpdateEnabled ? 1 : 0)}; server type {ZoneServerType.For(startup.WorldName)}.");
 
         var engineInputs = ZoneEngineInputs.Create(configuration, layout, content, loaded.Models, "zone-host.log");

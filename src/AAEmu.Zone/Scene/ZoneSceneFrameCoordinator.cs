@@ -199,22 +199,27 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
         // The owned authority starts at the origin until the scene poses it; pose it immediately
         // from the actor's admitted transform so the first published frame is the real position.
         _backend.Teleport(handle, actor.Position, actor.Orientation);
+        actor.BindPhysicsAuthority(_backend);
+        if (_simulation.Registry.Units.TryGetValue(unitObjectId, out var unit)) EnsureMovementModel(unit);
         _trace?.Invoke($"Backend registered unit={handle.UnitObjectId} gen={handle.Generation} mass={mass} halfExtents=({halfExtents.X}, {halfExtents.Y}, {halfExtents.Z})");
     }
 
     private readonly HashSet<ZoneActorHandle> _registeredActors = [];
 
     /// <summary>
-    /// Releases the AI provider (the only native-backed member of this composition) first; the
-    /// remaining stack members are plain managed scene objects whose lifetimes end with the
-    /// resource scope that disposes this coordinator (Agent-3 members declare no disposables
-    /// today; if a later turn adds one, dispose it here — the LIFO position does not change).
+    /// Retires backend registrations and player bodies/entities before the scene's terrain,
+    /// entity services and engine. AI retirement is still attempted if a player cleanup fails.
     /// </summary>
     public void Dispose()
     {
         if (_disposed) return;
         _disposed = true;
+        List<Exception>? errors = null;
+        try { _playerActors.RetireAll(_backend); }
+        catch (Exception error) { (errors ??= []).Add(error); }
+        _registeredActors.Clear();
         try { _ai?.Dispose(); }
-        catch (Exception error) { throw new InvalidOperationException("Scene frame AI provider retirement failed.", error); }
+        catch (Exception error) { (errors ??= []).Add(error); }
+        if (errors is not null) throw new AggregateException("Scene frame retirement failed.", errors);
     }
 }

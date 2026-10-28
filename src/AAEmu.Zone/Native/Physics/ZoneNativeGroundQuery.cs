@@ -26,7 +26,7 @@ internal sealed class ZoneNativeGroundQuery : ZoneOwnedPlayerPhysics.IGroundQuer
     public bool TryGround(Vector3 from, Vector3 to, out Vector3 position, out ushort physicalMaterialId)
     {
         // Terrain first: the heightfield is the authoritative floor and the cheaper answer.
-        if (_world.RaycastTerrain(from, to, out var terrain))
+        if (_world.RaycastTerrain(from, to - from, out var terrain))
         {
             position = terrain.Position;
             physicalMaterialId = terrain.PhysicalMaterialId;

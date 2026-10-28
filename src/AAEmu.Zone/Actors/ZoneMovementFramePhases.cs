@@ -48,6 +48,7 @@ public sealed class ZoneMovementFramePhases : IZoneMovementFramePhases
     private readonly ZoneMovementFrameClock _clock;
     private readonly ZoneMovementDiagnostics _diagnostics;
     private readonly ZoneMovementInputBindings _bindings;
+    private readonly ZoneActorMovementWorldOrigin _worldOrigin;
     private readonly List<StagedActor> _staged = [];
     private bool _inFrame;
     private bool _stepped;
@@ -63,7 +64,7 @@ public sealed class ZoneMovementFramePhases : IZoneMovementFramePhases
         ZonePlayerActorFactory actors, IZoneActorMovementInputServices input,
         IZoneActorMovementCorrectionServices correction, ZoneMovementOutgoing outgoing,
         ZoneMovementFrameClock clock, ZoneMovementDiagnostics diagnostics,
-        ZoneMovementInputBindings bindings)
+        ZoneMovementInputBindings bindings, ZoneActorMovementWorldOrigin worldOrigin = default)
     {
         ArgumentNullException.ThrowIfNull(registry);
         ArgumentNullException.ThrowIfNull(backend);
@@ -77,6 +78,7 @@ public sealed class ZoneMovementFramePhases : IZoneMovementFramePhases
         _registry = registry; _backend = backend; _actors = actors; _input = input;
         _correction = correction; _outgoing = outgoing; _clock = clock;
         _diagnostics = diagnostics; _bindings = bindings;
+        _worldOrigin = worldOrigin;
     }
 
     /// <summary>True while a frame is open (PrePhase ran, PostPhase has not) — diagnostics surface for the harness.</summary>
@@ -115,7 +117,9 @@ public sealed class ZoneMovementFramePhases : IZoneMovementFramePhases
                 if (!_registry.IsMovementCurrent(unit) || controller.IsRetired) continue;
                 try
                 {
-                    if (controller.TryRunPrePhase(frame, snapshot, _input, out _))
+                    if (controller.TryRunPrePhase(frame, snapshot, _input, out _) ||
+                        (_registry.IsMovementCurrent(unit) && !controller.IsRetired &&
+                         _actors.FindByUnitObjectId(unit.Snapshot.ObjectId) is { IsLive: true }))
                         _staged.Add(new(unit, controller));
                 }
                 catch (NotSupportedException error)
@@ -234,7 +238,7 @@ public sealed class ZoneMovementFramePhases : IZoneMovementFramePhases
                     }
                     if (!_registry.IsMovementCurrent(unit) || controller.IsRetired) { SkipRemoved(unit); continue; }
                     unit.CommitPose(new ZoneUnitPose(
-                        ZoneMovementPoseMath.ToUnitWorldPosition(status.Position), status.Orientation));
+                        ZoneMovementPoseMath.ToWorldPosition(status.Position, _worldOrigin), status.Orientation));
                     // Spatial refresh reads the model position AFTER the commit — with Agent 5's
                     // modelPosition delegate reading ZoneUnit.Pose, membership tracks the body
                     // (ZoneUnitRegistry.UpdateSpatialMembership :279-284, index Update :94).
@@ -252,7 +256,7 @@ public sealed class ZoneMovementFramePhases : IZoneMovementFramePhases
 
                 // --- outgoing encode: authoritative post-step pose, not re-emitted input ---
                 if (admitted is not null)
-                    _outgoing.Sample(unit, status, admitted, frame);
+                    _outgoing.Sample(unit, status with { Position = ZoneMovementPoseMath.ToMeters(unit.Pose.Position) }, admitted, frame);
                 else
                     _diagnostics.ReportSkippedActor(unit.Snapshot.ObjectId,
                         "encoder sample skipped: no admitted input state (stance/actorFlags source absent).");

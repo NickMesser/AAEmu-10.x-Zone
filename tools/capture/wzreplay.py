@@ -104,8 +104,16 @@ def main():
     print(f'ZoneLoaded after {time.time() - t0:.1f}s; replaying {len(after)} frames', flush=True)
     send(zone, after)
     pump(zone, None, a.linger)
-    print(f'done after {time.time() - t0:.1f}s', flush=True)
+    # Signal World EOF while continuing to read the zone's pending notifications. Closing a
+    # socket with unread debug/movement reports sends RST and hides orderly retirement failures.
+    zone.shutdown(socket.SHUT_WR)
+    zone.settimeout(60)
+    while data := zone.recv(65536):
+        record(data)
     zone.close()
+    server.close()
+    out.close()
+    print(f'done after {time.time() - t0:.1f}s (zone retired)', flush=True)
 
 
 main()

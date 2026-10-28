@@ -234,6 +234,7 @@ Body layouts: no mismatches found in those both sides serialize (join, response,
 - Confidence: medium (depends on how the user's Zone Manager works today)
 
 ### WC-06: Align coordinate frames and the movement flag with World's default (continent on the wire)
+- Status: **Partial** — the host now admits native/owned player bodies in engine zone-local meters, converts published movement back to continent coordinates, and reads spatial membership from the live pose in local meters. `ZoneMovementAuthorityTests` uses the captured zone-129 entry and origin `(9,14)` to verify admission, fixed-point conversion and ZW movement decoding. The alternative `AAEMU_WZ_UNIT_POS_LOCAL=1` debug policy and real-client movement/re-entry verification remain open.
 - Priority: P0
 - Evidence: W `AAEmu.Game/Core/Managers/World/ZoneCoordBoundary.cs:24-60,94-113`, `MovementRelay.cs:548-580,642-644`, `AAEmu.Game/WorldIntegration.cs:882-934`, `ZoneProtocolHandler.cs:321-336`, `ZwSpawnNpcParser.cs:55-60`; Z `src/AAEmu.Zone/Hosting/ZoneSceneHost.cs:299` (`localOnWire: true`), `src/AAEmu.Zone/Actors/ZoneMovementOutgoing.cs:20-88,117`, `src/AAEmu.Zone/Actors/IZoneMovementFramePhases.cs:80-95`
 - Repo state: Partial and ambiguous. The replacement's own doc says the model pose is in the WZUnitState world frame, yet it passes `localOnWire: true` and says output is "in the same local/world convention World's relay decodes".

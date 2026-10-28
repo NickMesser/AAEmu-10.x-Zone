@@ -23,6 +23,10 @@ This repository becomes the **zone server for AAEmu 10.x**. World runs it in pla
 
 Current implementation progress (2026-10-28): the owned backend has admitted a real player in zone 129 (commits `fa837e4`, `28850a2`). Cooldown reset/reduce/charge-change packets now update per-unit timer maps, and the rolling scene update advances them; see CMB-02/CMB-10 for the remaining start/modifier paths. The coverage snapshot below is the original audit, not a claim that these later changes are absent. Full gameplay parity remains open.
 
+The next verified slice connects movement to the selected physics authority, applies the world-map origin at the physics/wire boundary, and refreshes spatial membership from the live pose. Ordinary input preserves owned jump/gravity state. Native ground queries now receive displacements, collision sweeps use the frame duration, and saturated negative velocity cannot overflow the movement encoder. `ZWUnitLocation` is implemented under the recovered `unit_location_debug` gate (default off).
+
+Validation: the solution builds and all **141 standalone tests pass**. An isolated replay of the captured zone-129 session loads the six real terrain cells, admits unit 387, observes it grounded at engine-local `(1172.5996, 1646.5, 366.33508)`, emits ZW movement and 23-byte location reports, then retires player/terrain/entity resources in order and exits with the expected World-disconnect code 3. This replay is not a replacement for the outstanding real-client walk/jump/logout/re-entry check. Native `CPlayer` publication, NPC AI, full cooldown starts/modifiers and the remaining milestone tasks are still open.
+
 On 2026-10-27, 13 parallel audits compared three things:
 
 - **The original zone.** The Hex-Rays export of the client's `Bin64/x2game-dev_dedicate.dll` (ArcheAge 10.0.2.13 r575, 89,574 functions) and its string/RTTI/CVar dumps. Every task cites native function addresses, strings or RTTI names.
@@ -146,7 +150,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | WC-03 | Make World's launch preflight accept a non-native host | Partial | [world-contract](docs/tasks/world-contract.md#wc-03-make-worlds-launch-preflight-accept-a-non-native-host) |
 | WC-04 | Derive the runtime configuration from launch arguments and env instead of a json plus spawner-file per zone | Partial | [world-contract](docs/tasks/world-contract.md#wc-04-derive-the-runtime-configuration-from-launch-arguments-and-env-instead-of-a-json-plus-spawner-file-per-zone) |
 | WC-05 | Provide a launcher for static (continent) zones | Done | [world-contract](docs/tasks/world-contract.md#wc-05-provide-a-launcher-for-static-continent-zones) |
-| WC-06 | Align coordinate frames and the movement flag with World's default (continent on the wire) |  | [world-contract](docs/tasks/world-contract.md#wc-06-align-coordinate-frames-and-the-movement-flag-with-worlds-default-continent-on-the-wire) |
+| WC-06 | Align coordinate frames and the movement flag with World's default (continent on the wire) | Partial | [world-contract](docs/tasks/world-contract.md#wc-06-align-coordinate-frames-and-the-movement-flag-with-worlds-default-continent-on-the-wire) |
 | WZ-01 | Make WZ dispatch non-fatal and native-ordered for the first-entry path | Partial | [wz-inbound](docs/tasks/wz-inbound.md#wz-01-make-wz-dispatch-non-fatal-and-native-ordered-for-the-first-entry-path) |
 | WZ-02 | Verify the end-to-end first-entry WZ sequence against native handlers |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-02-verify-the-end-to-end-first-entry-wz-sequence-against-native-handlers) |
 | ZW-01 | Emit ZWHeartbeat once per second from the scene tick | Done | [zw-outbound](docs/tasks/zw-outbound.md#zw-01-emit-zwheartbeat-once-per-second-from-the-scene-tick) |
@@ -155,10 +159,10 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | SCN-03 | Confirm scene readiness and refresh TODO.md S1/S2 |  | [scene](docs/tasks/scene.md#scn-03-confirm-scene-readiness-and-refresh-todomd-s1s2) |
 | MOV-01 | Publish CPlayer through the RTTI class registry and bind the player-class owner |  | [movement](docs/tasks/movement.md#mov-01-publish-cplayer-through-the-rtti-class-registry-and-bind-the-player-class-owner) |
 | MOV-02 | Compose GameObject / ActorSystem / AnimatedCharacter for the player entity |  | [movement](docs/tasks/movement.md#mov-02-compose-gameobject--actorsystem--animatedcharacter-for-the-player-entity) |
-| MOV-04 | Close the pose-write seam: move a living body by the native action handler (or take ownership of the frame pump) |  | [movement](docs/tasks/movement.md#mov-04-close-the-pose-write-seam-move-a-living-body-by-the-native-action-handler-or-take-ownership-of-the-frame-pump) |
-| MOV-05 | Wire real physics step with player living-body parameters (dimensions, gravity, dynamics) and ground contact |  | [movement](docs/tasks/movement.md#mov-05-wire-real-physics-step-with-player-living-body-parameters-dimensions-gravity-dynamics-and-ground-contact) |
-| MOV-06 | Bind the production movement services (replace permissive leaves) and run prephase/step/postphase in the host loop |  | [movement](docs/tasks/movement.md#mov-06-bind-the-production-movement-services-replace-permissive-leaves-and-run-prephasesteppostphase-in-the-host-loop) |
-| MOV-07 | Complete ZWUnitMovements publication (flags, optional blobs, zone-owned authoritative state) |  | [movement](docs/tasks/movement.md#mov-07-complete-zwunitmovements-publication-flags-optional-blobs-zone-owned-authoritative-state) |
+| MOV-04 | Close the pose-write seam: move a living body by the native action handler (or take ownership of the frame pump) | Partial | [movement](docs/tasks/movement.md#mov-04-close-the-pose-write-seam-move-a-living-body-by-the-native-action-handler-or-take-ownership-of-the-frame-pump) |
+| MOV-05 | Wire real physics step with player living-body parameters (dimensions, gravity, dynamics) and ground contact | Partial | [movement](docs/tasks/movement.md#mov-05-wire-real-physics-step-with-player-living-body-parameters-dimensions-gravity-dynamics-and-ground-contact) |
+| MOV-06 | Bind the production movement services (replace permissive leaves) and run prephase/step/postphase in the host loop | Partial | [movement](docs/tasks/movement.md#mov-06-bind-the-production-movement-services-replace-permissive-leaves-and-run-prephasesteppostphase-in-the-host-loop) |
+| MOV-07 | Complete ZWUnitMovements publication (flags, optional blobs, zone-owned authoritative state) | Partial | [movement](docs/tasks/movement.md#mov-07-complete-zwunitmovements-publication-flags-optional-blobs-zone-owned-authoritative-state) |
 | MOV-14 | Player admission, placement and re-entry end to end (P1 acceptance) |  | [movement](docs/tasks/movement.md#mov-14-player-admission-placement-and-re-entry-end-to-end-p1-acceptance) |
 | OBJ-01 | Bind real static gimmick/doodad entities as ground objects for movement |  | [world-objects](docs/tasks/world-objects.md#obj-01-bind-real-static-gimmickdoodad-entities-as-ground-objects-for-movement) |
 | OBJ-02 | Run the ServerOnly elevator/platform graph for zone 129 |  | [world-objects](docs/tasks/world-objects.md#obj-02-run-the-serveronly-elevatorplatform-graph-for-zone-129) |
@@ -191,7 +195,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | WZ-11 | GM, command and diagnostics packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-11-gm-command-and-diagnostics-packets) |
 | ZW-02 | Send native-correct ZWJoin fields (sv_port, external IP, account/instance by server type) | Partial | [zw-outbound](docs/tasks/zw-outbound.md#zw-02-send-native-correct-zwjoin-fields-sv_port-external-ip-accountinstance-by-server-type) |
 | ZW-03 | Match native disconnect/lifecycle policy | Done | [zw-outbound](docs/tasks/zw-outbound.md#zw-03-match-native-disconnectlifecycle-policy) |
-| ZW-04 | Implement ZWUnitLocation emission (replace the no-send UpdateUnitLocationReports) |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-04-implement-zwunitlocation-emission-replace-the-no-send-updateunitlocationreports) |
+| ZW-04 | Implement ZWUnitLocation emission (replace the no-send UpdateUnitLocationReports) | Done | [zw-outbound](docs/tasks/zw-outbound.md#zw-04-implement-zwunitlocation-emission-replace-the-no-send-updateunitlocationreports) |
 | ZW-05 | Add ZWEnterArea / ZWLeaveArea |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-05-add-zwenterarea--zwleavearea) |
 | ZW-06 | Add skill ZW packets (StartSkill, StopSkill, StopCasting, SkillControllerState, LongDistSkillControllerCreated) |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-06-add-skill-zw-packets-startskill-stopskill-stopcasting-skillcontrollerstate-longdistskillcontrollercreated) |
 | ZW-07 | Handle World requests that expect a ZW reply (ZoneStatus, CombatUnits, RayCasting, Mole checks, RunCommand) |  | [zw-outbound](docs/tasks/zw-outbound.md#zw-07-handle-world-requests-that-expect-a-zw-reply-zonestatus-combatunits-raycasting-mole-checks-runcommand) |
@@ -210,7 +214,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | MOV-10 | Swim, water-volume and drowning movement |  | [movement](docs/tasks/movement.md#mov-10-swim-water-volume-and-drowning-movement) |
 | MOV-13 | Unit warp, impulse, teleport and forced-sync corrections |  | [movement](docs/tasks/movement.md#mov-13-unit-warp-impulse-teleport-and-forced-sync-corrections) |
 | MOV-15 | NPC path finding and movement controller |  | [movement](docs/tasks/movement.md#mov-15-npc-path-finding-and-movement-controller) |
-| MOV-18 | Movement test coverage and a headless movement simulator |  | [movement](docs/tasks/movement.md#mov-18-movement-test-coverage-and-a-headless-movement-simulator) |
+| MOV-18 | Movement test coverage and a headless movement simulator | Partial | [movement](docs/tasks/movement.md#mov-18-movement-test-coverage-and-a-headless-movement-simulator) |
 | OBJ-04 | Handle World doodad packets and unit attach/bond packets | Partial | [world-objects](docs/tasks/world-objects.md#obj-04-handle-world-doodad-packets-and-unit-attachbond-packets) |
 | OBJ-06 | Climb doodads and hanging units |  | [world-objects](docs/tasks/world-objects.md#obj-06-climb-doodads-and-hanging-units) |
 | AI-01 | Recover the CAISystem instance and unblock native AI construction | Partial | [npc-ai](docs/tasks/npc-ai.md#ai-01-recover-the-caisystem-instance-and-unblock-native-ai-construction) |

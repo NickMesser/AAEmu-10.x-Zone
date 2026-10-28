@@ -1,5 +1,6 @@
 using AAEmu.Zone.Protocol;
 using AAEmu.Zone.Protocol.Messages;
+using AAEmu.Zone.Hosting;
 using AAEmu.Zone.WorldState;
 
 namespace AAEmu.Zone.WorldLink;
@@ -36,6 +37,7 @@ public sealed class ZoneStartupState
     public uint? WorldGameTime { get; private set; }
     public ZoneTimeOfDayState TimeOfDayState { get; } = new();
     public ZoneWorldGameClock WorldGameClock { get; }
+    public ZoneEngineCVars EngineCVars { get; set; } = ZoneEngineCVars.Empty;
 
     public ZoneStartupState(WorldContentNameComparer? contentNameComparer = null, Func<uint>? localGameMilliseconds = null)
     {

@@ -43,9 +43,8 @@ namespace AAEmu.Zone.Hosting;
 /// <item>Physics/AI backend selection asserted by name here even after config validation —
 /// scene creation must reject Managed physics (ZoneSceneBackendSelection.cs:8-11) and managed AI
 /// (TODO(managed-ai), :25-27) at the point of construction.</item>
-/// <item>localOnWire: true for the outgoing encoder — retail local-on-wire
-/// (MovementRelay.cs:341-343, TODO(world-seed-check)); correction origin = the layout's region
-/// origin (one cell = one 1024 m region, ZoneUnitSpatialIndex.cs:9).</item>
+/// <item>The unit wire follows World's default continent coordinates. Engine and spatial poses
+/// are zone-local; admission and outgoing publication apply the layout's 1024 m cell origin.</item>
 /// </list>
 /// </summary>
 public static class ZoneSceneHost
@@ -142,7 +141,8 @@ public static class ZoneSceneHost
             // Managed-identity factory (class doc decision): identity/generation/spatial only;
             // native stages skip inside NativeAdmission when entities are absent
             // (ZonePlayerActorFactory.cs:254) — named in readiness, never silent.
-            var playerActors = new ZonePlayerActorFactory(inputs.Models);
+            var worldOrigin = new ZoneActorMovementWorldOrigin(inputs.Layout.Origin.X, inputs.Layout.Origin.Y);
+            var playerActors = new ZonePlayerActorFactory(inputs.Models, worldOrigin: worldOrigin);
 
             // The scene's physics backend and motion authority, chosen once below (after level
             // completion) and captured lazily by the spawner services, which are constructed first.
@@ -271,7 +271,7 @@ public static class ZoneSceneHost
                 var shapeQueries = new ZoneNativePhysicsBackendAdapter(physics, playerActors);
                 var ownedBackend = new ZoneOwnedPhysicsBackend(owned, ground, shapeQueries, collisionSurfaces);
                 backend = ownedBackend;
-                motion = ownedBackend;
+                motion = new ZoneOwnedMovementMotion(ownedBackend);
                 trace("Physics backend: OWNED (Agent 8) - the host is the movement authority; the ground comes from the native terrain raycast.");
             }
             else
@@ -286,25 +286,13 @@ public static class ZoneSceneHost
             var bindings = new ZoneMovementInputBindings(frameClock, playerActors, motion!, diagnostics);
             var actorMovement = new ZoneMovementServices(frameClock, motion!, bindings, diagnostics);
             var input = new ZoneMovementInputServices(scene.Registry, diagnostics, bindings);
-            var origin = new ZoneActorMovementWorldOrigin(inputs.Layout.Origin.X, inputs.Layout.Origin.Y);
-            // The movement chain writes POSES in the region-local frame (the correction's fixed-point
-            // Local()). The owned authority and the terrain raycast are in engine WORLD coordinates,
-            // so the two domains are joined HERE, once, instead of inside either one. Velocities and
-            // impulses are differences and pass through untouched.
-            IZonePhysicsMotion motionInWorldDomain = inputs.Backends.Physics == ZonePhysicsBackendKind.Managed
-                ? new ZoneLocalToWorldMotionAdapter(motion!, inputs.Layout.Origin.X, inputs.Layout.Origin.Y,
-                    actor => backend is ZoneOwnedPhysicsBackend owned && owned.TryReadHeight(actor, out var height)
-                        ? height
-                        : null)
-                : motion!;
-            if (ReferenceEquals(motionInWorldDomain, motion))
-                trace($"Motion domain: as supplied (region-local poses accepted by the {inputs.Backends.Physics} backend).");
-            else
-                trace($"Motion domain: region-local -> world (origin {inputs.Layout.Origin.X},{inputs.Layout.Origin.Y} = " +
-                    $"{inputs.Layout.Origin.X * 1024f} m, {inputs.Layout.Origin.Y * 1024f} m) before the owned backend.");
-            var correction = new ZoneMovementCorrectionServices(scene.Registry, playerActors, motionInWorldDomain, frameClock,
-                diagnostics, origin);
-            var outgoing = new ZoneMovementOutgoing(scene.Registry, diagnostics, localOnWire: true);
+            // Engine terrain, statics, native bodies and owned bodies all use zone-local meters.
+            // World uses continent coordinates by default (ZoneCoordBoundary.UseLocalOnZoneWire=false).
+            // Convert only at admission/publication; velocities and impulses need no origin offset.
+            trace($"Motion domain: zone-local physics, continent on the unit wire; origin {worldOrigin.X},{worldOrigin.Y} cells.");
+            var correction = new ZoneMovementCorrectionServices(scene.Registry, playerActors, motion!, frameClock,
+                diagnostics, worldOrigin);
+            var outgoing = new ZoneMovementOutgoing(scene.Registry, diagnostics, localOnWire: false);
             // Agent 7's compatibility route: the native AI reads the SAME neutral surface table the
             // owned player physics reads, so both agree on what the player is standing on instead of
             // resolving surfaces twice and drifting apart.
@@ -312,7 +300,7 @@ public static class ZoneSceneHost
                 aiProvider.AttachCollisionSurfaces(collisionSurfaces,
                     backend is ZoneOwnedPhysicsBackend ownedBackend ? ownedBackend.GroundMaterialFor : null);
             var phases = new ZoneMovementFramePhases(scene.Registry, backend!, playerActors, input, correction,
-                outgoing, frameClock, diagnostics, bindings);
+                outgoing, frameClock, diagnostics, bindings, worldOrigin);
             frame = new ZoneSceneFrameCoordinator(phases, backend!, playerActors, aiProvider, actorMovement,
                 scene.Simulation, inputs.Startup, framePeriod, trace);
             scene.Frame = frame;
@@ -344,17 +332,10 @@ public static class ZoneSceneHost
 
         System.Numerics.Vector3 ModelPosition(ZoneUnit unit)
         {
-            // The scene's real per-unit position source: the immutable wire pose in the WZUnitState
-            // world frame (fixed 2^-54, the exact conversion of ZonePlayerActorFactory.Admit
-            // :201-204). TODO(live-model-position): physics/entity pose publication into the
-            // model pose has no owner while native bodies are gated — moving owners keep their
-            // admitted pose for spatial/model reads, named at readiness.
-            var pose = ZoneUnitPose.FromSnapshot(unit.Snapshot);
-            const double fixedToWorld = 5.684341886080802e-14; // 2^-54
-            return new System.Numerics.Vector3(
-                (float)(pose.Position.FixedX * fixedToWorld),
-                (float)(pose.Position.FixedY * fixedToWorld),
-                pose.Position.Z);
+            // Spatial membership and scene geometry use the published live pose in local meters.
+            // Reading the immutable entry snapshot here kept moving units at their spawn forever.
+            return ZoneMovementPoseMath.ToLocalMeters(unit.Pose.Position,
+                new ZoneActorMovementWorldOrigin(inputs.Layout.Origin.X, inputs.Layout.Origin.Y));
         }
     }
 
@@ -393,7 +374,7 @@ public static class ZoneSceneHost
             {
                 var from = new System.Numerics.Vector3(column.X, column.Y, shape.From);
                 var to = new System.Numerics.Vector3(column.X, column.Y, shape.To);
-                var hit = physics.RaycastTerrain(from, to, out var result);
+                var hit = physics.RaycastTerrain(from, to - from, out var result);
                 trace($"GROUND-PROBE column={column.Name} ray={shape.Name} {(hit
                     ? $"HIT ground=({result.Position.X}, {result.Position.Y}, {result.Position.Z}) material={result.PhysicalMaterialId}"
                     : "MISS")}");
