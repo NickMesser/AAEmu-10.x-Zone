@@ -128,3 +128,10 @@ The native server has no weather or season system. The only hits are the client 
   - Add a short note to `TODO.md` that weather, seasons and cross-zone transfers are not zone-process responsibilities.
   - Test the reconnect path: a persisted instance spawner restore after a second join in the same process.
 - Confidence: medium.
+
+### WS-09: Match native time-of-day reporting (no ZW 0x001D/0x001E on the continent host)
+- Status: **Done** — `ZoneServerType` (instance id 0 = type 3) skips the initial detailed report and both per-tick time reports; `ZoneEngineCVars` reads `game/config/dedicated.cfg` from the asset sources with `+name value` CVars overriding, and `e_time_of_day_engine_update = 0` freezes `ZoneTimeOfDayState.Advance`. Live replay check not run. Open: the type-3 string at 0x3A5192C0 was not recovered (IDA offline), so instance id 0 stands in for the native map-descriptor compare.
+- Priority: P1
+- Native evidence: 0x393654B0 sets ZoneClient+140 (dedicated: 3 if the map descriptor string equals the global at 0x3A5192C0, else 2). 0x39332130 (initial ZW 0x001E) and the 0x393324E0 time phase (0x393322F0 detailed, 0x39332400 hourly ZW 0x001D) are skipped for type 3. The 6200 s native baseline for zone 129 contains zero 0x001D/0x001E. `e_time_of_day_engine_update` is not referenced by x2game (engine-side CVar); dedicated.cfg sets it to 0.
+- Work: none remaining beyond recovering the 0x3A5192C0 string.
+- Confidence: medium.

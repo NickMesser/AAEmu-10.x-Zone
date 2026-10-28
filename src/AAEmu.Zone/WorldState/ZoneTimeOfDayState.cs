@@ -27,6 +27,12 @@ public sealed class ZoneTimeOfDayState : IDisposable
     public bool AdvancementSuspended { get; set; }
     public bool UpdatesPaused { get; set; }
 
+    /// <summary>
+    /// CVar <c>e_time_of_day_engine_update</c> (engine default on; shipped dedicated.cfg sets 0). When off the engine does not
+    /// move the hour itself, so it changes only when World sets it (SetTime via Receive) and Advance is a no-op.
+    /// </summary>
+    public bool EngineUpdateEnabled { get; set; } = true;
+
     /// <summary>Optional scene notifications. The clock owns no renderer or observer lifetime.</summary>
     public event Action<float, bool>? TimeApplied;
     public event Action<float, float, float>? AdvancedTimeApplied;
@@ -63,7 +69,7 @@ public sealed class ZoneTimeOfDayState : IDisposable
     public void Advance(float frameSeconds)
     {
         ObjectDisposedException.ThrowIf(IsDisposed, this);
-        if (AdvancementSuspended || UpdatesPaused) return;
+        if (!EngineUpdateEnabled || AdvancementSuspended || UpdatesPaused) return;
         var hour = Hour;
         if (Speed > 0f) hour += frameSeconds * Speed;
         if (hour > End) hour = Start;

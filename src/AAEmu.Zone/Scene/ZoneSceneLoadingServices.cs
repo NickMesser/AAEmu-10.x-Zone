@@ -91,7 +91,7 @@ public sealed class ZoneSceneLoadingServices : IZoneSceneLoadingServices
     /// the recorded dedicated constant and the missing accessor is named once at readiness
     /// (TODO(server-type-slot)). Type 3 is what omits the time-of-day phase — it is never 3 here.
     /// </summary>
-    public int ServerType => DedicatedServerType;
+    public int ServerType => _startup.JoinRequest is { } join ? ZoneServerType.For(join.InstanceId) : DedicatedServerType;
 
     /// <summary>
     /// 39332730's environment+150 read: nonzero omits spatial and AI bounds publication. No

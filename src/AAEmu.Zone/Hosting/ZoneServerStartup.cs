@@ -2,6 +2,7 @@ using System.Net.Sockets;
 
 using AAEmu.Zone.Content;
 using AAEmu.Zone.Protocol.Messages;
+using AAEmu.Zone.Scene;
 using AAEmu.Zone.WorldLink;
 
 namespace AAEmu.Zone.Hosting;
@@ -60,6 +61,10 @@ public static class ZoneServerStartup
         var startup = await ZoneWorldClient.SynchronizeAsync(client.GetStream(), join,
             TimeSpan.FromSeconds(30), shutdown, contentNameComparer).ConfigureAwait(false);
         Console.WriteLine($"Startup synchronized: {startup.Factions.Count} factions, {startup.Relations.Count} relations, {startup.Spawners.Count} saved spawners, {startup.ContentFilter!.Categories.Count} content filter categories.");
+
+        startup.TimeOfDayState.EngineUpdateEnabled =
+            ZoneEngineCVars.Load(assets, launch.CVars).GetBool(ZoneEngineCVars.TimeOfDayEngineUpdate, true);
+        Console.WriteLine($"{ZoneEngineCVars.TimeOfDayEngineUpdate} = {(startup.TimeOfDayState.EngineUpdateEnabled ? 1 : 0)}; server type {ZoneServerType.For(join.InstanceId)}.");
 
         var engineInputs = ZoneEngineInputs.Create(configuration, layout, content, loaded.Models, "zone-host.log");
         Action<string> trace = message => Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] {message}");
