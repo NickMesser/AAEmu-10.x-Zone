@@ -181,9 +181,9 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | WC-11 | Golden-test WZUnitState, WZNpcState and buff bodies against World's serializer |  | [world-contract](docs/tasks/world-contract.md#wc-11-golden-test-wzunitstate-wznpcstate-and-buff-bodies-against-worlds-serializer) |
 | WC-12 | Log to a file under `AAEMU_ZONE_SAVE_DIR` / `AAEMU_ZONE_LOG_NAME` and cope with no console |  | [world-contract](docs/tasks/world-contract.md#wc-12-log-to-a-file-under-aaemu_zone_save_dir--aaemu_zone_log_name-and-cope-with-no-console) |
 | WZ-03 | Implement the unit attach/hang/bond/posture/skill-controller family |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-03-implement-the-unit-attachhangbondpostureskill-controller-family) |
-| WZ-04 | Skill / plot / combat-feedback packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-04-skill--plot--combat-feedback-packets) |
-| WZ-05 | Forced movement / physics unit packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-05-forced-movement--physics-unit-packets) |
-| WZ-06 | NPC / spawner control packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-06-npc--spawner-control-packets) |
+| WZ-04 | Skill / plot / combat-feedback packets | Partial | [wz-inbound](docs/tasks/wz-inbound.md#wz-04-skill--plot--combat-feedback-packets) |
+| WZ-05 | Forced movement / physics unit packets | Partial | [wz-inbound](docs/tasks/wz-inbound.md#wz-05-forced-movement--physics-unit-packets) |
+| WZ-06 | NPC / spawner control packets | Partial | [wz-inbound](docs/tasks/wz-inbound.md#wz-06-npc--spawner-control-packets) |
 | WZ-07 | Doodad, house and vegetation packets | Partial | [wz-inbound](docs/tasks/wz-inbound.md#wz-07-doodad-house-and-vegetation-packets) |
 | WZ-08 | Slave / vehicle / ship packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-08-slave--vehicle--ship-packets) |
 | WZ-11 | GM, command and diagnostics packets |  | [wz-inbound](docs/tasks/wz-inbound.md#wz-11-gm-command-and-diagnostics-packets) |
@@ -224,11 +224,11 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | LUA-06 | Provide the entity-script host (entity tables and lifecycle callbacks) |  | [lua-api](docs/tasks/lua-api.md#lua-06-provide-the-entity-script-host-entity-tables-and-lifecycle-callbacks) |
 | LUA-07 | Implement remaining `Script.*` functions (timers, reload variants, dumps) |  | [lua-api](docs/tasks/lua-api.md#lua-07-implement-remaining-script-functions-timers-reload-variants-dumps) |
 | LUA-10 | Command-set / quest `RunCommandSet` path |  | [lua-api](docs/tasks/lua-api.md#lua-10-command-set--quest-runcommandset-path) |
-| CMB-02 | Add WZ message codecs and opcodes for the skill/damage/knockback/cooldown/plot packets |  | [combat](docs/tasks/combat.md#cmb-02-add-wz-message-codecs-and-opcodes-for-the-skilldamageknockbackcooldownplot-packets) |
+| CMB-02 | Add WZ message codecs and opcodes for the skill/damage/knockback/cooldown/plot packets | Partial | [combat](docs/tasks/combat.md#cmb-02-add-wz-message-codecs-and-opcodes-for-the-skilldamageknockbackcooldownplot-packets) |
 | CMB-03 | Add outbound ZW opcodes/messages the zone originates for combat |  | [combat](docs/tasks/combat.md#cmb-03-add-outbound-zw-opcodesmessages-the-zone-originates-for-combat) |
 | CMB-04 | Load full SkillDesc content (the `skills` table and companions) |  | [combat](docs/tasks/combat.md#cmb-04-load-full-skilldesc-content-the-skills-table-and-companions) |
-| CMB-05 | Implement the zone skill-state mirror (StartSkill/FireSkill/EndSkill/StopSkill/StopCasting) |  | [combat](docs/tasks/combat.md#cmb-05-implement-the-zone-skill-state-mirror-startskillfireskillendskillstopskillstopcasting) |
-| CMB-06 | Wire WZUnitDamaged/WZUnitHealed into NPC aggro and AI notification |  | [combat](docs/tasks/combat.md#cmb-06-wire-wzunitdamagedwzunithealed-into-npc-aggro-and-ai-notification) |
+| CMB-05 | Implement the zone skill-state mirror (StartSkill/FireSkill/EndSkill/StopSkill/StopCasting) | Partial | [combat](docs/tasks/combat.md#cmb-05-implement-the-zone-skill-state-mirror-startskillfireskillendskillstopskillstopcasting) |
+| CMB-06 | Wire WZUnitDamaged/WZUnitHealed into NPC aggro and AI notification | Partial | [combat](docs/tasks/combat.md#cmb-06-wire-wzunitdamagedwzunithealed-into-npc-aggro-and-ai-notification) |
 | CMB-07 | Implement ZoneBuffMan create/destroy side effects on the unit |  | [combat](docs/tasks/combat.md#cmb-07-implement-zonebuffman-createdestroy-side-effects-on-the-unit) |
 | CMB-08 | Load the full BuffDesc (buffs table and companion tables) |  | [combat](docs/tasks/combat.md#cmb-08-load-the-full-buffdesc-buffs-table-and-companion-tables) |
 | CMB-09 | Implement unit crowd-control/status state consumers (stun, sleep, root, silence, walk-only, cannot-jump, blank-minded, glide) |  | [combat](docs/tasks/combat.md#cmb-09-implement-unit-crowd-controlstatus-state-consumers-stun-sleep-root-silence-walk-only-cannot-jump-blank-minded-glide) |
@@ -251,6 +251,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | WS-02 | Handle the remaining WZ world-state packets instead of counting them unimplemented |  | [world-state](docs/tasks/world-state.md#ws-02-handle-the-remaining-wz-world-state-packets-instead-of-counting-them-unimplemented) |
 | WS-04 | Emit the missing ZW world-state frames (ReportZoneStatus, Heartbeat loop, BackpackDropped, RemoveHouse) | Partial | [world-state](docs/tasks/world-state.md#ws-04-emit-the-missing-zw-world-state-frames-reportzonestatus-heartbeat-loop-backpackdropped-removehouse) |
 | WS-06 | Wire world-state consumers into gameplay (conflict state to PvP rules, siege and relation to combat, schedule to spawners) |  | [world-state](docs/tasks/world-state.md#ws-06-wire-world-state-consumers-into-gameplay-conflict-state-to-pvp-rules-siege-and-relation-to-combat-schedule-to-spawners) |
+| WS-09 | Match native time-of-day reporting (no ZW 0x001D/0x001E on the continent host) | Done | [world-state](docs/tasks/world-state.md#ws-09-match-native-time-of-day-reporting-no-zw-0x001d0x001e-on-the-continent-host) |
 | OPS-03 | Graceful shutdown, signal, and crash handling for the host | Partial | [ops](docs/tasks/ops.md#ops-03-graceful-shutdown-signal-and-crash-handling-for-the-host) |
 | OPS-04 | Add a ServerCVar configuration layer with the sim-affecting native CVars |  | [ops](docs/tasks/ops.md#ops-04-add-a-servercvar-configuration-layer-with-the-sim-affecting-native-cvars) |
 | OPS-06 | Implement the four unsupported zone-side GM selectors (49, 142, 143, 144) without crashing the session | Partial | [ops](docs/tasks/ops.md#ops-06-implement-the-four-unsupported-zone-side-gm-selectors-49-142-143-144-without-crashing-the-session) |
@@ -301,7 +302,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | LUA-08 | Implement server-meaningful `System.*` and `Physics.*` |  | [lua-api](docs/tasks/lua-api.md#lua-08-implement-server-meaningful-system-and-physics) |
 | LUA-09 | Provide `Particle.*` and `Sound.*` stub tables |  | [lua-api](docs/tasks/lua-api.md#lua-09-provide-particle-and-sound-stub-tables) |
 | CMB-17 | Combat state lifecycle (engage timeout, ZWClearCombat, force-attack, duel) |  | [combat](docs/tasks/combat.md#cmb-17-combat-state-lifecycle-engage-timeout-zwclearcombat-force-attack-duel) |
-| CMB-18 | Implement ZonePlotMan (plot events mirror) |  | [combat](docs/tasks/combat.md#cmb-18-implement-zoneplotman-plot-events-mirror) |
+| CMB-18 | Implement ZonePlotMan (plot events mirror) | Partial | [combat](docs/tasks/combat.md#cmb-18-implement-zoneplotman-plot-events-mirror) |
 | CMB-19 | Fall damage and collision notifications to World |  | [combat](docs/tasks/combat.md#cmb-19-fall-damage-and-collision-notifications-to-world) |
 | CMB-20 | Stealth/detection and invisibility semantics |  | [combat](docs/tasks/combat.md#cmb-20-stealthdetection-and-invisibility-semantics) |
 | CMB-21 | Quest-driven and special combat packets |  | [combat](docs/tasks/combat.md#cmb-21-quest-driven-and-special-combat-packets) |
