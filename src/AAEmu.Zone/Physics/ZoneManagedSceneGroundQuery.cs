@@ -1,10 +1,13 @@
 using System.Numerics;
 
+using AAEmu.Zone.Actors;
+
 namespace AAEmu.Zone.Physics;
 
 /// <summary>Character support over terrain and authored static meshes, without selecting roofs overhead.</summary>
 public sealed class ZoneManagedSceneGroundQuery(
-    ZoneManagedTerrainGeometry terrain, ZoneManagedStaticGeometry? statics = null) : ZoneOwnedPlayerPhysics.IGroundQuery
+    ZoneManagedTerrainGeometry terrain, ZoneManagedStaticGeometry? statics = null,
+    Func<ZoneActorHandle, float>? groundPivotHeight = null) : ZoneOwnedPlayerPhysics.IGroundQuery
 {
     /// <summary>
     /// Current character-controller allowance for a rising walking surface. Authored stance step
@@ -12,6 +15,7 @@ public sealed class ZoneManagedSceneGroundQuery(
     /// </summary>
     public const float MaximumStaticGroundRise = .3f;
     public float ContactTolerance => .002f;
+    public float GetGroundPivotHeight(ZoneActorHandle actor) => groundPivotHeight?.Invoke(actor) ?? 0;
 
     public bool TryGround(Vector3 from, Vector3 to, out Vector3 position, out ushort physicalMaterialId)
     {

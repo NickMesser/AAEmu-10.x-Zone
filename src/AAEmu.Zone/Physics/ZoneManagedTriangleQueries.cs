@@ -63,6 +63,22 @@ internal static class ZoneManagedTriangleQueries
 {
     private const float Epsilon = .00001f;
 
+    public static bool Overlaps(ZonePhysicsShape shape, Vector3 center, Vector3 a, Vector3 b, Vector3 c)
+    {
+        if (shape.Kind == ZonePhysicsShapeKind.Box) return Overlaps(center, shape.HalfExtents, a, b, c);
+        if (Vector3.Cross(b - a, c - a).LengthSquared() < 1e-18f) return false;
+        return ZoneManagedConvexQueries.Overlaps(ZoneManagedConvexTarget.ForTriangle(a, b, c), center, shape);
+    }
+
+    public static bool Sweep(ZonePhysicsShape shape, Vector3 origin, Vector3 displacement,
+        Vector3 a, Vector3 b, Vector3 c, out float fraction, out Vector3 normal, out Vector3 position)
+    {
+        if (shape.Kind == ZonePhysicsShapeKind.Box) return Sweep(origin, shape.HalfExtents, displacement, a, b, c, out fraction, out normal, out position);
+        if (Vector3.Cross(b - a, c - a).LengthSquared() < 1e-18f)
+        { fraction = 0; normal = position = default; return false; }
+        return ZoneManagedConvexQueries.Sweep(ZoneManagedConvexTarget.ForTriangle(a, b, c), origin, shape, displacement, out fraction, out normal, out position);
+    }
+
     public static bool Raycast(Vector3 origin, Vector3 displacement, Vector3 a, Vector3 b, Vector3 c,
         out float fraction, out Vector3 normal)
     {

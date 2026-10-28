@@ -187,28 +187,49 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
         if (actor is null) return; // not a player actor: not this backend's business.
         var handle = actor.Handle;
         if (!_registeredActors.Add(handle)) return; // already registered for this generation
-        var definition = actor.Model.Definition;
-        var stance = actor.Model.Stances.FirstOrDefault(row => row.StanceId == 2);
-        var scale = Math.Max(actor.Scale, 0.0001f);
-        var halfExtents = new Vector3(
-            Math.Max((stance?.SizeX ?? 0.5f) * scale, 0.0001f),
-            Math.Max((stance?.SizeY ?? 0.5f) * scale, 0.0001f),
-            Math.Max((stance?.SizeZ ?? 0.5f) * scale, 0.0001f));
-        var mass = definition.PhysicsLivingMass > 0 ? definition.PhysicsLivingMass : definition.PhysicsMass;
-        if (mass <= 0)
+        try
+        {
+            ZonePhysicsActorDescription description;
+            if (_backend is ZoneManagedPhysicsBackend)
+            {
+                // Reuse the recovered 392DF300/392E2F20 source-order/default-stance and entity-scale
+                // mapping. This builds copied values only; no native surface or engine is needed.
+                var initial = ZoneActorPhysicalizationRequest.BuildInitial(actor.Model, actor.Scale, false, _ => null);
+                description = ZonePhysicsActorDescription.FromLivingStance(initial.Stance,
+                    initial.Dynamics.ReadSingle(0x28)!.Value, -initial.Dynamics.ReadSingle(0x1C)!.Value);
+            }
+            else
+            {
+                // The comparison/native backend retains its existing adoption contract.
+                var definition = actor.Model.Definition;
+                var stance = actor.Model.Stances.FirstOrDefault(row => row.StanceId == 2);
+                var scale = Math.Max(actor.Scale, 0.0001f);
+                var halfExtents = new Vector3(
+                    Math.Max((stance?.SizeX ?? 0.5f) * scale, 0.0001f),
+                    Math.Max((stance?.SizeY ?? 0.5f) * scale, 0.0001f),
+                    Math.Max((stance?.SizeZ ?? 0.5f) * scale, 0.0001f));
+                var mass = definition.PhysicsLivingMass > 0 ? definition.PhysicsLivingMass : definition.PhysicsMass;
+                description = new(new(halfExtents, true), mass);
+            }
+            if (!float.IsFinite(description.Mass) || description.Mass <= 0)
+                throw new InvalidOperationException(
+                    $"Character unit {unitObjectId} has no finite positive authored living mass after entity scaling " +
+                    $"(mass={description.Mass}); the backend refuses to invent one.");
+            _backend.AddActor(handle, description);
+            // The owned authority starts at the origin until the scene poses it; pose it immediately
+            // from the actor's admitted transform so the first published frame is the real position.
+            _backend.Teleport(handle, actor.Position, actor.Orientation);
+            actor.BindPhysicsAuthority(_backend);
+            if (_simulation.Registry.Units.TryGetValue(unitObjectId, out var unit)) EnsureMovementModel(unit);
+            _trace?.Invoke($"Backend registered unit={handle.UnitObjectId} gen={handle.Generation} mass={description.Mass} " +
+                $"halfExtents=({description.Shape.HalfExtents.X}, {description.Shape.HalfExtents.Y}, {description.Shape.HalfExtents.Z}) " +
+                $"shape={description.Shape.Kind} centerOffsetZ={description.CenterOffsetZ} pivotHeight={description.GroundPivotHeight} gravity={description.Gravity}");
+        }
+        catch
         {
             _registeredActors.Remove(handle);
-            throw new InvalidOperationException(
-                $"Character unit {unitObjectId} has no authored living mass (physics_living_mass={definition.PhysicsLivingMass}, " +
-                $"physics_mass={definition.PhysicsMass}); the backend refuses to invent one.");
+            throw;
         }
-        _backend.AddActor(handle, new ZonePhysicsActorDescription(new ZonePhysicsShape(halfExtents, true), mass));
-        // The owned authority starts at the origin until the scene poses it; pose it immediately
-        // from the actor's admitted transform so the first published frame is the real position.
-        _backend.Teleport(handle, actor.Position, actor.Orientation);
-        actor.BindPhysicsAuthority(_backend);
-        if (_simulation.Registry.Units.TryGetValue(unitObjectId, out var unit)) EnsureMovementModel(unit);
-        _trace?.Invoke($"Backend registered unit={handle.UnitObjectId} gen={handle.Generation} mass={mass} halfExtents=({halfExtents.X}, {halfExtents.Y}, {halfExtents.Z})");
     }
 
     private readonly HashSet<ZoneActorHandle> _registeredActors = [];

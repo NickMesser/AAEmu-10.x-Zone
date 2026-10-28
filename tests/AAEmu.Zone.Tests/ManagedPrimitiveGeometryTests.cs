@@ -131,11 +131,12 @@ public sealed class ManagedPrimitiveGeometryTests
     {
         var scene = Scene(ZoneManagedPrimitiveKind.Sphere);
         var shape = new ZonePhysicsShape(new(.2f, .3f, .4f), true);
-        await Assert.That(scene.TrySweep(shape, new(-5, 1.3f, 0), new(10, 0, 0), out var hit)).IsTrue();
-        await Assert.That(hit.Distance).IsGreaterThan(4.7f);
-        await Assert.That(hit.Distance).IsLessThan(4.81f);
+        // Capsule radius is X=.2; unused Y=.3 does not enlarge its circular cross-section.
+        await Assert.That(scene.TrySweep(shape, new(-5, 1.2f, 0), new(10, 0, 0), out var hit)).IsTrue();
+        await Assert.That(hit.Distance).IsGreaterThan(4.94f);
+        await Assert.That(hit.Distance).IsLessThan(5.01f);
         await Assert.That(Vector3.Dot(hit.Normal, Vector3.UnitX)).IsLessThanOrEqualTo(0f);
-        await Assert.That(scene.TrySweep(shape, new(-5, 1.31f, 0), new(10, 0, 0), out _)).IsFalse();
+        await Assert.That(scene.TrySweep(shape, new(-5, 1.21f, 0), new(10, 0, 0), out _)).IsFalse();
     }
 
     [Test]

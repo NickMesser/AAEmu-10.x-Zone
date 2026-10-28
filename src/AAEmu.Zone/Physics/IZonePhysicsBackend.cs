@@ -5,12 +5,39 @@ using AAEmu.Zone.Actors;
 namespace AAEmu.Zone.Physics;
 
 /// <summary>
-/// Backend-neutral convex query/actor shape. The half-extent plus capsule-flag shape reuses the
-/// admitted stance semantics of <c>ZoneActorPhysicalizationStance</c>
-/// (Actors/ZoneActorPhysicalizationRequest.cs); a native adapter maps it to its own physical
-/// primitives inside the adapter. No native or ABI type crosses this boundary.
+/// The upright convex primitive used by a query or a character body.
 /// </summary>
-public readonly record struct ZonePhysicsShape(Vector3 HalfExtents, bool UseCapsule);
+public enum ZonePhysicsShapeKind { Box, Capsule, Cylinder }
+
+/// <summary>
+/// Backend-neutral shape dimensions. For a box, <see cref="HalfExtents"/> contains its three
+/// half sizes. For a capsule or cylinder, X is the radius, Z is the axial segment half-length,
+/// and Y is unused, matching CLivingEntity::SetParams (35028BF0). Capsule hemispheres extend
+/// beyond both ends of that segment. Query positions are primitive centers; the actor's authored
+/// pivot and collider offset belong to <see cref="ZonePhysicsActorDescription"/>.
+/// </summary>
+public readonly record struct ZonePhysicsShape
+{
+    public ZonePhysicsShape(Vector3 HalfExtents, bool UseCapsule)
+        : this(HalfExtents, UseCapsule ? ZonePhysicsShapeKind.Capsule : ZonePhysicsShapeKind.Box) { }
+
+    public ZonePhysicsShape(Vector3 HalfExtents, ZonePhysicsShapeKind Kind)
+    { this.HalfExtents = HalfExtents; this.Kind = Kind; }
+
+    public Vector3 HalfExtents { get; init; }
+    public ZonePhysicsShapeKind Kind { get; init; }
+    public bool UseCapsule => Kind == ZonePhysicsShapeKind.Capsule;
+    public float Radius => HalfExtents.X;
+    public float SegmentHalfHeight => HalfExtents.Z;
+    public Vector3 BoundingHalfExtents => Kind == ZonePhysicsShapeKind.Box ? HalfExtents :
+        new(Radius, Radius, SegmentHalfHeight + (UseCapsule ? Radius : 0));
+
+    public static ZonePhysicsShape Box(Vector3 halfExtents) => new(halfExtents, ZonePhysicsShapeKind.Box);
+    public static ZonePhysicsShape Capsule(float radius, float segmentHalfHeight) =>
+        new(new(radius, radius, segmentHalfHeight), ZonePhysicsShapeKind.Capsule);
+    public static ZonePhysicsShape Cylinder(float radius, float halfHeight) =>
+        new(new(radius, radius, halfHeight), ZonePhysicsShapeKind.Cylinder);
+}
 
 /// <summary>
 /// What the scene must supply to register one actor body: its shape and mass. Character-geometry
@@ -18,7 +45,40 @@ public readonly record struct ZonePhysicsShape(Vector3 HalfExtents, bool UseCaps
 /// existing owners (see <c>ZoneActorPhysicalizationRequest</c>,
 /// Actors/ZoneActorPhysicalizationRequest.cs).
 /// </summary>
-public sealed record ZonePhysicsActorDescription(ZonePhysicsShape Shape, float Mass);
+public sealed record ZonePhysicsActorDescription(ZonePhysicsShape Shape, float Mass)
+{
+    /// <summary>
+    /// Collider center relative to the actor origin. Null preserves the legacy feet-origin
+    /// convention for explicitly constructed descriptions. Authored living bodies set this to
+    /// HeightCollider - HeightPivot, as the original 35028BF0 stores in the part's local position.
+    /// </summary>
+    public float? ColliderCenterOffsetZ { get; init; }
+
+    /// <summary>
+    /// Actor origin above its ground support. The upright native living step (3502DED0) settles
+    /// position.Z at support height + HeightPivot; this is independent of the primitive's bottom.
+    /// </summary>
+    public float GroundPivotHeight { get; init; }
+    /// <summary>Signed world Z acceleration. Native living dynamics negate the authored scalar gravity.</summary>
+    public float Gravity { get; init; } = ZoneOwnedPlayerPhysics.Gravity;
+    public float CenterOffsetZ => ColliderCenterOffsetZ ?? Shape.BoundingHalfExtents.Z;
+
+    /// <summary>
+    /// Maps the recovered living dimensions only. IgnoreCollision remains content metadata until
+    /// its native behavior is recovered; it is not present in the dimension block.
+    /// </summary>
+    public static ZonePhysicsActorDescription FromLivingStance(ZoneActorPhysicalizationStance stance, float mass,
+        float gravity = ZoneOwnedPlayerPhysics.Gravity)
+    {
+        ArgumentNullException.ThrowIfNull(stance);
+        return new(new(stance.Size, stance.UseCapsule ? ZonePhysicsShapeKind.Capsule : ZonePhysicsShapeKind.Cylinder), mass)
+        {
+            ColliderCenterOffsetZ = stance.HeightCollider - stance.HeightPivot,
+            GroundPivotHeight = stance.HeightPivot,
+            Gravity = gravity,
+        };
+    }
+}
 
 /// <summary>
 /// A copied blocking-query result. Follows the copied-value pattern of <c>ZoneNativeTerrainRayHit</c>

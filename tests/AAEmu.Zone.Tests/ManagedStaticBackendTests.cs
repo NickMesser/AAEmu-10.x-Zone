@@ -31,7 +31,10 @@ public sealed class ManagedStaticBackendTests
     {
         var backend = new ZoneManagedPhysicsBackend(new(new ZoneTerrainHeightField()), staticGeometry: statics);
         var actor = new ZoneActorHandle(701, 1);
-        backend.AddActor(actor, new(new(halfExtents ?? new(.4f, .4f, .8f), true), 80));
+        // These controller scenarios specify the character's outer bounds. A native capsule's
+        // axial segment excludes its hemispheres, so subtract the radius from the desired Z size.
+        var outer = halfExtents ?? new Vector3(.4f, .4f, .8f);
+        backend.AddActor(actor, new(ZonePhysicsShape.Capsule(outer.X, outer.Z - outer.X), 80));
         backend.Teleport(actor, position, Quaternion.Identity);
         return (backend, actor);
     }
@@ -99,7 +102,7 @@ public sealed class ManagedStaticBackendTests
             sawDownward |= status.Position.Z > .1f && status.Velocity.Z < 0;
         }
         backend.CopyStatus(actor, out var landed);
-        await Assert.That(maximum).IsLessThanOrEqualTo(2.001f); // Feet + full box height cannot cross z=3.
+        await Assert.That(maximum).IsLessThanOrEqualTo(2.001f); // Feet + full capsule height cannot cross z=3.
         await Assert.That(maximum).IsGreaterThan(1.9f);
         await Assert.That(sawDownward).IsTrue();
         await Assert.That(landed.IsGrounded).IsTrue();

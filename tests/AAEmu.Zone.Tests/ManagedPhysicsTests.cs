@@ -122,7 +122,7 @@ public sealed class ManagedPhysicsTests
         await Assert.That(geometry.TrySweep(shape, new(1088.5f, 1088.5f, 140), new(10, 0, 0), out var hit)).IsTrue();
         await Assert.That(MathF.Abs(hit.Distance - 5)).IsLessThan(.001f);
         await Assert.That(Vector3.Distance(hit.Normal, Vector3.Normalize(new(-2, 0, 1)))).IsLessThan(.0001f);
-        await Assert.That(geometry.CapsulesUseBoundingBoxes).IsTrue();
+        await Assert.That(geometry.CapsulesUseBoundingBoxes).IsFalse();
         await Assert.That(geometry.HasStaticMeshCollision).IsFalse();
     }
 
@@ -170,14 +170,15 @@ public sealed class ManagedPhysicsTests
         backend.AddActor(actor, Description());
         backend.Teleport(actor, new(100, 100, 10), Quaternion.Identity);
         var shape = Description().Shape;
-        await Assert.That(backend.TrySweep(shape, new(95, 100, 11), new(10, 0, 0), null, out var hit)).IsTrue();
-        await Assert.That(hit.Distance).IsEqualTo(4f);
+        var centerZ = 10 + shape.BoundingHalfExtents.Z;
+        await Assert.That(backend.TrySweep(shape, new(95, 100, centerZ), new(10, 0, 0), null, out var hit)).IsTrue();
+        await Assert.That(MathF.Abs(hit.Distance - 4f)).IsLessThan(ZoneManagedStaticGeometry.AnalyticContactTolerance);
         await Assert.That(hit.Normal).IsEqualTo(-Vector3.UnitX);
-        await Assert.That(backend.TrySweep(shape, new(95, 100, 11), new(10, 0, 0), actor, out _)).IsFalse();
-        await Assert.That(backend.TryCollide(shape, new(100, 100, 11), null)).IsTrue();
-        await Assert.That(backend.TryCollide(shape, new(100, 100, 11), actor)).IsFalse();
+        await Assert.That(backend.TrySweep(shape, new(95, 100, centerZ), new(10, 0, 0), actor, out _)).IsFalse();
+        await Assert.That(backend.TryCollide(shape, new(100, 100, centerZ), null)).IsTrue();
+        await Assert.That(backend.TryCollide(shape, new(100, 100, centerZ), actor)).IsFalse();
         backend.RemoveActor(actor);
-        await Assert.That(backend.TryCollide(shape, new(100, 100, 11), null)).IsFalse();
+        await Assert.That(backend.TryCollide(shape, new(100, 100, centerZ), null)).IsFalse();
     }
 
     [Test]

@@ -30,7 +30,8 @@ public sealed class ManagedSceneHostTests
         var models = new ZoneModelContent([new() { Id = player.ModelId, Subtype = "ActorModel", SubtypeId = 1 }],
             actorModels: new ZoneActorModelContent(
                 [new() { Id = 1, PhysicsLivingMass = 80, PhysicsLivingGravity = 9.81f, GameJumpHeight = 1, TurnSpeed = 180 }],
-                [new() { Id = 1, ActorModelId = 1, StanceId = 2, MaxSpeed = 5, NormalSpeed = 5, SizeX = .4f, SizeY = .4f, SizeZ = .9f }]));
+                [new() { Id = 1, ActorModelId = 1, StanceId = 2, MaxSpeed = 5, NormalSpeed = 5,
+                    SizeX = .4f, SizeY = .4f, SizeZ = .32f, HeightCollider = .8f, HeightPivot = .15f, UseCapsule = true }]));
         // Synthetic gameplay content keeps this test focused on the real host/World/physics path.
         // Every formula referenced by the authored player fixture has an explicit constant source.
         var formulas = Enumerable.Range(1, 70).Select(kind =>
@@ -87,7 +88,7 @@ public sealed class ManagedSceneHostTests
             await worldStream.WriteAsync(new ZoneFrame(WzOpcodes.UnitState, body).Encode(), deadline.Token);
             var standing = await ReadUntil(worldStream, frame => frame.Opcode == ZwOpcodes.UnitLocation &&
                 ZoneUnitLocation.Read(frame.Body.Span) is { } location && location.ObjectId == player.ObjectId &&
-                Math.Abs(location.Position.Z - 366f) < .001f, deadline.Token);
+                Math.Abs(location.Position.Z - 366.15f) < .001f, deadline.Token);
             var initial = ZoneUnitLocation.Read(standing.Body.Span);
             await Assert.That(Math.Abs(initial.Position.X - player.Position.X)).IsLessThan(.002);
             await Assert.That(Math.Abs(initial.Position.Y - player.Position.Y)).IsLessThan(.002);
@@ -102,7 +103,7 @@ public sealed class ManagedSceneHostTests
             var replicated = UnitMovement.Read(output.Body.Span[4..]);
             await Assert.That(replicated.ObjectId).IsEqualTo(player.ObjectId);
             await Assert.That(Math.Abs(replicated.Movement.Position.Y - player.Position.Y)).IsLessThan(.01);
-            await Assert.That(Math.Abs(replicated.Movement.Position.Z - 366f)).IsLessThan(.01f);
+            await Assert.That(Math.Abs(replicated.Movement.Position.Z - 366.15f)).IsLessThan(.01f);
             await Assert.That(CryEngineModules().Length).IsEqualTo(0);
 
             // Preserve the read half so the host can flush and close after its incoming clean EOF.
@@ -118,6 +119,8 @@ public sealed class ManagedSceneHostTests
             await Assert.That(playersRetired).IsGreaterThanOrEqualTo(0);
             await Assert.That(terrainRetired).IsGreaterThan(playersRetired);
             await Assert.That(lines.Any(line => line.StartsWith($"Backend registered unit={player.ObjectId} ", StringComparison.Ordinal))).IsTrue();
+            await Assert.That(lines.Any(line => line.Contains("shape=Capsule", StringComparison.Ordinal) &&
+                line.Contains("pivotHeight=0.15", StringComparison.Ordinal) && line.Contains("gravity=-9.81", StringComparison.Ordinal))).IsTrue();
             await Assert.That(CryEngineModules().Length).IsEqualTo(0);
         }
         finally

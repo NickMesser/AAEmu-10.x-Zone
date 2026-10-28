@@ -31,8 +31,8 @@ namespace AAEmu.Zone.Physics;
 /// <item>Copied values only; no native pointer crosses this boundary.</item>
 /// <item>Named refusals: non-finite input, an unknown handle, and a step with no ground are all
 /// reported, never smoothed over.</item>
-/// <item>One gravity, one ground: the constants are named and public so a test asserts the same
-/// values the runtime uses.</item>
+/// <item>Each actor keeps its explicit signed gravity. Ground support and authored pivot height
+/// come from the scene provider, with legacy zero-pivot/default-gravity behavior retained.</item>
 /// </list>
 /// </summary>
 public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
@@ -59,6 +59,13 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
         /// </summary>
         float ContactTolerance => 0;
 
+        /// <summary>
+        /// Height of the actor's entity origin above its upright ground reference point.
+        /// Native living dimensions keep this pivot independent of the collider's center/size.
+        /// Existing ground providers use an origin on the ground and retain a zero offset.
+        /// </summary>
+        float GetGroundPivotHeight(ZoneActorHandle actor) => 0;
+
         bool TryCharacterGround(Vector3 previousPosition, Vector3 nextPosition, bool wasGrounded,
             out Vector3 position, out ushort physicalMaterialId) =>
             TryGround(new(nextPosition.X, nextPosition.Y, previousPosition.Z + 2000f),
@@ -66,7 +73,7 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
                 out position, out physicalMaterialId);
     }
 
-    /// <summary>World gravity in m/s² (downward), matching the content gravity used for jump impulses.</summary>
+    /// <summary>Legacy default signed Z acceleration in m/s²; an actor can supply authored gravity.</summary>
     public const float Gravity = -9.81f;
 
     private readonly IGroundQuery? _terrain;
@@ -87,6 +94,7 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
         internal Vector3 Position;
         internal Quaternion Orientation = Quaternion.Identity;
         internal Vector3 Velocity;
+        internal float Gravity = ZoneOwnedPlayerPhysics.Gravity;
         internal bool Grounded;
         internal float GroundZ;
         internal bool HasGround;
@@ -95,14 +103,15 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
     }
 
     /// <summary>Registers an owned body at a starting pose. Re-registering a live handle is refused.</summary>
-    public void AddActor(ZoneActorHandle actor, Vector3 position, Quaternion orientation)
+    public void AddActor(ZoneActorHandle actor, Vector3 position, Quaternion orientation, float gravity = Gravity)
     {
         RequireFinite(position, nameof(position));
         RequireFinite(orientation, nameof(orientation));
+        if (!float.IsFinite(gravity)) throw new ArgumentOutOfRangeException(nameof(gravity), "Owned gravity must be finite.");
         if (orientation.LengthSquared() <= 0) throw new ArgumentException("Owned orientation must be a nonzero rotation.", nameof(orientation));
         if (_bodies.ContainsKey(actor))
             throw new InvalidOperationException($"Owned physics already owns actor {actor}; one authority per actor.");
-        _bodies.Add(actor, new Body { Position = position, Orientation = orientation });
+        _bodies.Add(actor, new Body { Position = position, Orientation = orientation, Gravity = gravity });
         _order.Add(actor);
     }
 
@@ -161,20 +170,25 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
         foreach (var actor in _order)
         {
             var body = _bodies[actor];
+            var pivot = _terrain.GetGroundPivotHeight(actor);
+            if (!float.IsFinite(pivot))
+                throw new InvalidOperationException($"Owned physics received a non-finite ground pivot for {actor}.");
+            var pivotOffset = new Vector3(0, 0, pivot);
             // Z is UP in the engine-local world frame (terrain columns are cast along Z; player
             // positions read X/Y across the map and Z as height), so gravity belongs on Z. An
             // earlier revision put it on Y and the body drifted along the map instead of falling -
             // caught by the first owned-physics test run, which is exactly what it is for.
-            body.Velocity += new Vector3(0f, 0f, Gravity * seconds);
+            body.Velocity += new Vector3(0f, 0f, body.Gravity * seconds);
             var next = body.Position + body.Velocity * seconds;
-            if (_terrain.TryCharacterGround(body.Position, next, body.Grounded, out var ground, out var materialId))
+            if (_terrain.TryCharacterGround(body.Position - pivotOffset, next - pivotOffset, body.Grounded,
+                out var ground, out var materialId))
             {
                 body.GroundZ = ground.Z;
                 body.GroundMaterialId = materialId;
                 body.HasGround = true;
-                if (next.Z <= ground.Z + _terrain.ContactTolerance)
+                if (next.Z - pivot <= ground.Z + _terrain.ContactTolerance)
                 {
-                    next.Z = ground.Z;
+                    next.Z = ground.Z + pivot;
                     // Gravity runs on Z, so the LANDING velocity to cancel is Z as well. An earlier
                     // revision cleared Y here, which left the vertical velocity uncancelled and made
                     // a resting body oscillate around the ground height instead of settling on it.

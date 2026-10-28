@@ -11,7 +11,8 @@ namespace AAEmu.Zone.Physics;
 /// </summary>
 /// <remarks>
 /// Shape positions are centers. Box sweeps use continuous triangle separating axes; overlaps
-/// include the solid below the terrain. Upright capsules conservatively use their bounding boxes.
+/// include the solid below the terrain. Upright capsule/cylinder queries use convex support or
+/// exact capsule segment distances; their bounding boxes select candidates only.
 /// This provider contains terrain only: authored static meshes, caves, vegetation, vehicles and
 /// water collision need separate geometry providers and are not implied by a terrain miss.
 /// </remarks>
@@ -22,7 +23,7 @@ public sealed class ZoneManagedTerrainGeometry(
     private const float Epsilon = 0.00001f;
     private readonly ZoneTerrainHeightField _terrain = terrain ?? throw new ArgumentNullException(nameof(terrain));
 
-    public bool CapsulesUseBoundingBoxes => true;
+    public bool CapsulesUseBoundingBoxes => false;
     public bool HasStaticMeshCollision => false;
 
     /// <summary>Nearest intersection along a bounded displacement, with the authored upward normal.</summary>
@@ -111,8 +112,8 @@ public sealed class ZoneManagedTerrainGeometry(
     }
 
     /// <summary>
-    /// Continuous axis-aligned-box sweep against loaded terrain triangles. Capsule shapes use
-    /// their upright bounding boxes, so a reported contact can precede the rounded capsule.
+    /// Continuous box, upright capsule or cylinder sweep against loaded solid terrain. Curved
+    /// queries use the shared one-mm separation tolerance, not an enclosing box substitute.
     /// </summary>
     public bool TrySweep(ZonePhysicsShape shape, Vector3 origin, Vector3 displacement, out ZonePhysicsHit hit)
         => TrySweepCore(shape, origin, displacement, float.PositiveInfinity, out hit);
@@ -132,7 +133,7 @@ public sealed class ZoneManagedTerrainGeometry(
         var bestPosition = Vector3.Zero;
         var bestNormal = Vector3.Zero;
         var bestSurface = 0;
-        foreach (var (x, y) in SweepCells(origin, displacement, shape.HalfExtents))
+        foreach (var (x, y) in SweepCells(origin, displacement, shape.BoundingHalfExtents))
         {
             if (!_terrain.TryReadManagedPhysicsQuad(x, y, out var heights, out var surface)) continue;
             CreateTriangles(x, y, heights, out var a, out var b, out var c, out var d);
@@ -145,7 +146,17 @@ public sealed class ZoneManagedTerrainGeometry(
 
         void Check(Vector3 a, Vector3 b, Vector3 c, int surface)
         {
-            if (Vector3.Normalize(Vector3.Cross(b - a, c - a)).Z >= maximumNormalZ) return;
+            var faceNormal = Vector3.Normalize(Vector3.Cross(b - a, c - a));
+            if (faceNormal.Z >= maximumNormalZ) return;
+            if (shape.Kind != ZonePhysicsShapeKind.Box)
+            {
+                if (Vector3.Dot(displacement, faceNormal) >= -Epsilon) return;
+                var bottom = MathF.Min(origin.Z, origin.Z + displacement.Z) - shape.BoundingHalfExtents.Z - 1;
+                if (!ZoneManagedConvexQueries.Sweep(ZoneManagedConvexTarget.ForTerrain(a, b, c, bottom), origin, shape, displacement,
+                    out var contactFraction, out var contactNormal, out var position) || contactFraction >= nearest) return;
+                nearest = contactFraction; bestNormal = contactNormal; bestPosition = position; bestSurface = surface;
+                return;
+            }
             if (!SweepTriangle(shape.HalfExtents, origin, displacement, a, b, c, out var fraction, out var normal) ||
                 fraction >= nearest) return;
             nearest = fraction;
@@ -161,10 +172,17 @@ public sealed class ZoneManagedTerrainGeometry(
     {
         ValidateShape(shape);
         ValidateFinite(position, nameof(position));
-        foreach (var (x, y) in SweepCells(position, Vector3.Zero, shape.HalfExtents))
+        foreach (var (x, y) in SweepCells(position, Vector3.Zero, shape.BoundingHalfExtents))
         {
             if (!_terrain.TryReadManagedPhysicsQuad(x, y, out var heights, out _)) continue;
             CreateTriangles(x, y, heights, out var a, out var b, out var c, out var d);
+            if (shape.Kind != ZonePhysicsShapeKind.Box)
+            {
+                var bottom = position.Z - shape.BoundingHalfExtents.Z - 1;
+                if (ZoneManagedConvexQueries.Overlaps(ZoneManagedConvexTarget.ForTerrain(a, b, c, bottom), position, shape) ||
+                    ZoneManagedConvexQueries.Overlaps(ZoneManagedConvexTarget.ForTerrain(b, d, c, bottom), position, shape)) return true;
+                continue;
+            }
             if (OverlapsSolidBelow(position, shape.HalfExtents, a, b, c) ||
                 OverlapsSolidBelow(position, shape.HalfExtents, b, d, c)) return true;
         }
@@ -370,9 +388,17 @@ public sealed class ZoneManagedTerrainGeometry(
 
     internal static void ValidateShape(ZonePhysicsShape shape)
     {
-        ValidateFinite(shape.HalfExtents, nameof(shape));
-        if (shape.HalfExtents.X <= 0 || shape.HalfExtents.Y <= 0 || shape.HalfExtents.Z <= 0)
-            throw new ArgumentOutOfRangeException(nameof(shape), "Collision half extents must be positive.");
+        if (!Enum.IsDefined(shape.Kind)) throw new ArgumentOutOfRangeException(nameof(shape), "Unknown collision shape kind.");
+        if (shape.Kind == ZonePhysicsShapeKind.Box)
+        {
+            ValidateFinite(shape.HalfExtents, nameof(shape));
+            if (shape.HalfExtents.X <= 0 || shape.HalfExtents.Y <= 0 || shape.HalfExtents.Z <= 0)
+                throw new ArgumentOutOfRangeException(nameof(shape), "Collision box half extents must be positive.");
+        }
+        else if (!float.IsFinite(shape.Radius) || shape.Radius <= 0 || !float.IsFinite(shape.SegmentHalfHeight) ||
+            shape.SegmentHalfHeight < 0 || shape.Kind == ZonePhysicsShapeKind.Cylinder && shape.SegmentHalfHeight == 0)
+            throw new ArgumentOutOfRangeException(nameof(shape), "Curved queries require a positive radius and valid axial half-length.");
+        ValidateFinite(shape.BoundingHalfExtents, nameof(shape));
     }
 
     internal static void ValidateSegment(Vector3 origin, Vector3 displacement)

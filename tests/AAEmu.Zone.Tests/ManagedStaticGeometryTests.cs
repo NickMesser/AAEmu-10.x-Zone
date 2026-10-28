@@ -192,12 +192,12 @@ public sealed class ManagedStaticGeometryTests
     {
         var geometry = new ZoneManagedStaticGeometry();
         geometry.AddInstance(Quad(40), Matrix4x4.Identity);
-        var shape = new ZonePhysicsShape(new(.5f, .5f, 1), true);
+        var shape = ZonePhysicsShape.Capsule(.5f, .5f); // Outer half-height is one meter.
         await Assert.That(geometry.TryCollide(shape, new(0, 0, 1))).IsTrue();
         await Assert.That(geometry.TrySweep(shape, new(0, 0, 1), new(20, 10, 0), out _)).IsFalse();
         await Assert.That(geometry.TrySweep(shape, new(0, 0, 1), new(0, 0, 10), out _)).IsFalse();
         await Assert.That(geometry.TrySweep(shape, new(0, 0, 1), Vector3.Zero, out _)).IsFalse();
-        await Assert.That(geometry.CapsulesUseBoundingBoxes).IsTrue();
+        await Assert.That(geometry.CapsulesUseBoundingBoxes).IsFalse();
     }
 
     [Test]

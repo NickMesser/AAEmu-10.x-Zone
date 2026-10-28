@@ -37,6 +37,7 @@ public static class Program
             Console.WriteLine("  --check-managed-scene --config <runtime.json> [--collision-report <coverage.json>]");
             Console.WriteLine("      Loads authored terrain and supported static proxies without engine or Lua DLLs.");
             Console.WriteLine("      Either scene check accepts --scene-probes <rays.json> --scene-probe-output <hits.json>.");
+            Console.WriteLine("      --scene-shape-probes <shapes.json> --scene-shape-probe-output <hits.json> compares explicit box/capsule/cylinder queries.");
             Console.WriteLine("  --probe-pose-write / --probe-player-admission --config <runtime.json>: native research probes.");
             Console.WriteLine("  Select exactly one mode per run.");
             Console.WriteLine("  --config <runtime.json> supplies explicit paths, asset priority, zone identity, endpoint and logs.");
@@ -81,14 +82,16 @@ public static class Program
             if (options.ContainsKey("--check-managed-scene"))
                 return ZoneManagedSceneCheck.Run(configuration, layout, assets,
                     options.GetValueOrDefault("--collision-report"), options.GetValueOrDefault("--scene-probes"),
-                    options.GetValueOrDefault("--scene-probe-output"), shutdown.Token);
+                    options.GetValueOrDefault("--scene-probe-output"), options.GetValueOrDefault("--scene-shape-probes"),
+                    options.GetValueOrDefault("--scene-shape-probe-output"), shutdown.Token);
             var stats = content.LoadStatContent();
             var models = content.LoadModelContent();
             if (options.ContainsKey("--check-framework"))
                 return await CheckFrameworkAsync(configuration, content, models, layout, shutdown.Token).ConfigureAwait(false);
             if (options.ContainsKey("--check-scene"))
                 return await CheckSceneAsync(configuration, content, models, layout, assets, shutdown.Token,
-                    options.GetValueOrDefault("--scene-probes"), options.GetValueOrDefault("--scene-probe-output")).ConfigureAwait(false);
+                    options.GetValueOrDefault("--scene-probes"), options.GetValueOrDefault("--scene-probe-output"),
+                    options.GetValueOrDefault("--scene-shape-probes"), options.GetValueOrDefault("--scene-shape-probe-output")).ConfigureAwait(false);
             if (options.ContainsKey("--probe-pose-write"))
                 return await ProbePoseWriteAsync(configuration, content, models, layout, assets, shutdown.Token).ConfigureAwait(false);
             if (options.ContainsKey("--probe-player-admission"))
@@ -243,7 +246,8 @@ public static class Program
     /// </summary>
     private static async Task<int> CheckSceneAsync(ZoneRuntimeConfiguration? configuration,
         ZoneContentDatabase content, ZoneModelContent models, ZoneWorldMapLayout? layout,
-        IZoneAssetSource? assets, CancellationToken shutdown, string? probesPath = null, string? probeOutputPath = null)
+        IZoneAssetSource? assets, CancellationToken shutdown, string? probesPath = null, string? probeOutputPath = null,
+        string? shapeProbesPath = null, string? shapeProbeOutputPath = null)
     {
         var inputs = ZoneEngineInputs.Create(configuration, layout, content, models, "check-scene.log");
         var options = inputs.Options;
@@ -313,6 +317,9 @@ public static class Program
                                 hit = new(value.Distance, value.Position, value.Normal, value.PhysicalMaterialId);
                                 return found;
                             }));
+                    if (shapeProbesPath is not null)
+                        TrySceneStep("StaticShapeProbes", () => ZoneSceneShapeProbes.RunNative(
+                            shapeProbesPath, shapeProbeOutputPath, scene.PhysicsWorld!));
                     TrySceneStep("RetireScene", () => scene.Dispose());
                 }
                 if (engine is not null)
@@ -507,7 +514,7 @@ public static class Program
                     "blocked-player-admission-probe: the scene published no entity services after Create.");
                 var spawn = new Vector3(512f, 512f, 0f);
                 var groundZ = 0f;
-                if (services is not null && scene.PhysicsWorld is { } physics &&
+                if (scene.PhysicsWorld is { } physics &&
                     physics.RaycastTerrain(new Vector3(spawn.X, spawn.Y, spawn.Z + 2000f), new Vector3(0, 0, -4000f), out var ground))
                 {
                     groundZ = ground.Position.Z;
@@ -595,7 +602,7 @@ public static class Program
                     throw new ArgumentException($"Duplicate option {key}.");
                 continue;
             }
-            if (key is not ("--config" or "--content-db" or "--zone" or "--world-host" or "--world-port" or "--locale" or "--spawner-file" or "--terrain-file" or "--world-file" or "--world-name" or "--research-igame-slot" or "--research-igame-value" or "--collision-report" or "--scene-probes" or "--scene-probe-output"))
+            if (key is not ("--config" or "--content-db" or "--zone" or "--world-host" or "--world-port" or "--locale" or "--spawner-file" or "--terrain-file" or "--world-file" or "--world-name" or "--research-igame-slot" or "--research-igame-value" or "--collision-report" or "--scene-probes" or "--scene-probe-output" or "--scene-shape-probes" or "--scene-shape-probe-output"))
                 throw new ArgumentException($"Unknown option {key}.");
             if (++i == args.Length || args[i].StartsWith("--", StringComparison.Ordinal))
                 throw new ArgumentException($"Missing value for {key}.");
@@ -610,6 +617,10 @@ public static class Program
             throw new ArgumentException("--scene-probe-output requires --scene-probes.");
         if (options.ContainsKey("--scene-probes") && !(options.ContainsKey("--check-managed-scene") || options.ContainsKey("--check-scene")))
             throw new ArgumentException("--scene-probes requires a managed or native scene check.");
+        if (options.ContainsKey("--scene-shape-probe-output") && !options.ContainsKey("--scene-shape-probes"))
+            throw new ArgumentException("--scene-shape-probe-output requires --scene-shape-probes.");
+        if (options.ContainsKey("--scene-shape-probes") && !(options.ContainsKey("--check-managed-scene") || options.ContainsKey("--check-scene")))
+            throw new ArgumentException("--scene-shape-probes requires a managed or native scene check.");
         if (options.ContainsKey("--world-file") != options.ContainsKey("--world-name"))
             throw new ArgumentException("World map validation requires both --world-file and --world-name.");
         return options;

@@ -20,7 +20,7 @@ queries. They do not remove CryEngine. Existing configurations retain their orig
 | --- | --- | --- |
 | `crysystem.dll` | Configured assets, content, clocks, scene owner, startup/frame/shutdown composition | Finish diagnostics, platform checks and capability policies across every scene type |
 | `cry3dengine_dedicate.dll` | World/cell selection, authored heightmaps/surfaces/seams, decoded placements, default/picking CGF proxies including referenced source streams and curved primitives | Vegetation, visibility/area behavior, water volumes and procedural objects |
-| `cryphysics_dedicate.dll` | Character integration, terrain/static triangle and analytic primitive queries, shared-mesh BVHs, affine instances, combined movement sweeps, reachable ground/ceiling support, actor bounds and material IDs | Exact character capsules, complete stance/step behavior, friction, rigid bodies, swimming, vehicles, ragdolls and exact tangent conformance |
+| `cryphysics_dedicate.dll` | Character integration, true upright capsule/cylinder queries, authored initial collider/pivot/mass/gravity, terrain/static and analytic queries, shared-mesh BVHs, affine instances, combined sweeps and material IDs | Stance transitions, suspension, authored slope/step behavior, penetration recovery, friction, rigid bodies, swimming, vehicles, ragdolls and exact tangent conformance |
 | `cryentitysystem_dedicate.dll` | Player/NPC identity generations, registry/spatial membership and managed player lifecycle | General entity proxies, components, areas, attachments and entity-script state |
 | `cryaction_dedicate.dll` | Player movement controller/frame pipeline and managed goal-pipe execution adapter | Authored behavior construction, game-object actions, signal bindings and FlowGraphs |
 | `cryaisystem_dedicate.dll` | Provider ownership, active/target state, signals, generation retirement and deterministic update scheduling | Perception, authored behavior admission, navigation, locomotion, leash and combat decisions |
@@ -45,8 +45,8 @@ comparison; managed scene startup never constructs them.
   current samples on retirement. Failed cells retain named diagnostics and prevent terrain readiness.
 - [x] **CE-03 — Managed collision foundation.** Rays intersect authored two-meter triangles and
   report normals/materials. Sweeps/overlaps and registered actor bounds support basic character
-  collision. Missing cells, unloaded cells and hole slot 31 provide no floor. Capsules currently
-  use conservative upright bounds; terrain collision does not imply object collision.
+  collision. Missing cells, unloaded cells and hole slot 31 provide no floor. The initial milestone
+  used conservative capsule bounds; CE-07 now replaces them with upright capsule geometry.
 - [x] **CE-04 — Managed AI ownership and execution seam.** Fresh behavior state per generation,
   exclusion across managed/native providers, deterministic wrapped-clock scheduling, target
   retirement, callback-safe cancellation and disposal, and an adapter to existing goal pipes.
@@ -58,7 +58,8 @@ comparison; managed scene startup never constructs them.
   admits captured player 387 with `physicalId=0`, emits movement/location reports and retires.
 
 The first native-free milestone passed 172 standalone tests, including 31 new configuration,
-physics, AI and scene/host cases. Static collision and referenced/curved proxy work pass all 247 tests.
+physics, AI and scene/host cases. The static/reference/curved milestone passed 247 tests; the
+current character-shape implementation passes 272 standalone tests.
 The solution builds successfully; existing analyzer warnings remain.
 
 Real-content replay evidence is kept outside the repository: `managed-entry-verified-zone.log`,
@@ -78,8 +79,8 @@ Implemented: bounded CGF 0x744/0x745 containers and authored physical readers fo
 inline and referenced triangle meshes, spheres, cylinders and capsules. Referenced proxies use
 the precise Mesh0800 position/index streams, serialized foreign-triangle selection, vertex remap
 and source subset materials. A display mesh is never substituted for missing collision data.
-Curved proxies retain analytic surfaces; they are not tessellated. Character query capsules still
-use conservative bounds and remain CE-07 work.
+Curved proxies retain analytic surfaces; they are not tessellated. True character capsules and
+the authored initial living dimensions are implemented under CE-07.
 
 Static instances share immutable resources and mesh BVHs, with scene buckets pruning candidates.
 Analytic rays and convex-support overlap/sweep queries compose with existing triangle queries.
@@ -151,6 +152,12 @@ float transforms and intersection rounding; keep those controls visible rather t
 bit-exact conformance. The current catalog's `BrushCoverageComplete` reports decoded/admitted brush
 coverage only. See [CGF format evidence](../cgf-physics-format.md).
 
+The native player bit also has child-only `colltype_player` selection and `no_player_collide`
+property rules that need generic admission support. Independent inspection found no such names
+or properties in the current 512-resource catalog, so the player-mask shape controls below are
+not affected. Direct-root registration and object-quality-dependent child flags must remain
+distinct when those rules are ported.
+
 `ZoneManagedSceneActivation.Report.Cells[*].Objects` retains the remaining vegetation/entity
 descriptions. Extend the existing resource cache and instance index with their verified physical
 owners and the still-unsupported proxy formats. Retain exact material IDs and transforms, with
@@ -161,26 +168,70 @@ positions/materials as recorded native queries. A terrain miss under a bridge mu
 mesh. Walking into a building must stop. Unloaded instances must immediately stop colliding.
 Do not use render bounds as if they were authored collision geometry.
 
-### CE-07 — Character collision and movement fidelity (P0)
+### CE-07 — Character collision and movement fidelity (P0, in progress)
 
-Replace conservative capsule bounds with true capsule queries. Complete stance transitions,
-authored gravity and slope/step limits, penetration recovery, fall/landing state and collision
-surface response. Preserve the added static ceiling/sliding/support behavior and ensure ordinary
-client pose corrections cannot bypass the physics scene. Explicit scene teleports retain their
-separate authoritative path. Preserve the single movement authority and World coordinate boundary.
-Extend movement for swimming, gliding, ladders, mounts and moving platforms as their owners land.
+Implemented: true upright capsules and cylinders against authored terrain, triangle proxies,
+analytic targets and registered actor bodies. Bounding boxes only select candidates. Existing
+explicit query boxes retain their SAT/slab behavior. Independent controls cover rounded corners,
+triangle vertices, caps, actor pairs, affine targets, degeneracy and coordinates near 8000.
 
-Acceptance: recorded stance sizes and jump arcs, slope ascent/descent, stair climbing, a low
-ceiling and a capsule passing a corner behave correctly; re-entry cannot reuse a retired body.
-Run meaningful terrain and static-mesh cases rather than comparing an implementation to itself.
+Managed player admission now uses the recovered initial stance selection and native scaling:
+radius/segment dimensions, cylinder vs capsule, collider-center offset, ground pivot, cubically
+scaled living mass and signed authored gravity. Ground height remains on the physical surface;
+the entity origin settles at ground plus pivot. A TCP admission test verifies authored dimensions
+and nonzero pivot through movement replication. A separate jump test combines authored takeoff
+speed and gravity to reach the authored jump height within the integration step's error.
 
-Native sweep/overlap acceptance needs a direct primitive-query oracle: the current native backend
-adapter uses ray approximations and is not an exact shape reference. The original synchronous
-`IPhysicalWorld` slot 65 (`+0x208`, target `35093100`) and its writable 96-byte request/contact ABI
-have been recovered and PE-checked, but have not been executed as a shape parity check. The local
-research profile is `research/native-primitive-world-query-profile.md`. Implement a narrow isolated
-diagnostic, verify contact copying/material mapping and initial overlap behavior, then compare
-the same authored surfaces with real box and capsule requests.
+The captured player object 387 resolves to model 17 / actor model 8 / stance 130, scale 1. Its
+capsule radius is 0.4, center-segment half length 0.32, collider height 1.2, pivot 0 and living mass
+80. Authored scalar gravity 25 becomes acceleration -25. The previous feet-plus-half-size center
+and constant -9.81 acceleration did not represent this authored body.
+
+The original synchronous shape API is now executed through an isolated diagnostic: `IPhysicalWorld`
+slot 65 (`+0x208`, target `35093100`), a writable 96-byte request and immediately copied contacts.
+It selects static player-collidable parts with required/any flags 2/2. Raw return, raw normal and
+copied distance/material/entity/part remain visible. Common sweep normals explicitly reverse the
+original query/body contact orientation. Unknown protocol outcomes fail the diagnostic.
+The old native backend adapter's ray approximations remain unsuitable as an exact shape oracle.
+
+Use `--scene-shape-probes shapes.json --scene-shape-probe-output results.json` with either scene
+check. The input distinguishes raw primitive centers from actor origins, and zero sweep requests
+overlap. See [shape conventions, source evidence and numerical limits](../managed-character-physics.md).
+
+Validation includes 13 new capsule/convex cases, seven authored-living cases, four pivot/gravity/jump
+cases, a native ABI layout guard and the TCP host regression. All 272 standalone tests pass and
+the full solution builds. The original 108-ray scene output remains unchanged. The real-content
+replay admits player 387 with capsule center offset 1.2, pivot 0 and gravity -25, confirms it
+grounded, then retires in order on World EOF with the expected exit code 3. Its ready-process
+inventory contains 76 modules and zero CryEngine/Lua modules. Artifacts: `capsule-entry-zone.log`,
+`capsule-entry-replay.log`, `capsule-entry-modules.json` and `captures/capsule-entry-output.bin`.
+
+The exact native shape suite executes 132 box/capsule/cylinder requests. All 96 separated,
+clear/intersecting-overlap and outward-motion controls match hit/miss; all 24 positive separated
+sweeps match materials. Maximum distance difference is 0.000560 m and common-normal vector
+difference is 0.004053. Three of 12 nominal exact-touch overlaps differ within the declared contact
+band. The 24 inward initial-contact/penetration controls expose seven hit/miss differences and
+shared-hit travel differences up to 0.508648 m: the original raw query can skip an initially
+intersecting face and select a later surface, while managed blocking queries currently stop at
+zero. Overall hit decisions match in 122/132 cases; this is not full sweep/controller conformance.
+The complete outputs retain every residual. Artifacts: `native-character-shape-results.json`,
+`managed-character-shape-results.json`, `character-shape-parity-summary.json` and
+`research/native-oracle-character-shape-probes.json`.
+The [132-request corpus and original native results](../../tools/AAEmu.Zone.Diagnostics/Fixtures/README.md)
+are also checked into the repository, including the unresolved controls.
+
+Remaining: stance transitions, arbitrary character rotation, authored slope/step limits, native
+suspension, penetration recovery, fall/landing state and friction/elasticity response. The authored
+`IgnoreCollision` callback/state path has no managed owner. Some special stances put the collider
+below the pivot support plane and need native suspension/contact behavior; preserve their actual
+dimensions rather than recentering them. Existing single-authority movement, wall correction,
+ceiling support, generation retirement and explicit teleports must remain intact. Swimming,
+gliding, ladders, mounts and moving platforms require their own owners.
+
+Remaining acceptance: full recorded stance transitions and jump arcs across movement states,
+authored slope ascent/descent, stair climbing, penetration recovery and a sustained real-client
+walk/jump/logout/re-entry session. Native-free replay and isolated geometry controls alone do not
+establish complete living-controller parity.
 
 ### CE-08 — Authored NPC behavior admission (P0)
 
@@ -255,6 +306,8 @@ recorded original results or the explicit native comparison host, retaining reso
 known differences. Include walk, jump, logout/re-entry, multiple actors, NPC combat, objects and
 long-running tick/retirement checks. Only remove `Native/*`, native diagnostic modes and native
 deployment inputs once the corresponding capabilities have independent replacement evidence.
+The recorded character-shape corpus is now in the diagnostic project's `Fixtures` directory;
+its known differences prevent it from being treated as a passing full-parity gate.
 
 Acceptance: all required server scenarios run with no engine DLLs installed; capability reports
 have no unowned prerequisite for the accepted gameplay scope; removing comparison code does not

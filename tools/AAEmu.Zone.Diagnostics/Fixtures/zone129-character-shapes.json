@@ -1,0 +1,2686 @@
+[
+  {
+    "name": "wall_box_approach",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      769.8058684434948,
+      942.8366500824068,
+      230.33661587874093
+    ],
+    "sweep": [
+      -1.9544624059661835,
+      -0.42435445521978005,
+      -0.0
+    ]
+  },
+  {
+    "name": "wall_box_away",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      769.8058684434948,
+      942.8366500824068,
+      230.33661587874093
+    ],
+    "sweep": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ]
+  },
+  {
+    "name": "wall_box_overlap_clear",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      768.9607126511482,
+      942.6531491745652,
+      230.33661587874093
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "wall_box_overlap_intersect",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      768.8825341549096,
+      942.6361749963564,
+      230.33661587874093
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "wall_box_touch",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      768.921623403029,
+      942.6446620854608,
+      230.33661587874093
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "wall_box_initial_contact_outward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      768.921623403029,
+      942.6446620854608,
+      230.33661587874093
+    ],
+    "sweep": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ]
+  },
+  {
+    "name": "wall_box_initial_penetrating_outward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      768.8825341549096,
+      942.6361749963564,
+      230.33661587874093
+    ],
+    "sweep": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ]
+  },
+  {
+    "name": "wall_capsule_approach",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      769.8058684434948,
+      942.8366500824068,
+      230.33661587874093
+    ],
+    "sweep": [
+      -1.9544624059661835,
+      -0.42435445521978005,
+      -0.0
+    ]
+  },
+  {
+    "name": "wall_capsule_away",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      769.8058684434948,
+      942.8366500824068,
+      230.33661587874093
+    ],
+    "sweep": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ]
+  },
+  {
+    "name": "wall_capsule_overlap_clear",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.9459049848696,
+      942.64993412211,
+      230.33661587874093
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "wall_capsule_overlap_intersect",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.867726488631,
+      942.6329599439013,
+      230.33661587874093
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "wall_capsule_touch",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.9068157367502,
+      942.6414470330056,
+      230.33661587874093
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "wall_capsule_initial_contact_outward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.9068157367502,
+      942.6414470330056,
+      230.33661587874093
+    ],
+    "sweep": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ]
+  },
+  {
+    "name": "wall_capsule_initial_penetrating_outward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.867726488631,
+      942.6329599439013,
+      230.33661587874093
+    ],
+    "sweep": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ]
+  },
+  {
+    "name": "roof_box_approach",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      763.2834055765629,
+      1273.6358938944577,
+      261.6940958207878
+    ],
+    "sweep": [
+      -1.2302454714876288,
+      -1.1880334577864937,
+      -1.0368570697372175
+    ]
+  },
+  {
+    "name": "roof_box_away",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      763.2834055765629,
+      1273.6358938944577,
+      261.6940958207878
+    ],
+    "sweep": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ]
+  },
+  {
+    "name": "roof_box_overlap_clear",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      762.8034128328644,
+      1273.1723705958766,
+      261.2895555227248
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "roof_box_overlap_intersect",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      762.7542030140049,
+      1273.124849257565,
+      261.2480812399353
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "roof_box_touch",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      762.7788079234347,
+      1273.1486099267208,
+      261.26881838133005
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "roof_box_initial_contact_outward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      762.7788079234347,
+      1273.1486099267208,
+      261.26881838133005
+    ],
+    "sweep": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ]
+  },
+  {
+    "name": "roof_box_initial_penetrating_outward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      762.7542030140049,
+      1273.124849257565,
+      261.2480812399353
+    ],
+    "sweep": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ]
+  },
+  {
+    "name": "roof_capsule_approach",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      763.2834055765629,
+      1273.6358938944577,
+      261.6940958207878
+    ],
+    "sweep": [
+      -1.2302454714876288,
+      -1.1880334577864937,
+      -1.0368570697372175
+    ]
+  },
+  {
+    "name": "roof_capsule_away",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      763.2834055765629,
+      1273.6358938944577,
+      261.6940958207878
+    ],
+    "sweep": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ]
+  },
+  {
+    "name": "roof_capsule_overlap_clear",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7931211176933,
+      1273.1624320086232,
+      261.280881613426
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "roof_capsule_overlap_intersect",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7439112988338,
+      1273.114910670312,
+      261.2394073306365
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "roof_capsule_touch",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7685162082636,
+      1273.1386713394677,
+      261.26014447203124
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "roof_capsule_initial_contact_outward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7685162082636,
+      1273.1386713394677,
+      261.26014447203124
+    ],
+    "sweep": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ]
+  },
+  {
+    "name": "roof_capsule_initial_penetrating_outward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7439112988338,
+      1273.114910670312,
+      261.2394073306365
+    ],
+    "sweep": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ]
+  },
+  {
+    "name": "stair_box_approach",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      899.8374332586924,
+      463.19091302533224,
+      304.629769468805
+    ],
+    "sweep": [
+      -0.0,
+      -0.9139893527681913,
+      -1.7789388587094226
+    ]
+  },
+  {
+    "name": "stair_box_away",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      899.8374332586924,
+      463.19091302533224,
+      304.629769468805
+    ],
+    "sweep": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ]
+  },
+  {
+    "name": "stair_box_overlap_clear",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      899.8374332586924,
+      462.8339429137864,
+      303.93498237866726
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "stair_box_overlap_intersect",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      899.8374332586924,
+      462.79738333967566,
+      303.8638248243189
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "stair_box_touch",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      899.8374332586924,
+      462.815663126731,
+      303.8994036014931
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "stair_box_initial_contact_outward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      899.8374332586924,
+      462.815663126731,
+      303.8994036014931
+    ],
+    "sweep": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ]
+  },
+  {
+    "name": "stair_box_initial_penetrating_outward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      899.8374332586924,
+      462.79738333967566,
+      303.8638248243189
+    ],
+    "sweep": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ]
+  },
+  {
+    "name": "stair_capsule_approach",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      463.19091302533224,
+      304.629769468805
+    ],
+    "sweep": [
+      -0.0,
+      -0.9139893527681913,
+      -1.7789388587094226
+    ]
+  },
+  {
+    "name": "stair_capsule_away",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      463.19091302533224,
+      304.629769468805
+    ],
+    "sweep": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ]
+  },
+  {
+    "name": "stair_capsule_overlap_clear",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.8537949571577,
+      303.9736213094939
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "stair_capsule_overlap_intersect",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.8172353830469,
+      303.90246375514556
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "stair_capsule_touch",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.83551517010227,
+      303.93804253231974
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "stair_capsule_initial_contact_outward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.83551517010227,
+      303.93804253231974
+    ],
+    "sweep": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ]
+  },
+  {
+    "name": "stair_capsule_initial_penetrating_outward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.8172353830469,
+      303.90246375514556
+    ],
+    "sweep": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ]
+  },
+  {
+    "name": "bridge_box_approach",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.81492401100695
+    ],
+    "sweep": [
+      -0.0,
+      -0.0,
+      -2.0
+    ]
+  },
+  {
+    "name": "bridge_box_away",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.81492401100695
+    ],
+    "sweep": [
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "name": "bridge_box_overlap_clear",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.01492401100694
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "bridge_box_overlap_intersect",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.93492401100696
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "bridge_box_touch",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.97492401100695
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "bridge_box_initial_contact_outward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.97492401100695
+    ],
+    "sweep": [
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "name": "bridge_box_initial_penetrating_outward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.93492401100696
+    ],
+    "sweep": [
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "name": "bridge_capsule_approach",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.81492401100695
+    ],
+    "sweep": [
+      -0.0,
+      -0.0,
+      -2.0
+    ]
+  },
+  {
+    "name": "bridge_capsule_away",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.81492401100695
+    ],
+    "sweep": [
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "name": "bridge_capsule_overlap_clear",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.09492401100695
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "bridge_capsule_overlap_intersect",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.01492401100694
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "bridge_capsule_touch",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.05492401100696
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "bridge_capsule_initial_contact_outward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.05492401100696
+    ],
+    "sweep": [
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "name": "bridge_capsule_initial_penetrating_outward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.01492401100694
+    ],
+    "sweep": [
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "name": "curved_sphere_bone_box_approach",
+    "shape": "box",
+    "halfExtents": [
+      0.015,
+      0.015,
+      0.025
+    ],
+    "center": [
+      2679.447373326881,
+      1973.395137818555,
+      303.6511010354096
+    ],
+    "sweep": [
+      -0.09850579475453602,
+      0.12608175284226192,
+      -0.0
+    ]
+  },
+  {
+    "name": "curved_sphere_bone_box_away",
+    "shape": "box",
+    "halfExtents": [
+      0.015,
+      0.015,
+      0.025
+    ],
+    "center": [
+      2679.447373326881,
+      1973.395137818555,
+      303.6511010354096
+    ],
+    "sweep": [
+      0.04925289737726801,
+      -0.06304087642113096,
+      0.0
+    ]
+  },
+  {
+    "name": "curved_sphere_bone_capsule_approach",
+    "shape": "capsule",
+    "radius": 0.015,
+    "segmentHalfHeight": 0.025,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      2679.447373326881,
+      1973.395137818555,
+      303.6511010354096
+    ],
+    "sweep": [
+      -0.09850579475453602,
+      0.12608175284226192,
+      -0.0
+    ]
+  },
+  {
+    "name": "curved_sphere_bone_capsule_away",
+    "shape": "capsule",
+    "radius": 0.015,
+    "segmentHalfHeight": 0.025,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      2679.447373326881,
+      1973.395137818555,
+      303.6511010354096
+    ],
+    "sweep": [
+      0.04925289737726801,
+      -0.06304087642113096,
+      0.0
+    ]
+  },
+  {
+    "name": "curved_capsule_bone_box_approach",
+    "shape": "box",
+    "halfExtents": [
+      0.015,
+      0.015,
+      0.025
+    ],
+    "center": [
+      2679.241458891939,
+      1973.1873533211149,
+      303.3529533083509
+    ],
+    "sweep": [
+      -0.09850579475453604,
+      0.12608175284226192,
+      -0.0
+    ]
+  },
+  {
+    "name": "curved_capsule_bone_box_away",
+    "shape": "box",
+    "halfExtents": [
+      0.015,
+      0.015,
+      0.025
+    ],
+    "center": [
+      2679.241458891939,
+      1973.1873533211149,
+      303.3529533083509
+    ],
+    "sweep": [
+      0.04925289737726802,
+      -0.06304087642113096,
+      0.0
+    ]
+  },
+  {
+    "name": "curved_capsule_bone_capsule_approach",
+    "shape": "capsule",
+    "radius": 0.015,
+    "segmentHalfHeight": 0.025,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      2679.241458891939,
+      1973.1873533211149,
+      303.3529533083509
+    ],
+    "sweep": [
+      -0.09850579475453604,
+      0.12608175284226192,
+      -0.0
+    ]
+  },
+  {
+    "name": "curved_capsule_bone_capsule_away",
+    "shape": "capsule",
+    "radius": 0.015,
+    "segmentHalfHeight": 0.025,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      2679.241458891939,
+      1973.1873533211149,
+      303.3529533083509
+    ],
+    "sweep": [
+      0.04925289737726802,
+      -0.06304087642113096,
+      0.0
+    ]
+  },
+  {
+    "name": "curved_cylinder_barrel_box_approach",
+    "shape": "box",
+    "halfExtents": [
+      0.015,
+      0.015,
+      0.025
+    ],
+    "center": [
+      767.7622420505578,
+      1281.430423453624,
+      251.6666464805603
+    ],
+    "sweep": [
+      0.022267557383229778,
+      -0.15844291050149442,
+      -0.0
+    ]
+  },
+  {
+    "name": "curved_cylinder_barrel_box_away",
+    "shape": "box",
+    "halfExtents": [
+      0.015,
+      0.015,
+      0.025
+    ],
+    "center": [
+      767.7622420505578,
+      1281.430423453624,
+      251.6666464805603
+    ],
+    "sweep": [
+      -0.011133778691614889,
+      0.07922145525074721,
+      0.0
+    ]
+  },
+  {
+    "name": "curved_cylinder_barrel_capsule_approach",
+    "shape": "capsule",
+    "radius": 0.015,
+    "segmentHalfHeight": 0.025,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      767.7622420505578,
+      1281.430423453624,
+      251.6666464805603
+    ],
+    "sweep": [
+      0.022267557383229778,
+      -0.15844291050149442,
+      -0.0
+    ]
+  },
+  {
+    "name": "curved_cylinder_barrel_capsule_away",
+    "shape": "capsule",
+    "radius": 0.015,
+    "segmentHalfHeight": 0.025,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      767.7622420505578,
+      1281.430423453624,
+      251.6666464805603
+    ],
+    "sweep": [
+      -0.011133778691614889,
+      0.07922145525074721,
+      0.0
+    ]
+  },
+  {
+    "name": "curved_sphere_scaled_box_approach",
+    "shape": "box",
+    "halfExtents": [
+      0.015,
+      0.015,
+      0.025
+    ],
+    "center": [
+      467.08100718721994,
+      851.7016731635424,
+      239.02888757599314
+    ],
+    "sweep": [
+      -0.1341873253545125,
+      -0.08714219250284107,
+      -0.0
+    ]
+  },
+  {
+    "name": "curved_sphere_scaled_box_away",
+    "shape": "box",
+    "halfExtents": [
+      0.015,
+      0.015,
+      0.025
+    ],
+    "center": [
+      467.08100718721994,
+      851.7016731635424,
+      239.02888757599314
+    ],
+    "sweep": [
+      0.06709366267725625,
+      0.043571096251420534,
+      0.0
+    ]
+  },
+  {
+    "name": "curved_sphere_scaled_capsule_approach",
+    "shape": "capsule",
+    "radius": 0.015,
+    "segmentHalfHeight": 0.025,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      467.08100718721994,
+      851.7016731635424,
+      239.02888757599314
+    ],
+    "sweep": [
+      -0.1341873253545125,
+      -0.08714219250284107,
+      -0.0
+    ]
+  },
+  {
+    "name": "curved_sphere_scaled_capsule_away",
+    "shape": "capsule",
+    "radius": 0.015,
+    "segmentHalfHeight": 0.025,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      467.08100718721994,
+      851.7016731635424,
+      239.02888757599314
+    ],
+    "sweep": [
+      0.06709366267725625,
+      0.043571096251420534,
+      0.0
+    ]
+  },
+  {
+    "name": "wall_cylinder_approach",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      769.8058684434948,
+      942.8366500824068,
+      230.33661587874093
+    ],
+    "sweep": [
+      -1.9544624059661835,
+      -0.42435445521978005,
+      -0.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "wall_cylinder_away",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      769.8058684434948,
+      942.8366500824068,
+      230.33661587874093
+    ],
+    "sweep": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "wall_cylinder_overlap_clear",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.9459049848696,
+      942.64993412211,
+      230.33661587874093
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "wall_cylinder_overlap_intersect",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.867726488631,
+      942.6329599439013,
+      230.33661587874093
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "wall_cylinder_touch",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.9068157367502,
+      942.6414470330056,
+      230.33661587874093
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "wall_cylinder_initial_contact_outward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.9068157367502,
+      942.6414470330056,
+      230.33661587874093
+    ],
+    "sweep": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "wall_cylinder_initial_penetrating_outward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.867726488631,
+      942.6329599439013,
+      230.33661587874093
+    ],
+    "sweep": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "roof_cylinder_approach",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      763.2834055765629,
+      1273.6358938944577,
+      261.6940958207878
+    ],
+    "sweep": [
+      -1.2302454714876288,
+      -1.1880334577864937,
+      -1.0368570697372175
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "roof_cylinder_away",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      763.2834055765629,
+      1273.6358938944577,
+      261.6940958207878
+    ],
+    "sweep": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "roof_cylinder_overlap_clear",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7859916463209,
+      1273.1555471626937,
+      261.2748728591023
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "roof_cylinder_overlap_intersect",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7367818274614,
+      1273.1080258243824,
+      261.2333985763129
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "roof_cylinder_touch",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7613867368912,
+      1273.1317864935381,
+      261.25413571770764
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "roof_cylinder_initial_contact_outward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7613867368912,
+      1273.1317864935381,
+      261.25413571770764
+    ],
+    "sweep": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "roof_cylinder_initial_penetrating_outward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7367818274614,
+      1273.1080258243824,
+      261.2333985763129
+    ],
+    "sweep": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "stair_cylinder_approach",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      463.19091302533224,
+      304.629769468805
+    ],
+    "sweep": [
+      -0.0,
+      -0.9139893527681913,
+      -1.7789388587094226
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "stair_cylinder_away",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      463.19091302533224,
+      304.629769468805
+    ],
+    "sweep": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "stair_cylinder_overlap_clear",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.8339429137864,
+      303.93498237866726
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "stair_cylinder_overlap_intersect",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.79738333967566,
+      303.8638248243189
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "stair_cylinder_touch",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.81566312673107,
+      303.8994036014931
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "stair_cylinder_initial_contact_outward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.81566312673107,
+      303.8994036014931
+    ],
+    "sweep": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "stair_cylinder_initial_penetrating_outward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.79738333967566,
+      303.8638248243189
+    ],
+    "sweep": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "bridge_cylinder_approach",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.81492401100695
+    ],
+    "sweep": [
+      -0.0,
+      -0.0,
+      -2.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "bridge_cylinder_away",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.81492401100695
+    ],
+    "sweep": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "bridge_cylinder_overlap_clear",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.01492401100694
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "bridge_cylinder_overlap_intersect",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.93492401100693
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "bridge_cylinder_touch",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.97492401100695
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "bridge_cylinder_initial_contact_outward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.97492401100695
+    ],
+    "sweep": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "bridge_cylinder_initial_penetrating_outward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.93492401100693
+    ],
+    "sweep": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "curved_sphere_bone_cylinder_approach",
+    "shape": "cylinder",
+    "radius": 0.015,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      2679.447373326881,
+      1973.395137818555,
+      303.6511010354096
+    ],
+    "sweep": [
+      -0.09850579475453602,
+      0.12608175284226192,
+      -0.0
+    ],
+    "halfHeight": 0.025
+  },
+  {
+    "name": "curved_sphere_bone_cylinder_away",
+    "shape": "cylinder",
+    "radius": 0.015,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      2679.447373326881,
+      1973.395137818555,
+      303.6511010354096
+    ],
+    "sweep": [
+      0.04925289737726801,
+      -0.06304087642113096,
+      0.0
+    ],
+    "halfHeight": 0.025
+  },
+  {
+    "name": "curved_capsule_bone_cylinder_approach",
+    "shape": "cylinder",
+    "radius": 0.015,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      2679.241458891939,
+      1973.1873533211149,
+      303.3529533083509
+    ],
+    "sweep": [
+      -0.09850579475453604,
+      0.12608175284226192,
+      -0.0
+    ],
+    "halfHeight": 0.025
+  },
+  {
+    "name": "curved_capsule_bone_cylinder_away",
+    "shape": "cylinder",
+    "radius": 0.015,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      2679.241458891939,
+      1973.1873533211149,
+      303.3529533083509
+    ],
+    "sweep": [
+      0.04925289737726802,
+      -0.06304087642113096,
+      0.0
+    ],
+    "halfHeight": 0.025
+  },
+  {
+    "name": "curved_cylinder_barrel_cylinder_approach",
+    "shape": "cylinder",
+    "radius": 0.015,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      767.7622420505578,
+      1281.430423453624,
+      251.6666464805603
+    ],
+    "sweep": [
+      0.022267557383229778,
+      -0.15844291050149442,
+      -0.0
+    ],
+    "halfHeight": 0.025
+  },
+  {
+    "name": "curved_cylinder_barrel_cylinder_away",
+    "shape": "cylinder",
+    "radius": 0.015,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      767.7622420505578,
+      1281.430423453624,
+      251.6666464805603
+    ],
+    "sweep": [
+      -0.011133778691614889,
+      0.07922145525074721,
+      0.0
+    ],
+    "halfHeight": 0.025
+  },
+  {
+    "name": "curved_sphere_scaled_cylinder_approach",
+    "shape": "cylinder",
+    "radius": 0.015,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      467.08100718721994,
+      851.7016731635424,
+      239.02888757599314
+    ],
+    "sweep": [
+      -0.1341873253545125,
+      -0.08714219250284107,
+      -0.0
+    ],
+    "halfHeight": 0.025
+  },
+  {
+    "name": "curved_sphere_scaled_cylinder_away",
+    "shape": "cylinder",
+    "radius": 0.015,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      467.08100718721994,
+      851.7016731635424,
+      239.02888757599314
+    ],
+    "sweep": [
+      0.06709366267725625,
+      0.043571096251420534,
+      0.0
+    ],
+    "halfHeight": 0.025
+  },
+  {
+    "name": "wall_box_initial_contact_inward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      768.921623403029,
+      942.6446620854608,
+      230.33661587874093
+    ],
+    "sweep": [
+      -0.9772312029830917,
+      -0.21217722760989002,
+      -0.0
+    ]
+  },
+  {
+    "name": "wall_box_initial_penetrating_inward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      768.8825341549096,
+      942.6361749963564,
+      230.33661587874093
+    ],
+    "sweep": [
+      -0.9772312029830917,
+      -0.21217722760989002,
+      -0.0
+    ]
+  },
+  {
+    "name": "wall_capsule_initial_contact_inward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.9068157367502,
+      942.6414470330056,
+      230.33661587874093
+    ],
+    "sweep": [
+      -0.9772312029830917,
+      -0.21217722760989002,
+      -0.0
+    ]
+  },
+  {
+    "name": "wall_capsule_initial_penetrating_inward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.867726488631,
+      942.6329599439013,
+      230.33661587874093
+    ],
+    "sweep": [
+      -0.9772312029830917,
+      -0.21217722760989002,
+      -0.0
+    ]
+  },
+  {
+    "name": "roof_box_initial_contact_inward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      762.7788079234347,
+      1273.1486099267208,
+      261.26881838133005
+    ],
+    "sweep": [
+      -0.6151227357438144,
+      -0.5940167288932469,
+      -0.5184285348686087
+    ]
+  },
+  {
+    "name": "roof_box_initial_penetrating_inward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      762.7542030140049,
+      1273.124849257565,
+      261.2480812399353
+    ],
+    "sweep": [
+      -0.6151227357438144,
+      -0.5940167288932469,
+      -0.5184285348686087
+    ]
+  },
+  {
+    "name": "roof_capsule_initial_contact_inward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7685162082636,
+      1273.1386713394677,
+      261.26014447203124
+    ],
+    "sweep": [
+      -0.6151227357438144,
+      -0.5940167288932469,
+      -0.5184285348686087
+    ]
+  },
+  {
+    "name": "roof_capsule_initial_penetrating_inward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7439112988338,
+      1273.114910670312,
+      261.2394073306365
+    ],
+    "sweep": [
+      -0.6151227357438144,
+      -0.5940167288932469,
+      -0.5184285348686087
+    ]
+  },
+  {
+    "name": "stair_box_initial_contact_inward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      899.8374332586924,
+      462.815663126731,
+      303.8994036014931
+    ],
+    "sweep": [
+      -0.0,
+      -0.45699467638409563,
+      -0.8894694293547113
+    ]
+  },
+  {
+    "name": "stair_box_initial_penetrating_inward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      899.8374332586924,
+      462.79738333967566,
+      303.8638248243189
+    ],
+    "sweep": [
+      -0.0,
+      -0.45699467638409563,
+      -0.8894694293547113
+    ]
+  },
+  {
+    "name": "stair_capsule_initial_contact_inward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.83551517010227,
+      303.93804253231974
+    ],
+    "sweep": [
+      -0.0,
+      -0.45699467638409563,
+      -0.8894694293547113
+    ]
+  },
+  {
+    "name": "stair_capsule_initial_penetrating_inward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.8172353830469,
+      303.90246375514556
+    ],
+    "sweep": [
+      -0.0,
+      -0.45699467638409563,
+      -0.8894694293547113
+    ]
+  },
+  {
+    "name": "bridge_box_initial_contact_inward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.97492401100695
+    ],
+    "sweep": [
+      -0.0,
+      -0.0,
+      -1.0
+    ]
+  },
+  {
+    "name": "bridge_box_initial_penetrating_inward",
+    "shape": "box",
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.93492401100696
+    ],
+    "sweep": [
+      -0.0,
+      -0.0,
+      -1.0
+    ]
+  },
+  {
+    "name": "bridge_capsule_initial_contact_inward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.05492401100696
+    ],
+    "sweep": [
+      -0.0,
+      -0.0,
+      -1.0
+    ]
+  },
+  {
+    "name": "bridge_capsule_initial_penetrating_inward",
+    "shape": "capsule",
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      207.01492401100694
+    ],
+    "sweep": [
+      -0.0,
+      -0.0,
+      -1.0
+    ]
+  },
+  {
+    "name": "wall_cylinder_initial_contact_inward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.9068157367502,
+      942.6414470330056,
+      230.33661587874093
+    ],
+    "sweep": [
+      -0.9772312029830917,
+      -0.21217722760989002,
+      -0.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "wall_cylinder_initial_penetrating_inward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      768.867726488631,
+      942.6329599439013,
+      230.33661587874093
+    ],
+    "sweep": [
+      -0.9772312029830917,
+      -0.21217722760989002,
+      -0.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "roof_cylinder_initial_contact_inward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7613867368912,
+      1273.1317864935381,
+      261.25413571770764
+    ],
+    "sweep": [
+      -0.6151227357438144,
+      -0.5940167288932469,
+      -0.5184285348686087
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "roof_cylinder_initial_penetrating_inward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      762.7367818274614,
+      1273.1080258243824,
+      261.2333985763129
+    ],
+    "sweep": [
+      -0.6151227357438144,
+      -0.5940167288932469,
+      -0.5184285348686087
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "stair_cylinder_initial_contact_inward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.81566312673107,
+      303.8994036014931
+    ],
+    "sweep": [
+      -0.0,
+      -0.45699467638409563,
+      -0.8894694293547113
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "stair_cylinder_initial_penetrating_inward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      899.8374332586924,
+      462.79738333967566,
+      303.8638248243189
+    ],
+    "sweep": [
+      -0.0,
+      -0.45699467638409563,
+      -0.8894694293547113
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "bridge_cylinder_initial_contact_inward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.97492401100695
+    ],
+    "sweep": [
+      -0.0,
+      -0.0,
+      -1.0
+    ],
+    "halfHeight": 0.16
+  },
+  {
+    "name": "bridge_cylinder_initial_penetrating_inward",
+    "shape": "cylinder",
+    "radius": 0.08,
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "center": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.93492401100693
+    ],
+    "sweep": [
+      -0.0,
+      -0.0,
+      -1.0
+    ],
+    "halfHeight": 0.16
+  }
+]

@@ -102,8 +102,8 @@ public static class ZoneManagedSceneHost
                 scope!.Own(frame);
                 inputs.Trace($"Zone ready: phase={scene.Phase}, engine=managed, terrainReady={activation!.Report!.TerrainReady}, cells={inputs.Layout.Cells.Count}; full feature parity=false");
                 inputs.Trace($"Managed AI: {ai!.Count} live NPC generations; behavior, perception, navigation and combat remain gated.");
-                inputs.Trace($"Managed physics supports authored terrain, {activation.Collision!.Geometry.InstanceCount} admitted static proxies and actor bounds; " +
-                    "capsules use conservative bounds. Unsupported mesh formats, vegetation, vehicles and rigid-body dynamics remain incomplete.");
+                inputs.Trace($"Managed physics supports authored terrain, {activation.Collision!.Geometry.InstanceCount} admitted static proxies and upright box/capsule/cylinder queries; " +
+                    "initial living dimensions, pivot and gravity are authored. Stance transitions, suspension, vegetation, vehicles and rigid-body dynamics remain incomplete.");
                 foreach (var note in notes.Lines) inputs.Trace($"Partial leaf: {note}");
                 return scene;
             }

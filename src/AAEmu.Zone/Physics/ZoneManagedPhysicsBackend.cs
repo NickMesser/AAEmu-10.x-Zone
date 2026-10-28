@@ -7,14 +7,14 @@ namespace AAEmu.Zone.Physics;
 
 /// <summary>
 /// Engine-independent character physics for one scene generation. Reuses the owned gravity and
-/// ground landing integrator, with continuous terrain/static and registered-body bounds queries.
-/// Actor transforms are foot origins; public shape query positions are centers.
+/// ground landing integrator, with continuous terrain/static and registered-body convex queries.
+/// Actor transforms are authored pivot origins; public shape query positions are centers.
 /// </summary>
 /// <remarks>
 /// This is a character controller, not a replacement rigid-body solver. Vehicle dynamics,
 /// swimming, ragdolls, actor stacking and friction response are not implemented.
-/// Capsules and rotated actor bodies use conservative upright axis-aligned bounds. The explicit
-/// capabilities prevent a successful terrain query from being mistaken for full scene parity.
+/// Character colliders stay upright; arbitrary body rotation, stance transitions and the native
+/// living suspension/step solver remain separate movement-fidelity work.
 /// </remarks>
 public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysicsMotion
 {
@@ -31,7 +31,8 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     {
         Geometry = geometry ?? throw new ArgumentNullException(nameof(geometry));
         StaticGeometry = staticGeometry;
-        _groundQuery = new(geometry, staticGeometry);
+        _groundQuery = new(geometry, staticGeometry,
+            groundPivotHeight: actor => _actors.TryGetValue(actor, out var description) ? description.GroundPivotHeight : 0);
         OwnedPhysics = new(_groundQuery);
         _surfaces = surfaces;
     }
@@ -41,13 +42,13 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     public ZoneOwnedPlayerPhysics OwnedPhysics { get; }
     public bool HasStaticMeshCollision => StaticGeometry is { InstanceCount: > 0 };
     public bool HasVehicleDynamics => false;
-    public bool CapsulesUseBoundingBoxes => true;
+    public bool CapsulesUseBoundingBoxes => false;
     public ZonePhysicalSurfaceDefinition? LastFootfallSurface { get; private set; }
 
     public IReadOnlyList<string> Limitations { get; } = Array.AsReadOnly(new[]
     {
         "Only decoded and admitted static collision proxies are present; scene coverage reports retain unsupported resources.",
-        "Capsules and rotated bodies use conservative upright axis-aligned bounds.",
+        "Character colliders stay upright; arbitrary body rotation, stance transitions, the authored IgnoreCollision flag and native suspension/step dynamics are not implemented.",
         "Vehicle, rigid-body, ragdoll, swimming and actor stacking dynamics are not implemented.",
         "Material ids are resolved, but friction and elasticity response are not implemented.",
     });
@@ -58,12 +59,15 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         ZoneManagedTerrainGeometry.ValidateShape(description.Shape);
         if (!float.IsFinite(description.Mass) || description.Mass <= 0)
             throw new ArgumentOutOfRangeException(nameof(description), "An actor requires a finite positive mass.");
+        if (!float.IsFinite(description.CenterOffsetZ) || !float.IsFinite(description.GroundPivotHeight) ||
+            !float.IsFinite(description.Gravity))
+            throw new ArgumentOutOfRangeException(nameof(description), "Actor collider offsets, pivot height and gravity must be finite.");
         if (actor.Generation == 0 || _retired.Contains(actor) ||
             (_lastGeneration.TryGetValue(actor.UnitObjectId, out var previous) && actor.Generation <= previous))
             throw new InvalidOperationException($"Managed physics rejects retired or invalid actor generation {actor}.");
         if (_liveIdentities.ContainsKey(actor.UnitObjectId))
             throw new InvalidOperationException($"Managed physics already registers live identity {actor.UnitObjectId}; retire it before re-entry.");
-        OwnedPhysics.AddActor(actor, Vector3.Zero, Quaternion.Identity);
+        OwnedPhysics.AddActor(actor, Vector3.Zero, Quaternion.Identity, description.Gravity);
         _actors.Add(actor, description);
         _liveIdentities.Add(actor.UnitObjectId, actor);
         _lastGeneration[actor.UnitObjectId] = actor.Generation;
@@ -148,9 +152,7 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         foreach (var (actor, description) in _actors)
         {
             if (actor == ignoreActor) continue;
-            var delta = Vector3.Abs(position - Center(actor, description.Shape));
-            var sum = shape.HalfExtents + description.Shape.HalfExtents;
-            if (delta.X <= sum.X && delta.Y <= sum.Y && delta.Z <= sum.Z) return true;
+            if (ZoneManagedShapeQueries.Overlaps(shape, position, description.Shape, Center(actor, description))) return true;
         }
         return false;
     }
@@ -184,9 +186,10 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     {
         Require(actor);
         OwnedPhysics.TryReadPosition(actor, out var previous);
-        var shape = _actors[actor].Shape;
+        var description = _actors[actor];
+        var shape = description.Shape;
         var displacement = position - previous;
-        var center = Center(actor, shape);
+        var center = Center(actor, description);
         // Ordinary client pose corrections arrive after the physics step. They must traverse
         // the same collision scene or each new input could place the actor past a blocked wall.
         // Explicit scene-authoritative repositioning uses Teleport and bypasses this correction.
@@ -236,7 +239,7 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
             OwnedPhysics.TryReadVelocity(actor, out var velocity);
             var horizontal = new Vector3(velocity.X, velocity.Y, 0);
             if ((horizontal * seconds).LengthSquared() <= 1e-12f) continue;
-            var center = Center(actor, description.Shape);
+            var center = Center(actor, description);
             // Recheck the shortened/sliding segment so a second wall at a corner cannot be
             // crossed after the first normal changes the intended motion.
             for (var iteration = 0; iteration < 3; iteration++)
@@ -271,17 +274,20 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         {
             OwnedPhysics.TryReadVelocity(actor, out var velocity);
             OwnedPhysics.TryReadGrounded(actor, out var grounded);
-            if (!grounded && OwnedPhysics.TryReadPosition(actor, out var feet))
-                grounded = _groundQuery.TryCharacterGround(feet, feet, false, out var support, out _) &&
-                    MathF.Abs(feet.Z - support.Z) <= _groundQuery.ContactTolerance;
-            var displacement = (velocity + new Vector3(0, 0, ZoneOwnedPlayerPhysics.Gravity * seconds)) * seconds;
+            if (!grounded && OwnedPhysics.TryReadPosition(actor, out var origin))
+            {
+                var supportOrigin = origin - new Vector3(0, 0, description.GroundPivotHeight);
+                grounded = _groundQuery.TryCharacterGround(supportOrigin, supportOrigin, false, out var support, out _) &&
+                    MathF.Abs(supportOrigin.Z - support.Z) <= _groundQuery.ContactTolerance;
+            }
+            var displacement = (velocity + new Vector3(0, 0, description.Gravity * seconds)) * seconds;
             var changed = false;
             // Sweep the actual combined trajectory. Separate horizontal and vertical casts can
             // both miss a finite overhang crossed diagonally, or block a jump over a low wall.
             for (var iteration = 0; iteration < 3 && displacement.LengthSquared() > 1e-12f; iteration++)
             {
                 var maximumNormalZ = !grounded && displacement.Z <= 0 ? 1 : MinimumWalkableNormalZ - .0001f;
-                if (!StaticGeometry.TrySweep(description.Shape, Center(actor, description.Shape),
+                if (!StaticGeometry.TrySweep(description.Shape, Center(actor, description),
                     displacement, out var hit, -1, maximumNormalZ)) break;
                 var into = Vector3.Dot(displacement, hit.Normal);
                 if (into >= 0) break;
@@ -291,7 +297,7 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
                 if (hit.Normal.Z < -.01f && !blocked.Contains(actor)) blocked.Add(actor);
             }
             if (changed)
-                OwnedPhysics.ApplyVelocity(actor, displacement / seconds - new Vector3(0, 0, ZoneOwnedPlayerPhysics.Gravity * seconds));
+                OwnedPhysics.ApplyVelocity(actor, displacement / seconds - new Vector3(0, 0, description.Gravity * seconds));
         }
         return blocked;
     }
@@ -304,58 +310,19 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         foreach (var (actor, description) in _actors)
         {
             if (actor == ignoreActor) continue;
-            var center = Center(actor, description.Shape);
-            if (!SweepBounds(origin - center, displacement, shape.HalfExtents + description.Shape.HalfExtents,
-                out var fraction, out var normal) || fraction >= best) continue;
+            var center = Center(actor, description);
+            if (!ZoneManagedShapeQueries.Sweep(shape, origin, displacement, description.Shape, center,
+                out var fraction, out var normal, out var point) || fraction >= best) continue;
             best = fraction;
-            var point = origin + displacement * fraction - normal * Vector3.Dot(Vector3.Abs(normal), shape.HalfExtents);
             hit = new(fraction * displacement.Length(), point, normal, 0);
         }
         return float.IsFinite(best);
     }
 
-    private static bool SweepBounds(Vector3 origin, Vector3 displacement, Vector3 extents,
-        out float fraction, out Vector3 normal)
+    private Vector3 Center(ZoneActorHandle actor, ZonePhysicsActorDescription description)
     {
-        fraction = 0;
-        normal = Vector3.Zero;
-        var exit = 1f;
-        var overlapping = true;
-        var minimumPenetration = float.PositiveInfinity;
-        var overlapNormal = Vector3.Zero;
-        for (var axis = 0; axis < 3; axis++)
-        {
-            var position = Get(origin, axis);
-            var speed = Get(displacement, axis);
-            var radius = Get(extents, axis);
-            var penetration = radius - MathF.Abs(position);
-            if (penetration < 0) overlapping = false;
-            if (penetration < minimumPenetration)
-            {
-                minimumPenetration = penetration;
-                overlapNormal = Axis(axis) * (position != 0 ? MathF.Sign(position) : speed > 0 ? -1 : 1);
-            }
-            if (speed == 0)
-            {
-                if (position < -radius || position > radius) return false;
-                continue;
-            }
-            var first = (-radius - position) / speed;
-            var last = (radius - position) / speed;
-            var entering = -Axis(axis);
-            if (first > last) { (first, last) = (last, first); entering = Axis(axis); }
-            if (first > fraction) { fraction = first; normal = entering; }
-            exit = MathF.Min(exit, last);
-            if (fraction > exit) return false;
-        }
-        if (overlapping) normal = overlapNormal;
-        return fraction <= 1 && exit >= 0 && Vector3.Dot(displacement, normal) < 0;
-    }
-
-    private Vector3 Center(ZoneActorHandle actor, ZonePhysicsShape shape)
-    {
-        OwnedPhysics.TryReadPosition(actor, out var feet);
-        return feet + new Vector3(0, 0, shape.HalfExtents.Z);
+        OwnedPhysics.TryReadPosition(actor, out var origin);
+        return origin + new Vector3(0, 0, description.CenterOffsetZ);
     }
 
     private void Require(ZoneActorHandle actor)
@@ -364,6 +331,4 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
             throw new InvalidOperationException($"Managed physics does not own actor {actor}; unknown and retired generations cannot be used.");
     }
 
-    private static float Get(Vector3 vector, int axis) => axis == 0 ? vector.X : axis == 1 ? vector.Y : vector.Z;
-    private static Vector3 Axis(int axis) => axis == 0 ? Vector3.UnitX : axis == 1 ? Vector3.UnitY : Vector3.UnitZ;
 }

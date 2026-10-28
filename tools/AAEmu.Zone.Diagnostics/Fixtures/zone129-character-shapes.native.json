@@ -1,0 +1,2882 @@
+{
+  "backend": "native",
+  "queryProfile": "static player-collidable geometry (native required/any flags2/2)",
+  "centerConvention": "raw primitive center; no actor or stance offset",
+  "complete": true,
+  "normalConvention": "normal is collider-outward for sweeps; original nativeContactNormal is retained and negated for that convention; overlap normal is not compared",
+  "requested": 132,
+  "results": [
+    {
+      "name": "wall_box_approach",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.9048505,
+      "position": [
+        768.8416,
+        942.5647,
+        230.1766
+      ],
+      "normal": [
+        0.97723126,
+        0.21217716,
+        0
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.9048505,
+      "nativeContactDistance": 0.9048505009837022,
+      "nativeEntityId": 741,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.97723126,
+        -0.21217716,
+        -0
+      ]
+    },
+    {
+      "name": "wall_box_away",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_box_overlap_clear",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_box_overlap_intersect",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        768.8416,
+        942.56464,
+        230.1766
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.0400077385609702,
+      "nativeEntityId": 741,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.97723126,
+        -0.21217716,
+        -0
+      ]
+    },
+    {
+      "name": "wall_box_touch",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_box_initial_contact_outward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_box_initial_penetrating_outward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_capsule_approach",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.9200032,
+      "position": [
+        768.8286,
+        942.6245,
+        230.1766
+      ],
+      "normal": [
+        0.97723126,
+        0.21217716,
+        0
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.9200032,
+      "nativeContactDistance": 0.9200031948081984,
+      "nativeEntityId": 741,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.97723126,
+        -0.21217716,
+        -0
+      ]
+    },
+    {
+      "name": "wall_capsule_away",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_capsule_overlap_clear",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_capsule_overlap_intersect",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        768.8286,
+        942.62445,
+        230.49661
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.03997559905924831,
+      "nativeEntityId": 741,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.97723126,
+        -0.21217716,
+        -0
+      ]
+    },
+    {
+      "name": "wall_capsule_touch",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        768.8286,
+        942.62445,
+        230.49661
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 2.413987250094205E-06,
+      "nativeEntityId": 741,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.97723126,
+        -0.21217716,
+        -0
+      ]
+    },
+    {
+      "name": "wall_capsule_initial_contact_outward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_capsule_initial_penetrating_outward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_box_approach",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.8202897,
+      "position": [
+        762.6988,
+        1273.0686,
+        261.10883
+      ],
+      "normal": [
+        0.6151229,
+        0.59401655,
+        0.51842856
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.8202897,
+      "nativeContactDistance": 0.8202896806146882,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6151229,
+        -0.59401655,
+        -0.51842856
+      ]
+    },
+    {
+      "name": "roof_box_away",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_box_overlap_clear",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_box_overlap_intersect",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        762.6988,
+        1273.0686,
+        261.1088
+      ],
+      "normal": null,
+      "physicalMaterialId": 123,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.03997866800258711,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6151229,
+        -0.59401655,
+        -0.51842856
+      ]
+    },
+    {
+      "name": "roof_box_touch",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        762.69885,
+        1273.0686,
+        261.10883
+      ],
+      "normal": null,
+      "physicalMaterialId": 123,
+      "nativeReturn": 1,
+      "nativeContactDistance": 2.270029175643833E-05,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6151229,
+        -0.59401655,
+        -0.51842856
+      ]
+    },
+    {
+      "name": "roof_box_initial_contact_outward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_box_initial_penetrating_outward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_capsule_approach",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.83702064,
+      "position": [
+        762.7193,
+        1273.0912,
+        261.0587
+      ],
+      "normal": [
+        0.6151229,
+        0.59401655,
+        0.51842856
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.83702064,
+      "nativeContactDistance": 0.8370206550335104,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6151229,
+        -0.59401655,
+        -0.51842856
+      ]
+    },
+    {
+      "name": "roof_capsule_away",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_capsule_overlap_clear",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_capsule_overlap_intersect",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        762.7193,
+        1273.0912,
+        261.0587
+      ],
+      "normal": null,
+      "physicalMaterialId": 123,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.04003185569480522,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6151229,
+        -0.59401655,
+        -0.51842856
+      ]
+    },
+    {
+      "name": "roof_capsule_touch",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        762.7193,
+        1273.0912,
+        261.05865
+      ],
+      "normal": null,
+      "physicalMaterialId": 123,
+      "nativeReturn": 1,
+      "nativeContactDistance": 1.8671150524341934E-05,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6151229,
+        -0.59401655,
+        -0.51842856
+      ]
+    },
+    {
+      "name": "roof_capsule_initial_contact_outward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_capsule_initial_penetrating_outward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_box_approach",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.82111984,
+      "position": [
+        899.75745,
+        462.73566,
+        303.7394
+      ],
+      "normal": [
+        0,
+        0.4569947,
+        0.8894695
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 0.82111984,
+      "nativeContactDistance": 0.8211198339172636,
+      "nativeEntityId": 935,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        -0.4569947,
+        -0.8894695
+      ]
+    },
+    {
+      "name": "stair_box_away",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_box_overlap_clear",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_box_overlap_intersect",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        899.75745,
+        462.73566,
+        303.7394
+      ],
+      "normal": null,
+      "physicalMaterialId": 0,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.0399901606420057,
+      "nativeEntityId": 935,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        -0.4569947,
+        -0.8894695
+      ]
+    },
+    {
+      "name": "stair_box_touch",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_box_initial_contact_outward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_box_initial_penetrating_outward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_capsule_approach",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.77767926,
+      "position": [
+        899.83746,
+        462.79895,
+        303.70688
+      ],
+      "normal": [
+        0,
+        0.4569947,
+        0.8894695
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 0.77767926,
+      "nativeContactDistance": 0.7776792512940913,
+      "nativeEntityId": 935,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        -0.4569947,
+        -0.8894695
+      ]
+    },
+    {
+      "name": "stair_capsule_away",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_capsule_overlap_clear",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_capsule_overlap_intersect",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        899.83746,
+        462.79895,
+        303.70688
+      ],
+      "normal": null,
+      "physicalMaterialId": 0,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.04000053048137012,
+      "nativeEntityId": 935,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        -0.4569947,
+        -0.8894695
+      ]
+    },
+    {
+      "name": "stair_capsule_touch",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_capsule_initial_contact_outward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_capsule_initial_penetrating_outward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_box_approach",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.8400022,
+      "position": [
+        1243.8401,
+        1018.5383,
+        206.81493
+      ],
+      "normal": [
+        0,
+        -0,
+        1
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 0.8400022,
+      "nativeContactDistance": 0.8400021493434906,
+      "nativeEntityId": 7590,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        0,
+        -1
+      ]
+    },
+    {
+      "name": "bridge_box_away",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_box_overlap_clear",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_box_overlap_intersect",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        1243.8401,
+        1018.5383,
+        206.81493
+      ],
+      "normal": null,
+      "physicalMaterialId": 0,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.0400027433039393,
+      "nativeEntityId": 7590,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        0,
+        -1
+      ]
+    },
+    {
+      "name": "bridge_box_touch",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_box_initial_contact_outward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_box_initial_penetrating_outward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_capsule_approach",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.7600022,
+      "position": [
+        1243.92,
+        1018.61835,
+        206.81493
+      ],
+      "normal": [
+        0,
+        -0,
+        1
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 0.7600022,
+      "nativeContactDistance": 0.7600021815301288,
+      "nativeEntityId": 7590,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        0,
+        -1
+      ]
+    },
+    {
+      "name": "bridge_capsule_away",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_capsule_overlap_clear",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_capsule_overlap_intersect",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        1243.92,
+        1018.61835,
+        206.81493
+      ],
+      "normal": null,
+      "physicalMaterialId": 0,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.04000092402111578,
+      "nativeEntityId": 7590,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        0,
+        -1
+      ]
+    },
+    {
+      "name": "bridge_capsule_touch",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        1243.92,
+        1018.61835,
+        206.81493
+      ],
+      "normal": null,
+      "physicalMaterialId": 0,
+      "nativeReturn": 1,
+      "nativeContactDistance": 7.62939544074481E-06,
+      "nativeEntityId": 7590,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        0,
+        -1
+      ]
+    },
+    {
+      "name": "bridge_capsule_initial_contact_outward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_capsule_initial_penetrating_outward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_sphere_bone_box_approach",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.05895632,
+      "position": [
+        2679.396,
+        1973.4567,
+        303.6511
+      ],
+      "normal": [
+        0.5966329,
+        -0.8025143,
+        -0
+      ],
+      "physicalMaterialId": 103,
+      "nativeReturn": 0.05895632,
+      "nativeContactDistance": 0.058956321859212554,
+      "nativeEntityId": 3126,
+      "nativePartId": 3,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.5966329,
+        0.8025143,
+        0
+      ]
+    },
+    {
+      "name": "curved_sphere_bone_box_away",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_sphere_bone_capsule_approach",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.06497942,
+      "position": [
+        2679.3982,
+        1973.4581,
+        303.6511
+      ],
+      "normal": [
+        0.61509657,
+        -0.7884518,
+        -0
+      ],
+      "physicalMaterialId": 103,
+      "nativeReturn": 0.06497942,
+      "nativeContactDistance": 0.06497942099913256,
+      "nativeEntityId": 3126,
+      "nativePartId": 3,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.61509657,
+        0.7884518,
+        0
+      ]
+    },
+    {
+      "name": "curved_sphere_bone_capsule_away",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_capsule_bone_box_approach",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.059029292,
+      "position": [
+        2679.1902,
+        1973.2489,
+        303.3511
+      ],
+      "normal": [
+        0.6155759,
+        -0.7880776,
+        0.00014336749
+      ],
+      "physicalMaterialId": 103,
+      "nativeReturn": 0.059029292,
+      "nativeContactDistance": 0.05902929313064881,
+      "nativeEntityId": 3126,
+      "nativePartId": 2,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6155759,
+        0.7880776,
+        -0.00014336749
+      ]
+    },
+    {
+      "name": "curved_capsule_bone_box_away",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_capsule_bone_capsule_approach",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.065084375,
+      "position": [
+        2679.1921,
+        1973.2505,
+        303.35303
+      ],
+      "normal": [
+        0.61566126,
+        -0.78801095,
+        -0
+      ],
+      "physicalMaterialId": 103,
+      "nativeReturn": 0.065084375,
+      "nativeContactDistance": 0.06508437384786565,
+      "nativeEntityId": 3126,
+      "nativePartId": 2,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.61566126,
+        0.78801095,
+        0
+      ]
+    },
+    {
+      "name": "curved_capsule_bone_capsule_away",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_cylinder_barrel_box_approach",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.06322189,
+      "position": [
+        767.7861,
+        1281.3528,
+        251.64165
+      ],
+      "normal": [
+        -0.11243629,
+        0.9936589,
+        -0
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.06322189,
+      "nativeContactDistance": 0.06322189008142556,
+      "nativeEntityId": 3912,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        0.11243629,
+        -0.9936589,
+        0
+      ]
+    },
+    {
+      "name": "curved_cylinder_barrel_box_away",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_cylinder_barrel_capsule_approach",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.064990975,
+      "position": [
+        767.7734,
+        1281.3512,
+        251.69164
+      ],
+      "normal": [
+        -0.13911654,
+        0.9902761,
+        0
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.064990975,
+      "nativeContactDistance": 0.06499097200660059,
+      "nativeEntityId": 3912,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        0.13911654,
+        -0.9902761,
+        -0
+      ]
+    },
+    {
+      "name": "curved_cylinder_barrel_capsule_away",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_sphere_scaled_box_approach",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.059236474,
+      "position": [
+        467.01633,
+        851.65436,
+        239.02888
+      ],
+      "normal": [
+        0.84729743,
+        0.53111887,
+        -0
+      ],
+      "physicalMaterialId": 104,
+      "nativeReturn": 0.059236474,
+      "nativeContactDistance": 0.05923647427339043,
+      "nativeEntityId": 399,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.84729743,
+        -0.53111887,
+        0
+      ]
+    },
+    {
+      "name": "curved_sphere_scaled_box_away",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_sphere_scaled_capsule_approach",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.064950496,
+      "position": [
+        467.01395,
+        851.6581,
+        239.02888
+      ],
+      "normal": [
+        0.8387301,
+        0.54454756,
+        -0
+      ],
+      "physicalMaterialId": 104,
+      "nativeReturn": 0.064950496,
+      "nativeContactDistance": 0.06495049573015041,
+      "nativeEntityId": 399,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.8387301,
+        -0.54454756,
+        0
+      ]
+    },
+    {
+      "name": "curved_sphere_scaled_capsule_away",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_cylinder_approach",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.9200032,
+      "position": [
+        768.8286,
+        942.6245,
+        230.1766
+      ],
+      "normal": [
+        0.97723126,
+        0.21217716,
+        0
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.9200032,
+      "nativeContactDistance": 0.9200031858713993,
+      "nativeEntityId": 741,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.97723126,
+        -0.21217716,
+        -0
+      ]
+    },
+    {
+      "name": "wall_cylinder_away",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_cylinder_overlap_clear",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_cylinder_overlap_intersect",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        768.8286,
+        942.62445,
+        230.1766
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.039975593912955985,
+      "nativeEntityId": 741,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.97723126,
+        -0.21217716,
+        -0
+      ]
+    },
+    {
+      "name": "wall_cylinder_touch",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        768.8286,
+        942.62445,
+        230.1766
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 2.4200768513266234E-06,
+      "nativeEntityId": 741,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.97723126,
+        -0.21217716,
+        -0
+      ]
+    },
+    {
+      "name": "wall_cylinder_initial_contact_outward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_cylinder_initial_penetrating_outward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_cylinder_approach",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.8486111,
+      "position": [
+        762.70386,
+        1273.0762,
+        261.09415
+      ],
+      "normal": [
+        0.6151229,
+        0.59401655,
+        0.51842856
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.8486111,
+      "nativeContactDistance": 0.8486111451921634,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6151229,
+        -0.59401655,
+        -0.51842856
+      ]
+    },
+    {
+      "name": "roof_cylinder_away",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_cylinder_overlap_clear",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_cylinder_overlap_intersect",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        762.7038,
+        1273.0762,
+        261.09415
+      ],
+      "normal": null,
+      "physicalMaterialId": 123,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.04001129418040877,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6151229,
+        -0.59401655,
+        -0.51842856
+      ]
+    },
+    {
+      "name": "roof_cylinder_touch",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_cylinder_initial_contact_outward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "roof_cylinder_initial_penetrating_outward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_cylinder_approach",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.8211198,
+      "position": [
+        899.83746,
+        462.73566,
+        303.7394
+      ],
+      "normal": [
+        0,
+        0.4569947,
+        0.8894695
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 0.8211198,
+      "nativeContactDistance": 0.8211198032723099,
+      "nativeEntityId": 935,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        -0.4569947,
+        -0.8894695
+      ]
+    },
+    {
+      "name": "stair_cylinder_away",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_cylinder_overlap_clear",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_cylinder_overlap_intersect",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        899.83746,
+        462.73566,
+        303.7394
+      ],
+      "normal": null,
+      "physicalMaterialId": 0,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.039990080693843,
+      "nativeEntityId": 935,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        -0.4569947,
+        -0.8894695
+      ]
+    },
+    {
+      "name": "stair_cylinder_touch",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_cylinder_initial_contact_outward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_cylinder_initial_penetrating_outward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_cylinder_approach",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.8400022,
+      "position": [
+        1243.92,
+        1018.61835,
+        206.81493
+      ],
+      "normal": [
+        0,
+        -0,
+        1
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 0.8400022,
+      "nativeContactDistance": 0.840002169832587,
+      "nativeEntityId": 7590,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        0,
+        -1
+      ]
+    },
+    {
+      "name": "bridge_cylinder_away",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_cylinder_overlap_clear",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_cylinder_overlap_intersect",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        1243.92,
+        1018.61835,
+        206.81493
+      ],
+      "normal": null,
+      "physicalMaterialId": 0,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.040002745166584704,
+      "nativeEntityId": 7590,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        0,
+        -1
+      ]
+    },
+    {
+      "name": "bridge_cylinder_touch",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_cylinder_initial_contact_outward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_cylinder_initial_penetrating_outward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_sphere_bone_cylinder_approach",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.06497942,
+      "position": [
+        2679.3982,
+        1973.4581,
+        303.6511
+      ],
+      "normal": [
+        0.61509657,
+        -0.7884518,
+        -0
+      ],
+      "physicalMaterialId": 103,
+      "nativeReturn": 0.06497942,
+      "nativeContactDistance": 0.06497942099913256,
+      "nativeEntityId": 3126,
+      "nativePartId": 3,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.61509657,
+        0.7884518,
+        0
+      ]
+    },
+    {
+      "name": "curved_sphere_bone_cylinder_away",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_capsule_bone_cylinder_approach",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.065084375,
+      "position": [
+        2679.1921,
+        1973.2505,
+        303.35303
+      ],
+      "normal": [
+        0.61566126,
+        -0.78801095,
+        -0
+      ],
+      "physicalMaterialId": 103,
+      "nativeReturn": 0.065084375,
+      "nativeContactDistance": 0.06508437384786565,
+      "nativeEntityId": 3126,
+      "nativePartId": 2,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.61566126,
+        0.78801095,
+        0
+      ]
+    },
+    {
+      "name": "curved_capsule_bone_cylinder_away",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_cylinder_barrel_cylinder_approach",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.064990975,
+      "position": [
+        767.7713,
+        1281.3661,
+        251.64165
+      ],
+      "normal": [
+        -0.13915166,
+        0.99027103,
+        -0
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.064990975,
+      "nativeContactDistance": 0.06499097200659915,
+      "nativeEntityId": 3912,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        0.13915166,
+        -0.99027103,
+        0
+      ]
+    },
+    {
+      "name": "curved_cylinder_barrel_cylinder_away",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "curved_sphere_scaled_cylinder_approach",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.064950496,
+      "position": [
+        467.01395,
+        851.6581,
+        239.02888
+      ],
+      "normal": [
+        0.8387301,
+        0.54454756,
+        -0
+      ],
+      "physicalMaterialId": 104,
+      "nativeReturn": 0.064950496,
+      "nativeContactDistance": 0.06495049573015041,
+      "nativeEntityId": 399,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.8387301,
+        -0.54454756,
+        0
+      ]
+    },
+    {
+      "name": "curved_sphere_scaled_cylinder_away",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_box_initial_contact_inward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 2.5111987E-05,
+      "position": [
+        768.8416,
+        942.56464,
+        230.1766
+      ],
+      "normal": [
+        0.97723126,
+        0.21217716,
+        0
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 2.5111987E-05,
+      "nativeContactDistance": 2.511198648635915E-05,
+      "nativeEntityId": 741,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.97723126,
+        -0.21217716,
+        -0
+      ]
+    },
+    {
+      "name": "wall_box_initial_penetrating_inward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.46180883,
+      "position": [
+        768.3512,
+        942.4582,
+        230.1766
+      ],
+      "normal": [
+        0.94457614,
+        0.32829267,
+        1.6055851E-06
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.46180883,
+      "nativeContactDistance": 0.4618088333573114,
+      "nativeEntityId": 562,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.94457614,
+        -0.32829267,
+        -1.6055851E-06
+      ]
+    },
+    {
+      "name": "wall_capsule_initial_contact_inward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.50864786,
+      "position": [
+        768.33417,
+        942.5072,
+        230.1766
+      ],
+      "normal": [
+        0.94457614,
+        0.32829267,
+        1.6055851E-06
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.50864786,
+      "nativeContactDistance": 0.5086478863497504,
+      "nativeEntityId": 562,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.94457614,
+        -0.32829267,
+        -1.6055851E-06
+      ]
+    },
+    {
+      "name": "wall_capsule_initial_penetrating_inward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.46867442,
+      "position": [
+        768.33417,
+        942.5072,
+        230.1766
+      ],
+      "normal": [
+        0.94457614,
+        0.32829267,
+        1.6055851E-06
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.46867442,
+      "nativeContactDistance": 0.46867440784746217,
+      "nativeEntityId": 562,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.94457614,
+        -0.32829267,
+        -1.6055851E-06
+      ]
+    },
+    {
+      "name": "roof_box_initial_contact_inward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.17202848,
+      "position": [
+        762.593,
+        1272.9664,
+        261.01965
+      ],
+      "normal": [
+        0.61421883,
+        0.59314364,
+        0.5204958
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.17202848,
+      "nativeContactDistance": 0.17202848599470444,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.61421883,
+        -0.59314364,
+        -0.5204958
+      ]
+    },
+    {
+      "name": "roof_box_initial_penetrating_inward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.1320724,
+      "position": [
+        762.59296,
+        1272.9664,
+        261.0196
+      ],
+      "normal": [
+        0.61421883,
+        0.59314364,
+        0.5204958
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.1320724,
+      "nativeContactDistance": 0.1320724075480898,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.61421883,
+        -0.59314364,
+        -0.5204958
+      ]
+    },
+    {
+      "name": "roof_capsule_initial_contact_inward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.17188981,
+      "position": [
+        762.61365,
+        1272.9891,
+        260.9694
+      ],
+      "normal": [
+        0.61421883,
+        0.59314364,
+        0.5204958
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.17188981,
+      "nativeContactDistance": 0.17188980714086,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.61421883,
+        -0.59314364,
+        -0.5204958
+      ]
+    },
+    {
+      "name": "roof_capsule_initial_penetrating_inward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.13187757,
+      "position": [
+        762.61365,
+        1272.9891,
+        260.9694
+      ],
+      "normal": [
+        0.61421883,
+        0.59314364,
+        0.5204958
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.13187757,
+      "nativeContactDistance": 0.1318775690794518,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.61421883,
+        -0.59314364,
+        -0.5204958
+      ]
+    },
+    {
+      "name": "stair_box_initial_contact_inward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 1.42693125E-05,
+      "position": [
+        899.75745,
+        462.73566,
+        303.7394
+      ],
+      "normal": [
+        0,
+        0.4569947,
+        0.8894695
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 1.42693125E-05,
+      "nativeContactDistance": 1.4269312130110734E-05,
+      "nativeEntityId": 935,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        -0.4569947,
+        -0.8894695
+      ]
+    },
+    {
+      "name": "stair_box_initial_penetrating_inward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "stair_capsule_initial_contact_inward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 3.8146973E-06,
+      "position": [
+        899.83746,
+        462.79895,
+        303.70688
+      ],
+      "normal": [
+        0,
+        0.4569947,
+        0.8894695
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 3.8146973E-06,
+      "nativeContactDistance": 3.8146974929986754E-06,
+      "nativeEntityId": 935,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        -0.4569947,
+        -0.8894695
+      ]
+    },
+    {
+      "name": "stair_capsule_initial_penetrating_inward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_box_initial_contact_inward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 5.811453E-06,
+      "position": [
+        1243.8401,
+        1018.5383,
+        206.81493
+      ],
+      "normal": [
+        0,
+        -0,
+        1
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 5.811453E-06,
+      "nativeContactDistance": 5.811452865600586E-06,
+      "nativeEntityId": 7590,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        0,
+        -1
+      ]
+    },
+    {
+      "name": "bridge_box_initial_penetrating_inward",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_capsule_initial_contact_inward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_capsule_initial_penetrating_inward",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "wall_cylinder_initial_contact_inward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.5086479,
+      "position": [
+        768.33417,
+        942.5072,
+        230.1766
+      ],
+      "normal": [
+        0.94457614,
+        0.32829267,
+        1.6055851E-06
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.5086479,
+      "nativeContactDistance": 0.5086479055201012,
+      "nativeEntityId": 562,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.94457614,
+        -0.32829267,
+        -1.6055851E-06
+      ]
+    },
+    {
+      "name": "wall_cylinder_initial_penetrating_inward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.46867442,
+      "position": [
+        768.33417,
+        942.5072,
+        230.1766
+      ],
+      "normal": [
+        0.94457614,
+        0.32829267,
+        1.6055851E-06
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.46867442,
+      "nativeContactDistance": 0.4686744147284504,
+      "nativeEntityId": 562,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.94457614,
+        -0.32829267,
+        -1.6055851E-06
+      ]
+    },
+    {
+      "name": "roof_cylinder_initial_contact_inward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 5.4781416E-05,
+      "position": [
+        762.70386,
+        1273.0762,
+        261.09412
+      ],
+      "normal": [
+        0.6151229,
+        0.59401655,
+        0.51842856
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 5.4781416E-05,
+      "nativeContactDistance": 5.478141764203581E-05,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6151229,
+        -0.59401655,
+        -0.51842856
+      ]
+    },
+    {
+      "name": "roof_cylinder_initial_penetrating_inward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.13199814,
+      "position": [
+        762.598,
+        1272.974,
+        261.00497
+      ],
+      "normal": [
+        0.61421883,
+        0.59314364,
+        0.5204958
+      ],
+      "physicalMaterialId": 123,
+      "nativeReturn": 0.13199814,
+      "nativeContactDistance": 0.1319981345964184,
+      "nativeEntityId": 3908,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.61421883,
+        -0.59314364,
+        -0.5204958
+      ]
+    },
+    {
+      "name": "stair_cylinder_initial_contact_inward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 1.41888395E-05,
+      "position": [
+        899.83746,
+        462.73566,
+        303.7394
+      ],
+      "normal": [
+        0,
+        0.4569947,
+        0.8894695
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 1.41888395E-05,
+      "nativeContactDistance": 1.418883952031269E-05,
+      "nativeEntityId": 935,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        -0.4569947,
+        -0.8894695
+      ]
+    },
+    {
+      "name": "stair_cylinder_initial_penetrating_inward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    },
+    {
+      "name": "bridge_cylinder_initial_contact_inward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 5.831942E-06,
+      "position": [
+        1243.92,
+        1018.61835,
+        206.81493
+      ],
+      "normal": [
+        0,
+        -0,
+        1
+      ],
+      "physicalMaterialId": 0,
+      "nativeReturn": 5.831942E-06,
+      "nativeContactDistance": 5.8319419622421265E-06,
+      "nativeEntityId": 7590,
+      "nativePartId": 1,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0,
+        0,
+        -1
+      ]
+    },
+    {
+      "name": "bridge_cylinder_initial_penetrating_inward",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null
+    }
+  ]
+}

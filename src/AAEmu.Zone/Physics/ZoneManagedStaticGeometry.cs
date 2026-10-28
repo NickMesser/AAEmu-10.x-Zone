@@ -16,13 +16,15 @@ public readonly record struct ZoneManagedStaticQueryStatistics(int InstanceBound
 /// <remarks>
 /// General triangles are two-sided surfaces: space below a bridge or inside a building stays
 /// empty. Explicitly flagged closed convex meshes and analytic primitives contain their interior
-/// volume. Query boxes are axis aligned; capsule queries conservatively use their bounding boxes.
+/// volume. Query boxes are axis aligned; capsules and cylinders retain their actual upright
+/// support surfaces. Bounding extents are used only for broadphase candidate selection.
 /// This supplies static collision queries, not rigid-body, vehicle, animation or breakage dynamics.
 /// </remarks>
 public sealed class ZoneManagedStaticGeometry
 {
     /// <summary>
-    /// World-space separation tolerance for analytic overlap/sweep contacts, in meters. This is
+    /// World-space separation tolerance for curved convex overlap/sweep contacts, in meters,
+    /// including capsule/cylinder queries against triangles and analytic targets. This is
     /// not a bound on distance traveled before a grazing contact: a small normal separation can
     /// span a longer interval along a nearly tangent trajectory. Raw ray solutions do not use it.
     /// </summary>
@@ -40,7 +42,7 @@ public sealed class ZoneManagedStaticGeometry
     private ulong _nextIdentity;
     private ZoneManagedStaticQueryStatistics _lastQuery;
 
-    public bool CapsulesUseBoundingBoxes => true;
+    public bool CapsulesUseBoundingBoxes => false;
     public int InstanceCount { get { lock (_gate) return _instances.Count; } }
     public ZoneManagedStaticQueryStatistics LastQueryStatistics { get { lock (_gate) return _lastQuery; } }
 
@@ -184,7 +186,7 @@ public sealed class ZoneManagedStaticGeometry
     }
 
     /// <summary>
-    /// Continuously sweeps an axis-aligned box (or capsule bounds) against mesh surfaces and
+    /// Continuously sweeps a box, upright capsule or cylinder against mesh surfaces and
     /// analytic convex targets. Analytic contacts use the declared separation tolerance; this
     /// does not promise the same tolerance in distance traveled at a grazing contact.
     /// Filtering contact normals before selecting the nearest hit lets callers skip walkable
@@ -202,7 +204,7 @@ public sealed class ZoneManagedStaticGeometry
         ZoneManagedTerrainGeometry.ValidateSegment(origin, displacement);
         ValidateNormalRange(minimumNormalZ, maximumNormalZ);
         var end = origin + displacement;
-        var worldBounds = new ZoneManagedBounds(Vector3.Min(origin, end) - shape.HalfExtents, Vector3.Max(origin, end) + shape.HalfExtents);
+        var worldBounds = new ZoneManagedBounds(Vector3.Min(origin, end) - shape.BoundingHalfExtents, Vector3.Max(origin, end) + shape.BoundingHalfExtents);
         ZoneManagedTerrainGeometry.ValidateFinite(worldBounds.Minimum, nameof(shape));
         ZoneManagedTerrainGeometry.ValidateFinite(worldBounds.Maximum, nameof(shape));
         lock (_gate)
@@ -216,7 +218,7 @@ public sealed class ZoneManagedStaticGeometry
             {
                 if (instance.Primitive is { } primitive)
                 {
-                    if (!ZoneManagedPrimitiveQueries.Sweep(primitive, instance.LocalToWorld, origin, shape.HalfExtents, displacement,
+                    if (!ZoneManagedPrimitiveQueries.Sweep(primitive, instance.LocalToWorld, origin, shape, displacement,
                         out var fraction, out var normal, out var position) || fraction >= best ||
                         normal.Z < minimumNormalZ || normal.Z > maximumNormalZ) continue;
                     best = fraction;
@@ -228,7 +230,7 @@ public sealed class ZoneManagedStaticGeometry
                 {
                     triangleTests++;
                     WorldTriangle(instance, triangle, out var a, out var b, out var c, out var material);
-                    if (!ZoneManagedTriangleQueries.Sweep(origin, shape.HalfExtents, displacement, a, b, c,
+                    if (!ZoneManagedTriangleQueries.Sweep(shape, origin, displacement, a, b, c,
                         out var fraction, out var normal, out var position) || fraction >= best ||
                         normal.Z < minimumNormalZ || normal.Z > maximumNormalZ) continue;
                     best = fraction;
@@ -244,7 +246,7 @@ public sealed class ZoneManagedStaticGeometry
     {
         ZoneManagedTerrainGeometry.ValidateShape(shape);
         ZoneManagedTerrainGeometry.ValidateFinite(position, nameof(position));
-        var bounds = new ZoneManagedBounds(position - shape.HalfExtents, position + shape.HalfExtents);
+        var bounds = new ZoneManagedBounds(position - shape.BoundingHalfExtents, position + shape.BoundingHalfExtents);
         ZoneManagedTerrainGeometry.ValidateFinite(bounds.Minimum, nameof(shape));
         ZoneManagedTerrainGeometry.ValidateFinite(bounds.Maximum, nameof(shape));
         lock (_gate)
@@ -256,7 +258,7 @@ public sealed class ZoneManagedStaticGeometry
             {
                 if (instance.Primitive is { } primitive)
                 {
-                    collided = ZoneManagedPrimitiveQueries.Overlaps(primitive, instance.LocalToWorld, position, shape.HalfExtents);
+                    collided = ZoneManagedPrimitiveQueries.Overlaps(primitive, instance.LocalToWorld, position, shape);
                     if (collided) break;
                     continue;
                 }
@@ -270,7 +272,7 @@ public sealed class ZoneManagedStaticGeometry
                 {
                     triangleTests++;
                     WorldTriangle(instance, triangle, out var a, out var b, out var c, out _);
-                    if (!ZoneManagedTriangleQueries.Overlaps(position, shape.HalfExtents, a, b, c)) continue;
+                    if (!ZoneManagedTriangleQueries.Overlaps(shape, position, a, b, c)) continue;
                     collided = true;
                     break;
                 }
