@@ -1,3 +1,9 @@
 * text=auto
 
 *.cs text eol=lf
+
+# Recorded controls/captures retain their original SHA-256 bytes on every platform.
+tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-movement*.json -text whitespace=cr-at-eol
+tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-stance-*.json -text whitespace=cr-at-eol
+tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-corrections*.json -text whitespace=cr-at-eol
+tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-controller.managed-summary.json -text whitespace=cr-at-eol
