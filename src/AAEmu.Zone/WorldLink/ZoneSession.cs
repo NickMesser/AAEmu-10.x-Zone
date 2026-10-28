@@ -391,6 +391,18 @@ public sealed partial class ZoneSession
             case WzOpcodes.FactionIndependence:
                 Factions.DeclareIndependence(frame.Body.Span);
                 break;
+            case WzOpcodes.CreateDoodad:
+                Doodads.Create(frame.Body.Span);
+                break;
+            case WzOpcodes.RemoveDoodad:
+                Doodads.Remove(frame.Body.Span);
+                break;
+            case WzOpcodes.DoodadChangePhase:
+                Doodads.ChangePhase(frame.Body.Span);
+                break;
+            case WzOpcodes.VegetationCutdown:
+                Doodads.CutDownVegetation(frame.Body.Span);
+                break;
             case WzOpcodes.NpcState:
                 RequireNpcs().Create(frame.Body.Span);
                 break;
@@ -566,6 +578,9 @@ public sealed partial class ZoneSession
                 break;
         }
     }
+
+    /// <summary>World's doodads (WZ 0x0073-0x0076); state only, declared after DispatchCore to keep line citations stable.</summary>
+    public ZoneDoodadRegistry Doodads { get; } = new();
 
     private ZoneNpcSimulation RequireNpcs() => Registry.Npcs ??
         throw new NotSupportedException("NPC simulation requires configured content and actor/spatial services.");

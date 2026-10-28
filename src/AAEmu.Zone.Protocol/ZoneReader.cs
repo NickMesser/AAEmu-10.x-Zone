@@ -1,4 +1,5 @@
 using System.Buffers.Binary;
+using System.Numerics;
 using System.Text;
 
 namespace AAEmu.Zone.Protocol;
@@ -34,6 +35,21 @@ public ref struct ZoneReader(ReadOnlySpan<byte> bytes)
     {
         var value = ReadBytes(3);
         return (uint)(value[0] | value[1] << 8 | value[2] << 16);
+    }
+
+    /// <summary>
+    /// 11-byte quantized position (World <c>Helpers.ConvertPosition</c>): x and y as unsigned 32-bit
+    /// magnitudes in 1/512 units (byte 10 bits 7/6 are their sign flags), z as 22 bits over [-100, 4096].
+    /// </summary>
+    public Vector3 ReadPosition()
+    {
+        var value = ReadBytes(11);
+        var rawX = (long)BinaryPrimitives.ReadUInt32LittleEndian(value);
+        var rawY = (long)BinaryPrimitives.ReadUInt32LittleEndian(value[4..]);
+        var rawZ = value[8] | value[9] << 8 | (value[10] & 0x3F) << 16;
+        return new(8f * rawX / 4096f * ((value[10] & 0x80) != 0 ? -1 : 1),
+            8f * rawY / 4096f * ((value[10] & 0x40) != 0 ? -1 : 1),
+            (float)Math.Round(rawZ * 0.00000023841858 * 4196 - 100, 4, MidpointRounding.ToEven));
     }
 
     /// <summary>FUN_3937E2D0: groups of four integers, two width bits per integer.</summary>

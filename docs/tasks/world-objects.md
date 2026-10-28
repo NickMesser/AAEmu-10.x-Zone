@@ -61,6 +61,7 @@ Notes: native RTTI has no server-side Doodad/Slave/Transfer manager classes in t
 - Confidence: medium
 
 ### OBJ-04: Handle World doodad packets and unit attach/bond packets
+- Status: **Partial** — doodad create/remove/phase handlers with phase state are done (`ZoneDoodadRegistry`); unit attach/detach/hung/bond packets and the ZW surface/collide reports remain open.
 - Priority: P1
 - Native evidence: WZCreateDoodad/RemoveDoodad/DoodadChangePhase RTTI (0x3A51A6D0/0x3A51A700); sub_39362F90, sub_39363040, sub_39363100 ("can't find unit/child"); ZWReportDoodadSurfaceHack, ZWDoodadCollideUnit.
 - Repo state: opcodes only (WzOpcodes.cs:14-19,47-49; ZwOpcodes.cs:46,48); no handlers.

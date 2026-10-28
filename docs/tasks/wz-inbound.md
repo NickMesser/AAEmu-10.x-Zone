@@ -221,6 +221,7 @@ Summary count: 133 registered; 56 decoded+dispatched; 77 absent (0 missing from 
 - Confidence: medium
 
 ### WZ-07: Doodad, house and vegetation packets
+- Status: **Partial** — WZ 0x0073-0x0076 (CreateDoodad/RemoveDoodad/DoodadChangePhase/VegetationCutdown) are decoded (`DoodadMessages.cs`), tracked in `ZoneDoodadRegistry` and dispatched in `ZoneSession`; verified against 4536 native-baseline create bodies. House packets, DropBackpack and the doodad physics remain open.
 - Priority: P1
 - Native evidence: CreateDoodad `sub_393641A0`, RemoveDoodad `sub_393641D0`, DoodadChangePhase `sub_393641F0`, VegetationCutdown `sub_39364220` (all call the doodad manager `qword_3A607A80`); HouseState `sub_39362E50` (house mgr at `A40+16`), HouseBuildDone `sub_3936E290`, HouseBuildProgress `sub_3936E340`, DropBackpack `sub_393642B0`.
 - Repo state: absent. Content readers for doodads/houses may exist in Content/ but no WZ decode/dispatch (grep for CreateDoodad/HouseState finds nothing).
