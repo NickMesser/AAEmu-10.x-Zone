@@ -1,7 +1,8 @@
 # Managed character geometry and native controls
 
-Managed mode uses authored living dimensions and upright convex queries. This replaces the
-previous capsule bounding boxes; it does not implement the complete native living controller.
+Managed mode uses authored living dimensions, queued stance changes and upright convex queries.
+Its living controller separates requested and actual velocity and consumes authored movement
+dynamics. It does not implement the complete native living controller.
 The remaining work is tracked in [CE-07](tasks/cryengine-removal.md).
 
 ## Shape and origin conventions
@@ -18,14 +19,16 @@ For curved shapes, its compatibility property `HalfExtents` contains native para
 
 Use `BoundingHalfExtents` for candidate selection. A capsule with radius `0.4` and segment half
 length `0.32` has total height `1.44`, not `0.64`. Zero capsule segment length is a sphere;
-cylinders require a positive axial half length. Query positions are primitive centers.
+cylinders require a positive axial half length at public admission. The isolated stance preflight
+also handles the original old-cylinder/new-sphere zero-height disk query. Query positions are
+primitive centers.
 
 The original `CLivingEntity::SetParams` at `35028BF0` uses `Size.X` radially and ignores `Size.Y`.
 The authored `UseCapsule=false` living body is a cylinder. It is distinct from an explicitly
 requested query box. `FromLivingStance` makes this distinction during managed player admission.
 
 Initial admission reuses `ZoneActorPhysicalizationRequest.BuildInitial`: the last source-order
-stance with ID 2 wins, authored lengths scale by entity scale, and living mass scales by its cube.
+stance with content ID 2 wins, authored lengths scale by entity scale, and living mass scales by its cube.
 When no such stance exists, the native constructor's unscaled default dimensions are retained.
 Invalid sizes, mass, offsets and gravity are refused explicitly.
 
@@ -50,7 +53,86 @@ derives takeoff speed from the same authored gravity and jump height.
 The captured player object 387 is model 17, actor model 8 (`elf_female`), scale 1. Stance 130 has
 radius `0.4`, segment half length `0.32`, collider height `1.2`, pivot `0`, mass `80` and authored
 gravity `25`. Its signed acceleration is therefore `-25`; its collider bottom is `0.48` above
-the entity origin. Object identity and actor-model identity must not be conflated.
+the entity origin. These are its initial dimensions: wire stance 2 selects swim/content ID 3,
+which has different authored dimensions. Object identity, actor-model identity, content stance
+ID and wire slot must not be conflated.
+
+## Authored stances and queued dimensions
+
+`ZoneActorStanceCatalog` reproduces constructor `392DF300`: content IDs 1 through 9 map to slots
+0 through 8, source order decides duplicates and initial slot 1 selects content ID 2. Missing
+slots retain the unscaled constructor cylinder. Wire -1 supplies no new request. Slot 9 has a
+getter boundary but no initialized stance storage, so it remains an explicit refusal.
+
+The actor retains desired and accepted-current slots separately. Frame prephase retries a refused
+desired change; outgoing stance and movement limits use accepted current. The backend separately
+owns applied physical dimensions. Those three states can differ in the original implementation.
+`SetParams(-1)` queues before preflight: a false return can still apply later, while a true
+preflight can be refused during application. Removal retires queued requests for the exact
+generation. Dynamics changes made before drain survive the dimension update.
+
+Preflight probes changed collider height, radius and raw half height using the old pivot and old
+primitive kind. Queue application also considers the new pivot and kind. The helper moves along
+positive Z, multiplies each selected depth by 1.01, preserves the eight-query counter ordering and
+accepts equality at the request's maximum shift. Fixed-direction exit and normal fallback are
+separate geometry results. Candidate selection uses the native entity envelope and multipart
+physics bounds, including bound-only obstruct parts, rather than render bounds or clipped triangles.
+Native cross-entity/contact order and exported bounding-box padding remain unresolved.
+
+Other-living preflight uses strict radial and segment-height overlap, excluding capsule cap radius
+from its vertical shortcut. Its Z arithmetic retains `(hc + originZ) - hp`; reassociation changes
+strict decisions near coordinate 8000. Actual collider placement still uses `originZ + (hc - hp)`.
+The raw primitive half height and the separately clamped support half height are retained. A
+request that compares equal to the clamped support height does not rebuild the raw primitive.
+
+## Living movement ownership
+
+`ZonePhysicsLivingMovementSettings` copies initial dimensions and dynamics, including the native
+unused-float sentinel and exact constructor defaults. Authored angle degrees use the original
+double-cosine conversion; explicit zero angles remain zero. Flat ground therefore fails the
+strict grounded angle test when minimum-fall angle is explicitly zero. Maximum support velocity
+limits a retained platform's velocity; it is not a walking-speed cap.
+
+The living motor snapshots prior state, applies admitted early recovery, prepares actual velocity,
+probes the proposed endpoint, sweeps the combined displacement, then resolves support and velocity.
+It owns strict support-rise/descent, slide/climb/fall comparisons, inertia selection, air control,
+gravity/resistance and landing/suspension fields for admitted terrain/static controls. Gravity
+changes velocity after movement. Sweep queries extend travel by the world's 0.01 m clearance and
+subtract that clearance from the selected hit distance. Generic kinematic bodies retain their
+existing integrator.
+
+Mode 0 writes a persistent requested velocity. Mode 3 also sets a one-step actual override and
+persistent flag 0x2; consuming the override does not clear that flag. Frame-shaped living input
+uses mode 0 and preserves its intended Z instead of copying gravity or a slope's actual velocity
+back into the wish. Collision-active false is a separate original dynamics state, with its own
+translation/status behavior; it is not the authored `IgnoreCollision` gameplay flag.
+
+Static contact response has a separate angle/up-speed gate. It uses the native 1.01 impulse and
+strict magnitude cap, which can halve a large inward response; a full normal projection is not a
+universal actual-velocity update. Displacement sliding is separate. After non-tiny movement, the
+integrity pass checks positive-Z unprojection at the resulting pose. Any admitted contact restores
+the pre-sweep origin; depth above world clearance also blocks and clears actual velocity before
+grounded response. A blocked body can report grounded with no real floor hit. This is kept distinct
+from cached support, including the original `-1e10` missing-floor value.
+
+The owned body remains the only transform authority. Controllers return staged pose/velocity and
+copied support geometry; finite values, normals and exact body lifetime are checked before commit.
+Legacy height-only support explicitly reports an unknown normal. Reentrant writes and steps are
+refused, and removal/replacement during a query cannot commit a retired body's result. New bodies
+wait until the next frame snapshot. Suspension and timer changes are staged alongside each
+controller result and publish only after that body's validated commit. Invalid forced correction
+travel is refused before immediate velocity fields or pose queues change.
+
+Network corrections preserve the original physical boundary: X2 producer `392440E0` calls living
+virtual `0xC0` / `3502AA60`. Its type-4 tuple is distinct from reset Action 4. It queues a bounded
+position correction, immediately writes actual velocity XY, optionally copies original requested
+velocity, then writes filtered Z to both actual and requested Z. It preserves rotation, flag 0x2
+and the one-step override. The radius/speed band and near/far/forced position branches are retained.
+The actor forwards the copied tuple once; it does not decompose it into generic pose and mode-3
+velocity writes. A same-ground request without an owned retained support entity returns a visible
+refusal. Managed pose drain keeps the existing collision traversal guard, an explicit replacement
+policy rather than exact native flags-49 type-0 collision behavior. Cross-type queue interleaving
+and moving-support anchors remain open.
 
 ## Query algorithms and numerical boundary
 
@@ -143,8 +225,12 @@ copied depth, unprojection direction, witness and authored material, with no con
 included. Exact analytic/SAT cases and a bounded convex EPA solve retain the real box, capsule,
 cylinder, triangle or affine analytic surface. Closed convex proxies use the whole solid volume;
 triangle meshes retain empty interiors. Verified coplanar patches consolidate internal seams without
-filling outer edges, holes or gaps. Terrain recovery requires an actual top-triangle intersection
-and selects an upward unprojection; a wholly submerged body is not an early terrain-surface contact.
+filling outer edges, holes or gaps. Terrain recovery requires an actual finite top-triangle
+intersection and uses its positive authored face normal. Interior-plane depth is the shape's
+support extent minus signed plane distance. Coplanar seams merge; no internal triangle sidewall
+is created. A wholly submerged body is not an early terrain-surface contact. At real boundaries
+the positive face-normal result is a conservative surface constraint; native finite-edge choice
+and global minimum translation are not claimed. Fixed positive-Z stance exits remain a separate API.
 
 Nearly spherical diagonal affine targets with centered or exactly aligned query offsets can
 otherwise exhaust smooth-hull EPA refinement. A separate analytic certificate handles cases where
@@ -156,10 +242,12 @@ exhaustion remains an explicit failure rather than a fabricated depth or miss.
 
 The original living step at `3502DED0` corrects an admitted static contact by
 `(depth + world.clearance) * direction`. The world constructor at `350827B0` sets clearance to
-`0.01` m. Its geometry query limits individual living unprojections to `2.5 * radius`; this is
-not an aggregate frame travel budget. Managed authored bodies have an explicit `Living` profile
-and use that bound. Explicitly constructed `Kinematic` bodies retain their generic support contract
-and do not acquire a fabricated native living radius limit.
+`0.01` m. Its geometry query supplies `2.5 * radius` as a per-geometry solver bound, not an
+aggregate frame travel budget. Native geometry can enter fallback paths at that bound; the
+parameter alone does not prove a universal depth-rejection rule. The managed bounded query
+filters out-of-range contacts before selecting the deepest eligible neighbor, rather than
+throwing away the whole actor step. Exact native fallback remains open. Explicitly constructed
+`Kinematic` bodies retain their generic support contract and have no living radius limit.
 
 Recovery stages the whole pose before committing, preserves velocity, orientation, collider offset,
 pivot and gravity, and then lets ordinary sweeps/support resolve motion. The original static early
@@ -178,19 +266,19 @@ not be described as complete actor stacking or native contact-state parity.
 The original also has an idle shortcut before this pass. It tests exact zero actual and requested
 velocity together with flying/gravity, cached floor/normal, suspension fields, prior contact state
 and a retained ground entity. A tiny nonzero request defeats it even if float coordinates cannot
-represent the resulting travel. Managed recovery currently runs proactively; a speed epsilon or
-an idle velocity test alone would not reproduce that state-dependent predicate. Porting the full
-idle/contact-cache behavior remains part of controller parity.
+represent the resulting travel. Managed living bodies now implement the mapped static/terrain
+idle state, including copied floor/normal and suspension fields. Impulse recovery selects inertia
+before aging its timer, even when the subsequent idle/inactive branch skips movement. Retained
+support and the complete prior stuck-contact producer remain separate controller parity work.
 
-The owned integrator also receives the actor identity for support queries. For authored living
-bodies, a bounded fallback repairs a foot pivot slightly below a real support surface even when
-the collider is already clear. The original helper at `3502CA20` starts its ray at
-`foot + (HeightCollider - segmentHalfHeight)` and casts down
-`1.5 * (HeightCollider - segmentHalfHeight) + 2`. The final living clamp raises a foot only when
-it lies strictly less than `HeightCollider - segmentHalfHeight` below the floor. The managed
-fallback applies that bound, preserves the raw surface height/material and does not adopt distant
-terrain above an interior floor. Existing crossing/touch support remains in place; the complete
-native suspension, authored walkable-angle and stair solver are still separate work.
+The original helper at `3502CA20` starts its ray at
+`foot + (HeightCollider - clampedSupportHalfHeight)` and casts down
+`1.5 * (HeightCollider - clampedSupportHalfHeight) + 2`. The living motor probes the proposed
+endpoint, then probes again after movement. A foot below real support rises only inside the
+strict authored reach; a short downward transition also depends on prior grounded state and
+flags. It preserves raw height, normal and material, including slope normals outside the legacy
+generic walkable threshold. The dedicated living query bypasses the legacy kinematic snap policy.
+Moving support filters and complete stair/contact behavior remain open.
 
 Explicit teleports now immediately clear cached grounded state, height and material. Invalid
 teleports leave the prior pose, velocity and support unchanged. Ordinary pose corrections still
@@ -208,15 +296,24 @@ retained as negative evidence and does not demonstrate living-body motion or rec
 
 ## Remaining controller work
 
-Stance transitions, arbitrary character rotation, authored slope/step limits, native suspension,
-complete recovery contact ordering/state, friction/elasticity and the `IgnoreCollision`
-callback/state behavior remain unimplemented. Some special authored stances place the collider
-bottom below the pivot support plane; the original diagnostic also observes hovering rather than
-a simple pivot landing for those dimensions. Their full response needs the suspension/contact
-solver, not a hidden dimension change. NPC behavior, swimming, gliding, mounts, moving platforms,
-vehicles and rigid-body dynamics also need their own owners. Full feature parity remains false.
+Arbitrary character rotation, complete stair/suspension and retained support behavior, native
+world speed caps, recovery contact ordering/fallback and prior stuck-contact state remain open.
+The `IgnoreCollision` callback/state path, friction/elasticity and movement control driven by
+animation need their own owners. Some authored stances put the collider below the pivot support
+plane and can hover after a successful resize; those dimensions and cached state must be preserved.
+NPC behavior, swimming, gliding, mounts, moving platforms, vehicles and rigid-body dynamics remain
+unfinished. Full feature parity remains false.
 
 The checked-in [original control fixtures](../tools/AAEmu.Zone.Diagnostics/Fixtures/README.md)
 include 32 base living cases, ten followups (38 distinct living cases overall) and 54 terrain-only
 shape queries, with copied results and control attribution. These fixtures require the configured
 original assets to replay; standalone geometry/controller tests do not.
+
+Five further original captures add 66 movement/stance/network-correction controls and 1,147 world
+steps. In the matched-pose managed run, all 1,229 body frames agree exactly on flying, flag 0x2,
+applied dimensions and wishes. All 42 dimension returns and six network returns agree; the six
+network cases also agree exactly on pose and actual velocity. Maximum velocity difference is
+0.0000006 m/s, and maximum position difference is 0.0011 m in four growth/kind-switch controls.
+The [per-case comparison summary](../tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-controller.managed-summary.json)
+retains the remaining differences and source hashes. The full solution builds and 411 standalone
+tests pass. These checks establish the exercised subset, not native creation or full gameplay parity.

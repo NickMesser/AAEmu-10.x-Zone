@@ -1,0 +1,351 @@
+[
+  {
+    "name": "air_mode0_control_0",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "airControl": 0,
+        "velocity": [
+          1,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 10,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "air_mode0_control_0.1",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "airControl": 0.1,
+        "velocity": [
+          1,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 10,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "air_mode0_control_1",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "airControl": 1,
+        "velocity": [
+          1,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 10,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "air_mode0_zero_inertia",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "airControl": 0.1,
+        "inertia": 0,
+        "velocity": [
+          1,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 10,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "air_gravity_resistance_0",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "airControl": 0,
+        "airResistance": 0
+      }
+    ],
+    "frames": 10,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "air_gravity_resistance_1",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "airControl": 0,
+        "airResistance": 1
+      }
+    ],
+    "frames": 10,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "pivot_only_preflight_diff_queued",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ]
+      }
+    ],
+    "frames": 3,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 1,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "segmentHalfHeight": 2,
+          "heightCollider": 0.4,
+          "heightPivot": 1.5
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "pivot_only_preflight_diff_immediate",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ]
+      }
+    ],
+    "frames": 3,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 1,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "segmentHalfHeight": 2,
+          "heightCollider": 0.4,
+          "heightPivot": 1.5
+        },
+        "threadSafe": 0
+      }
+    ]
+  },
+  {
+    "name": "kind_only_preflight_diff_queued",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 2,
+        "halfHeight": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ]
+      }
+    ],
+    "frames": 3,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 1,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 2,
+          "segmentHalfHeight": 0.2,
+          "heightCollider": 0.4,
+          "heightPivot": 0
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "kind_only_preflight_diff_immediate",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 2,
+        "halfHeight": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ]
+      }
+    ],
+    "frames": 3,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 1,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 2,
+          "segmentHalfHeight": 0.2,
+          "heightCollider": 0.4,
+          "heightPivot": 0
+        },
+        "threadSafe": 0
+      }
+    ]
+  }
+]

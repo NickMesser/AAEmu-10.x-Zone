@@ -20,7 +20,7 @@ public readonly record struct ZoneManagedStaticQueryStatistics(int InstanceBound
 /// support surfaces. Bounding extents are used only for broadphase candidate selection.
 /// This supplies static collision queries, not rigid-body, vehicle, animation or breakage dynamics.
 /// </remarks>
-public sealed class ZoneManagedStaticGeometry
+public sealed partial class ZoneManagedStaticGeometry
 {
     /// <summary>
     /// World-space separation tolerance for curved convex overlap/sweep contacts, in meters,
@@ -48,32 +48,38 @@ public sealed class ZoneManagedStaticGeometry
     public int InstanceCount { get { lock (_gate) return _instances.Count; } }
     public ZoneManagedStaticQueryStatistics LastQueryStatistics { get { lock (_gate) return _lastQuery; } }
 
-    public ZoneManagedStaticInstanceHandle AddInstance(ZoneManagedTriangleMesh mesh, Matrix4x4 localToWorld)
+    public ZoneManagedStaticInstanceHandle AddInstance(ZoneManagedTriangleMesh mesh, Matrix4x4 localToWorld,
+        ZonePhysicsQueryBounds? admissionBounds = null)
     {
         ArgumentNullException.ThrowIfNull(mesh);
-        return AddInstanceCore(mesh, null, localToWorld);
+        return AddInstanceCore(mesh, null, localToWorld, admissionBounds);
     }
 
-    public ZoneManagedStaticInstanceHandle AddInstance(ZoneManagedPrimitiveGeometry primitive, Matrix4x4 localToWorld)
+    public ZoneManagedStaticInstanceHandle AddInstance(ZoneManagedPrimitiveGeometry primitive, Matrix4x4 localToWorld,
+        ZonePhysicsQueryBounds? admissionBounds = null)
     {
         ArgumentNullException.ThrowIfNull(primitive);
-        return AddInstanceCore(null, primitive, localToWorld);
+        return AddInstanceCore(null, primitive, localToWorld, admissionBounds);
     }
 
     private ZoneManagedStaticInstanceHandle AddInstanceCore(ZoneManagedTriangleMesh? mesh,
-        ZoneManagedPrimitiveGeometry? primitive, Matrix4x4 localToWorld)
+        ZoneManagedPrimitiveGeometry? primitive, Matrix4x4 localToWorld, ZonePhysicsQueryBounds? admissionBounds)
     {
         ValidateTransform(localToWorld, out var worldToLocal);
         var bounds = (mesh is not null ? new ZoneManagedBounds(mesh.BoundsMinimum, mesh.BoundsMaximum) : primitive!.Bounds).Transform(localToWorld);
         ZoneManagedTerrainGeometry.ValidateFinite(bounds.Minimum, nameof(localToWorld));
         ZoneManagedTerrainGeometry.ValidateFinite(bounds.Maximum, nameof(localToWorld));
+        var admitted = admissionBounds?.Managed ?? bounds;
+        if (admitted.Minimum.X > bounds.Minimum.X || admitted.Minimum.Y > bounds.Minimum.Y || admitted.Minimum.Z > bounds.Minimum.Z ||
+            admitted.Maximum.X < bounds.Maximum.X || admitted.Maximum.Y < bounds.Maximum.Y || admitted.Maximum.Z < bounds.Maximum.Z)
+            throw new ArgumentException("Entity admission bounds must contain the part's collision bounds.", nameof(admissionBounds));
         var (minimum, maximum, bucketCount) = BucketRange(bounds);
         var keys = bucketCount <= MaximumInstanceBuckets ? EnumerateBuckets(minimum, maximum).ToArray() : [];
         lock (_gate)
         {
             if (_nextIdentity == ulong.MaxValue) throw new InvalidOperationException("Static instance identities are exhausted.");
             var handle = new ZoneManagedStaticInstanceHandle(++_nextIdentity);
-            _instances.Add(handle, new(mesh, primitive, localToWorld, worldToLocal, bounds, keys));
+            _instances.Add(handle, new(mesh, primitive, localToWorld, worldToLocal, bounds, admitted, keys));
             if (keys.Length == 0) _oversized.Add(handle);
             foreach (var key in keys)
             {
@@ -340,21 +346,24 @@ public sealed class ZoneManagedStaticGeometry
     }
 
     private ushort SolidContactMaterial(Instance instance, ZonePhysicsPenetration contact, ref int triangleTests)
+        => SolidContactMaterial(instance, contact.Position, contact.Normal, ref triangleTests);
+
+    private ushort SolidContactMaterial(Instance instance, Vector3 position, Vector3 normal, ref int triangleTests)
     {
         var extent = new Vector3(MathF.Max(.001f, PenetrationTolerance * 4));
-        instance.Mesh!.QueryBounds(new ZoneManagedBounds(contact.Position - extent, contact.Position + extent).Transform(instance.WorldToLocal), _queryTriangles);
+        instance.Mesh!.QueryBounds(new ZoneManagedBounds(position - extent, position + extent).Transform(instance.WorldToLocal), _queryTriangles);
         if (_queryTriangles.Count == 0) throw ZoneManagedPenetrationMath.Failure("solid contact witness has no nearby authored face");
         var best = double.PositiveInfinity; var alignment = -1f; ushort material = 0;
         foreach (var triangle in _queryTriangles)
         {
             triangleTests++;
             WorldTriangle(instance, triangle, out var a, out var b, out var c, out var candidate);
-            ZoneManagedPenetrationMath.ClosestTriangle(ZoneManagedDouble3.From(contact.Position), ZoneManagedDouble3.From(a),
+            ZoneManagedPenetrationMath.ClosestTriangle(ZoneManagedDouble3.From(position), ZoneManagedDouble3.From(a),
                 ZoneManagedDouble3.From(b), ZoneManagedDouble3.From(c), out var wa, out var wb, out var wc);
             var point = ZoneManagedDouble3.From(a) * wa + ZoneManagedDouble3.From(b) * wb + ZoneManagedDouble3.From(c) * wc;
-            var squared = (point - ZoneManagedDouble3.From(contact.Position)).Squared;
+            var squared = (point - ZoneManagedDouble3.From(position)).Squared;
             var n = Vector3.Cross(b - a, c - a);
-            var score = n.LengthSquared() > 0 ? MathF.Abs(Vector3.Dot(Vector3.Normalize(n), contact.Normal)) : 0;
+            var score = n.LengthSquared() > 0 ? MathF.Abs(Vector3.Dot(Vector3.Normalize(n), normal)) : 0;
             if (squared > best + 1e-12 || Math.Abs(squared - best) <= 1e-12 && score <= alignment) continue;
             best = squared; material = candidate; alignment = score;
         }
@@ -434,6 +443,6 @@ public sealed class ZoneManagedStaticGeometry
     }
 
     private sealed record Instance(ZoneManagedTriangleMesh? Mesh, ZoneManagedPrimitiveGeometry? Primitive, Matrix4x4 LocalToWorld,
-        Matrix4x4 WorldToLocal, ZoneManagedBounds Bounds, Bucket[] Buckets);
+        Matrix4x4 WorldToLocal, ZoneManagedBounds Bounds, ZoneManagedBounds AdmissionBounds, Bucket[] Buckets);
     private readonly record struct Bucket(int X, int Y, int Z);
 }

@@ -1,0 +1,10 @@
+{
+  "scope": "Two full original unbound PE_LIVING bodies at clear altitude; body B configured10m apart, then pose-set. Radius growth creates same-height overlap or capsule-cap-only overlap. No velocity or gravity work requested.",
+  "initialRadiusSum": 0.4,
+  "newRadiusSum": 0.7,
+  "horizontalGap": 0.6,
+  "axialHalfHeightSum": 0.4,
+  "capOnlyAxialGap": 0.5,
+  "capOnlyCapsuleSegmentDistance": 0.6082762530298219,
+  "expectedShortcut": "35027E10 returns1e10 onlyfor strict radial overlap AND axialcenterGap<hSum; capsule cap radii omitted vertically."
+}

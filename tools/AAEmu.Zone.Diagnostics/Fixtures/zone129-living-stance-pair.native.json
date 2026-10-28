@@ -1,0 +1,4772 @@
+{
+  "backend": "native-living",
+  "complete": true,
+  "requested": 4,
+  "bodyProfile": "unbound full PE_LIVING; authored-compatible dimensions; exact world Step and status",
+  "stepProfile": "original world TimeStep flags8 selects living class3 list; flags0 is not simulation acceptance",
+  "velocityProfile": "optional original24-byte action type1, explicit mode0 or mode3(default), dt0; no position action or forced correction",
+  "dimensionProfile": "optional original64-byte type1; actor queued(-1) or explicit immediate(0); \u002BZ unprojection, max(heightPivot,1), zero postpone flag; return and immediate read-back retained independently",
+  "centerConvention": "input position is entity origin; collider center=origin\u002B(heightCollider-heightPivot)*up",
+  "results": [
+    {
+      "name": "living_stance_pair_axial_overlap_refused_queued",
+      "outcome": "completed",
+      "input": {
+        "name": "living_stance_pair_axial_overlap_refused_queued",
+        "bodies": [
+          {
+            "name": "a",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          },
+          {
+            "name": "b",
+            "shape": "capsule",
+            "position": [
+              512.6,
+              512,
+              1000
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              522.6,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 3,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null,
+        "dimensionUpdates": [
+          {
+            "beforeFrame": 1,
+            "body": "a",
+            "dimensions": {
+              "shape": "capsule",
+              "radius": 0.5,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "segmentHalfHeight": 0.2,
+              "halfHeight": null
+            },
+            "threadSafe": -1
+          }
+        ]
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40001,
+              "position": [
+                522.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                522.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40001,
+              "position": [
+                512.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.01,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40001,
+              "position": [
+                512.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.02,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40001,
+              "position": [
+                512.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.03,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40001,
+              "position": [
+                512.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostic": null,
+      "dimensionUpdates": [
+        {
+          "beforeFrame": 1,
+          "body": "a",
+          "requested": {
+            "shape": "capsule",
+            "radius": 0.5,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null
+          },
+          "threadSafe": -1,
+          "nativeReturn": 0,
+          "before": {
+            "name": "a",
+            "physicalId": 40000,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.2,
+            "axialHalfHeight": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 73,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 65536,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.2,
+              "geometryAxialHalfHeight": 0.2,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            }
+          },
+          "after": {
+            "name": "a",
+            "physicalId": 40000,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.2,
+            "axialHalfHeight": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 73,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 196608,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.2,
+              "geometryAxialHalfHeight": 0.2,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "living_stance_pair_axial_overlap_refused_immediate",
+      "outcome": "completed",
+      "input": {
+        "name": "living_stance_pair_axial_overlap_refused_immediate",
+        "bodies": [
+          {
+            "name": "a",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          },
+          {
+            "name": "b",
+            "shape": "capsule",
+            "position": [
+              512.6,
+              512,
+              1000
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              522.6,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 3,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null,
+        "dimensionUpdates": [
+          {
+            "beforeFrame": 1,
+            "body": "a",
+            "dimensions": {
+              "shape": "capsule",
+              "radius": 0.5,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "segmentHalfHeight": 0.2,
+              "halfHeight": null
+            },
+            "threadSafe": 0
+          }
+        ]
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.03,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40002,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 1068570697,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40003,
+              "position": [
+                522.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                522.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 857055305,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.03,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40002,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 1068570697,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40003,
+              "position": [
+                512.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 857055305,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.04,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40002,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 1068570697,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40003,
+              "position": [
+                512.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 857055305,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.049999997,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40002,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 1068570697,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40003,
+              "position": [
+                512.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 857055305,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.06,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40002,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 1068570697,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40003,
+              "position": [
+                512.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 857055305,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostic": null,
+      "dimensionUpdates": [
+        {
+          "beforeFrame": 1,
+          "body": "a",
+          "requested": {
+            "shape": "capsule",
+            "radius": 0.5,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null
+          },
+          "threadSafe": 0,
+          "nativeReturn": 0,
+          "before": {
+            "name": "a",
+            "physicalId": 40002,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.2,
+            "axialHalfHeight": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 1068570697,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 65536,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.2,
+              "geometryAxialHalfHeight": 0.2,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            }
+          },
+          "after": {
+            "name": "a",
+            "physicalId": 40002,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.2,
+            "axialHalfHeight": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 1068570697,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 65536,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.2,
+              "geometryAxialHalfHeight": 0.2,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "living_stance_pair_caps_only_overlap_accepted_queued",
+      "outcome": "completed",
+      "input": {
+        "name": "living_stance_pair_caps_only_overlap_accepted_queued",
+        "bodies": [
+          {
+            "name": "a",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          },
+          {
+            "name": "b",
+            "shape": "capsule",
+            "position": [
+              512.6,
+              512,
+              1000.5
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              522.6,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 3,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null,
+        "dimensionUpdates": [
+          {
+            "beforeFrame": 1,
+            "body": "a",
+            "dimensions": {
+              "shape": "capsule",
+              "radius": 0.5,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "segmentHalfHeight": 0.2,
+              "halfHeight": null
+            },
+            "threadSafe": -1
+          }
+        ]
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.06,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40005,
+              "position": [
+                522.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                522.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 11075657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.06,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40005,
+              "position": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 11075657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.07,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.5,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.5,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40005,
+              "position": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 11075657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.08,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.5,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.5,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40005,
+              "position": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 11075657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.089999996,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.5,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.5,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40005,
+              "position": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 11075657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostic": null,
+      "dimensionUpdates": [
+        {
+          "beforeFrame": 1,
+          "body": "a",
+          "requested": {
+            "shape": "capsule",
+            "radius": 0.5,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null
+          },
+          "threadSafe": -1,
+          "nativeReturn": 1,
+          "before": {
+            "name": "a",
+            "physicalId": 40004,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.2,
+            "axialHalfHeight": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 73,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 65536,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.2,
+              "geometryAxialHalfHeight": 0.2,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            }
+          },
+          "after": {
+            "name": "a",
+            "physicalId": 40004,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.2,
+            "axialHalfHeight": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 73,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 196608,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.2,
+              "geometryAxialHalfHeight": 0.2,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "living_stance_pair_caps_only_overlap_accepted_immediate",
+      "outcome": "completed",
+      "input": {
+        "name": "living_stance_pair_caps_only_overlap_accepted_immediate",
+        "bodies": [
+          {
+            "name": "a",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          },
+          {
+            "name": "b",
+            "shape": "capsule",
+            "position": [
+              512.6,
+              512,
+              1000.5
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              522.6,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 3,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null,
+        "dimensionUpdates": [
+          {
+            "beforeFrame": 1,
+            "body": "a",
+            "dimensions": {
+              "shape": "capsule",
+              "radius": 0.5,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "segmentHalfHeight": 0.2,
+              "halfHeight": null
+            },
+            "threadSafe": 0
+          }
+        ]
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.089999996,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 11075657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                522.6,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                522.6,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3272304713,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.089999996,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 11075657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3272304713,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.099999994,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.5,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 11075657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.5,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3272304713,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.11,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.5,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 11075657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.5,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3272304713,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.12,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.5,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 11075657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.5,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "rawPosition": [
+                512.6,
+                512,
+                1000.5
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3272304713,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.2,
+                "geometryAxialHalfHeight": 0.2,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostic": null,
+      "dimensionUpdates": [
+        {
+          "beforeFrame": 1,
+          "body": "a",
+          "requested": {
+            "shape": "capsule",
+            "radius": 0.5,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null
+          },
+          "threadSafe": 0,
+          "nativeReturn": 1,
+          "before": {
+            "name": "a",
+            "physicalId": 40006,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.2,
+            "axialHalfHeight": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 11075657,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 65536,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.2,
+              "geometryAxialHalfHeight": 0.2,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            }
+          },
+          "after": {
+            "name": "a",
+            "physicalId": 40006,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.5,
+            "axialHalfHeight": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 11075657,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 65536,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.5,
+              "geometryAxialHalfHeight": 0.2,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

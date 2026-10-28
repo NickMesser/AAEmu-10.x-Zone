@@ -1,0 +1,28 @@
+{
+  "profile": "Unbound original living body in clear space, verified CLiving vtable0xC0/3502AA60 network-state tuple; no Action4 reset. Same authored zone129 assets as living60.",
+  "sourceAnchors": {
+    "x2Producer": "392440E0 constructs tupletype4 and callsphysicalvirtual192",
+    "livingVtable": "35025556 ->351EE1D8;slot192->3502AA60",
+    "consumer": "3502AA60;full84-byte copied tuple; internaltype0SetParams(-1),immediateactual/requestedtailwrites"
+  },
+  "cases": 6,
+  "worldSteps": 19,
+  "callOrder": "dimensionchanges(ifany),networkcorrection,before-framevelocitysubmission(ifconfigured),originalworldStepflags8",
+  "expected": {
+    "accepted": [
+      "netcorrection_force_original_present",
+      "netcorrection_near_cap_no_original",
+      "netcorrection_far_cap_no_original",
+      "netcorrection_original_absent_preserves_xy_wish",
+      "netcorrection_preserves_prior_mode3_flag2"
+    ],
+    "refused": [
+      "netcorrection_same_ground_without_owner_refused"
+    ],
+    "positionCap": "max(min(length(tupleVelocity)*.1,radius*.5),radius*.1)",
+    "nearFormula": "current+(target-current)*(distance/cap)*.033",
+    "farFormula": "target+(current-target)/sqrt(distanceSquared+FLT_MIN)*cap",
+    "tail": "ActualXY=tupleVelocityXY; ifOriginalpresentWishXYZ=Original; thenActualZ=WishZ=tupleVelocityZ.952/1120untouched.",
+    "sourceOnly": "No executed1120=truecorrection; prior-mode3controlbeginsafterfirstStepwithpersistentflag2=true,1120=false. No retainedmovingplatform/groundpartcontrol."
+  }
+}

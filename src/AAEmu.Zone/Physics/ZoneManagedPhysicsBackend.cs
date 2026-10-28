@@ -6,17 +6,20 @@ using AAEmu.Zone.Content;
 namespace AAEmu.Zone.Physics;
 
 /// <summary>
-/// Engine-independent character physics for one scene generation. Reuses the owned gravity and
-/// ground landing integrator, with continuous terrain/static and registered-body convex queries.
+/// Engine-independent character physics for one scene generation. Living bodies use copied
+/// authored movement dynamics; generic bodies retain the owned gravity/ground integrator.
+/// Both use continuous terrain/static and registered-body convex queries.
 /// Actor transforms are authored pivot origins; public shape query positions are centers.
 /// </summary>
 /// <remarks>
 /// This is a character controller, not a replacement rigid-body solver. Vehicle dynamics,
 /// swimming, ragdolls, actor stacking and friction response are not implemented.
-/// Character colliders stay upright; arbitrary body rotation, stance transitions and the native
-/// living suspension/step solver remain separate movement-fidelity work.
+/// Character colliders stay upright. Queued stances and mapped static/terrain movement are owned;
+/// arbitrary rotation, moving supports and complete native contact state remain separate work.
 /// </remarks>
-public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysicsMotion
+public sealed partial class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysicsMotion,
+    IZonePhysicsLivingStances, IZonePhysicsLivingDynamics, IZonePhysicsLivingMovementRequests,
+    IZonePhysicsLivingCorrections
 {
     public const float MinimumWalkableNormalZ = .7f;
     /// <summary>Original CPhysicalWorld's default unprojection clearance (world+244).</summary>
@@ -60,8 +63,10 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     public IReadOnlyList<string> Limitations { get; } = Array.AsReadOnly(new[]
     {
         "Only decoded and admitted static collision proxies are present; scene coverage reports retain unsupported resources.",
-        "Character colliders stay upright; arbitrary body rotation, stance transitions, the authored IgnoreCollision flag and native suspension/step dynamics are not implemented.",
-        "Living overlap recovery is proactive; the original idle, fall and contact-cache gate is not implemented.",
+        "Character colliders stay upright; arbitrary rotation and the authored IgnoreCollision callback/state path are not implemented.",
+        "Living stance queues, static/terrain slope and air response are implemented; moving/retained support owners, full stair/suspension and prior stuck-contact state remain incomplete.",
+        "Recovery uses deterministic contacts and a bounded replacement solve; complete native contact order, normal fallback and terrain boundary edge selection remain unverified.",
+        "Network corrections admit no retained support entity and keep the scene's traversed-correction guard; exact native queue interleaving/collision policy remains incomplete.",
         "Vehicle, rigid-body, ragdoll, swimming and actor stacking dynamics are not implemented.",
         "Material ids are resolved, but friction and elasticity response are not implemented.",
     });
@@ -78,6 +83,13 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         if (!float.IsFinite(description.CenterOffsetZ) || !float.IsFinite(description.GroundPivotHeight) ||
             !float.IsFinite(description.Gravity))
             throw new ArgumentOutOfRangeException(nameof(description), "Actor collider offsets, pivot height and gravity must be finite.");
+        if (description.Profile == ZonePhysicsActorProfile.Living && description.LivingMovement is null)
+            throw new ArgumentException("A living body requires copied movement settings from its stance or initial request.", nameof(description));
+        if (description.Profile == ZonePhysicsActorProfile.Living && description.LivingMovement is { } movement &&
+            (movement.Radius != description.Shape.Radius || movement.SegmentHalfHeight != description.Shape.SegmentHalfHeight ||
+             movement.UseCapsule != description.Shape.UseCapsule || movement.HeightPivot != description.GroundPivotHeight ||
+             movement.HeightCollider - movement.HeightPivot != description.CenterOffsetZ))
+            throw new ArgumentException("Living movement settings must describe the registered collider and pivot.", nameof(description));
         if (actor.Generation == 0 || _retired.Contains(actor) ||
             (_lastGeneration.TryGetValue(actor.UnitObjectId, out var previous) && actor.Generation <= previous))
             throw new InvalidOperationException($"Managed physics rejects retired or invalid actor generation {actor}.");
@@ -87,10 +99,13 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         _actors.Add(actor, description);
         _liveIdentities.Add(actor.UnitObjectId, actor);
         _lastGeneration[actor.UnitObjectId] = actor.Generation;
+        if (description.Profile == ZonePhysicsActorProfile.Living) _livingControls.Add(actor, new());
     }
 
     public void RemoveActor(ZoneActorHandle actor)
     {
+        RetireLivingStanceRequests(actor);
+        RetireLivingControls(actor);
         _retired.Add(actor);
         _lastRecovery.Remove(actor);
         if (!_actors.Remove(actor)) return;
@@ -102,6 +117,9 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     {
         if (elapsed <= TimeSpan.Zero)
             throw new ArgumentOutOfRangeException(nameof(elapsed), "Physics requires a positive explicit step.");
+        DrainLivingCorrectionPoses();
+        DrainLivingStanceRequests();
+        DrainLivingVelocityRequests();
         // Normal scene periods use at most 50 ms per integration. Catch-up is bounded to 256
         // substeps; the complete elapsed time is still integrated rather than silently discarded.
         var count = (int)Math.Clamp(Math.Ceiling(elapsed.TotalSeconds / .05), 1, 256);
@@ -111,10 +129,13 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         for (var i = 0; i < count; i++)
         {
             var period = TimeSpan.FromTicks(ticks + (i < remainder ? 1 : 0));
-            foreach (var actor in _actors.Keys) RecoverActor(actor);
+            PrepareLivingStep(period);
+            foreach (var (actor, description) in _actors)
+                if (description.Profile != ZonePhysicsActorProfile.Living ||
+                    description.CollisionActive && !_livingNextControls[actor].LastIdle) RecoverActor(actor);
             BlockHorizontalMotion((float)period.TotalSeconds);
             var ceilings = BlockStaticMotion((float)period.TotalSeconds);
-            OwnedPhysics.Step(period);
+            OwnedPhysics.Step(period, IntegrateLivingActor, CommitLivingControl);
             foreach (var actor in ceilings)
             {
                 OwnedPhysics.TryReadVelocity(actor, out var velocity);
@@ -127,6 +148,9 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     {
         Require(actor);
         OwnedPhysics.Teleport(actor, position, orientation);
+        if (_livingControls.TryGetValue(actor, out var control)) control.ResetMotion();
+        _pendingLivingVelocity.RemoveAll(request => request.Actor == actor);
+        _pendingLivingCorrectionPoses.RemoveAll(request => request.Actor == actor);
         _lastRecovery.Remove(actor);
     }
 
@@ -137,17 +161,27 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         OwnedPhysics.TryReadOrientation(actor, out var orientation);
         OwnedPhysics.TryReadVelocity(actor, out var velocity);
         OwnedPhysics.TryReadGrounded(actor, out var grounded);
+        if (_actors[actor] is { Profile: ZonePhysicsActorProfile.Living, CollisionActive: false }) grounded = true;
         // Native status2 (35029A30) reports airborne state for collision-active living
         // bodies; the native adapter exposes grounded as its exact complement.
-        status = new(position, orientation, velocity, grounded, !grounded);
+        status = new(position, orientation, velocity, grounded, !grounded)
+        {
+            CachedLivingGroundHeight = _livingControls.TryGetValue(actor, out var control)
+                ? control.CachedGroundHeight : null,
+        };
     }
 
     public bool TrySweep(ZonePhysicsShape shape, Vector3 origin, Vector3 displacement,
-        ZoneActorHandle? ignoreActor, out ZonePhysicsHit hit)
+        ZoneActorHandle? ignoreActor, out ZonePhysicsHit hit) =>
+        TrySweepWithTarget(shape, origin, displacement, ignoreActor, out hit, out _);
+
+    private bool TrySweepWithTarget(ZonePhysicsShape shape, Vector3 origin, Vector3 displacement,
+        ZoneActorHandle? ignoreActor, out ZonePhysicsHit hit, out bool staticTarget)
     {
         ZoneManagedTerrainGeometry.ValidateShape(shape);
         ZoneManagedTerrainGeometry.ValidateSegment(origin, displacement);
         hit = default;
+        staticTarget = true;
         if (displacement == Vector3.Zero) return false;
         var found = Geometry.TrySweep(shape, origin, displacement, out hit);
         if (StaticGeometry is not null && StaticGeometry.TrySweep(shape, origin, displacement, out var staticHit) &&
@@ -159,6 +193,7 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         if (TrySweepBodies(shape, origin, displacement, ignoreActor, out var bodyHit) && (!found || bodyHit.Distance < hit.Distance))
         {
             hit = bodyHit;
+            staticTarget = false;
             found = true;
         }
         return found;
@@ -195,12 +230,25 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     {
         Require(actor);
         OwnedPhysics.ApplyVelocity(actor, velocity);
+        if (_livingControls.TryGetValue(actor, out var control))
+        {
+            control.Requested = velocity;
+            control.LastMode = ZonePhysicsLivingVelocityMode.Immediate;
+            control.ForceRequestedOnce = true;
+            control.Flag2 = true;
+        }
     }
 
     public void ApplyImpulse(ZoneActorHandle actor, Vector3 impulse)
     {
         Require(actor);
         OwnedPhysics.ApplyImpulse(actor, impulse);
+        if (_livingControls.TryGetValue(actor, out var control))
+        {
+            if (impulse.Z > 1) OwnedPhysics.MarkFlying(actor);
+            if (_actors[actor].LivingMovement!.Inertia == 0)
+                control.ImpulseRecoveryTimer = _actors[actor].LivingMovement!.ImpulseRecoveryTime;
+        }
     }
 
     public void ApplyPose(ZoneActorHandle actor, Vector3 position, Quaternion orientation)
@@ -270,6 +318,7 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         // Compute corrections before integrating any actor, so every query sees one frame snapshot.
         foreach (var (actor, description) in _actors)
         {
+            if (description.Profile == ZonePhysicsActorProfile.Living) continue;
             OwnedPhysics.TryReadVelocity(actor, out var velocity);
             var horizontal = new Vector3(velocity.X, velocity.Y, 0);
             if ((horizontal * seconds).LengthSquared() <= 1e-12f) continue;
@@ -306,6 +355,7 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         if (StaticGeometry is null) return blocked;
         foreach (var (actor, description) in _actors)
         {
+            if (description.Profile == ZonePhysicsActorProfile.Living) continue;
             OwnedPhysics.TryReadVelocity(actor, out var velocity);
             OwnedPhysics.TryReadGrounded(actor, out var grounded);
             if (!grounded && OwnedPhysics.TryReadPosition(actor, out var origin))
@@ -382,12 +432,6 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
             }
             if (iteration == RecoveryIterationLimit)
                 throw RecoveryFailure(actor, "the bounded contact solve did not reach clearance");
-            // Explicit box bodies keep the backend's generic kinematic profile and numerical
-            // guard. A native living radius bound only exists for capsule/cylinder bodies.
-            if (description.Profile == ZonePhysicsActorProfile.Living &&
-                contact.Depth - ZoneManagedStaticGeometry.PenetrationTolerance > RecoveryRadiusLimit * description.Shape.Radius)
-                throw RecoveryFailure(actor, "the contact exceeds the verified 2.5-radius per-geometry unprojection bound");
-
             var correction = contact.Normal * (contact.Depth + RecoveryClearance);
             var squared = correction.LengthSquared();
             if (!Finite(correction) || !float.IsFinite(squared) || squared <= 0)
@@ -427,6 +471,12 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
 
         void Consider(ZonePhysicsPenetration contact)
         {
+            // This replacement applies the native per-geometry solver bound before selecting
+            // a contact. Exact native normal fallback/contact order remains separate work.
+            // An out-of-range target cannot abort the actor or hide an eligible neighbor.
+            if (description.Profile == ZonePhysicsActorProfile.Living &&
+                contact.Depth - ZoneManagedStaticGeometry.PenetrationTolerance > RecoveryRadiusLimit * shape.Radius)
+                return;
             // The existing generic kinematic profile follows a point support, so its footprint
             // can intersect an uphill surface while the reference point already rests on that
             // same plane. Preserve that contract without calling it native living floor policy.

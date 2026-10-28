@@ -432,7 +432,7 @@ internal static class CgfTestAssets
         return File(0x745, chunks);
     }
 
-    private static byte[] File(uint version, List<(uint Type, uint Version, int Id, byte[] Bytes)> chunks)
+    internal static byte[] File(uint version, List<(uint Type, uint Version, int Id, byte[] Bytes)> chunks)
     {
         var stride = version == 0x744 ? 16 : 20;
         var offset = 24 + chunks.Count * stride;
@@ -458,7 +458,7 @@ internal static class CgfTestAssets
         return bytes;
     }
 
-    private static byte[] Node(int objectId, int parentId, Matrix4x4 transform, string name)
+    internal static byte[] Node(int objectId, int parentId, Matrix4x4 transform, string name)
     {
         var bytes = new byte[220];
         Encoding.ASCII.GetBytes(name).CopyTo(bytes, 16);

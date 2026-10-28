@@ -195,8 +195,7 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
                 // Reuse the recovered 392DF300/392E2F20 source-order/default-stance and entity-scale
                 // mapping. This builds copied values only; no native surface or engine is needed.
                 var initial = ZoneActorPhysicalizationRequest.BuildInitial(actor.Model, actor.Scale, false, _ => null);
-                description = ZonePhysicsActorDescription.FromLivingStance(initial.Stance,
-                    initial.Dynamics.ReadSingle(0x28)!.Value, -initial.Dynamics.ReadSingle(0x1C)!.Value);
+                description = ZonePhysicsActorDescription.FromLivingRequest(initial);
             }
             else
             {
@@ -219,7 +218,7 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
             // The owned authority starts at the origin until the scene poses it; pose it immediately
             // from the actor's admitted transform so the first published frame is the real position.
             _backend.Teleport(handle, actor.Position, actor.Orientation);
-            actor.BindPhysicsAuthority(_backend);
+            actor.BindPhysicsAuthority(_backend, description);
             if (_simulation.Registry.Units.TryGetValue(unitObjectId, out var unit)) EnsureMovementModel(unit);
             _trace?.Invoke($"Backend registered unit={handle.UnitObjectId} gen={handle.Generation} mass={description.Mass} " +
                 $"halfExtents=({description.Shape.HalfExtents.X}, {description.Shape.HalfExtents.Y}, {description.Shape.HalfExtents.Z}) " +

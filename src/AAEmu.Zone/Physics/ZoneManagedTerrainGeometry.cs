@@ -17,7 +17,7 @@ namespace AAEmu.Zone.Physics;
 /// This provider contains terrain only: authored static meshes, caves, vegetation, vehicles and
 /// water collision need separate geometry providers and are not implied by a terrain miss.
 /// </remarks>
-public sealed class ZoneManagedTerrainGeometry(
+public sealed partial class ZoneManagedTerrainGeometry(
     ZoneTerrainHeightField terrain, ZoneTerrainSurfaceBindings? surfaces = null)
     : ZoneOwnedPlayerPhysics.IGroundQuery
 {
@@ -174,23 +174,25 @@ public sealed class ZoneManagedTerrainGeometry(
     }
 
     /// <summary>
-    /// Copies exact upward terrain support unprojections over each authored triangle/true shape
-    /// footprint. These are explicitly constrained surface contacts, not whole nonconvex-world
-    /// minimum translations. Eligibility requires a real top-surface intersection; wholly
-    /// submerged bodies, internal grid sides, holes and unloaded cells supply no early recovery
-    /// contacts. Depth reaches touch and excludes controller clearance.
+    /// Copies positive authored-face-normal recovery constraints, gated by real finite-triangle
+    /// intersections. Interior face depth is exact; boundary normal/depth selection is a conservative
+    /// surface policy, not a whole-terrain/edge MTD. A shorter backside exit never lowers a body
+    /// below terrain. Coplanar seam constraints coalesce; internal grid edges do not become walls.
+    /// Holes, unloaded cells and fully submerged nonintersecting shapes supply no contacts.
     /// </summary>
     public IReadOnlyList<ZonePhysicsPenetration> GetPenetrations(ZonePhysicsShape shape, Vector3 position)
     {
         ValidateShape(shape); ValidateFinite(position, nameof(position));
+        ValidateFinite(position - shape.BoundingHalfExtents, nameof(shape));
+        ValidateFinite(position + shape.BoundingHalfExtents, nameof(shape));
         var contacts = new List<ZonePhysicsPenetration>();
         foreach (var (x, y) in SweepCells(position, Vector3.Zero, shape.BoundingHalfExtents))
         {
             if (!_terrain.TryReadManagedPhysicsQuad(x, y, out var heights, out var material)) continue;
             CreateTriangles(x, y, heights, out var a, out var b, out var c, out var d);
             var physical = ResolveShapeMaterial(material);
-            if (ZoneManagedTerrainPenetration.Try(shape, position, a, b, c, physical, out var first)) contacts.Add(first);
-            if (ZoneManagedTerrainPenetration.Try(shape, position, b, d, c, physical, out var second)) contacts.Add(second);
+            if (ZoneManagedTerrainNormalPenetration.Try(shape, position, a, b, c, physical, out var first)) contacts.Add(first);
+            if (ZoneManagedTerrainNormalPenetration.Try(shape, position, b, d, c, physical, out var second)) contacts.Add(second);
         }
         return ZoneManagedPenetrationCollection.Snapshot(contacts);
     }
@@ -299,6 +301,15 @@ public sealed class ZoneManagedTerrainGeometry(
         else if (!float.IsFinite(shape.Radius) || shape.Radius <= 0 || !float.IsFinite(shape.SegmentHalfHeight) ||
             shape.SegmentHalfHeight < 0 || shape.Kind == ZonePhysicsShapeKind.Cylinder && shape.SegmentHalfHeight == 0)
             throw new ArgumentOutOfRangeException(nameof(shape), "Curved queries require a positive radius and valid axial half-length.");
+        ValidateFinite(shape.BoundingHalfExtents, nameof(shape));
+    }
+
+    /// <summary>Only the original old-kind/new-dimensions stance preflight can use a cylinder disk.</summary>
+    internal static void ValidateStancePreflightShape(ZonePhysicsShape shape)
+    {
+        if (shape.Kind != ZonePhysicsShapeKind.Cylinder || shape.SegmentHalfHeight != 0) { ValidateShape(shape); return; }
+        if (!float.IsFinite(shape.Radius) || shape.Radius <= 0)
+            throw new ArgumentOutOfRangeException(nameof(shape), "A stance preflight disk requires a finite positive radius.");
         ValidateFinite(shape.BoundingHalfExtents, nameof(shape));
     }
 

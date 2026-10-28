@@ -168,12 +168,24 @@ public sealed record ZoneMovementInputLimits(
         ZoneGameStanceDefinition? stance = null;
         foreach (var row in model.Stances)
             if (row.StanceId == 2) stance = row; // last source-order row wins (ZoneActorPhysicalizationRequest.cs:122-130)
-        var definition = model.Definition;
+        return FromSpeeds(model.Definition, stance?.MaxSpeed ?? 0, stance?.NormalSpeed ?? 0);
+    }
+
+    /// <summary>Uses the actor's accepted stance request, including constructor defaults for missing rows.</summary>
+    public static ZoneMovementInputLimits FromActorStance(ZoneActorModel model, ZoneActorStanceDefinition stance)
+    {
+        ArgumentNullException.ThrowIfNull(model);
+        ArgumentNullException.ThrowIfNull(stance);
+        return FromSpeeds(model.Definition, stance.Physicalization.MaximumSpeed, stance.NormalSpeed);
+    }
+
+    private static ZoneMovementInputLimits FromSpeeds(ZoneActorModelDefinition definition, float maximumSpeed, float normalSpeed)
+    {
         var turnSpeed = definition.TurnSpeed > 0 ? definition.TurnSpeed * (MathF.PI / 180f) : 0f; // TODO(turn-speed-units)
         var gravity = MathF.Abs(definition.PhysicsLivingGravity);
         var jumpHeight = definition.GameJumpHeight;
         var jumpSpeed = gravity > 0 && jumpHeight > 0 ? MathF.Sqrt(2f * gravity * jumpHeight) : 0f;
-        return new(stance?.MaxSpeed ?? 0f, stance?.NormalSpeed ?? 0f, turnSpeed, jumpSpeed);
+        return new(maximumSpeed, normalSpeed, turnSpeed, jumpSpeed);
     }
 }
 
@@ -248,14 +260,7 @@ public sealed class ZoneMovementInputAdmission
         uint sceneMilliseconds, out ZoneMovementInputIntent intent, out string refusal)
     {
         intent = default;
-        ArgumentNullException.ThrowIfNull(state);
-
-        if (!float.IsFinite(state.Pose.Position.Z))
-            return Reject(state, "position Z is not finite", out intent, out refusal);
-        if (!FiniteNonZeroRotation(state.Pose.Rotation))
-            return Reject(state, "pose rotation is not finite or is a zero quaternion", out intent, out refusal);
-        if (!Finite(state.Velocity) || !Finite(state.Delta) || !Finite(state.NativeVector3C))
-            return Reject(state, "velocity/delta/native state vector contains a non-finite component", out intent, out refusal);
+        if (!TryValidateState(state, out refusal)) return false;
 
         // --- turn clamp (scene clock domain) ---
         var yaw = YawOf(state.Pose.Rotation);
@@ -310,13 +315,24 @@ public sealed class ZoneMovementInputAdmission
         return true;
     }
 
-    private static bool Reject(ZoneActorMovementState? state, string reason,
-        out ZoneMovementInputIntent intent, out string refusal)
+    internal static bool TryValidateState(ZoneActorMovementState state, out string refusal)
     {
-        _ = state;
-        intent = default;
-        refusal = reason;
-        return false;
+        ArgumentNullException.ThrowIfNull(state);
+        refusal = !float.IsFinite(state.Pose.Position.Z) ? "position Z is not finite"
+            : !FiniteNonZeroRotation(state.Pose.Rotation) ? "pose rotation is not finite or is a zero quaternion"
+            : !Finite(state.Velocity) || !Finite(state.Delta) || !Finite(state.NativeVector3C)
+                ? "velocity/delta/native state vector contains a non-finite component" : string.Empty;
+        return refusal.Length == 0;
+    }
+
+    internal static bool TryValidateRequest(ZoneActorMovementInputRequest request, Quaternion rotation, out string refusal)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        refusal = !FiniteNonZeroRotation(rotation) ? "unit rotation is not finite or is a zero quaternion"
+            : !Finite(request.Delta) || !Finite(request.NativeVector04) || !Finite(request.RotationAngles) ||
+              !float.IsFinite(request.MovementScalar)
+                ? "request delta/vector/angles/scalar contains a non-finite component" : string.Empty;
+        return refusal.Length == 0;
     }
 
     /// <summary>
@@ -337,12 +353,7 @@ public sealed class ZoneMovementInputAdmission
         out string refusal)
     {
         intent = default;
-        ArgumentNullException.ThrowIfNull(request);
-        if (!FiniteNonZeroRotation(unitRotation))
-            return Reject(null, "unit rotation is not finite or is a zero quaternion", out intent, out refusal);
-        if (!Finite(request.Delta) || !Finite(request.NativeVector04) || !Finite(request.RotationAngles) ||
-            !float.IsFinite(request.MovementScalar))
-            return Reject(null, "request delta/vector/angles/scalar contains a non-finite component", out intent, out refusal);
+        if (!TryValidateRequest(request, unitRotation, out refusal)) return false;
 
         var yaw = YawOf(unitRotation);
         var turned = false;
@@ -393,7 +404,7 @@ public sealed class ZoneMovementInputAdmission
     private static bool FiniteNonZeroRotation(Quaternion rotation) =>
         float.IsFinite(rotation.X) && float.IsFinite(rotation.Y) &&
         float.IsFinite(rotation.Z) && float.IsFinite(rotation.W) &&
-        rotation.LengthSquared() > 0;
+        float.IsFinite(rotation.LengthSquared()) && rotation.LengthSquared() > 0;
 
     /// <summary>Heading of a yaw-bearing quaternion — the yaw term of the canonical decomposition (AAEmu.Game Utils MathUtil.cs:149, mirrored zone-side).</summary>
     internal static float YawOf(Quaternion rotation) =>
@@ -444,7 +455,13 @@ public sealed class ZoneMovementInputBinding
     public ZoneMovementInputControllerLeaf Controller { get; }
     public ZoneMovementInputActorLeaf PhysicalActor { get; }
     public ZoneMovementInputPoseEntity ModelEntity { get; }
-    /// <summary>Projected CActor flag bit zero (contract <c>IZoneActorMovementInputActor.SetMovementFlag</c>); plain bodies record it only — TODO(actor-flag-100).</summary>
+    public ZoneMovementInputLimits MovementLimits => Actor.LivingStances is { } stances
+        ? ZoneMovementInputLimits.FromActorStance(Actor.Model, stances.Current)
+        : ZoneMovementInputLimits.FromActorModel(Actor.Model);
+    /// <summary>
+    /// Wire actor flag bit zero, projected by CActor virtual0x100/392D4FB0 into actor+124 bit0x1000.
+    /// The original per-frame dynamics writer uses this exact flag to disable positive GameInertia.
+    /// </summary>
     public bool LastMovementFlag { get; internal set; }
 
     /// <summary>Generation-stable liveness: an exact-generation body check before every write (scope item 6: no output for retired actors).</summary>
@@ -454,6 +471,46 @@ public sealed class ZoneMovementInputBinding
             return true;
         _diagnostics.ReportSkippedActor(Owner.Snapshot.ObjectId, "player actor generation retired before motion write.");
         return false;
+    }
+
+    internal void RequestStance(int slot)
+    {
+        if (EnsureLive()) Actor.LivingStances?.Request(slot);
+    }
+
+    internal void ApplyPendingStance()
+    {
+        if (!EnsureLive() || Actor.LivingStances is not { } stances || stances.AttemptedInFrame) return;
+        if (!stances.TryApplyPending(out var refusal))
+            _diagnostics.ReportStanceRefusal(Handle, refusal);
+    }
+
+    internal void ApplyLivingDynamics()
+    {
+        if (!EnsureLive()) return;
+        // 392DC900: CActor virtual0x108 reads bit0x1000, produced by the selected wire
+        // movement bit through virtual0x100. Only positive GameInertia is replaced with zero.
+        // The separate animated-character GameInertiaAccel path is not inferred here.
+        var inertia = Actor.Model.Definition.GameInertia;
+        if (inertia > 0 && LastMovementFlag) inertia = 0;
+        Actor.SetLivingInertia(inertia);
+    }
+
+    internal void ApplyFrameVelocity(Vector3 requestedVelocity)
+    {
+        if (!EnsureLive()) return;
+        try
+        {
+            // A living frame action is mode0. Its requested Z must not be replaced with the
+            // actual vertical velocity retained by the generic ordinary-motion adapter.
+            if (Actor.TryApplyLivingVelocityRequest(requestedVelocity)) return;
+        }
+        catch (NotSupportedException error)
+        {
+            _diagnostics.ReportMotionRefusal("ApplyLivingVelocityRequest", Handle, error.Message);
+            return;
+        }
+        ZoneMovementMotionCall.Velocity(_motion, Handle, requestedVelocity, _diagnostics);
     }
 }
 
@@ -508,14 +565,24 @@ public sealed class ZoneMovementInputControllerLeaf(ZoneMovementInputBinding bin
 
     /// <summary>
     /// Applies one frame-phase input request: admission first (finite + content clamps), then
-    /// the physical velocity write through <see cref="ZoneMovementMotionCall"/> (refusal-counted
-    /// while <c>TODO(pose-write)</c> is open). Rejected requests are reported and dropped —
-    /// they never reach physics.
+    /// the normal living wish when its registration owns that capability, or the existing
+    /// generic velocity path. Refusals are counted; rejected requests never reach physics.
     /// </summary>
     public void Apply(ZoneActorMovementInputRequest request)
     {
         if (!binding.EnsureLive()) return;
-        var limits = ZoneMovementInputLimits.FromActorModel(binding.Actor.Model);
+        if (!ZoneMovementInputAdmission.TryValidateRequest(request, binding.Owner.Pose.Rotation, out var invalid))
+        {
+            binding.Diagnostics.ReportRejectedInput(binding.Owner.Snapshot.ObjectId, invalid);
+            return;
+        }
+        // 392EA280 retains the request's signed stance slot only under flag 8. This leaf runs
+        // inside the scene prephase; a refused resize keeps the accepted stance and its limits.
+        if ((request.Flags & 8) != 0)
+            binding.RequestStance(Math.Clamp(request.Stance, sbyte.MinValue, sbyte.MaxValue));
+        binding.ApplyPendingStance();
+        if (!binding.EnsureLive()) return;
+        var limits = binding.MovementLimits;
         if (!binding.Admission.TryAdmitRequest(request, binding.Owner.Pose.Rotation, limits,
                 binding.Clock.Current.ServerMilliseconds, out var intent, out var refusal))
         {
@@ -523,7 +590,7 @@ public sealed class ZoneMovementInputControllerLeaf(ZoneMovementInputBinding bin
             return;
         }
         _retained = request.NativeVector04;
-        ZoneMovementMotionCall.Velocity(binding.Motion, binding.Handle, intent.Velocity, binding.Diagnostics);
+        binding.ApplyFrameVelocity(intent.Velocity);
     }
 }
 
@@ -558,7 +625,7 @@ public sealed class ZoneMovementInputActorLeaf(ZoneMovementInputBinding binding,
         }
     }
 
-    /// <summary>TODO(actor-flag-100): the native CActor virtual (+D5 projection) has no plain-body owner; the flag is recorded on the binding, not fabricated into physics.</summary>
+    /// <summary>392D4FB0: retain the selected movement bit that controls the CActor inertia override.</summary>
     public void SetMovementFlag(bool value) => binding.LastMovementFlag = value;
 }
 

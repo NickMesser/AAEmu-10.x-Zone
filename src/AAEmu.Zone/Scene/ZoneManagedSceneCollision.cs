@@ -118,14 +118,26 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                         resource.SkippedNonUniformBrushes++;
                         continue;
                     }
+                    ZoneManagedBounds? entityBounds = null;
+                    foreach (var part in resource.Parts)
+                    {
+                        // Original ComputeBBox35054080 unions every published physical part,
+                        // regardless of its player/ray/vehicle collision flags. Render bounds
+                        // are not part of that calculation. The stance query admits the entity
+                        // first, then tests all of its eligible parts against the moving shape.
+                        var bounds = part.Bounds(matrix);
+                        entityBounds = entityBounds is { } previous ? ZoneManagedBounds.Union(previous, bounds) : bounds;
+                    }
+                    var admissionBounds = entityBounds is { } union
+                        ? new ZonePhysicsQueryBounds(union.Minimum, union.Maximum) : (ZonePhysicsQueryBounds?)null;
                     foreach (var part in resource.Parts)
                     {
                         if (part.BlocksCharacters)
                         {
-                            handles.Add(part.AddInstance(Geometry, matrix));
+                            handles.Add(part.AddInstance(Geometry, matrix, admissionBounds));
                             if (part.Primitive is not null) primitiveInstances++;
                         }
-                        if (part.CollidesRay) rayHandles.Add(part.AddInstance(RayGeometry, matrix));
+                        if (part.CollidesRay) rayHandles.Add(part.AddInstance(RayGeometry, matrix, admissionBounds));
                     }
                 }
                 catch (Exception error) when (AssetFailure(error))
@@ -199,13 +211,22 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                         // Native CStatObj maps these slots to 4096=default, 4097=nocollide,
                         // 4098=obstruct and 4099. Slot1 is a ray proxy, despite its legacy name;
                         // when it exists the default part loses geom_colltype_ray (0x8000).
-                        if (part.PhysicsSlot > 1) { resource.Skipped++; continue; }
+                        if (part.PhysicsSlot > 1)
+                        {
+                            resource.Skipped++;
+                            // CBrush30111970 publishes root4098 as a vehicle/obstruct part on
+                            // the same entity. It affects entity admission bounds even though
+                            // it is not a player or picking target. Child300442F0 publishes only
+                            // slots0/1; neither path publishes slot3 as an ordinary brush part.
+                            if (part.PhysicsSlot != 2 || !publishRoot) continue;
+                        }
                         if (part.PhysicsSlot == 0) resource.DefaultParts++;
                         if (part.Geometry is not { } geometry)
                         {
                             resource.Diagnostics.Add(part.Diagnostic ?? $"Unsupported default physics chunk {part.PhysicsChunkId}.");
                             continue;
                         }
+                        var partTransforms = part.PhysicsSlot == 2 ? new[] { Matrix4x4.Identity } : physicsTransforms;
                         if (geometry.Primitive is { } primitive)
                         {
                             var surface = Surface(geometry.DefaultMaterialSlot);
@@ -218,9 +239,9 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                             };
                             var shape = new ZoneManagedPrimitiveGeometry(kind, primitive.Center, primitive.Axis,
                                 primitive.Radius, primitive.HalfHeight, surface);
-                            foreach (var physicsTransform in physicsTransforms)
+                            foreach (var physicsTransform in partTransforms)
                                 resource.Parts.Add(new(null, shape, physicsTransform, part.PhysicsSlot == 0,
-                                    part.PhysicsSlot == 1 || !hasPickingProxy, part.PhysicsSlot));
+                                    part.PhysicsSlot == 1 || part.PhysicsSlot == 0 && !hasPickingProxy, part.PhysicsSlot));
                         }
                         else
                         {
@@ -232,9 +253,9 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                                     ? geometry.DefaultMaterialSlot : geometry.MaterialSlots[triangle]);
                             var mesh = new ZoneManagedTriangleMesh(geometry.Vertices.ToArray(), indices, triangleMaterials,
                                 solidConvex: geometry.Kind == ZoneCgfPhysicsGeometryKind.Box);
-                            foreach (var physicsTransform in physicsTransforms)
+                            foreach (var physicsTransform in partTransforms)
                                 resource.Parts.Add(new(mesh, null, physicsTransform, part.PhysicsSlot == 0,
-                                    part.PhysicsSlot == 1 || !hasPickingProxy, part.PhysicsSlot));
+                                    part.PhysicsSlot == 1 || part.PhysicsSlot == 0 && !hasPickingProxy, part.PhysicsSlot));
                         }
 
                         ushort Surface(int slot)
@@ -336,9 +357,13 @@ public sealed class ZoneManagedSceneCollision : IDisposable
     private sealed record Part(ZoneManagedTriangleMesh? Mesh, ZoneManagedPrimitiveGeometry? Primitive,
         Matrix4x4 Transform, bool BlocksCharacters, bool CollidesRay, int PhysicsSlot)
     {
-        public ZoneManagedStaticInstanceHandle AddInstance(ZoneManagedStaticGeometry target, Matrix4x4 placement)
-            => Primitive is { } primitive ? target.AddInstance(primitive, Transform * placement)
-                : target.AddInstance(Mesh!, Transform * placement);
+        public ZoneManagedBounds Bounds(Matrix4x4 placement) =>
+            (Primitive?.Bounds ?? new ZoneManagedBounds(Mesh!.BoundsMinimum, Mesh.BoundsMaximum)).Transform(Transform * placement);
+
+        public ZoneManagedStaticInstanceHandle AddInstance(ZoneManagedStaticGeometry target, Matrix4x4 placement,
+            ZonePhysicsQueryBounds? admissionBounds)
+            => Primitive is { } primitive ? target.AddInstance(primitive, Transform * placement, admissionBounds)
+                : target.AddInstance(Mesh!, Transform * placement, admissionBounds);
     }
     private sealed class Resource(string path, string? material)
     {

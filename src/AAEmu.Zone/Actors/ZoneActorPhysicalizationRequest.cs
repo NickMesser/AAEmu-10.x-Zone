@@ -114,20 +114,7 @@ public sealed class ZoneActorPhysicalizationRequest
         ArgumentNullException.ThrowIfNull(model);
         ArgumentNullException.ThrowIfNull(resolvePhysicalSurface);
         var source = model.Definition;
-        // CActor constructor 392E6BC0 initializes each stance to a half-size box, zero
-        // offsets/heights/speed and false flags. Missing content does not scale that default.
-        var stance = new ZoneActorPhysicalizationStance(new(.5f), default, default, 0, 0, 0, false, false);
-        // 392DF300 installs rows in source order then copies slot1 (content stance ID2)
-        // over the default stance. ID0's earlier default write cannot survive that copy.
-        foreach (var row in model.Stances)
-        {
-            if (row.StanceId != 2) continue;
-            stance = new(new(row.SizeX * entityScale, row.SizeY * entityScale, row.SizeZ * entityScale),
-                new(row.ViewOffsetX * entityScale, row.ViewOffsetY * entityScale, row.ViewOffsetZ * entityScale),
-                new(row.ModelOffsetX * entityScale, row.ModelOffsetY * entityScale, row.ModelOffsetZ * entityScale),
-                row.HeightCollider * entityScale, row.HeightPivot * entityScale, row.MaxSpeed,
-                row.UseCapsule, row.IgnoreCollision);
-        }
+        var stance = new ZoneActorStanceCatalog(model, entityScale).Default.Physicalization;
 
         // 392DF860 multiplies in float precision. No finite/positive clamp is present.
         var scaleCubed = (entityScale * entityScale) * entityScale;

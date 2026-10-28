@@ -1,0 +1,1677 @@
+[
+  {
+    "name": "native_movement_constructor_defaults",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "useNativeMovementDefaults": true
+      }
+    ],
+    "frames": 2,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "explicit_zero_angles",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "minSlideAngle": 0,
+        "maxClimbAngle": 0,
+        "minFallAngle": 0,
+        "maxVelGround": 0
+      }
+    ],
+    "frames": 2,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "free_capsule_h0",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ]
+      }
+    ],
+    "frames": 2,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "free_capsule_submillimeter_h",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.0001,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ]
+      }
+    ],
+    "frames": 2,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_idle_slide20",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 20,
+        "maxClimbAngle": 60,
+        "minFallAngle": 70
+      }
+    ],
+    "frames": 40,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_idle_slide30",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 30,
+        "maxClimbAngle": 60,
+        "minFallAngle": 70
+      }
+    ],
+    "frames": 40,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_idle_slide50",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 50,
+        "maxClimbAngle": 60,
+        "minFallAngle": 70
+      }
+    ],
+    "frames": 40,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_idle_slide80",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 60,
+        "minFallAngle": 70
+      }
+    ],
+    "frames": 40,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_idle_fall0",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 60,
+        "minFallAngle": 0
+      }
+    ],
+    "frames": 30,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_idle_fall20",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 60,
+        "minFallAngle": 20
+      }
+    ],
+    "frames": 30,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_idle_fall50",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 60,
+        "minFallAngle": 50
+      }
+    ],
+    "frames": 30,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_idle_fall70",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 60,
+        "minFallAngle": 70
+      }
+    ],
+    "frames": 30,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_uphill_climb20_mode0",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 20,
+        "minFallAngle": 70,
+        "velocity": [
+          -0.9926288840991626,
+          0.12119364031190448,
+          0
+        ],
+        "velocityStartFrame": 11,
+        "velocityMode": 0
+      }
+    ],
+    "frames": 45,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true
+  },
+  {
+    "name": "slope_downhill_climb20_mode0",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 20,
+        "minFallAngle": 70,
+        "velocity": [
+          0.9926288840991626,
+          -0.12119364031190448,
+          0
+        ],
+        "velocityStartFrame": 11,
+        "velocityMode": 0
+      }
+    ],
+    "frames": 45,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true
+  },
+  {
+    "name": "slope_uphill_climb60_mode0",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 60,
+        "minFallAngle": 70,
+        "velocity": [
+          -0.9926288840991626,
+          0.12119364031190448,
+          0
+        ],
+        "velocityStartFrame": 11,
+        "velocityMode": 0
+      }
+    ],
+    "frames": 45,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true
+  },
+  {
+    "name": "slope_downhill_climb60_mode0",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 60,
+        "minFallAngle": 70,
+        "velocity": [
+          0.9926288840991626,
+          -0.12119364031190448,
+          0
+        ],
+        "velocityStartFrame": 11,
+        "velocityMode": 0
+      }
+    ],
+    "frames": 45,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true
+  },
+  {
+    "name": "slope_uphill_climb20_mode3",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 20,
+        "minFallAngle": 70,
+        "velocity": [
+          -0.9926288840991626,
+          0.12119364031190448,
+          0
+        ],
+        "velocityStartFrame": 11,
+        "velocityMode": 3
+      }
+    ],
+    "frames": 45,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true
+  },
+  {
+    "name": "slope_downhill_climb20_mode3",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 20,
+        "minFallAngle": 70,
+        "velocity": [
+          0.9926288840991626,
+          -0.12119364031190448,
+          0
+        ],
+        "velocityStartFrame": 11,
+        "velocityMode": 3
+      }
+    ],
+    "frames": 45,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true
+  },
+  {
+    "name": "slope_uphill_climb60_mode3",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 60,
+        "minFallAngle": 70,
+        "velocity": [
+          -0.9926288840991626,
+          0.12119364031190448,
+          0
+        ],
+        "velocityStartFrame": 11,
+        "velocityMode": 3
+      }
+    ],
+    "frames": 45,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true
+  },
+  {
+    "name": "slope_downhill_climb60_mode3",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "maxClimbAngle": 60,
+        "minFallAngle": 70,
+        "velocity": [
+          0.9926288840991626,
+          -0.12119364031190448,
+          0
+        ],
+        "velocityStartFrame": 11,
+        "velocityMode": 3
+      }
+    ],
+    "frames": 45,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true
+  },
+  {
+    "name": "free_requested_speed2_supportcap0",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "maxVelGround": 0,
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 20,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true,
+    "minimumFirstBodyTravel": 0.01
+  },
+  {
+    "name": "free_requested_speed2_supportcap1",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "maxVelGround": 1,
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 20,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true,
+    "minimumFirstBodyTravel": 0.01
+  },
+  {
+    "name": "free_requested_speed2_supportcap100",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "maxVelGround": 100,
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 20,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true,
+    "minimumFirstBodyTravel": 0.01
+  },
+  {
+    "name": "free_dimension_sequence",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ]
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 2,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.06,
+          "heightCollider": 0.32,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.08
+        },
+        "threadSafe": -1
+      },
+      {
+        "beforeFrame": 4,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.32
+        },
+        "threadSafe": -1
+      },
+      {
+        "beforeFrame": 6,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0.25,
+          "segmentHalfHeight": 0.32
+        },
+        "threadSafe": -1
+      },
+      {
+        "beforeFrame": 8,
+        "body": "actor",
+        "dimensions": {
+          "shape": "cylinder",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0.25,
+          "halfHeight": 0.32
+        },
+        "threadSafe": -1
+      },
+      {
+        "beforeFrame": 10,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0.25,
+          "segmentHalfHeight": 0
+        },
+        "threadSafe": -1
+      },
+      {
+        "beforeFrame": 12,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0.25,
+          "segmentHalfHeight": 0.0001
+        },
+        "threadSafe": -1
+      },
+      {
+        "beforeFrame": 14,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0.25,
+          "segmentHalfHeight": 0.001
+        },
+        "threadSafe": -1
+      },
+      {
+        "beforeFrame": 16,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.16
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "free_dimension_keeps_velocity",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "velocity": [
+          1,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 10,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 4,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.45,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.2
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "floor_dimensions_grow_accepted",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 11,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.6
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "floor_dimensions_grow_near_limit",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 11,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.95
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "floor_dimensions_grow_refused",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 11,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0,
+          "segmentHalfHeight": 2
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "floor_dimensions_pivot_+0.2",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 11,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0.2,
+          "segmentHalfHeight": 0.16
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "floor_dimensions_pivot_-0.1",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 11,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": -0.1,
+          "segmentHalfHeight": 0.16
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "inactive_floor_dimension_growth",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "collisionActive": false
+      }
+    ],
+    "frames": 10,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 4,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0,
+          "segmentHalfHeight": 2
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "slope_origin_below_support_0.1",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.20856323242185
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "velocity": [
+          1e-06,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 8,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_origin_below_support_0.2",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.1085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "velocity": [
+          1e-06,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 8,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "slope_origin_below_support_0.5",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          305.8085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80,
+        "velocity": [
+          1e-06,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 8,
+    "stepSeconds": 0.01
+  },
+  {
+    "name": "free_dimension_sequence_immediate",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ]
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 2,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.06,
+          "heightCollider": 0.32,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.08
+        },
+        "threadSafe": 0
+      },
+      {
+        "beforeFrame": 4,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.32
+        },
+        "threadSafe": 0
+      },
+      {
+        "beforeFrame": 6,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0.25,
+          "segmentHalfHeight": 0.32
+        },
+        "threadSafe": 0
+      },
+      {
+        "beforeFrame": 8,
+        "body": "actor",
+        "dimensions": {
+          "shape": "cylinder",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0.25,
+          "halfHeight": 0.32
+        },
+        "threadSafe": 0
+      },
+      {
+        "beforeFrame": 10,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0.25,
+          "segmentHalfHeight": 0
+        },
+        "threadSafe": 0
+      },
+      {
+        "beforeFrame": 12,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0.25,
+          "segmentHalfHeight": 0.0001
+        },
+        "threadSafe": 0
+      },
+      {
+        "beforeFrame": 14,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.7,
+          "heightPivot": 0.25,
+          "segmentHalfHeight": 0.001
+        },
+        "threadSafe": 0
+      },
+      {
+        "beforeFrame": 16,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.16
+        },
+        "threadSafe": 0
+      }
+    ]
+  },
+  {
+    "name": "free_dimension_keeps_velocity_immediate",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "velocity": [
+          1,
+          0,
+          0
+        ],
+        "velocityMode": 0
+      }
+    ],
+    "frames": 10,
+    "stepSeconds": 0.01,
+    "submitVelocityEachStep": true,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 4,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.1,
+          "heightCollider": 0.45,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.2
+        },
+        "threadSafe": 0
+      }
+    ]
+  },
+  {
+    "name": "floor_dimensions_grow_accepted_immediate",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 11,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.6
+        },
+        "threadSafe": 0
+      }
+    ]
+  },
+  {
+    "name": "floor_dimensions_grow_near_limit_immediate",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 11,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0,
+          "segmentHalfHeight": 0.95
+        },
+        "threadSafe": 0
+      }
+    ]
+  },
+  {
+    "name": "floor_dimensions_grow_refused_immediate",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 11,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0,
+          "segmentHalfHeight": 2
+        },
+        "threadSafe": 0
+      }
+    ]
+  },
+  {
+    "name": "floor_dimensions_pivot_+0.2_immediate",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 11,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0.2,
+          "segmentHalfHeight": 0.16
+        },
+        "threadSafe": 0
+      }
+    ]
+  },
+  {
+    "name": "floor_dimensions_pivot_-0.1_immediate",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "minSlideAngle": 80
+      }
+    ],
+    "frames": 18,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 11,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": -0.1,
+          "segmentHalfHeight": 0.16
+        },
+        "threadSafe": 0
+      }
+    ]
+  },
+  {
+    "name": "inactive_floor_dimension_growth_immediate",
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          510.6666564941406,
+          510.6666564941406,
+          306.3085632324219
+        ],
+        "radius": 0.08,
+        "segmentHalfHeight": 0.16,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 25,
+        "setupPosition": [
+          510.6666564941406,
+          510.6666564941406,
+          1000
+        ],
+        "collisionActive": false
+      }
+    ],
+    "frames": 10,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 4,
+        "body": "actor",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.08,
+          "heightCollider": 0.4,
+          "heightPivot": 0,
+          "segmentHalfHeight": 2
+        },
+        "threadSafe": 0
+      }
+    ]
+  }
+]

@@ -1,4 +1,4 @@
-# Zone 129 character-shape controls
+# Zone 129 physics controls
 
 `zone129-character-shapes.json` contains 132 copied-value box, capsule and cylinder requests in
 the six-cell zone-129 window, whose world-cell origin is `(9,14)`. Centers are raw primitive
@@ -72,9 +72,116 @@ The controls establish static early unprojection with approximately 0.01 m added
 preserved velocity, bounded buried-pivot support and the original special-stance hover behavior.
 They also retain the native idle shortcut: zero actual/requested velocity is only part of a larger
 predicate over flying/gravity, suspension, cached floor/normal, retained ground and prior contacts.
-A tiny nonzero request defeats that shortcut. Managed proactive recovery does not reproduce this
-complete state predicate. These original results support individual rules; they are not a passing
-claim of complete managed living-body parity.
+A tiny nonzero request defeats that shortcut. The managed static/terrain profile copies the idle
+predicate for its owned state; retained supports and the complete original contact state remain
+separate limits. These original results support individual rules; they are not a passing claim of
+complete managed living-body parity.
+
+## Authored living movement and stance controls
+
+The following four input/result groups contain 60 additional cases and 1,128 original world
+steps. Each group also has an `.evidence.json` file recording the independent placement and
+source attribution. Counts are world steps, not the sum of all bodies' individual steps.
+
+| Input stem | Cases | World steps | Coverage |
+| --- | ---: | ---: | --- |
+| `zone129-living-movement` | 42 | 988 | Constructor/explicit thresholds, slope slide/fall/climb, velocity modes, initial support, queued/immediate dimension changes |
+| `zone129-living-movement-followup` | 10 | 72 | Air control/inertia/resistance and preflight versus drain for pivot/kind changes |
+| `zone129-living-stance-pair` | 4 | 12 | Living-pair radial/axial dimension refusal and capsule-cap admission |
+| `zone129-living-stance-queue-survival` | 4 | 56 | Queued preflight returning zero while the later physical application succeeds |
+
+Each stem has `.json` inputs and the unchanged `.native.json` copied results. The native captures
+retain post-creation frame `-1`, verified starting frame `0`, every actual step, dimension-call
+return values and immediate applied readbacks. All bodies entered the original class-3 living
+list. A repeated preliminary smoke run is excluded from the 60-case total.
+
+The same native command shown above accepts these inputs. A managed comparison also requires
+the explicitly matched native capture:
+
+```text
+--check-managed-scene --config <managed-runtime.json>
+--scene-living-probes tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-movement.json
+--scene-living-native-reference tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-movement.native.json
+--scene-living-probe-output <managed-states.json>
+```
+
+The runner verifies input values, case/body/frame membership and resolved dimensions/dynamics
+before registering a body. It seeds only the copied native frame-0 origin, leaving native
+creation shifts and unseeded cache metadata visible in `seeds`. Applied geometry, actual velocity,
+requested velocity and queued stance reports are separate fields. The declared period rounds to
+the nearest 100 ns tick, and the native copied elapsed period must match the single-step profile.
+Output cannot overwrite its input or native reference.
+
+This is a comparison of stepping from the same physical starting pose. It does not establish
+native creation admission, animated-character behavior, retained moving supports or full gameplay
+parity. The native fixtures remain the independent observations; managed results do not replace
+them.
+
+The source anchors for this slice are `35025530` (constructor), `35028BF0` (dimensions/dynamics),
+`3502A300` (velocity requests), `3502B3F0` (support velocity), `3502CA20` (support probe),
+`3502DED0` (living step), `35023200` (queue before preflight) and `35027E10` (dimension
+unprojection). Angle fields retain their explicit values; zero is not an unused sentinel.
+`useNativeMovementDefaults` leaves the selected angle/support-speed fields unused, while the
+remaining explicit diagnostic dynamics still apply. `MaxVelGround` caps support-platform
+velocity, not walking speed.
+
+Velocity mode `0` submits ordinary wishes. Mode `3` sets the original one-step velocity bypass
+and its separate persistent flag-2 state; it must not be substituted for ordinary input. A
+dimension update with `threadSafe: -1` queues before preflight. Both directions are retained:
+preflight can succeed before drain refuses, or return zero before drain applies. The diagnostic
+`threadSafe: 0` branch applies immediately; production actor requests use the queue.
+
+The original early contact solver's `2.5 * radius` parameter is a per-geometry solver bound.
+Its fallback/contact ordering does not imply a universal hard rejection rule. Network correction
+tuples also use a separate physical API (`3502AA60`, virtual `+0xC0`), and are not the reset
+action numbered 4 or an ordinary mode-3 request. These 60 controls do not execute that network
+correction API.
+
+## Network-state correction controls
+
+`zone129-living-corrections.json`, `.native.json` and `.evidence.json` add six free-space
+controls and 19 original world steps. They use the same living-probe flags and matched-reference
+managed command, with this fixture stem instead. Together with the movement/stance groups,
+they contain 66 cases and 1,147 original world steps.
+
+The original X2 producer `392440E0` sends the 84-byte type-4 network tuple to physical virtual
+`+0xC0`; the original living vtable resolves it to `3502AA60`. The diagnostic validates that
+target and supplies copied tuple fields. This call is separate from the type-4 reset action at
+virtual `+0x50`.
+
+The five accepted controls cover forced position, near/far position caps, absent/present original
+velocity and a retained prior mode-3 flag. Position remains unchanged immediately and its queued
+update appears at the next step. Actual velocity changes immediately. Defined original velocity
+updates the wish, and filtered Z then updates both actual and requested Z. The sixth control
+returns zero without tail writes when `sameGround` has no retained owner.
+
+The prior-mode-3 control preserves flag `0x2`; the copied one-step byte `1120` is false before and
+after that call. Nonzero-byte preservation remains source evidence, not an executed control.
+Moving-platform anchors, ground-part corrections and collision traversal of correction poses
+are outside these free-space controls.
+
+## Managed controller comparison
+
+The [copied comparison summary](zone129-living-controller.managed-summary.json) records all 66
+cases, source fixture hashes and per-case measurements. The managed run completed all 1,147
+world steps and captured every expected body frame: 1,229 samples including frame zero.
+
+- Flying state, flag `0x2`, requested velocity and applied dimensions match in all 1,229 samples.
+  Dimensions include raw primitive and clamped support half-height, pivot/collider heights,
+  primitive kind and the primary part offset.
+- All 42 stance returns and six network-correction returns match. The six correction controls
+  also match immediate state, queued pose timing and every subsequent copied position/velocity.
+- Maximum actual-velocity difference is `0.0000006` m/s. Suspension differences are at most
+  `0.0000001266` m offset, `0.00000033` m/s velocity, zero acceleration and `0.00000001` s time.
+- The largest position difference is `0.0011` m in four queued/immediate cylinder-growth
+  controls. The two steep-slope fall/contact controls differ by at most `0.000543508` m.
+  Other captured position differences are at most `0.00003` m.
+
+All 25 samples that copy native byte `1120` match; those values are false. The original 60-case
+captures do not contain that byte, and none of these captures copies the live impulse-recovery
+timer. The managed report exposes its current timer without claiming an executed numerical
+comparison. Source-only branches and moving-support/contact-order limits remain explicit.
+These results establish this bounded scene/pose/controller comparison, not full feature parity.
 
 ## Terrain-only primitive controls
 

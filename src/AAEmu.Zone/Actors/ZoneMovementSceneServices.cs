@@ -83,6 +83,7 @@ public sealed class ZoneMovementDiagnostics
     public long PhaseRefusals { get; private set; }
     public long FacingControlRequests { get; private set; }
     public long JumpEndedNotifications { get; private set; }
+    public long StanceChangeRefusals { get; private set; }
 
     public string? LastRefusalMessage { get; private set; }
     public string? LastRejectionReason { get; private set; }
@@ -127,6 +128,15 @@ public sealed class ZoneMovementDiagnostics
     internal void ReportPhaseRefusal(uint objectId, string reason)
     {
         lock (_gate) { PhaseRefusals++; LastRefusalMessage = $"unit {objectId}: {reason}"; }
+    }
+
+    internal void ReportStanceRefusal(ZoneActorHandle actor, string reason)
+    {
+        lock (_gate)
+        {
+            StanceChangeRefusals++;
+            LastRefusalMessage = $"stance({actor}): {reason}";
+        }
     }
 
     internal void ReportFacingControl(uint objectId, bool enabled)
@@ -305,7 +315,7 @@ public sealed class ZoneMovementServices : IZoneActorMovementServices
             return;
         }
 
-        var limits = ZoneMovementInputLimits.FromActorModel(binding.Actor.Model);
+        var limits = binding.MovementLimits;
         if (!limits.HasSpeedLimit && binding.Actor.Model.Stances.Count == 0)
             _diagnostics.ReportMissingLimits(owner.Snapshot.ObjectId);
 
@@ -319,6 +329,10 @@ public sealed class ZoneMovementServices : IZoneActorMovementServices
             _diagnostics.ReportRejectedInput(owner.Snapshot.ObjectId, refusal);
             return;
         }
+
+        // Receiving only stages the native slot request. Its one physical resize attempt is
+        // owned by the upcoming prephase, after valid input and before the single scene step.
+        binding.RequestStance(intent.Stance);
 
         // walk / stop → desired world velocity (engine-local frame, IZonePhysicsMotion doc).
         ZoneMovementMotionCall.Velocity(_motion, binding.Handle, intent.Velocity, _diagnostics);

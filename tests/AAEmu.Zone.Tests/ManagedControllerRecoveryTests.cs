@@ -63,7 +63,9 @@ public sealed class ManagedControllerRecoveryTests
         await Assert.That(MathF.Abs(recovered.Velocity.Y - 2)).IsLessThan(.00001f);
         await Assert.That(MathF.Abs(recovered.Velocity.Z)).IsLessThan(.00001f);
         await Assert.That(recovered.Velocity.X).IsGreaterThanOrEqualTo(0f);
-        await Assert.That(recovered.Velocity.X).IsLessThan(1f);
+        // A vertical static wall at zero up-speed fails the native actual-impulse gate.
+        // Displacement still slides; the inward requested/actual component is retained.
+        await Assert.That(recovered.Velocity.X).IsEqualTo(1f);
         await Assert.That(recovered.Orientation).IsEqualTo(Quaternion.Identity);
         await Assert.That(backend.TryReadLastRecovery(actor, out var report)).IsTrue();
         await Assert.That(report.Translation.X).IsLessThan(-.1f);
@@ -143,7 +145,7 @@ public sealed class ManagedControllerRecoveryTests
     }
 
     [Test]
-    public async Task DepthBeyondTheNativePerGeometryRadiusBoundFailsWithoutCommittingStagedState()
+    public async Task DepthBeyondTheNativePerGeometryRadiusBoundContributesNoRecoveryContact()
     {
         var statics = new ZoneManagedStaticGeometry();
         statics.AddInstance(Cube(5), Matrix4x4.CreateTranslation(0, 0, 1.2f));
@@ -154,15 +156,35 @@ public sealed class ManagedControllerRecoveryTests
         var velocity = new Vector3(1, 2, 0);
         backend.Teleport(actor, position, Quaternion.Identity);
         backend.ApplyVelocity(actor, velocity);
-        InvalidOperationException? failure = null;
-        try { backend.Step(TimeSpan.FromMilliseconds(20)); }
-        catch (InvalidOperationException error) { failure = error; }
-        await Assert.That(failure).IsNotNull();
-        await Assert.That(failure!.Message.Contains("2.5-radius", StringComparison.Ordinal)).IsTrue();
+        backend.Step(TimeSpan.FromMilliseconds(20));
         backend.CopyStatus(actor, out var unchanged);
+        // The early bounded query omits this target. The separate post-movement
+        // integrity pass restores the origin and clears actual motion, before the
+        // grounded branch relaxes toward the wish using constructor inertia8 over20ms.
         await Assert.That(unchanged.Position).IsEqualTo(position);
-        await Assert.That(unchanged.Velocity).IsEqualTo(velocity);
+        await Assert.That(unchanged.Velocity).IsEqualTo(velocity * .16f);
+        await Assert.That(unchanged.IsGrounded).IsTrue();
+        await Assert.That(unchanged.CachedLivingGroundHeight).IsEqualTo((float?)-1e10f);
         await Assert.That(backend.TryReadLastRecovery(actor, out _)).IsFalse();
+    }
+
+    [Test]
+    public async Task AnOutOfRangeTargetCannotHideAnEligibleNeighborRecovery()
+    {
+        var statics = new ZoneManagedStaticGeometry();
+        statics.AddInstance(Cube(5), Matrix4x4.CreateTranslation(0, 0, 1.2f));
+        statics.AddInstance(new ZoneManagedTriangleMesh(
+            [new(0, -10, -10), new(0, 10, -10), new(0, 10, 10), new(0, -10, 10)],
+            [0, 1, 2, 0, 2, 3]), Matrix4x4.Identity);
+        var backend = new ZoneManagedPhysicsBackend(new(new ZoneTerrainHeightField()), staticGeometry: statics);
+        var actor = new ZoneActorHandle(1012, 1);
+        backend.AddActor(actor, Description());
+        backend.Teleport(actor, new(-.3f, 0, .15f), Quaternion.Identity);
+        backend.ApplyLivingVelocityRequest(actor, new(.001f, 0, 0));
+        backend.Step(TimeSpan.FromMilliseconds(20));
+        await Assert.That(backend.TryReadLastRecovery(actor, out var recovery)).IsTrue();
+        await Assert.That(recovery.Translation.X).IsLessThan(-.1f);
+        await Assert.That(recovery.Translation.Length()).IsLessThan(.12f);
     }
 
     [Test]
@@ -279,7 +301,7 @@ public sealed class ManagedControllerRecoveryTests
         await Assert.That(recovered.IsGrounded).IsTrue();
         await Assert.That(MathF.Abs(recovered.Position.Z - .15f)).IsLessThan(.0001f);
         await Assert.That(backend.OwnedPhysics.TryReadGroundHeight(actor, out var ground)).IsTrue();
-        await Assert.That(ground).IsEqualTo(0f);
+        await Assert.That(MathF.Abs(ground)).IsLessThan(.00001f);
         // This movement belongs to bounded pivot support, not body-surface unprojection.
         await Assert.That(backend.TryReadLastRecovery(actor, out _)).IsFalse();
     }

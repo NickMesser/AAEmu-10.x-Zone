@@ -692,6 +692,8 @@ public sealed class ZonePlayerActor
 {
     private readonly ZonePlayerActorFactory _factory;
     private IZonePhysicsBackend? _physicsAuthority;
+    private IZonePhysicsLivingDynamics? _livingDynamics;
+    private IZonePhysicsLivingMovementRequests? _livingMovementRequests;
 
     internal ZonePlayerActor(ZonePlayerActorFactory factory, ZoneActorHandle handle, ZoneActorModel model,
         Vector3 position, Quaternion orientation, float scale)
@@ -711,6 +713,10 @@ public sealed class ZonePlayerActor
     public Vector3 Position { get; }
     public Quaternion Orientation { get; }
     public float Scale { get; }
+    /// <summary>Accepted/desired stance state when the selected backend owns living dimension changes.</summary>
+    public ZoneActorLivingStanceState? LivingStances { get; private set; }
+    /// <summary>Copied network corrections are available only for an authored living registration.</summary>
+    internal IZonePhysicsLivingCorrections? LivingCorrections { get; private set; }
     /// <summary>
     /// The registry-owned unit (movement-model owner). Null only for contract-created
     /// admissions that never passed through the registry hook (IZoneActorLifecycle.Create is the
@@ -775,14 +781,43 @@ public sealed class ZonePlayerActor
         return true;
     }
 
-    /// <summary>Bind once after AddActor/Teleport succeeded; changing authority requires a fresh actor generation.</summary>
-    internal void BindPhysicsAuthority(IZonePhysicsBackend authority)
+    /// <summary>
+    /// Bind once after AddActor/Teleport succeeded. Authored living admission opts into the
+    /// backend's stance and movement request capabilities; generic kinematic bodies keep their existing path.
+    /// Changing authority requires a fresh actor generation.
+    /// </summary>
+    internal void BindPhysicsAuthority(IZonePhysicsBackend authority, ZonePhysicsActorDescription? description = null)
     {
         ArgumentNullException.ThrowIfNull(authority);
         if (!IsLive) throw new ObjectDisposedException(nameof(ZonePlayerActor));
         if (_physicsAuthority is not null && !ReferenceEquals(_physicsAuthority, authority))
             throw new InvalidOperationException("A live player generation already has a physics authority.");
         _physicsAuthority = authority;
+        if (description is { Profile: ZonePhysicsActorProfile.Living })
+        {
+            _livingDynamics = authority as IZonePhysicsLivingDynamics;
+            _livingMovementRequests = authority as IZonePhysicsLivingMovementRequests;
+            LivingCorrections = authority as IZonePhysicsLivingCorrections;
+            if (authority is IZonePhysicsLivingStances stances) LivingStances ??= new(this, stances);
+        }
+    }
+
+    internal void SetLivingInertia(float inertia)
+    {
+        if (!IsLive) throw new ObjectDisposedException(nameof(ZonePlayerActor));
+        _livingDynamics?.SetLivingInertia(Handle, inertia);
+    }
+
+    /// <summary>
+    /// The actor's frame action requests normal living movement. This wish is distinct from
+    /// actual falling or ground-tangent velocity; generic registrations retain their motion path.
+    /// </summary>
+    internal bool TryApplyLivingVelocityRequest(Vector3 requestedVelocity)
+    {
+        if (!IsLive) throw new ObjectDisposedException(nameof(ZonePlayerActor));
+        if (_livingMovementRequests is not { } movement) return false;
+        movement.ApplyLivingVelocityRequest(Handle, requestedVelocity, ZonePhysicsLivingVelocityMode.Normal);
+        return true;
     }
 
     /// <summary>

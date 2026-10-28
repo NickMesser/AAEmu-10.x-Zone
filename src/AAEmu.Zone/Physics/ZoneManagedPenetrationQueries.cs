@@ -11,6 +11,13 @@ internal static class ZoneManagedPenetrationQueries
         ushort material, bool surface, out ZonePhysicsPenetration penetration)
     {
         penetration = default;
+        // A zero-height preflight cylinder is a disk. Parallel triangle/disk planes have
+        // either no intersection or zero-depth touch, never a positive volumetric MTD.
+        if (shape.Kind == ZonePhysicsShapeKind.Cylinder && shape.SegmentHalfHeight == 0 && target.Kind == ZoneManagedConvexTargetKind.Triangle)
+        {
+            var face = D.Cross(D.From(target.B) - D.From(target.A), D.From(target.C) - D.From(target.A));
+            if (face.X == 0 && face.Y == 0) return false;
+        }
         ZoneManagedPenetrationResult result;
         bool found;
         if (target.Kind == ZoneManagedConvexTargetKind.Shape)

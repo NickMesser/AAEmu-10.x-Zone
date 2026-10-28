@@ -66,6 +66,12 @@ public sealed record ZonePhysicsActorDescription(ZonePhysicsShape Shape, float M
     /// <summary>Signed world Z acceleration. Native living dynamics negate the authored scalar gravity.</summary>
     public float Gravity { get; init; } = ZoneOwnedPlayerPhysics.Gravity;
     public float CenterOffsetZ => ColliderCenterOffsetZ ?? Shape.BoundingHalfExtents.Z;
+    /// <summary>Copied authored living thresholds/dimensions; generic kinematic bodies have none.</summary>
+    public ZonePhysicsLivingMovementSettings? LivingMovement { get; init; }
+    /// <summary>Original living dynamics bActive. This is independent of authored IgnoreCollision.</summary>
+    public bool CollisionActive { get; init; } = true;
+    /// <summary>Copied type4 mode bit4. Its gameplay producer is separate from the movement solver.</summary>
+    public bool LivingFlag4 { get; init; }
 
     /// <summary>
     /// Maps the recovered living dimensions only. IgnoreCollision remains content metadata until
@@ -81,6 +87,34 @@ public sealed record ZonePhysicsActorDescription(ZonePhysicsShape Shape, float M
             ColliderCenterOffsetZ = stance.HeightCollider - stance.HeightPivot,
             GroundPivotHeight = stance.HeightPivot,
             Gravity = gravity,
+            LivingMovement = ZonePhysicsLivingMovementSettings.FromStance(stance),
+        };
+    }
+
+    /// <summary>
+    /// Maps an initial authored living request, including its defined dynamics instead of
+    /// substituting constructor slope/air coefficients. The copied settings retain no request.
+    /// </summary>
+    public static ZonePhysicsActorDescription FromLivingRequest(ZoneActorPhysicalizationRequest request)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var mass = request.Dynamics.ReadSingle(0x28) ??
+            throw new NotSupportedException("Managed living admission requires defined living mass.");
+        var gravity = request.Dynamics.ReadSingle(0x1C) ??
+            throw new NotSupportedException("Managed living admission requires defined scalar gravity.");
+        var settings = ZonePhysicsLivingMovementSettings.FromRequest(request);
+        return new(new(new(settings.Radius, request.Stance.Size.Y, settings.SegmentHalfHeight),
+            settings.UseCapsule ? ZonePhysicsShapeKind.Capsule : ZonePhysicsShapeKind.Cylinder), mass)
+        {
+            Profile = ZonePhysicsActorProfile.Living,
+            ColliderCenterOffsetZ = settings.HeightCollider - settings.HeightPivot,
+            GroundPivotHeight = settings.HeightPivot,
+            Gravity = -gravity,
+            LivingMovement = settings,
+            CollisionActive = request.Dynamics.ReadUInt32(0x5C) is not { } active ||
+                active == ZoneActorPhysicalizationRequest.UnusedIntegerBits || active != 0,
+            LivingFlag4 = request.Dynamics.ReadUInt32(0x24) is { } mode &&
+                mode != ZoneActorPhysicalizationRequest.UnusedIntegerBits && (mode & 1) != 0,
         };
     }
 }
@@ -104,7 +138,11 @@ public readonly record struct ZonePhysicsGroundHit(
 /// snapshots; no native state is retained by the reader.
 /// </summary>
 public readonly record struct ZonePhysicsActorStatus(
-    Vector3 Position, Quaternion Orientation, Vector3 Velocity, bool IsGrounded, bool IsFlying);
+    Vector3 Position, Quaternion Orientation, Vector3 Velocity, bool IsGrounded, bool IsFlying)
+{
+    /// <summary>Original status2+0x58/body572 cache; null means this backend does not copy it.</summary>
+    public float? CachedLivingGroundHeight { get; init; }
+}
 
 /// <summary>
 /// The one replaceable physics backend of a scene generation: stepping, sweep/collide queries,
@@ -167,4 +205,43 @@ public interface IZonePhysicsBackend
     /// <c>ZoneSceneActivation</c> (Scene/ZoneSceneActivation.cs).
     /// </summary>
     bool TryGround(Vector3 origin, float maxDistance, out ZonePhysicsGroundHit ground);
+}
+
+/// <summary>
+/// Optional living-dimension capability. The scene requests a stance through its existing
+/// movement owner. Acceptance means the request passed preflight and was queued; the scene's
+/// next physics step applies it before simulation. The original queues before preflight, so
+/// even a refused preflight can leave a command to drain; the actor keeps its desired request
+/// pending. Applied dimensions remain physical truth and must not be inferred from the return
+/// value. This does not create a second pose authority.
+/// </summary>
+public interface IZonePhysicsLivingStances
+{
+    bool TryChangeLivingStance(ZoneActorHandle actor, ZoneActorPhysicalizationStance stance, out string refusal);
+}
+
+/// <summary>Copied live dynamics updates issued by the actor's existing frame/input owner.</summary>
+public interface IZonePhysicsLivingDynamics
+{
+    void SetLivingInertia(ZoneActorHandle actor, float inertia);
+    void SetLivingCollisionActive(ZoneActorHandle actor, bool active);
+}
+
+public enum ZonePhysicsLivingVelocityMode { Normal = 0, Immediate = 3 }
+
+/// <summary>Queued living wishes, separate from the owned actual velocity and collision response.</summary>
+public interface IZonePhysicsLivingMovementRequests
+{
+    void ApplyLivingVelocityRequest(ZoneActorHandle actor, Vector3 requestedVelocity,
+        ZonePhysicsLivingVelocityMode mode = ZonePhysicsLivingVelocityMode.Normal);
+}
+
+/// <summary>
+/// Optional original network-correction boundary (PE virtual0xC0), distinct from Action4.
+/// The copied tuple updates velocity fields now and queues its position for the next step.
+/// It does not submit a mode3 wish or select a new orientation.
+/// </summary>
+public interface IZonePhysicsLivingCorrections
+{
+    bool TryApplyLivingCorrection(ZoneActorHandle actor, ZoneActorMovementCorrectionAction correction, out string refusal);
 }

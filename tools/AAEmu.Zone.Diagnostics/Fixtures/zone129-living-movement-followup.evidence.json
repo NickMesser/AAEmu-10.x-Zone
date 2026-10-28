@@ -1,0 +1,12 @@
+{
+  "caseCount": 10,
+  "frames": 72,
+  "scope": "Ordinary mode0 air controls use actual native gravity/inertia; queued/immediate preflight contrast starts with deliberately overlapping collider placed by verified pose API before anyStep. These are malformed-start ownership tests, not normal clear stance transitions.",
+  "sourceAnchors": [
+    "3502A300",
+    "35028BF0",
+    "35023200",
+    "3502DED0",
+    "35027BB0"
+  ]
+}

@@ -1,0 +1,238 @@
+[
+  {
+    "name": "living_stance_pair_axial_overlap_refused_queued",
+    "bodies": [
+      {
+        "name": "a",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "segmentHalfHeight": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0
+      },
+      {
+        "name": "b",
+        "shape": "capsule",
+        "position": [
+          512.6,
+          512,
+          1000
+        ],
+        "setupPosition": [
+          522.6,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "segmentHalfHeight": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0
+      }
+    ],
+    "frames": 3,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 1,
+        "body": "a",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.5,
+          "segmentHalfHeight": 0.2,
+          "heightCollider": 0.4,
+          "heightPivot": 0
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "living_stance_pair_axial_overlap_refused_immediate",
+    "bodies": [
+      {
+        "name": "a",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "segmentHalfHeight": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0
+      },
+      {
+        "name": "b",
+        "shape": "capsule",
+        "position": [
+          512.6,
+          512,
+          1000
+        ],
+        "setupPosition": [
+          522.6,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "segmentHalfHeight": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0
+      }
+    ],
+    "frames": 3,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 1,
+        "body": "a",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.5,
+          "segmentHalfHeight": 0.2,
+          "heightCollider": 0.4,
+          "heightPivot": 0
+        },
+        "threadSafe": 0
+      }
+    ]
+  },
+  {
+    "name": "living_stance_pair_caps_only_overlap_accepted_queued",
+    "bodies": [
+      {
+        "name": "a",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "segmentHalfHeight": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0
+      },
+      {
+        "name": "b",
+        "shape": "capsule",
+        "position": [
+          512.6,
+          512,
+          1000.5
+        ],
+        "setupPosition": [
+          522.6,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "segmentHalfHeight": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0
+      }
+    ],
+    "frames": 3,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 1,
+        "body": "a",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.5,
+          "segmentHalfHeight": 0.2,
+          "heightCollider": 0.4,
+          "heightPivot": 0
+        },
+        "threadSafe": -1
+      }
+    ]
+  },
+  {
+    "name": "living_stance_pair_caps_only_overlap_accepted_immediate",
+    "bodies": [
+      {
+        "name": "a",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "segmentHalfHeight": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0
+      },
+      {
+        "name": "b",
+        "shape": "capsule",
+        "position": [
+          512.6,
+          512,
+          1000.5
+        ],
+        "setupPosition": [
+          522.6,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "segmentHalfHeight": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0
+      }
+    ],
+    "frames": 3,
+    "stepSeconds": 0.01,
+    "dimensionUpdates": [
+      {
+        "beforeFrame": 1,
+        "body": "a",
+        "dimensions": {
+          "shape": "capsule",
+          "radius": 0.5,
+          "segmentHalfHeight": 0.2,
+          "heightCollider": 0.4,
+          "heightPivot": 0
+        },
+        "threadSafe": 0
+      }
+    ]
+  }
+]

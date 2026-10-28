@@ -1,0 +1,4637 @@
+{
+  "backend": "native-living",
+  "complete": true,
+  "requested": 6,
+  "bodyProfile": "unbound full PE_LIVING; authored-compatible dimensions; exact world Step and status",
+  "stepProfile": "original world TimeStep flags8 selects living class3 list; flags0 is not simulation acceptance",
+  "velocityProfile": "optional original24-byte action type1, explicit mode0 or mode3(default), dt0; no position action or forced correction",
+  "dimensionProfile": "optional original64-byte type1; actor queued(-1) or explicit immediate(0); \u002BZ unprojection, max(heightPivot,1), zero postpone flag; return and immediate read-back retained independently",
+  "correctionProfile": "optional exact84-byte network-state tuple type4 at CLiving virtual0xC0/3502AA60; distinct from reset Action4; correction before optional velocity submission and Step; return and immediate read-back retained",
+  "centerConvention": "input position is entity origin; collider center=origin\u002B(heightCollider-heightPivot)*up",
+  "results": [
+    {
+      "name": "netcorrection_force_original_present",
+      "outcome": "completed",
+      "input": {
+        "name": "netcorrection_force_original_present",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 3,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null,
+        "dimensionUpdates": null,
+        "corrections": [
+          {
+            "beforeFrame": 1,
+            "body": "actor",
+            "position": [
+              513,
+              512,
+              1000
+            ],
+            "velocity": [
+              0.8,
+              -0.2,
+              0.15
+            ],
+            "originalVelocity": [
+              1.25,
+              0.5,
+              0.8
+            ],
+            "sameGround": false,
+            "groundTransition": false,
+            "forcePosition": true,
+            "groundPart": 0,
+            "groundPartId": 0
+          }
+        ]
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.01,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40000,
+              "position": [
+                513.0125,
+                512.005,
+                1000.0015
+              ],
+              "rawPosition": [
+                513.0125,
+                512.005,
+                1000.0015
+              ],
+              "velocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "rawVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "requestedVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.02,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40000,
+              "position": [
+                513.025,
+                512.01,
+                1000.00305
+              ],
+              "rawPosition": [
+                513.025,
+                512.01,
+                1000.00305
+              ],
+              "velocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "rawVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "requestedVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.03,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40000,
+              "position": [
+                513.03754,
+                512.015,
+                1000.0046
+              ],
+              "rawPosition": [
+                513.03754,
+                512.015,
+                1000.0046
+              ],
+              "velocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "rawVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "requestedVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.03,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        }
+      ],
+      "diagnostic": null,
+      "dimensionUpdates": [],
+      "corrections": [
+        {
+          "beforeFrame": 1,
+          "body": "actor",
+          "requested": {
+            "beforeFrame": 1,
+            "body": "actor",
+            "position": [
+              513,
+              512,
+              1000
+            ],
+            "velocity": [
+              0.8,
+              -0.2,
+              0.15
+            ],
+            "originalVelocity": [
+              1.25,
+              0.5,
+              0.8
+            ],
+            "sameGround": false,
+            "groundTransition": false,
+            "forcePosition": true,
+            "groundPart": 0,
+            "groundPartId": 0
+          },
+          "nativeReturn": 1,
+          "before": {
+            "name": "actor",
+            "physicalId": 40000,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 73,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 65536,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          },
+          "after": {
+            "name": "actor",
+            "physicalId": 40000,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0.8,
+              -0.2,
+              0.15
+            ],
+            "rawVelocity": [
+              0.8,
+              -0.2,
+              0.15
+            ],
+            "requestedVelocity": [
+              1.25,
+              0.5,
+              0.15
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 73,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 196608,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "netcorrection_near_cap_no_original",
+      "outcome": "completed",
+      "input": {
+        "name": "netcorrection_near_cap_no_original",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 2,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null,
+        "dimensionUpdates": null,
+        "corrections": [
+          {
+            "beforeFrame": 1,
+            "body": "actor",
+            "position": [
+              512.004,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "originalVelocity": null,
+            "sameGround": false,
+            "groundTransition": false,
+            "forcePosition": false,
+            "groundPart": 0,
+            "groundPartId": 0
+          }
+        ]
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.03,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 869450825,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.03,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 869450825,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.04,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                512.00006,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.00006,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 869450825,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.049999997,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                512.00006,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.00006,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 869450825,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        }
+      ],
+      "diagnostic": null,
+      "dimensionUpdates": [],
+      "corrections": [
+        {
+          "beforeFrame": 1,
+          "body": "actor",
+          "requested": {
+            "beforeFrame": 1,
+            "body": "actor",
+            "position": [
+              512.004,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "originalVelocity": null,
+            "sameGround": false,
+            "groundTransition": false,
+            "forcePosition": false,
+            "groundPart": 0,
+            "groundPartId": 0
+          },
+          "nativeReturn": 1,
+          "before": {
+            "name": "actor",
+            "physicalId": 40001,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 869450825,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 65536,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          },
+          "after": {
+            "name": "actor",
+            "physicalId": 40001,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 869450825,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 196608,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "netcorrection_far_cap_no_original",
+      "outcome": "completed",
+      "input": {
+        "name": "netcorrection_far_cap_no_original",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 2,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null,
+        "dimensionUpdates": null,
+        "corrections": [
+          {
+            "beforeFrame": 1,
+            "body": "actor",
+            "position": [
+              513,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "originalVelocity": null,
+            "sameGround": false,
+            "groundTransition": false,
+            "forcePosition": false,
+            "groundPart": 0,
+            "groundPartId": 0
+          }
+        ]
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.049999997,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 1091700809,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.049999997,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 1091700809,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.06,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                512.992,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.992,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 1091700809,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.07,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                512.992,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.992,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 1091700809,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        }
+      ],
+      "diagnostic": null,
+      "dimensionUpdates": [],
+      "corrections": [
+        {
+          "beforeFrame": 1,
+          "body": "actor",
+          "requested": {
+            "beforeFrame": 1,
+            "body": "actor",
+            "position": [
+              513,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "originalVelocity": null,
+            "sameGround": false,
+            "groundTransition": false,
+            "forcePosition": false,
+            "groundPart": 0,
+            "groundPartId": 0
+          },
+          "nativeReturn": 1,
+          "before": {
+            "name": "actor",
+            "physicalId": 40002,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 1091700809,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 65536,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          },
+          "after": {
+            "name": "actor",
+            "physicalId": 40002,
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "rawPosition": [
+              512,
+              512,
+              1000
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "rawVelocity": [
+              0,
+              0,
+              0
+            ],
+            "requestedVelocity": [
+              0,
+              0,
+              0
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 1091700809,
+            "partColliderFlags": 2,
+            "groundHeight": -1E-10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 196608,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0,
+            "stepElapsed": 0,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 1,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "netcorrection_original_absent_preserves_xy_wish",
+      "outcome": "completed",
+      "input": {
+        "name": "netcorrection_original_absent_preserves_xy_wish",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": [
+              1,
+              0.5,
+              0.25
+            ],
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 0,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 4,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null,
+        "dimensionUpdates": null,
+        "corrections": [
+          {
+            "beforeFrame": 2,
+            "body": "actor",
+            "position": [
+              512.25,
+              512,
+              1000
+            ],
+            "velocity": [
+              0.4,
+              -0.1,
+              0.15
+            ],
+            "originalVelocity": null,
+            "sameGround": false,
+            "groundTransition": false,
+            "forcePosition": true,
+            "groundPart": 0,
+            "groundPartId": 0
+          }
+        ]
+      },
+      "actionReturns": [
+        1
+      ],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.07,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 4087001161,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.07,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 4087001161,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.08,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                512.01,
+                512.005,
+                1000.0002
+              ],
+              "rawPosition": [
+                512.01,
+                512.005,
+                1000.0002
+              ],
+              "velocity": [
+                1,
+                0.5,
+                0.020000003
+              ],
+              "rawVelocity": [
+                1,
+                0.5,
+                0.020000003
+              ],
+              "requestedVelocity": [
+                1,
+                0.5,
+                0.25
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 4087001161,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.089999996,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                512.26,
+                512.005,
+                1000.0015
+              ],
+              "rawPosition": [
+                512.26,
+                512.005,
+                1000.0015
+              ],
+              "velocity": [
+                1,
+                0.5,
+                0.15
+              ],
+              "rawVelocity": [
+                1,
+                0.5,
+                0.15
+              ],
+              "requestedVelocity": [
+                1,
+                0.5,
+                0.15
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 4087001161,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.099999994,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                512.27,
+                512.01,
+                1000.00305
+              ],
+              "rawPosition": [
+                512.27,
+                512.01,
+                1000.00305
+              ],
+              "velocity": [
+                1,
+                0.5,
+                0.15
+              ],
+              "rawVelocity": [
+                1,
+                0.5,
+                0.15
+              ],
+              "requestedVelocity": [
+                1,
+                0.5,
+                0.15
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.03,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 4087001161,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.11,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                512.28,
+                512.015,
+                1000.0046
+              ],
+              "rawPosition": [
+                512.28,
+                512.015,
+                1000.0046
+              ],
+              "velocity": [
+                1,
+                0.5,
+                0.15
+              ],
+              "rawVelocity": [
+                1,
+                0.5,
+                0.15
+              ],
+              "requestedVelocity": [
+                1,
+                0.5,
+                0.15
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.04,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 4087001161,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        }
+      ],
+      "diagnostic": null,
+      "dimensionUpdates": [],
+      "corrections": [
+        {
+          "beforeFrame": 2,
+          "body": "actor",
+          "requested": {
+            "beforeFrame": 2,
+            "body": "actor",
+            "position": [
+              512.25,
+              512,
+              1000
+            ],
+            "velocity": [
+              0.4,
+              -0.1,
+              0.15
+            ],
+            "originalVelocity": null,
+            "sameGround": false,
+            "groundTransition": false,
+            "forcePosition": true,
+            "groundPart": 0,
+            "groundPartId": 0
+          },
+          "nativeReturn": 1,
+          "before": {
+            "name": "actor",
+            "physicalId": 40003,
+            "position": [
+              512.01,
+              512.005,
+              1000.0002
+            ],
+            "rawPosition": [
+              512.01,
+              512.005,
+              1000.0002
+            ],
+            "velocity": [
+              1,
+              0.5,
+              0.020000003
+            ],
+            "rawVelocity": [
+              1,
+              0.5,
+              0.020000003
+            ],
+            "requestedVelocity": [
+              1,
+              0.5,
+              0.25
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0.01,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 4087001161,
+            "partColliderFlags": 2,
+            "groundHeight": -1E+10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 0,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0.01,
+            "stepElapsed": 0.01,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 0.5,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          },
+          "after": {
+            "name": "actor",
+            "physicalId": 40003,
+            "position": [
+              512.01,
+              512.005,
+              1000.0002
+            ],
+            "rawPosition": [
+              512.01,
+              512.005,
+              1000.0002
+            ],
+            "velocity": [
+              0.4,
+              -0.1,
+              0.15
+            ],
+            "rawVelocity": [
+              0.4,
+              -0.1,
+              0.15
+            ],
+            "requestedVelocity": [
+              1,
+              0.5,
+              0.15
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0.01,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 4087001161,
+            "partColliderFlags": 2,
+            "groundHeight": -1E+10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 131072,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0.01,
+            "stepElapsed": 0.01,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 0.5,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "netcorrection_preserves_prior_mode3_flag2",
+      "outcome": "completed",
+      "input": {
+        "name": "netcorrection_preserves_prior_mode3_flag2",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 4,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null,
+        "dimensionUpdates": null,
+        "corrections": [
+          {
+            "beforeFrame": 2,
+            "body": "actor",
+            "position": [
+              512.25,
+              512,
+              1000
+            ],
+            "velocity": [
+              0.4,
+              -0.1,
+              0.15
+            ],
+            "originalVelocity": [
+              1.25,
+              0.5,
+              0.8
+            ],
+            "sameGround": false,
+            "groundTransition": false,
+            "forcePosition": true,
+            "groundPart": 0,
+            "groundPartId": 0
+          }
+        ]
+      },
+      "actionReturns": [
+        1
+      ],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.11,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.11,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.12,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512.01,
+                512.0025,
+                1000.005
+              ],
+              "rawPosition": [
+                512.01,
+                512.0025,
+                1000.005
+              ],
+              "velocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "rawVelocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "requestedVelocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 75,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.13,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512.2625,
+                512.005,
+                1000.0015
+              ],
+              "rawPosition": [
+                512.2625,
+                512.005,
+                1000.0015
+              ],
+              "velocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "rawVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "requestedVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 75,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.14,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512.275,
+                512.01,
+                1000.00305
+              ],
+              "rawPosition": [
+                512.275,
+                512.01,
+                1000.00305
+              ],
+              "velocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "rawVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "requestedVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.03,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 75,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.14999999,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512.28754,
+                512.015,
+                1000.0046
+              ],
+              "rawPosition": [
+                512.28754,
+                512.015,
+                1000.0046
+              ],
+              "velocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "rawVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "requestedVelocity": [
+                1.25,
+                0.5,
+                0.15
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.04,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 75,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        }
+      ],
+      "diagnostic": null,
+      "dimensionUpdates": [],
+      "corrections": [
+        {
+          "beforeFrame": 2,
+          "body": "actor",
+          "requested": {
+            "beforeFrame": 2,
+            "body": "actor",
+            "position": [
+              512.25,
+              512,
+              1000
+            ],
+            "velocity": [
+              0.4,
+              -0.1,
+              0.15
+            ],
+            "originalVelocity": [
+              1.25,
+              0.5,
+              0.8
+            ],
+            "sameGround": false,
+            "groundTransition": false,
+            "forcePosition": true,
+            "groundPart": 0,
+            "groundPartId": 0
+          },
+          "nativeReturn": 1,
+          "before": {
+            "name": "actor",
+            "physicalId": 40004,
+            "position": [
+              512.01,
+              512.0025,
+              1000.005
+            ],
+            "rawPosition": [
+              512.01,
+              512.0025,
+              1000.005
+            ],
+            "velocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "rawVelocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "requestedVelocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0.01,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 75,
+            "partColliderFlags": 2,
+            "groundHeight": -1E+10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 0,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0.01,
+            "stepElapsed": 0.01,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 0.5,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          },
+          "after": {
+            "name": "actor",
+            "physicalId": 40004,
+            "position": [
+              512.01,
+              512.0025,
+              1000.005
+            ],
+            "rawPosition": [
+              512.01,
+              512.0025,
+              1000.005
+            ],
+            "velocity": [
+              0.4,
+              -0.1,
+              0.15
+            ],
+            "rawVelocity": [
+              0.4,
+              -0.1,
+              0.15
+            ],
+            "requestedVelocity": [
+              1.25,
+              0.5,
+              0.15
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0.01,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 75,
+            "partColliderFlags": 2,
+            "groundHeight": -1E+10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 131072,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0.01,
+            "stepElapsed": 0.01,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 0.5,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "netcorrection_same_ground_without_owner_refused",
+      "outcome": "completed",
+      "input": {
+        "name": "netcorrection_same_ground_without_owner_refused",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true,
+            "minSlideAngle": null,
+            "maxClimbAngle": null,
+            "minFallAngle": null,
+            "maxVelGround": null,
+            "useNativeMovementDefaults": false,
+            "velocityStartFrame": 1,
+            "velocityMode": 3,
+            "airControl": 1,
+            "airResistance": 0,
+            "inertia": null,
+            "inertiaAcceleration": null
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 4,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null,
+        "dimensionUpdates": null,
+        "corrections": [
+          {
+            "beforeFrame": 2,
+            "body": "actor",
+            "position": [
+              513,
+              512,
+              1000
+            ],
+            "velocity": [
+              0.4,
+              -0.1,
+              0.15
+            ],
+            "originalVelocity": [
+              1.25,
+              0.5,
+              0.8
+            ],
+            "sameGround": true,
+            "groundTransition": false,
+            "forcePosition": true,
+            "groundPart": 0,
+            "groundPartId": 0
+          }
+        ]
+      },
+      "actionReturns": [
+        1
+      ],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.14999999,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468827721,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.14999999,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468827721,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 1,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.16,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                512.01,
+                512.0025,
+                1000.005
+              ],
+              "rawPosition": [
+                512.01,
+                512.0025,
+                1000.005
+              ],
+              "velocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "rawVelocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "requestedVelocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468827723,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.17,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                512.02,
+                512.005,
+                1000.01
+              ],
+              "rawPosition": [
+                512.02,
+                512.005,
+                1000.01
+              ],
+              "velocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "rawVelocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "requestedVelocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468827723,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.17999999,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                512.03,
+                512.0075,
+                1000.015
+              ],
+              "rawPosition": [
+                512.03,
+                512.0075,
+                1000.015
+              ],
+              "velocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "rawVelocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "requestedVelocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.03,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468827723,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.19,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                512.04004,
+                512.01,
+                1000.02
+              ],
+              "rawPosition": [
+                512.04004,
+                512.01,
+                1000.02
+              ],
+              "velocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "rawVelocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "requestedVelocity": [
+                1,
+                0.25,
+                0.5
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.04,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468827723,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01,
+              "movement": {
+                "minSlideAngle": 45,
+                "maxClimbAngle": 60,
+                "maxJumpAngle": 54.000004,
+                "minFallAngle": 70,
+                "minSlideCosine": 0.70710677,
+                "maxClimbCosine": 0.5,
+                "maxJumpCosine": 0.5877852,
+                "minFallCosine": 0.34202015,
+                "maximumSupportVelocity": 100,
+                "suspensionOffset": 0,
+                "suspensionVelocity": 0,
+                "suspensionAcceleration": 0,
+                "suspensionTime": 0.5,
+                "hasRetainedSupport": false,
+                "supportVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "geometryRadius": 0.08,
+                "geometryAxialHalfHeight": 0.16,
+                "primaryPartOffset": [
+                  0,
+                  0,
+                  0.4
+                ],
+                "inertia": 8,
+                "inertiaAcceleration": 0,
+                "airControl": 1,
+                "airResistance": 0
+              },
+              "velocityBypassPending": false
+            }
+          ]
+        }
+      ],
+      "diagnostic": null,
+      "dimensionUpdates": [],
+      "corrections": [
+        {
+          "beforeFrame": 2,
+          "body": "actor",
+          "requested": {
+            "beforeFrame": 2,
+            "body": "actor",
+            "position": [
+              513,
+              512,
+              1000
+            ],
+            "velocity": [
+              0.4,
+              -0.1,
+              0.15
+            ],
+            "originalVelocity": [
+              1.25,
+              0.5,
+              0.8
+            ],
+            "sameGround": true,
+            "groundTransition": false,
+            "forcePosition": true,
+            "groundPart": 0,
+            "groundPartId": 0
+          },
+          "nativeReturn": 0,
+          "before": {
+            "name": "actor",
+            "physicalId": 40005,
+            "position": [
+              512.01,
+              512.0025,
+              1000.005
+            ],
+            "rawPosition": [
+              512.01,
+              512.0025,
+              1000.005
+            ],
+            "velocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "rawVelocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "requestedVelocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0.01,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 3468827723,
+            "partColliderFlags": 2,
+            "groundHeight": -1E+10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 0,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0.01,
+            "stepElapsed": 0.01,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 0.5,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          },
+          "after": {
+            "name": "actor",
+            "physicalId": 40005,
+            "position": [
+              512.01,
+              512.0025,
+              1000.005
+            ],
+            "rawPosition": [
+              512.01,
+              512.0025,
+              1000.005
+            ],
+            "velocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "rawVelocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "requestedVelocity": [
+              1,
+              0.25,
+              0.5
+            ],
+            "gravity": [
+              0,
+              0,
+              -0
+            ],
+            "isFlying": true,
+            "flyingTime": 0.01,
+            "radius": 0.08,
+            "axialHalfHeight": 0.16,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "entityFlags": 184550979,
+            "livingFlags": 3468827723,
+            "partColliderFlags": 2,
+            "groundHeight": -1E+10,
+            "groundNormal": [
+              0,
+              0,
+              1
+            ],
+            "commandState": 0,
+            "contactClearance": 0.01,
+            "simulationClass": 3,
+            "inLivingStepList": true,
+            "stepPeriod": 0.01,
+            "stepElapsed": 0.01,
+            "movement": {
+              "minSlideAngle": 45,
+              "maxClimbAngle": 60,
+              "maxJumpAngle": 54.000004,
+              "minFallAngle": 70,
+              "minSlideCosine": 0.70710677,
+              "maxClimbCosine": 0.5,
+              "maxJumpCosine": 0.5877852,
+              "minFallCosine": 0.34202015,
+              "maximumSupportVelocity": 100,
+              "suspensionOffset": 0,
+              "suspensionVelocity": 0,
+              "suspensionAcceleration": 0,
+              "suspensionTime": 0.5,
+              "hasRetainedSupport": false,
+              "supportVelocity": [
+                0,
+                0,
+                0
+              ],
+              "geometryRadius": 0.08,
+              "geometryAxialHalfHeight": 0.16,
+              "primaryPartOffset": [
+                0,
+                0,
+                0.4
+              ],
+              "inertia": 8,
+              "inertiaAcceleration": 0,
+              "airControl": 1,
+              "airResistance": 0
+            },
+            "velocityBypassPending": false
+          }
+        }
+      ]
+    }
+  ]
+}

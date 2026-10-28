@@ -95,7 +95,7 @@ public sealed class ManagedLivingStanceTests
     }
 
     [Test]
-    public async Task ManagedBackendPassesAuthoredGravityToItsOwnedIntegrator()
+    public async Task LivingMovesWithPriorVelocityBeforeApplyingAuthoredAirGravity()
     {
         var backend = Backend();
         var actor = new ZoneActorHandle(903, 1);
@@ -104,7 +104,8 @@ public sealed class ManagedLivingStanceTests
         backend.Step(TimeSpan.FromSeconds(.1));
         backend.CopyStatus(actor, out var status);
         await Assert.That(MathF.Abs(status.Velocity.Z + .4f)).IsLessThan(.0001f);
-        await Assert.That(MathF.Abs(status.Position.Z - 99.97f)).IsLessThan(.0001f);
+        // Two50ms steps: first moves with zero velocity, second moves with -.2m/s.
+        await Assert.That(MathF.Abs(status.Position.Z - 99.99f)).IsLessThan(.0001f);
     }
 
     [Test]
@@ -134,7 +135,7 @@ public sealed class ManagedLivingStanceTests
         await Assert.That(standing.IsGrounded).IsTrue();
         await Assert.That(MathF.Abs(standing.Position.Z - .15f)).IsLessThan(.0001f);
         await Assert.That(backend.OwnedPhysics.TryReadGroundHeight(actor, out var height)).IsTrue();
-        await Assert.That(height).IsEqualTo(0f);
+        await Assert.That(MathF.Abs(height)).IsLessThan(.00001f);
         await Assert.That(backend.GroundMaterialFor(actor)).IsEqualTo((ushort?)17);
     }
 

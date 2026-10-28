@@ -115,12 +115,22 @@ public sealed class ZoneMovementFramePhases : IZoneMovementFramePhases
                 // (ZoneUnitRegistry.cs:208-215) and StopMovement retires everything (:257-268);
                 // a retired or scene-stopped actor is never staged, never stepped for.
                 if (!_registry.IsMovementCurrent(unit) || controller.IsRetired) continue;
+                var actor = _actors.FindByUnitObjectId(unit.Snapshot.ObjectId);
+                if (actor is { IsLive: true }) actor.LivingStances?.BeginFrame();
                 try
                 {
                     if (controller.TryRunPrePhase(frame, snapshot, _input, out _) ||
                         (_registry.IsMovementCurrent(unit) && !controller.IsRetired &&
                          _actors.FindByUnitObjectId(unit.Snapshot.ObjectId) is { IsLive: true }))
                         _staged.Add(new(unit, controller));
+                    // Valid input normally attempts the stance in its input leaf. A retained
+                    // blocked wish is retried even when this frame produced no new request.
+                    if (_registry.IsMovementCurrent(unit) && !controller.IsRetired)
+                    {
+                        var binding = _bindings.GetOrLiveCreate(unit);
+                        binding?.ApplyPendingStance();
+                        binding?.ApplyLivingDynamics();
+                    }
                 }
                 catch (NotSupportedException error)
                 {
@@ -256,7 +266,11 @@ public sealed class ZoneMovementFramePhases : IZoneMovementFramePhases
 
                 // --- outgoing encode: authoritative post-step pose, not re-emitted input ---
                 if (admitted is not null)
+                {
+                    if (actor.LivingStances is { } stances)
+                        admitted = admitted with { Stance = unchecked((sbyte)stances.CurrentSlot) };
                     _outgoing.Sample(unit, status with { Position = ZoneMovementPoseMath.ToMeters(unit.Pose.Position) }, admitted, frame);
+                }
                 else
                     _diagnostics.ReportSkippedActor(unit.Snapshot.ObjectId,
                         "encoder sample skipped: no admitted input state (stance/actorFlags source absent).");

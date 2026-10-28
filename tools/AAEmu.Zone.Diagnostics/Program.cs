@@ -40,6 +40,7 @@ public static class Program
             Console.WriteLine("      --scene-shape-probes <shapes.json> --scene-shape-probe-output <hits.json> compares explicit box/capsule/cylinder queries.");
             Console.WriteLine("      Shape target is static by default; target:terrain selects only the heightfield(original mask0x100).");
             Console.WriteLine("      Native scene check accepts --scene-living-probes <cases.json> --scene-living-probe-output <states.json> to step controlled full living bodies.");
+            Console.WriteLine("      Managed living probes use the same options plus --scene-living-native-reference <native-states.json> to seed matched frame-zero poses.");
             Console.WriteLine("  --probe-pose-write / --probe-player-admission --config <runtime.json>: native research probes.");
             Console.WriteLine("  Select exactly one mode per run.");
             Console.WriteLine("  --config <runtime.json> supplies explicit paths, asset priority, zone identity, endpoint and logs.");
@@ -85,7 +86,8 @@ public static class Program
                 return ZoneManagedSceneCheck.Run(configuration, layout, assets,
                     options.GetValueOrDefault("--collision-report"), options.GetValueOrDefault("--scene-probes"),
                     options.GetValueOrDefault("--scene-probe-output"), options.GetValueOrDefault("--scene-shape-probes"),
-                    options.GetValueOrDefault("--scene-shape-probe-output"), shutdown.Token);
+                    options.GetValueOrDefault("--scene-shape-probe-output"), options.GetValueOrDefault("--scene-living-probes"),
+                    options.GetValueOrDefault("--scene-living-probe-output"), options.GetValueOrDefault("--scene-living-native-reference"), shutdown.Token);
             var stats = content.LoadStatContent();
             var models = content.LoadModelContent();
             if (options.ContainsKey("--check-framework"))
@@ -606,7 +608,7 @@ public static class Program
                     throw new ArgumentException($"Duplicate option {key}.");
                 continue;
             }
-            if (key is not ("--config" or "--content-db" or "--zone" or "--world-host" or "--world-port" or "--locale" or "--spawner-file" or "--terrain-file" or "--world-file" or "--world-name" or "--research-igame-slot" or "--research-igame-value" or "--collision-report" or "--scene-probes" or "--scene-probe-output" or "--scene-shape-probes" or "--scene-shape-probe-output" or "--scene-living-probes" or "--scene-living-probe-output"))
+            if (key is not ("--config" or "--content-db" or "--zone" or "--world-host" or "--world-port" or "--locale" or "--spawner-file" or "--terrain-file" or "--world-file" or "--world-name" or "--research-igame-slot" or "--research-igame-value" or "--collision-report" or "--scene-probes" or "--scene-probe-output" or "--scene-shape-probes" or "--scene-shape-probe-output" or "--scene-living-probes" or "--scene-living-probe-output" or "--scene-living-native-reference"))
                 throw new ArgumentException($"Unknown option {key}.");
             if (++i == args.Length || args[i].StartsWith("--", StringComparison.Ordinal))
                 throw new ArgumentException($"Missing value for {key}.");
@@ -627,8 +629,14 @@ public static class Program
             throw new ArgumentException("--scene-shape-probes requires a managed or native scene check.");
         if (options.ContainsKey("--scene-living-probe-output") && !options.ContainsKey("--scene-living-probes"))
             throw new ArgumentException("--scene-living-probe-output requires --scene-living-probes.");
-        if (options.ContainsKey("--scene-living-probes") && !options.ContainsKey("--check-scene"))
-            throw new ArgumentException("--scene-living-probes requires the original native scene check.");
+        if (options.ContainsKey("--scene-living-probes") && !(options.ContainsKey("--check-scene") || options.ContainsKey("--check-managed-scene")))
+            throw new ArgumentException("--scene-living-probes requires a managed or native scene check.");
+        if (options.ContainsKey("--scene-living-native-reference") &&
+            !(options.ContainsKey("--check-managed-scene") && options.ContainsKey("--scene-living-probes")))
+            throw new ArgumentException("--scene-living-native-reference requires managed living scene probes.");
+        if (options.ContainsKey("--check-managed-scene") && options.ContainsKey("--scene-living-probes") &&
+            !options.ContainsKey("--scene-living-native-reference"))
+            throw new ArgumentException("Managed living probes require --scene-living-native-reference for matched frame-zero poses.");
         if (options.ContainsKey("--world-file") != options.ContainsKey("--world-name"))
             throw new ArgumentException("World map validation requires both --world-file and --world-name.");
         return options;

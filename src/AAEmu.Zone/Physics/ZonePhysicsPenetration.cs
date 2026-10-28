@@ -3,14 +3,16 @@ using System.Numerics;
 namespace AAEmu.Zone.Physics;
 
 /// <summary>
-/// Copied overlap unprojection. Translating the query by Normal * Depth reaches touch, without
-/// adding a controller clearance. Normal is the chosen target-to-query unprojection direction;
+/// Copied overlap unprojection. Interior face/solid solutions reach touch at Normal * Depth;
+/// a terrain boundary constraint can conservatively pass its finite-edge exit. No controller
+/// clearance is included. Normal is the chosen query unprojection direction;
 /// it need not equal the target's authored surface normal. General convex numerical solutions
 /// use the kernel's documented depth tolerance.
 /// </summary>
 /// <remarks>
 /// Surface contacts describe a two-sided triangle/verified coplanar patch, or the terrain's
-/// explicitly upward contact constraint. Internal patch edges are consolidated only when an
+/// explicitly positive authored-face-normal constraint. Terrain boundary constraints are
+/// conservative and never stand in for a whole-terrain/finite-edge MTD. Internal patch edges are consolidated only when an
 /// authored face contains the resulting touch point. A solid contact describes a whole closed convex volume's minimum
 /// translation. IsAmbiguous identifies nonunique/symmetric direction choices, resolved
 /// deterministically by the kernel. The collection owner returns immutable copied snapshots.

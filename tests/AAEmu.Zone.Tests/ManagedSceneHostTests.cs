@@ -29,7 +29,8 @@ public sealed class ManagedSceneHostTests
         var player = UnitStateSnapshot.Read(body);
         var models = new ZoneModelContent([new() { Id = player.ModelId, Subtype = "ActorModel", SubtypeId = 1 }],
             actorModels: new ZoneActorModelContent(
-                [new() { Id = 1, PhysicsLivingMass = 80, PhysicsLivingGravity = 9.81f, GameJumpHeight = 1, TurnSpeed = 180 }],
+                [new() { Id = 1, PhysicsLivingMass = 80, PhysicsLivingGravity = 9.81f, GameJumpHeight = 1, TurnSpeed = 180,
+                    PhysicsLivingMinSlideAngle = 45, PhysicsLivingMaxClimbAngle = 50, PhysicsLivingMinFallAngle = 50 }],
                 [new() { Id = 1, ActorModelId = 1, StanceId = 2, MaxSpeed = 5, NormalSpeed = 5,
                     SizeX = .4f, SizeY = .4f, SizeZ = .32f, HeightCollider = .8f, HeightPivot = .15f, UseCapsule = true }]));
         // Synthetic gameplay content keeps this test focused on the real host/World/physics path.
@@ -93,17 +94,33 @@ public sealed class ManagedSceneHostTests
             await Assert.That(Math.Abs(initial.Position.X - player.Position.X)).IsLessThan(.002);
             await Assert.That(Math.Abs(initial.Position.Y - player.Position.Y)).IsLessThan(.002);
 
-            var moved = player.Position with { QuantizedX = player.Position.QuantizedX + 512 };
+            // This synthetic world has settled the captured admission onto a different floor.
+            // Send the observed support height as a client would after consuming the location.
+            var settled = AAEmu.Commons.Utils.Helpers.ConvertPosition((float)initial.Position.X,
+                (float)initial.Position.Y, initial.Position.Z);
+            var settledZ = (uint)(settled[8] | settled[9] << 8 | (settled[10] & 0x3F) << 16);
+            var moved = player.Position with { QuantizedX = player.Position.QuantizedX + 512, QuantizedZ = settledZ };
+            // Wire slot 1 selects the fixture's content stance ID 2 (relaxed).
             var movement = new UnitMovement(player.ObjectId, new(1, 1500, 0, 0, 0, moved,
-                new MovementVector16(2000, 0, 0), default, new UnitActorMovement(new(127, 0, 0), 2, 0, 1)));
+                new MovementVector16(2000, 0, 0), default, new UnitActorMovement(new(127, 0, 0), 1, 0, 1)));
             await worldStream.WriteAsync(new ZoneFrame(WzOpcodes.UnitMovement, movement.Write()).Encode(), deadline.Token);
             var output = await ReadUntil(worldStream, frame => frame.Opcode == ZwOpcodes.UnitMovements &&
                 BinaryPrimitives.ReadInt32LittleEndian(frame.Body.Span) == 1 &&
                 UnitMovement.Read(frame.Body.Span[4..]).Movement.Position.X > player.Position.X + .5, deadline.Token);
             var replicated = UnitMovement.Read(output.Body.Span[4..]);
             await Assert.That(replicated.ObjectId).IsEqualTo(player.ObjectId);
+            await Assert.That(((UnitActorMovement)replicated.Movement.Details).Stance).IsEqualTo((sbyte)1);
             await Assert.That(Math.Abs(replicated.Movement.Position.Y - player.Position.Y)).IsLessThan(.01);
-            await Assert.That(Math.Abs(replicated.Movement.Position.Z - 366.15f)).IsLessThan(.01f);
+            await Assert.That(replicated.Movement.Position.Z).IsEqualTo(366.15f).Within(.01f);
+            for (var sample = 0; sample < 2; sample++)
+            {
+                var previousX = replicated.Movement.Position.X;
+                output = await ReadUntil(worldStream, frame => frame.Opcode == ZwOpcodes.UnitMovements &&
+                    BinaryPrimitives.ReadInt32LittleEndian(frame.Body.Span) == 1 &&
+                    UnitMovement.Read(frame.Body.Span[4..]).Movement.Position.X > previousX + .1, deadline.Token);
+                replicated = UnitMovement.Read(output.Body.Span[4..]);
+                await Assert.That(replicated.Movement.Position.Z).IsEqualTo(366.15f).Within(.01f);
+            }
             await Assert.That(CryEngineModules().Length).IsEqualTo(0);
 
             // Preserve the read half so the host can flush and close after its incoming clean EOF.

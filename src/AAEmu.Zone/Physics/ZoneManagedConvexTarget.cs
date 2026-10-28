@@ -139,6 +139,28 @@ internal static class ZoneManagedShapeQueries
         return ZoneManagedPenetrationQueries.Try(ZoneManagedConvexTarget.ForShape(targetShape, targetCenter), shape, center, 0, false, out penetration);
     }
 
+    public static bool TryUpwardUnprojection(ZonePhysicsShape shape, Vector3 center, ZonePhysicsShape targetShape,
+        Vector3 targetCenter, out ZonePhysicsDirectedUnprojection result, ZonePhysicsQueryBounds? candidateBounds = null)
+        => TryUpwardUnprojectionCore(shape, center, targetShape, targetCenter, out result, candidateBounds, false);
+
+    public static bool TryUpwardUnprojectionForStancePreflight(ZonePhysicsShape shape, Vector3 center, ZonePhysicsShape targetShape,
+        Vector3 targetCenter, out ZonePhysicsDirectedUnprojection result, ZonePhysicsQueryBounds? candidateBounds = null)
+        => TryUpwardUnprojectionCore(shape, center, targetShape, targetCenter, out result, candidateBounds, true);
+
+    private static bool TryUpwardUnprojectionCore(ZonePhysicsShape shape, Vector3 center, ZonePhysicsShape targetShape,
+        Vector3 targetCenter, out ZonePhysicsDirectedUnprojection result, ZonePhysicsQueryBounds? candidateBounds, bool stancePreflight)
+    {
+        if (stancePreflight) ZoneManagedTerrainGeometry.ValidateStancePreflightShape(shape); else ZoneManagedTerrainGeometry.ValidateShape(shape);
+        ZoneManagedTerrainGeometry.ValidateShape(targetShape);
+        ZoneManagedTerrainGeometry.ValidateFinite(center, nameof(center)); ZoneManagedTerrainGeometry.ValidateFinite(targetCenter, nameof(targetCenter));
+        result = default;
+        var targetBounds = new ZoneManagedBounds(targetCenter - targetShape.BoundingHalfExtents, targetCenter + targetShape.BoundingHalfExtents);
+        ZoneManagedTerrainGeometry.ValidateFinite(targetBounds.Minimum, nameof(targetShape)); ZoneManagedTerrainGeometry.ValidateFinite(targetBounds.Maximum, nameof(targetShape));
+        if (candidateBounds is { } envelope && !envelope.Managed.Overlaps(targetBounds))
+            return false;
+        return ZoneManagedDirectedUnprojectionQueries.Try(ZoneManagedConvexTarget.ForShape(targetShape, targetCenter), shape, center, 0, false, out result);
+    }
+
     // Preserve the existing exact slab result for actor box pairs; curved pairs use their actual
     // convex shapes after this same inexpensive candidate rejection, not a bounding-box answer.
     private static bool SweepBoxes(ZonePhysicsShape shape, Vector3 center, Vector3 displacement,

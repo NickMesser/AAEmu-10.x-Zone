@@ -178,10 +178,10 @@ public sealed class ManagedPenetrationTests
         var heights = new ZoneTerrainHeightField();
         heights.LoadCell(1, 1, TerrainHeightFieldTests.CreateCell(0, .03125f, sample: (x, _, sx, _) => (ushort)((x / 2 + sx) * 32)));
         var terrain = new ZoneManagedTerrainGeometry(heights);
-        var contact = terrain.GetPenetrations(ZonePhysicsShape.Capsule(.5f, .5f), new(1100, 1100, 38.5f))[0];
+        var contact = terrain.GetUpwardUnprojections(ZonePhysicsShape.Capsule(.5f, .5f), new(1100, 1100, 38.5f)).MaxBy(contact => contact.Depth);
         await Near(contact.Depth, .5f * MathF.Sqrt(1.25f), .0002f);
         await Near(contact.Position.X, 1100 + .25f / MathF.Sqrt(1.25f), .0002f);
-        await Near(contact.Normal, Vector3.UnitZ);
+        await Near(contact.Direction, Vector3.UnitZ);
     }
 
     [Test]
@@ -216,12 +216,12 @@ public sealed class ManagedPenetrationTests
         var heights = new ZoneTerrainHeightField(); heights.LoadCell(1, 1, TerrainHeightFieldTests.CreateCell(0, 0));
         var terrain = new ZoneManagedTerrainGeometry(heights);
         var capsule = ZonePhysicsShape.Capsule(1, .5f);
-        var edge = terrain.GetPenetrations(capsule, new(1023.5f, 1100, -.25f))[0];
+        var edge = terrain.GetUpwardUnprojections(capsule, new(1023.5f, 1100, -.25f))[0];
         await Near(edge.Depth, .75f + MathF.Sqrt(.75f));
         await Near(edge.Position.X, 1024);
-        var corner = terrain.GetPenetrations(capsule, new(1023.5f, 1023.5f, -.25f))[0];
+        var corner = terrain.GetUpwardUnprojections(capsule, new(1023.5f, 1023.5f, -.25f))[0];
         await Near(corner.Depth, .75f + MathF.Sqrt(.5f));
-        await Assert.That(terrain.GetPenetrations(capsule, new(1023, 1100, -.25f)).Count).IsEqualTo(0);
+        await Assert.That(terrain.GetUpwardUnprojections(capsule, new(1023, 1100, -.25f)).Count).IsEqualTo(0);
     }
 
     [Test]

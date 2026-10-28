@@ -1,0 +1,52 @@
+{
+  "source": "Copied original physics height callback values, current quad255,255; independent float32 plane reconstruction.",
+  "vertices": [
+    [
+      510,
+      510,
+      306.75372314453125
+    ],
+    [
+      512,
+      510,
+      305.2325134277344
+    ],
+    [
+      510,
+      512,
+      306.939453125
+    ]
+  ],
+  "surfacePoint": [
+    510.6666564941406,
+    510.6666564941406,
+    306.3085632324219
+  ],
+  "surfaceNormal": [
+    0.6037414260898819,
+    -0.0737129680659422,
+    0.793764882545118
+  ],
+  "slopeDegrees": 37.461249134446184,
+  "uphillHorizontalDirection": [
+    -0.9926288840991626,
+    0.12119364031190448,
+    0
+  ],
+  "downhillHorizontalDirection": [
+    0.9926288840991626,
+    -0.12119364031190448,
+    0
+  ],
+  "scope": "Full original scene remains admitted; selected slope is terrain. Body collider starts clear of pivot floor, then original floor support establishes ground. Mode0 is ordinary request; mode3 is retained separately as inertia-bypass comparison.",
+  "nativeSource": {
+    "thresholdSetter": "35028BF0",
+    "movement": "3502DED0",
+    "support": "3502CA20",
+    "dimensions": "35028BF0",
+    "constructor": "35025530",
+    "supportVelocityCap": "3502B3F0"
+  },
+  "caseCount": 42,
+  "frames": 988
+}

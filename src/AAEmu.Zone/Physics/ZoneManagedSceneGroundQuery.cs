@@ -19,6 +19,23 @@ public sealed class ZoneManagedSceneGroundQuery(
     public float GetGroundPivotHeight(ZoneActorHandle actor) => groundPivotHeight?.Invoke(actor) ?? 0;
 
     /// <summary>
+    /// Original living-height probe over the actual static/terrain surfaces. This supplies the
+    /// nearest front-facing surface; slide, climb, fall and the .087 normal-cache gate belong
+    /// to the controller, so the legacy .7/.3 walking policy is not applied here.
+    /// </summary>
+    internal bool TryLivingSupport(Vector3 entityOrigin, ZonePhysicsLivingMovementSettings settings,
+        out ZonePhysicsCharacterSupport support)
+    {
+        var ray = ZoneLivingMovementMath.CreateSupportRay(entityOrigin, settings);
+        var found = terrain.RaycastTerrain(ray.Origin, ray.Displacement, out var hit);
+        if (statics is not null && statics.Raycast(ray.Origin, ray.Displacement, out var other, float.Epsilon) &&
+            (!found || other.Distance < hit.Distance))
+        { hit = other; found = true; }
+        support = found ? new(hit.Position, hit.Normal, hit.PhysicalMaterialId) : default;
+        return found;
+    }
+
+    /// <summary>
     /// Copies support already touching a ground reference point. This narrow query cannot adopt
     /// overhead terrain or a remote floor and does not reuse an actor's cached contact state.
     /// </summary>
@@ -47,10 +64,17 @@ public sealed class ZoneManagedSceneGroundQuery(
     public bool TryCharacterGround(Vector3 previousPosition, Vector3 nextPosition, bool wasGrounded,
         out Vector3 position, out ushort physicalMaterialId)
     {
-        position = default;
-        physicalMaterialId = 0;
+        var found = TryLegacyCharacterSupport(previousPosition, nextPosition, wasGrounded, out var hit);
+        position = hit.Position;
+        physicalMaterialId = hit.PhysicalMaterialId;
+        return found;
+    }
+
+    private bool TryLegacyCharacterSupport(Vector3 previousPosition, Vector3 nextPosition, bool wasGrounded,
+        out ZonePhysicsHit support)
+    {
+        support = default;
         if (nextPosition.Z > previousPosition.Z + ContactTolerance) return false;
-        ZonePhysicsHit support;
         if (wasGrounded)
         {
             // A grounded controller can follow a nearby rising slope. Constrain terrain too:
@@ -70,16 +94,27 @@ public sealed class ZoneManagedSceneGroundQuery(
             if (!SupportRay(new(nextPosition.X, nextPosition.Y, height + ContactTolerance),
                 new(0, 0, -ContactTolerance * 2), out support)) return false;
         }
-        position = support.Position;
-        physicalMaterialId = support.PhysicalMaterialId;
         return true;
     }
 
     public bool TryCharacterGround(ZoneActorHandle actor, Vector3 previousPosition, Vector3 nextPosition,
         bool wasGrounded, out Vector3 position, out ushort physicalMaterialId)
     {
-        if (TryCharacterGround(previousPosition, nextPosition, wasGrounded, out position, out physicalMaterialId))
+        var found = TryCharacterSupport(actor, previousPosition, nextPosition, wasGrounded, out var support);
+        position = support.Position;
+        physicalMaterialId = support.PhysicalMaterialId;
+        return found;
+    }
+
+    public bool TryCharacterSupport(ZoneActorHandle actor, Vector3 previousPosition, Vector3 nextPosition,
+        bool wasGrounded, out ZonePhysicsCharacterSupport support)
+    {
+        support = default;
+        if (TryLegacyCharacterSupport(previousPosition, nextPosition, wasGrounded, out var legacy))
+        {
+            support = new(legacy.Position, legacy.Normal, legacy.PhysicalMaterialId);
             return true;
+        }
         var description = actorDescription?.Invoke(actor);
         if (description is not { Profile: ZonePhysicsActorProfile.Living } ||
             nextPosition.Z > previousPosition.Z + ContactTolerance) return false;
@@ -95,10 +130,9 @@ public sealed class ZoneManagedSceneGroundQuery(
         if (!float.IsFinite(rise) || !float.IsFinite(length) || rise <= 0 || length <= 0) return false;
         // Preserve the original subtraction order: floor-foot < rise admits a rounded exact
         // boundary at large coordinates that foot > floor-rise correctly excludes.
-        if (!SupportRay(nextPosition + new Vector3(0, 0, rise), new(0, 0, -length), out var support) ||
-            nextPosition.Z >= support.Position.Z || nextPosition.Z <= support.Position.Z - rise) return false;
-        position = support.Position;
-        physicalMaterialId = support.PhysicalMaterialId;
+        if (!SupportRay(nextPosition + new Vector3(0, 0, rise), new(0, 0, -length), out var contact) ||
+            nextPosition.Z >= contact.Position.Z || nextPosition.Z <= contact.Position.Z - rise) return false;
+        support = new(contact.Position, contact.Normal, contact.PhysicalMaterialId);
         return true;
     }
 

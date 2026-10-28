@@ -510,17 +510,17 @@ public sealed class ZoneMovementCorrectionPhysics(
 
     /// <summary>
     /// Living status 2 mapped from the copy: VelocityZ and RelativePosition are real copied
-    /// values (engine frame); Native04/Native58/Native7C and the ground collider have NO
-    /// proven plain-body source — TODO(living-status-abi): Native04 = 0 (no state word),
-    /// Native58 = 0 (keeps the documented preserveVertical branch, :187, which then filters
-    /// against the REAL copied VelocityZ), Native7C = 0 and Collider = null so the
+    /// values (engine frame). Native04 is status2's flying value; Native58 copies the
+    /// cached ground height at status2+0x58/body572 (35029A30). Legacy providers without
+    /// that metadata retain zero. Native7C = 0 and Collider = null so the
     /// sameGround/collider branches never claim an attachment that does not exist.
     /// </summary>
     public ZoneActorMovementLivingStatus GetLivingStatus()
     {
         var status = CopyStatus();
         return new ZoneActorMovementLivingStatus(
-            Native04: 0, VelocityZ: status.Velocity.Z, Native58: 0f,
+            Native04: status.IsFlying ? 1 : 0, VelocityZ: status.Velocity.Z,
+            Native58: status.CachedLivingGroundHeight ?? 0f,
             Collider: null, Native7C: 0, RelativePosition: status.Position);
     }
 
@@ -535,17 +535,30 @@ public sealed class ZoneMovementCorrectionPhysics(
     public float GetDimensionsHeight() => actor?.Model.Definition.ActorHeight ?? 0f;
 
     /// <summary>
-    /// Type-4 correction action → authoritative pose + velocity writes (PLAN section 4 flow).
-    /// <paramref name="action"/>.Position is the producer's engine-frame target; orientation
-    /// comes from the committed unit pose (same frame by construction). Both writes are
-    /// refusal-counted while <c>TODO(pose-write)</c> is open — the batch survives, the seam
-    /// stays visible in <see cref="ZoneMovementDiagnostics"/>.
+    /// The type-4 correction tuple crosses the living network-correction boundary (native+C0).
+    /// Existing generic registrations retain their pose + velocity path.
+    /// <paramref name="action"/>.Position is the producer's engine-frame target. The living
+    /// tuple preserves orientation; the generic path takes it from the committed unit pose.
+    /// Named capability refusals remain visible in <see cref="ZoneMovementDiagnostics"/>.
     /// </summary>
     public void Apply(ZoneActorMovementCorrectionAction action)
     {
         if (actor is null || !actor.IsLive)
             throw new ObjectDisposedException(nameof(ZonePlayerActor),
                 $"Unit {unit.Snapshot.ObjectId} has no live physical body; correction action cannot be applied.");
+        if (actor.LivingCorrections is { } corrections)
+        {
+            try
+            {
+                if (!corrections.TryApplyLivingCorrection(actor.Handle, action, out var refusal))
+                    diagnostics.ReportMotionRefusal("LivingCorrection", actor.Handle, refusal);
+            }
+            catch (NotSupportedException error)
+            {
+                diagnostics.ReportMotionRefusal("LivingCorrection", actor.Handle, error.Message);
+            }
+            return;
+        }
         ZoneMovementMotionCall.Pose(motion, actor.Handle, action.Position, unit.Pose.Rotation, diagnostics);
         ZoneMovementMotionCall.Velocity(motion, actor.Handle, action.Velocity, diagnostics);
     }

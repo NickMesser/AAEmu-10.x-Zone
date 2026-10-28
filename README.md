@@ -50,7 +50,7 @@ Copy [zone.example.json](src/AAEmu.ZoneServer/zone.example.json) outside this re
 
 - A configured decrypted `game.compact` export, opened read-only. Its actual filename may be `game_decrypted.sqlite3`; the unrelated `compact.sqlite` substitute is refused.
 - Authorized local game assets, accessed through configured loose directories and/or `game_pak`.
-- Managed mode (`"engineBackend": "managed"`, as in the example) requires no engine directory or Lua library. Terrain, authored box/inline triangle proxies and conservative actor bounds are supported. Collision coverage reports identify unsupported geometry; authored NPC behavior remains incomplete.
+- Managed mode (`"engineBackend": "managed"`, as in the example) requires no engine directory or Lua library. It supports authored terrain, decoded static proxies, upright capsule/cylinder characters and queued stance changes. Living movement consumes authored slope, gravity and inertia settings; [recorded controls and remaining controller gaps](docs/managed-character-physics.md) keep its scope explicit. Collision coverage reports identify unsupported geometry; authored NPC behavior remains incomplete.
 - The optional [native comparison mode](src/AAEmu.ZoneServer/zone.native.example.json) requires the exact compatible Windows AMD64 engine modules. `ZoneNativeEngine.Identities.cs` records the accepted hashes. It also requires a 64-bit Lua 5.1 library with the LNUM `double int64` patch, configured by `luaLibraryPath` or `AAEMU_ZONE_LUA_LIBRARY`. No engine binaries or game assets are supplied by this source.
 - A compatible World server for startup exchange or host experiments, with an explicitly configured endpoint. Use an isolated development World; startup joins affect that World's connection lifecycle.
 
