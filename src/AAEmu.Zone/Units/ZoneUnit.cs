@@ -22,6 +22,8 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
     public IZoneUnitMovementModel? MovementModel { get; internal set; }
     // Native server unit +A59C, set by EscapeSlave and initialized to zero on admission.
     public uint MovementBlockedUntil { get; internal set; }
+    // Native server unit +8009 (32777), written by WZUnitFlyingStateChanged 393636A0 via 39258C90.
+    public bool IsFlying { get; internal set; }
     public ZoneUnitScaleState Scale { get; } = new(snapshot.Scale);
     public ushort Flags { get; private set; } = snapshot.Flags;
     public byte AttackFactionFlags { get; private set; } = snapshot.AttackFactionFlags;

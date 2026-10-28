@@ -198,6 +198,7 @@ Summary count: 133 registered; 56 decoded+dispatched; 77 absent (0 missing from 
 - Confidence: medium (body layouts need a closer read of each `sub_` target)
 
 ### WZ-05: Forced movement / physics unit packets
+- Status: **Partial** — UnitFlyingStateChanged 0x0036 done (body `bc objId, u8 flying`; `UnitFlyingStateChanged` in SpawnerAreaActivation.cs; handler 393636A0 -> 39258C90 stores the byte at unit+0x8009, then calls physics-actor vfunc +296; we set `ZoneUnit.IsFlying`, unknown unit counted-and-ignored, the actor notification is not modelled; no unit-level test because building a `UnitStateSnapshot` fixture is heavy). RequestUnitFlyingState 0x0037 and the other packets in this task are not done (0x0037 needs the ZW ChangeUnitFlyState writer and the unidentified 3933B710 predicate).
 - Priority: P1
 - Native evidence: OnUnitBlinked `sub_39363420`, BlinkUnit `sub_39369B10`, KnockBackUnit `sub_393635D0`, ImpulseUnit `sub_39363600` (gated by physics vfunc+88), UnitInvisible `sub_39363660`, UnitFlyingStateChanged `sub_393636A0`, RequestUnitFlyingState `sub_3936EFD0` (replies ZWChangeUnitFlyState, opcode 0x1C present in ZwOpcodes.cs), ZombieCharacter `sub_39364380`, PhysicalExplosion `sub_39363E90`, EscapeSlave `sub_3936F280`.
 - Repo state: absent. `ZoneUnit.cs:21` has a comment for the +A59C field set by EscapeSlave; `IZonePhysicsMotion` / ZoneLocalToWorldMotionAdapter exist and expose impulse; `ZwOpcodes.ChangeUnitFlyState` exists but is unused.
@@ -209,6 +210,7 @@ Summary count: 133 registered; 56 decoded+dispatched; 77 absent (0 missing from 
 - Confidence: medium
 
 ### WZ-06: NPC / spawner control packets
+- Status: **Partial** — ActivateNpcSpawnersInArea 0x0042 done (17 bytes: f32 x,y,z, f32 radius, u8 activate). Native 3933E7E0 flips the Active byte (+355) of every spawner that is not TowerDef-controlled (+353) or schedule-controlled (+354) and has an authored point strictly inside the XY circle (Z ignored); it spawns nothing itself, ZW SpawnNpc follows from the normal scheduler update. Implemented as `ZoneNpcSpawnerFactory.ActivateInArea` (reached via `ZoneSession.Spawners`, null without a scene) writing `Scheduler.Active`. Other packets in this task are not done.
 - Priority: P1
 - Native evidence: NpcStartDespawn `sub_39364A10` (AI event "GO_TO_DESPAWN"), ActivateNpcSpawnersInArea `sub_39363850` -> `sub_3933E7E0(center, radius, flag)`, NpcControl `sub_39364110`, NpcBanned `sub_3936E6A0`, RequestCombatUnits `sub_39369EC0` (replies ZWResponseCombatUnits 0x2D), AttackOnQuest `sub_3936E3F0`, FollowUnitOnQuest `sub_3936E4C0`, FollowPathOnQuest `sub_3936E550`, RunCommandSetOnQuest `sub_3936E610`, FactionImmigrateNpcSpawnerCondition `sub_3936E940`, AiDebug `sub_39364240`.
 - Repo state: NpcState/NpcSpawnFailed/NpcSpawnerEvent/Aggro*/Interact are done (ZoneSession.cs:372-413); the rest absent. `NpcRemoval` (Protocol/Messages/NpcNotifications.cs) is a different (outbound) message, not NpcStartDespawn. Spawner machinery exists (ZoneNpcSpawnerFactory, ZoneNpcSpawnerEvents).

@@ -339,6 +339,15 @@ public sealed class ZoneUnitRegistry
         return true;
     }
 
+    public bool ChangeFlyingState(ReadOnlySpan<byte> body)
+    {
+        var message = UnitFlyingStateChanged.Read(body);
+        if (!_units.TryGetValue(message.ObjectId, out var unit)) return false;
+        // 39258C90 also notifies the unit's physics actor (vfunc +296); that seam is not modelled yet.
+        unit.IsFlying = message.Flying;
+        return true;
+    }
+
     public bool ChangeTarget(ReadOnlySpan<byte> body)
     {
         var message = TargetChanged.Read(body);
