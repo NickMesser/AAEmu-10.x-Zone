@@ -21,17 +21,18 @@ queries. They do not remove CryEngine. Existing configurations retain their orig
 | `crysystem.dll` | Configured assets, content, clocks, scene owner, startup/frame/shutdown composition | Finish diagnostics, platform checks and capability policies across every scene type |
 | `cry3dengine_dedicate.dll` | World/cell selection, authored heightmaps/surfaces/seams, decoded placements, default/picking CGF proxies including referenced source streams and curved primitives | Vegetation, visibility/area behavior, water volumes and procedural objects |
 | `cryphysics_dedicate.dll` | True upright capsule/cylinder queries, authored dimensions/dynamics, queued stances, requested/actual velocity ownership, mapped slope/air/landing response, no-platform network corrections, terrain/static recovery, shared-mesh BVHs, affine instances and material IDs | Complete stair/suspension and retained support behavior, native recovery fallback/contact state, world speed caps, friction, rigid bodies, swimming, vehicles, ragdolls and exact tangent conformance |
-| `cryentitysystem_dedicate.dll` | Player/NPC identity generations, registry/spatial membership and managed player lifecycle | General entity proxies, components, areas, attachments and entity-script state |
-| `cryaction_dedicate.dll` | Player movement controller/frame pipeline and managed goal-pipe execution adapter | Authored behavior construction, game-object actions, signal bindings and FlowGraphs |
-| `cryaisystem_dedicate.dll` | Provider ownership, active/target state, signals, generation retirement and deterministic update scheduling | Perception, authored behavior admission, navigation, locomotion, leash and combat decisions |
-| `cryscriptsystem.dll` | Managed mode has no Lua bootstrap or script DLL dependency | Replacement interpreter or translated behavior layer and the game script API |
+| `cryentitysystem_dedicate.dll` | Player/NPC generations, registry/spatial membership, model-class generation, original entity-script initialization, owned entity timers and script updates | Character slots/attachments, collider-event receivers, general components, areas and complete entity state |
+| `cryaction_dedicate.dll` | Player movement/frame pipeline, real managed goal/control phases, authored behavior construction and signal bindings | Complete NPC service admission, game-object actions and FlowGraphs |
+| `cryaisystem_dedicate.dll` | Provider/actor/proxy ownership, signals, scheduled NPC AI timers, tiled authored graph import, bounded A*, physical query adapter and wish-only path follower | Full Puppet parameters, perception, physical NPC route admission, steering, leash and combat decisions |
+| `cryscriptsystem.dll` | Managed source VM, LNUM compatibility transforms, original 73-file NPC bootstrap and explicit game bindings; no native Lua DLL | Full Lua 5.1/bytecode/library compatibility and remaining actor/game APIs |
 | `cryanimation.dll` | Authored model/stance dimensions and movement parameters are consumed as data | Server-relevant skeleton collision, animation events and motion driven by animation |
 | `cryrendernull.dll` | Managed host is headless and never constructs a renderer | No renderer is required; retain checks that no rendering service enters the server path |
 | `tbb*`, `xlcommon.dll`, `xldiag.dll`, engine CRT dependencies | Engine startup is bypassed entirely | Remove native comparison deployment dependencies after replacement coverage is sufficient |
 
 New production owners are `ZoneManagedSceneHost`, `ZoneManagedSceneActivation`,
-`ZoneManagedTerrainGeometry`, `ZoneManagedPhysicsBackend`, `ZoneManagedAiProvider` and
-`ZoneManagedAiActor`. They reuse existing content readers, unit/NPC registries, World protocol,
+`ZoneManagedTerrainGeometry`, `ZoneManagedPhysicsBackend`, `ZoneManagedAiProvider`,
+`ZoneManagedNpcRuntime`, `ZoneManagedNpcActorScene` and `ZoneNavigationTiledGraph`.
+They reuse existing content readers, unit/NPC registries, World protocol,
 scene retirement, owned integration and movement publication. Native ABI adapters remain for
 comparison; managed scene startup never constructs them.
 
@@ -50,8 +51,10 @@ comparison; managed scene startup never constructs them.
 - [x] **CE-04 — Managed AI ownership and execution seam.** Fresh behavior state per generation,
   exclusion across managed/native providers, deterministic wrapped-clock scheduling, target
   retirement, callback-safe cancellation and disposal, and an adapter to existing goal pipes.
-  The production host currently admits idle managed NPC control state. Its gameplay AI gate stays
-  closed until authored behavior and supporting services are attached; unsupported signals fail.
+  The production host loads the original source and admits authored construction only when a
+  supported actor profile is supplied; known incomplete profiles refuse before expensive work.
+  Signal-ready actors can consume their scheduled AI timers independently of the still-closed full
+  gameplay gate. Remaining service dependencies retain named admission refusals.
 - [x] **CE-05 — Evidence without engine modules.** Synthetic host integration checks join,
   readiness, player landing/movement, clean World EOF and player-before-terrain retirement while
   inspecting loaded modules. A separate real-content zone-129 replay also reaches readiness,
@@ -61,7 +64,17 @@ The first native-free milestone passed 172 standalone tests, including 31 new co
 physics, AI and scene/host cases. The static/reference/curved milestone passed 247 tests; the
 character-shape implementation passed 272 standalone tests. The overlap/support and corrected
 terrain implementation passed 329; the current stance/movement slice passes **411 standalone tests**.
-The solution builds successfully; existing analyzer warnings remain.
+The NPC scripting/navigation slice passes **500 standalone tests**. The solution builds
+successfully; analyzer warnings remain.
+
+The final source-VM/tiled-navigation zone-129 replay also admits player 387, grounded at local
+`(1172.5996,1646.5,366.3365)`, emits its captured movement/location reports and retires on clean
+World EOF. Its readiness inventory contains 80 modules and zero CryEngine/native Lua DLLs.
+The replay listener exits 0 and the zone exits 3 under its configured disconnect policy.
+Evidence: `script-entry-{zone.log,replay.log,modules.json,verification.json}` and
+`captures/script-entry-output.bin` under the runtime artifact directory. Cold burst processing
+in this control takes about 107 seconds end to end; profile startup/receive throughput separately
+before claiming production performance parity.
 
 Real-content replay evidence is kept outside the repository: `managed-entry-verified-zone.log`,
 `managed-entry-verified-modules.json` and `captures/managed-entry-output-verified.bin` under the local runtime
@@ -354,23 +367,65 @@ moving support and native recovery/contact-state conformance, plus
 a sustained real-client walk/jump/logout/re-entry session. Native-free replay and isolated geometry
 controls alone do not establish complete living-controller parity.
 
-### CE-08 — Authored NPC behavior admission (P0)
+### CE-08 — Authored NPC behavior admission (P0, in progress)
 
-Attach the existing NPC signal/actor/goal-pipe runtimes to managed provider actors. Resolve
-authored AI file and initial behavior per NPC, construct the behavior stack, route signals and
-provide the required managed script/entity API. Define a supported behavior set and report each
-unsupported script/action. Remove the `HasAiActor` gameplay gate only for admitted behaviors
-whose dependencies are present. Do not flip it globally: several reachable leaves still refuse.
+Implemented: the original 73-file NPC source bootstrap, actual AI character/behavior lookup,
+database parameter closures, source-ordered database model-class generation, cached original
+`npc:Create`, original `common.new`, server initialization, character and spawning constructors.
+The composition supports real actor/goal/proxy owners and unwinds refused generations.
+Production refuses its incomplete actor profile before model-class compilation or per-entity
+cloning/initialization. Repeated known-failing attachment calls caused receive backlog
+in the first real-entry control; unsupported profiles must not block player admission.
+Entity IDs and proxy keys are allocated independently of World/NPC IDs. Signals and original
+scheduled AI time events use exact script ownership; the full gameplay gate remains closed.
+
+Original-script controls for five NPC profiles match all **657/657 recorded API calls**, parameters,
+callback results and tested state transitions in the native and managed VMs. Their declared
+generic/recording fixture does not establish C++ NPC gameplay parity. Separate production bootstrap
+uses real managed goal/track/combat catalogs. See [runtime evidence and contracts](../managed-npc-runtime.md).
+
+Entity timers, independent constructor health fields, default-state script updates and both update
+intervals now have real owners. Timer callbacks use the original due-batch and argument rules;
+faults retire their exact provider generation. Native dedicated `SetMovementTarget` is verified empty
+after argument decoding and is implemented accordingly.
+
+- [ ] Own actual character-slot/attachment inventories. Implement present attachment effects;
+  only a real absent lookup may take `HideAttachment`'s native empty branch.
+- [ ] Dispatch entity event 43 through owned receivers. Implement animated collider request layers
+  and arbitration before physics writes; absent physics alone cannot justify ignoring the event.
+- [ ] Complete Puppet parameters, persistent stick, indexed reference/look objects, smart-object
+  state, actor-health update producers, script-state switching and event-44 interval selection.
+- [ ] Attach posture, casting, buff, combat and position-check services used by each admitted
+  behavior. Unsupported operations must remain per-owner refusals.
+
+Remove the `HasAiActor` gameplay gate only for admitted behaviors whose dependencies are present.
+Do not flip it globally: several reachable leaves still refuse.
 
 Acceptance: an authored idle/talk NPC executes its initialization and a named signal; a hostile
 NPC runs its actual authored state transitions; missing behavior remains a named admission
 refusal; removal, failure and re-entry release every actor/listener/target generation.
 
-### CE-09 — Managed perception, navigation and locomotion (P0)
+### CE-09 — Managed perception, navigation and locomotion (P0, in progress)
 
-Wire authored navigation areas/shapes and path data into an owned query service. Add supported
-path search, forbidden-area/capability checks, territory/leash predicates, line-of-sight against
-terrain and static collision, perception/alertness, target selection and movement requests.
+Implemented: all 96 zone-129 streamed `paths/%03d_%03d/{areas,verts,net}mission0.bai` triplets,
+native tile translation, XY vertex welding, directed paired adjacency, modifiers and forbidden
+areas. The combined graph has 146,696 nodes, 231,626 paired links and 69,539 vertices. Missing
+modifiers/traversal types and unavailable tiles keep explicit outcomes and diagnostics.
+
+Bounded A* uses actual graph clearance and forbidden/coverage checks. Copied paths belong to
+one publication; retirement invalidates them and synchronously clears followers' queued wishes.
+The physical adapter queries applied living bodies, terrain/static support and full-body sweeps
+with caller-certified coverage. The follower requests horizontal velocity through the existing
+movement owner and never steps physics or writes a pose. Its search cost, support/clearance and
+following policies remain explicit replacements, not recovered X2 walkability/steering parity.
+
+- [ ] Register actual NPC physical bodies and connect the generation-owned motor to the scene's
+  single movement publication authority. Production physical route admission remains gated.
+- [ ] Supply truthful full-region terrain/brush/entity/vegetation coverage to route and visibility
+  queries. Missing owners cannot be represented as clear space.
+- [ ] Recover/compare X2 walkability, native route costs, steering, stairs and moving support.
+- [ ] Own perception/alertness, target acquisition, territory/leash, group routing and return policy.
+
 AI requests movement through the scene authority, never a second physics writer.
 
 Acceptance: NPCs route around an authored obstacle, cannot path through a wall, lose line of sight,
@@ -388,12 +443,23 @@ Acceptance: elevator starts from authored graph input, moves its collision surfa
 player and retires cleanly; `ZWEnterArea`/`ZWLeaveArea` follow actual crossings; graph callbacks
 cannot retain a removed entity or a previous scene generation.
 
-### CE-11 — Script execution without engine libraries (P1)
+### CE-11 — Script execution without engine libraries (P1, in progress)
 
-Select and implement a compatible managed script execution/translation layer. Existing authored
-scripts depend on Lua 5.1 plus integer behavior and game bindings; replacing the DLL requires
-validating those semantics, script source resolution, reference lifetimes and error behavior.
-Keep this independent from the native comparison host's `ZoneLuaRuntime`.
+Implemented: a VM-neutral host boundary and managed source execution through pinned NeoLua,
+with protected calls, exact method receivers, byte strings, references/callback ownership,
+LNUM integer promotion/division/modulo/hex semantics, correctly rounded fractional literals,
+and owned coroutine retirement. Original source loading uses the configured asset order.
+Nested script failures and nonthrowing script error reports cannot claim initialization readiness.
+The native comparison host retains its independent `ZoneLuaRuntime`.
+
+- [ ] Implement original Lua 5.1 `.alb` bytecode or require proven source equivalents for every
+  deployment script; current managed mode executes source only.
+- [ ] Expand independent language/library controls: environments/debug APIs, implicit vararg
+  `arg`, native RNG sequence, numeric loops and other still-uncovered edge cases.
+- [ ] Resolve coroutine interaction with scene-thread-only services; the covered original NPC
+  dependency closure contains no coroutine use.
+- [ ] Finish the actual entity/game bindings listed in CE-08 and CE-10. A managed compiler alone
+  does not establish gameplay parity.
 
 Acceptance: execute representative authored AI/entity scripts with the required number/string/
 table/metatable/coroutine semantics, install their used game bindings and reproduce signal/state

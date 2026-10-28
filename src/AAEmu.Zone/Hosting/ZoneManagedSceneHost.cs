@@ -1,9 +1,12 @@
 using System.Numerics;
 using AAEmu.Zone.Actors;
 using AAEmu.Zone.Ai;
+using AAEmu.Zone.Content;
+using AAEmu.Zone.Navigation;
 using AAEmu.Zone.Npcs;
 using AAEmu.Zone.Physics;
 using AAEmu.Zone.Scene;
+using AAEmu.Zone.Scripting;
 using AAEmu.Zone.Units;
 using AAEmu.Zone.WorldLink;
 using AAEmu.Zone.WorldState;
@@ -11,8 +14,8 @@ using AAEmu.Zone.WorldState;
 namespace AAEmu.Zone.Hosting;
 
 /// <summary>
-/// Independent scene composition with no engine creation, native entity admission or Lua
-/// bootstrap. The existing World protocol, scene lifetime and player movement stack are reused.
+/// Independent scene composition with no engine creation or native library bootstrap. Original
+/// NPC source scripts use the managed VM; the World protocol and player movement stack are reused.
 /// </summary>
 public static class ZoneManagedSceneHost
 {
@@ -40,6 +43,8 @@ public static class ZoneManagedSceneHost
             var clock = new ZoneSceneScriptClock();
             ZoneManagedSceneActivation? activation = null;
             ZoneManagedAiProvider? ai = null;
+            ZoneManagedNpcRuntime? scripts = null;
+            ZoneNavigationTiledGraph? navigation = null;
             ZoneManagedPhysicsBackend? backend = null;
             ZoneSceneResourceScope? scope = null;
 
@@ -51,9 +56,25 @@ public static class ZoneManagedSceneHost
             {
                 scope = resources;
                 activation = resources.Own(new ZoneManagedSceneActivation(inputs.Layout, inputs.Assets, inputs.Trace));
-                ai = resources.Own(new ZoneManagedAiProvider(Kind, _ => new ZoneManagedAiActor()));
+                IZoneScriptSource source = inputs.Configuration.ScriptRoot is { } scriptRoot
+                    ? new ZoneDirectoryScriptSource(scriptRoot) : new ZoneAssetScriptSource(inputs.Assets);
+                var random = new Random();
+                scripts = resources.Own(new ZoneManagedNpcRuntime(registry, catalog, inputs.Models, inputs.Npcs,
+                    source, Position, () => clock.GameMicroseconds,
+                    () => (uint)random.NextInt64(1L << 32), () => DateTimeOffset.UtcNow, period, inputs.Trace,
+                    // The verified initial CPuppet shell is available, but its required character
+                    // slots/attachments and collider-event receivers have no production owners.
+                    // Refuse that profile before cloning/running OnInit for every incoming NPC.
+                    // Repeated known-failing Lua construction must not block ordinary player entry.
+                    createScriptServices: lua => new ZoneManagedNpcScriptEffects(lua,
+                        () => clock.GameMicroseconds, inputs.Trace)));
+                notes.AddOnce("managed-npc-profile", "NPC script initialization profile remains unadmitted: " +
+                    "character slots/attachments, collider-event receivers and complete actor parameters/physics need owners. " +
+                    ZoneManagedNpcProfileFactory.CapabilitySummary);
+                ai = resources.Own(new ZoneManagedAiProvider(Kind, scripts.CreateActor));
                 var world = new ZoneSceneNpcWorld(registry, inputs.Startup, inputs.Npcs, Position,
                     () => backend, catalog, ai, clock, period, notes, inputs.Trace);
+                world.AttachAiRuntime(scripts.Actors.Actors.AiRuntime);
                 return new(world, new ZoneSceneUnitUpdateServices(registry, inputs.Startup, notes),
                     new ZoneSceneMovementServices(inputs.Startup, notes), Position);
             }
@@ -62,7 +83,8 @@ public static class ZoneManagedSceneHost
             {
                 ZoneNpcSpawnerRegistry? spawners = null;
                 var services = resources.Own(new ZoneSceneSpawnerServices(registry, inputs.Startup, inputs.Npcs, period,
-                    Position, () => backend, () => spawners?.IsShuttingDown == true, notes, inputs.Trace));
+                    Position, () => backend, () => spawners?.IsShuttingDown == true, notes, inputs.Trace,
+                    actorRuntime: scripts!.Actors.Actors));
                 var initial = new ZoneNpcInitialSpawnBehavior(registry.Npcs!, inputs.Npcs, services);
                 spawners = resources.Own(new ZoneNpcSpawnerRegistry(registry, inputs.Npcs, inputs.Npcs.Spawners,
                     services, services, initial));
@@ -70,14 +92,19 @@ public static class ZoneManagedSceneHost
                 var manager = resources.Own(new ZoneNpcManager(registry.Npcs!, services, spawners.Groups));
                 var factory = new ZoneNpcSpawnerFactory(spawners, manager, services);
                 var simulation = resources.CreateSimulation(registry,
-                    new ZoneSceneTickServices(registry, inputs.Startup, manager, clock, period, notes));
+                    new ZoneSceneTickServices(registry, inputs.Startup, manager, clock, period, notes, advanceScriptClock: false));
                 var loading = new ZoneManagedSceneLoadingServices(registry, inputs.Startup, activation!,
                     inputs.SceneContent, inputs.Zone.Key, notes, () =>
                     {
                         var geometry = new ZoneManagedTerrainGeometry(activation!.Heights, activation.Surfaces);
                         var surfaces = activation.SurfaceContent is { } content ? new ZoneCollisionSurfaceTable(content) : null;
                         backend = new ZoneManagedPhysicsBackend(geometry, surfaces, activation.Collision!.Geometry);
-                    }, inputs.Trace);
+                        var bootstrap = scripts!.Bootstrap();
+                        inputs.Trace($"Managed original NPC script bootstrap ready={bootstrap.Ready}; files={scripts.Loader.LoadedScripts.Count}" +
+                            (bootstrap.Refusal is { } refusal ? $"; {refusal}" : ""));
+                        navigation = resources.Own(new ZoneNavigationTiledGraph(inputs.Layout.Zone.Origin,
+                            ZoneNavigationTileContent.LoadZone(inputs.Assets, inputs.Layout.World.RequestedWorldName, inputs.Layout.Zone)));
+                    }, inputs.Trace, () => scripts!.ScriptingStatus, NavigationStatus);
                 return new(loading, factory, simulation);
             }
 
@@ -97,13 +124,22 @@ public static class ZoneManagedSceneHost
                     new ZoneMovementCorrectionServices(scene.Registry, players, motion, frameClock, diagnostics, origin),
                     new ZoneMovementOutgoing(scene.Registry, diagnostics, localOnWire: false),
                     frameClock, diagnostics, bindings, origin);
-                frame = new(phases, backend, players, ai, movement, scene.Simulation, inputs.Startup, period, inputs.Trace);
+                frame = new(phases, backend, players, ai, movement, scene.Simulation, inputs.Startup, period, inputs.Trace,
+                    elapsed =>
+                    {
+                        foreach (var fault in scripts!.TickScripts(elapsed, ai!.RemoveNpc))
+                        {
+                            inputs.Trace($"Managed NPC script callback refused actor={fault.Actor} {fault.Callback}: {fault.Message}");
+                        }
+                    }, beginFrame: clock.Advance);
                 scene.Frame = frame;
                 scope!.Own(frame);
                 inputs.Trace($"Zone ready: phase={scene.Phase}, engine=managed, terrainReady={activation!.Report!.TerrainReady}, cells={inputs.Layout.Cells.Count}; full feature parity=false");
-                inputs.Trace($"Managed AI: {ai!.Count} live NPC generations; behavior, perception, navigation and combat remain gated.");
+                inputs.Trace(scripts!.ScriptingStatus);
+                inputs.Trace(NavigationStatus());
+                inputs.Trace($"Managed AI: {ai!.Count} admitted script generations; perception, physical NPC admission and combat remain gated.");
                 inputs.Trace($"Managed physics supports authored terrain, {activation.Collision!.Geometry.InstanceCount} admitted static proxies and upright box/capsule/cylinder queries; " +
-                    "initial living dimensions, pivot and gravity are authored. Stance transitions, suspension, vegetation, vehicles and rigid-body dynamics remain incomplete.");
+                    "living dimensions, queued stances, pivot, gravity and movement dynamics are authored. Suspension, vegetation, vehicles and rigid-body dynamics remain incomplete.");
                 foreach (var note in notes.Lines) inputs.Trace($"Partial leaf: {note}");
                 return scene;
             }
@@ -114,6 +150,11 @@ public static class ZoneManagedSceneHost
                 { throw new AggregateException("Managed scene loading and cleanup failed.", failure, cleanup); }
                 throw;
             }
+
+            string NavigationStatus() => navigation is null ? "Managed navigation has not loaded." :
+                $"Managed navigation: tiles={navigation.Snapshot.TileLoads.Count(tile => tile.Status == ZoneNavigationTileLoadStatus.Loaded)}/{navigation.Snapshot.TileLoads.Count}, " +
+                $"nodes={navigation.Snapshot.Nodes.Count}, pairedLinks={navigation.Snapshot.AllocatedLinkPairCount}; " +
+                "topology search is available; physical NPC route admission remains gated.";
         }
 
         ZoneSession AdoptSession(ZoneSceneCoordinator loaded) => ZoneSession.AdoptScene(loaded,

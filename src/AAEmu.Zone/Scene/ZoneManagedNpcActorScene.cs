@@ -1,0 +1,290 @@
+using System.Numerics;
+using System.Diagnostics.CodeAnalysis;
+using AAEmu.Zone.Actors;
+using AAEmu.Zone.Ai;
+using AAEmu.Zone.Npcs;
+using AAEmu.Zone.Scripting;
+using AAEmu.Zone.Units;
+
+namespace AAEmu.Zone.Scene;
+
+public sealed record ZoneManagedNpcActorEvent(ZoneActorHandle Actor, string Source, int Kind, string Name);
+
+/// <summary>
+/// Owns the real actor index, goal phases and script runtime for one managed scene. The admission
+/// owner supplies fresh AI identity, type, radius, controls and proxy allocation identity; this
+/// service never substitutes a World unit ID for an engine entity or writes an actor pose.
+/// </summary>
+public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
+{
+    private readonly ZoneUnitRegistry _units;
+    private readonly ZoneSceneNpcCatalog _catalog;
+    private readonly Func<ZoneUnit, Vector3> _position;
+    private readonly Func<long> _frameMicroseconds;
+    private readonly Func<uint> _random;
+    private readonly Action<string> _loadScript;
+    private readonly Action<string>? _trace;
+    private readonly Dictionary<ZoneActorHandle, ZoneManagedNpcActor> _actors = [];
+    private readonly Queue<ZoneManagedNpcActorEvent> _events = [];
+    private readonly ZoneGoalPipeEventDispatcher _pipeEvents = new();
+    public ZoneNpcActorRegistry Actors { get; }
+    public ZoneAiObjectRegistry Objects { get; } = new();
+    public ZoneGoalPipeCatalog GoalPipes { get; }
+    public bool IsDisposed { get; private set; }
+    public float FrameTimeSeconds { get; }
+    public bool GlobalAiUpdateAlways { get; set; }
+    public ulong EventCount { get; private set; }
+    public IReadOnlyList<ZoneManagedNpcActorEvent> RecentEvents => _events.ToArray();
+    public int Count => _actors.Count;
+
+    public ZoneManagedNpcActorScene(ZoneUnitRegistry units, ZoneSceneNpcCatalog catalog, IZoneLuaRuntime lua,
+        ZoneGoalPipeCatalog goalPipes, Func<ZoneUnit, Vector3> position, Func<long> frameMicroseconds,
+        Func<uint> random, Action<string> loadScript, TimeSpan framePeriod, Action<string>? trace = null)
+    {
+        _units = units ?? throw new ArgumentNullException(nameof(units));
+        _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
+        GoalPipes = goalPipes ?? throw new ArgumentNullException(nameof(goalPipes));
+        _position = position ?? throw new ArgumentNullException(nameof(position));
+        _frameMicroseconds = frameMicroseconds ?? throw new ArgumentNullException(nameof(frameMicroseconds));
+        _random = random ?? throw new ArgumentNullException(nameof(random));
+        _loadScript = loadScript ?? throw new ArgumentNullException(nameof(loadScript));
+        _trace = trace;
+        if (framePeriod <= TimeSpan.Zero || !float.IsFinite((float)framePeriod.TotalSeconds))
+            throw new ArgumentOutOfRangeException(nameof(framePeriod));
+        FrameTimeSeconds = (float)framePeriod.TotalSeconds;
+        Actors = new(lua, Objects, this);
+    }
+
+    /// <summary>Verified generic CPipeUser reset defaults, not authored physics or a complete Puppet constructor.</summary>
+    public static ZoneActorControlState CreatePipeUserControls() => new()
+    {
+        SignalsEnabled = true, MovementUrgency = .4f, GoalMovementUrgency = .4f,
+    };
+
+    /// <summary>
+    /// Prepare stable behavior services before the authored entity table exists. No script constructor,
+    /// index registration or actor update runs until Adopt succeeds. The caller owns the pending shell.
+    /// </summary>
+    public ZoneManagedNpcActor Prepare(ZoneActorHandle actor, ZoneAiObjectState aiObject,
+        ZoneActorControlState controls, bool isPuppet)
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        ArgumentNullException.ThrowIfNull(aiObject); ArgumentNullException.ThrowIfNull(controls);
+        var npc = _catalog.Find(actor) ?? throw new InvalidOperationException($"NPC actor {actor} has no exact live catalog owner.");
+        if (!_units.Units.TryGetValue(npc.ObjectId, out var unit) || !ReferenceEquals(unit, npc.Unit))
+            throw new InvalidOperationException("NPC actor admission requires its exact registered Unit.");
+        if (_actors.ContainsKey(actor)) throw new InvalidOperationException("This NPC generation already has a managed actor.");
+        return new ZoneManagedNpcActor(this, actor, npc, aiObject, controls, isPuppet);
+    }
+
+    /// <summary>
+    /// Transfer a pending shell into the scene, retaining the borrowed entity script. Register its
+    /// behavior next, before invoking authored constructors. Failure retires the pending shell.
+    /// </summary>
+    public void Adopt(ZoneManagedNpcActor managed, short objectType, ulong proxyAllocationKey,
+        ZoneLuaReference? entityScript)
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        ArgumentNullException.ThrowIfNull(managed);
+        if (!ReferenceEquals(managed.Scene, this)) throw new ArgumentException("The actor belongs to a different scene.", nameof(managed));
+        if (!managed.IsPending) throw new InvalidOperationException("Only a fresh pending actor can be adopted.");
+        var actor = managed.Handle; var npc = managed.Npc;
+        if (!ReferenceEquals(_catalog.Find(actor), npc) ||
+            !_units.Units.TryGetValue(npc.ObjectId, out var unit) || !ReferenceEquals(unit, npc.Unit))
+            throw new InvalidOperationException("NPC actor admission requires its exact live catalog and Unit owners.");
+        if (_actors.ContainsKey(actor)) throw new InvalidOperationException("This NPC generation already has a managed actor.");
+        var phase = new ZoneActorGoalPhase(GoalPipes, managed.Services, _pipeEvents);
+        ZoneNpcActorEntry? entry = null;
+        try
+        {
+            entry = Actors.Adopt(npc, npc.Unit.Snapshot.Name, objectType, managed.AiObject, phase, proxyAllocationKey, entityScript);
+            if (IsDisposed || !ReferenceEquals(_catalog.Find(actor), npc) ||
+                !_units.Units.TryGetValue(npc.ObjectId, out unit) || !ReferenceEquals(unit, npc.Unit))
+                throw new InvalidOperationException("The NPC generation retired during actor admission.");
+            managed.Attach(entry);
+            _actors.Add(actor, managed);
+            // CPipeUser constructor 31163974 selects the catalog's real initial pipe.
+            phase.Pipes.Select(0, "_first_");
+        }
+        catch (Exception failure)
+        {
+            _actors.Remove(actor);
+            managed.MarkRetired();
+            try { if (entry is not null) Actors.Remove(entry); else phase.Dispose(); }
+            catch (Exception cleanup) { throw new AggregateException(failure, cleanup); }
+            throw;
+        }
+    }
+
+    public ZoneManagedNpcActor Adopt(ZoneActorHandle actor, ZoneAiObjectState aiObject, short objectType,
+        ulong proxyAllocationKey, ZoneActorControlState controls, bool isPuppet, ZoneLuaReference? entityScript)
+    {
+        var managed = Prepare(actor, aiObject, controls, isPuppet);
+        try { Adopt(managed, objectType, proxyAllocationKey, entityScript); return managed; }
+        catch { managed.Dispose(); throw; }
+    }
+
+    public void RegisterBehavior(ZoneManagedNpcActor actor, ZoneNpcBehavior behavior)
+    {
+        Require(actor);
+        Actors.AiRuntime.Register(actor.Npc, behavior);
+        actor.AttachBehavior(behavior);
+    }
+
+    public ZoneManagedNpcActor? Find(ZoneActorHandle actor) =>
+        !IsDisposed && _actors.TryGetValue(actor, out var current) && IsCurrent(current) ? current : null;
+
+    internal bool IsCurrent(ZoneManagedNpcActor actor) => !IsDisposed &&
+        _actors.TryGetValue(actor.Handle, out var current) && ReferenceEquals(current, actor) &&
+        ReferenceEquals(_catalog.Find(actor.Handle), actor.Npc) &&
+        _units.Units.TryGetValue(actor.Npc.ObjectId, out var unit) && ReferenceEquals(unit, actor.Npc.Unit) &&
+        ReferenceEquals(Actors.Find(actor.Npc), actor.Entry);
+
+    internal void Require(ZoneManagedNpcActor actor)
+    {
+        if (!IsCurrent(actor)) throw new ObjectDisposedException(nameof(ZoneManagedNpcActor), "The exact NPC actor generation has retired.");
+    }
+
+    [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The dictionary owns the actor shell; this method retires its registry entry and target state directly.")]
+    public bool Remove(ZoneActorHandle actor)
+    {
+        if (!_actors.Remove(actor, out var managed)) return false;
+        managed.MarkRetired();
+        foreach (var other in _actors.Values.ToArray()) other.Services.RemoveTarget(managed.AiObject);
+        try { Actors.Remove(managed.Entry); }
+        finally { managed.Services.ReleaseTargets(); }
+        return true;
+    }
+
+    internal long FrameMicroseconds() => _frameMicroseconds();
+    internal uint NextRandom() => _random();
+    internal void LoadScript(string name) => _loadScript(name);
+    internal Vector3 Position(ZoneManagedNpcActor actor) { Require(actor); return _position(actor.Npc.Unit); }
+    public void RefreshPositions()
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        foreach (var actor in _actors.Values.ToArray())
+            if (IsCurrent(actor)) actor.AiObject.Position = _position(actor.Npc.Unit);
+    }
+    internal ZoneManagedNpcActor? ObjectOwner(object target) =>
+        _actors.Values.FirstOrDefault(actor => ReferenceEquals(actor.AiObject, target) && IsCurrent(actor));
+    internal ZoneManagedNpcActor? EntryOwner(ZoneNpcActorEntry entry) =>
+        _actors.Values.FirstOrDefault(actor => ReferenceEquals(actor.Entry, entry) && IsCurrent(actor));
+
+    internal void Record(ZoneManagedNpcActor actor, string source, int kind, string? name)
+    {
+        if (EventCount != ulong.MaxValue) EventCount++;
+        if (_events.Count == 256) _events.Dequeue();
+        _events.Enqueue(new(actor.Handle, source, kind, name ?? string.Empty));
+    }
+
+    public IZoneActorEntityView? FindExternalEntity(uint entityId) => null;
+    public IZoneActorEntityView? FindExternalEntity(ZoneUnit unit) => null;
+    public ZoneGoalPipeController? GetExternalPipeUser(object aiObject) => null;
+    public Vector3? GetEntityPosition(ZoneNpcActorEntry actor) => EntryOwner(actor) is { } owner ? Position(owner) : null;
+    public bool HasSignalHandler(ZoneNpcActorEntry actor) => EntryOwner(actor)?.Behavior is { IsDisposed: false };
+    public void ActorSignalEvent(ZoneNpcActorEntry actor, string name)
+    { if (EntryOwner(actor) is { } owner) Record(owner, "actor", 2, name); }
+    public void RecordSignal(ZoneNpcActorEntry actor, string name)
+    { if (EntryOwner(actor) is { } owner) Record(owner, "recorder", 2, name); }
+    public int GetActorAlertness(ZoneNpcActorEntry actor) => EntryOwner(actor)?.Behavior?.Alertness ?? 0;
+    public void SetEntityUpdatePolicy(ZoneNpcActorEntry actor, int policy)
+    { if (EntryOwner(actor) is { } owner) owner.EntityUpdatePolicy = policy; }
+    public void ActorActivationEvent(ZoneNpcActorEntry actor, int eventId)
+    {
+        if (EntryOwner(actor) is not { } owner) return;
+        if (eventId is not (6 or 7)) throw new NotSupportedException($"Unknown NPC activation event {eventId}.");
+        owner.SetActive(eventId == 7);
+        Record(owner, "activation", eventId, null);
+    }
+    public bool StartAuxiliaryBehavior(ZoneNpcActorEntry actor, string name, int kind) =>
+        throw Missing("auxiliary behavior execution");
+    public bool IsAuxiliaryBehaviorFinished(ZoneNpcActorEntry actor) =>
+        throw Missing("auxiliary behavior execution");
+    public object? ResolvePipeTarget(ZoneGoalPipeController pipeUser, string name) => throw Missing($"special/named pipe target '{name}'");
+    public object? FindAiObject(string name) => throw Missing($"named AI object '{name}'");
+    public void Warning(string message) => _trace?.Invoke(message);
+    internal static NotSupportedException Missing(string dependency) =>
+        new($"Managed NPC actor requires an owned scene service for {dependency}.");
+
+    public void Dispose()
+    {
+        if (IsDisposed) return;
+        IsDisposed = true;
+        List<Exception>? errors = null;
+        foreach (var actor in _actors.Keys.ToArray())
+            try { Remove(actor); } catch (Exception error) { (errors ??= []).Add(error); }
+        try { Actors.Dispose(); } catch (Exception error) { (errors ??= []).Add(error); }
+        if (errors is not null) throw new AggregateException("Managed NPC actors failed to retire.", errors);
+    }
+}
+
+/// <summary>One exact NPC generation's actor phase and behavior services; the enclosing scene owns physics.</summary>
+public sealed class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcBehaviorServices
+{
+    private readonly ZoneManagedNpcActorScene _scene;
+    private bool _retired;
+    internal ZoneManagedNpcActorServices Services { get; }
+    internal ZoneManagedNpcActorScene Scene => _scene;
+    internal bool IsPending => !_retired && Entry is null;
+    public ZoneActorHandle Handle { get; }
+    public ZoneNpc Npc { get; }
+    public ZoneAiObjectState AiObject { get; }
+    public ZoneNpcActorEntry Entry { get; private set; } = null!;
+    public ZoneActorControlState Controls => Services.Controls;
+    public ZoneActorNavigationState Navigation => Services.Navigation;
+    public ZoneActorContinuationState Continuation => Services.Continuation;
+    public ZoneAiObjectState? Argument => Services.Argument as ZoneAiObjectState;
+    public ZoneAiObjectState? AttentionTarget => Services.GetAttentionTarget() as ZoneAiObjectState;
+    public IReadOnlyList<ZoneManagedNpcDevaluation> Devaluations => Services.Devaluations;
+    public ZoneNpcBehavior? Behavior { get; private set; }
+    public bool IsPuppet { get; }
+    public int EntityUpdatePolicy { get; internal set; }
+    public bool GameplayReady => false;
+    public bool HasActor => !_retired && _scene.IsCurrent(this);
+
+    internal ZoneManagedNpcActor(ZoneManagedNpcActorScene scene, ZoneActorHandle handle, ZoneNpc npc,
+        ZoneAiObjectState aiObject, ZoneActorControlState controls, bool isPuppet)
+    {
+        _scene = scene; Handle = handle; Npc = npc; AiObject = aiObject; IsPuppet = isPuppet;
+        Services = new(scene, this, controls);
+    }
+    internal void Attach(ZoneNpcActorEntry entry) => Entry = entry;
+    internal void AttachBehavior(ZoneNpcBehavior behavior) => Behavior = behavior;
+    internal void MarkRetired() { _retired = true; Behavior = null; }
+    public void SetActive(bool active) { _scene.Require(this); AiObject.Enabled = active; }
+    public void SetTarget(ZoneActorHandle? target)
+    {
+        _scene.Require(this);
+        if (target is null) { Services.SetAttentionTarget(null); return; }
+        var other = _scene.Find(target.Value) ?? throw ZoneManagedNpcActorScene.Missing("an AI object for the selected target generation");
+        Services.SetAttentionTarget(other.AiObject);
+    }
+    public void SendSignal(ZoneAiSignal signal)
+    {
+        _scene.Require(this);
+        Npc.AiSignals.Submit(signal.Kind, signal.Name, signal.SenderEntityId, signal.Data, signal.Crc);
+    }
+    public void Update(uint timeMilliseconds, float elapsedSeconds)
+    {
+        _scene.Require(this);
+        if (!float.IsFinite(elapsedSeconds) || elapsedSeconds < 0) throw new ArgumentOutOfRangeException(nameof(elapsedSeconds));
+        if (!AiObject.Enabled) return;
+        AiObject.Position = _scene.Position(this);
+        Entry.Phase.Update();
+    }
+    public void LoadScript(string filename) { _scene.Require(this); _scene.LoadScript(filename); }
+    public void ActorEvent(int kind, string name) { _scene.Require(this); _scene.Record(this, "actor", kind, name); }
+    public void RecordEvent(int kind, string name) { _scene.Require(this); _scene.Record(this, "recorder", kind, name); }
+    public void ResetPipeUserAfterBehaviorExit() { _scene.Require(this); Services.SetAttentionTarget(null); }
+    public void ChangeSmartObjectState(string change) => throw ZoneManagedNpcActorScene.Missing($"smart-object state '{change}'");
+    public void NotifyAlert() => throw ZoneManagedNpcActorScene.Missing("gameplay alert notification");
+    public void NotifyActionDone() => throw ZoneManagedNpcActorScene.Missing("gameplay action-done notification");
+    public void ScriptError(string callback, ZoneLuaException error) => _scene.Warning($"NPC {Handle} {callback}: {error.Message}");
+    public void Dispose()
+    {
+        if (_retired) return;
+        if (Entry is null) { MarkRetired(); Services.ReleaseTargets(); }
+        else _scene.Remove(Handle);
+    }
+}

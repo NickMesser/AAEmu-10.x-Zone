@@ -37,7 +37,7 @@ public sealed class ZoneNpcAiSignals
     /// <summary>390B30D0 / CAISystem filter 0: send to this NPC with its own actor entity as sender.</summary>
     public void Send(string name, int kind = 0, ZoneAiSignalData? data = null)
     {
-        if (_disposed || !_world.HasAiActor(_npc) || _runtime.GetEntityId(_npc.Unit) is not { } sender) return;
+        if (_disposed || !_world.HasSignalActor(_npc) || _runtime.GetEntityId(_npc.Unit) is not { } sender) return;
         Submit(kind, name, sender, data);
     }
 
@@ -63,7 +63,7 @@ public sealed class ZoneNpcAiSignals
 
     internal bool CancelPendingTalk()
     {
-        if (_disposed || !_world.HasAiActor(_npc) || !_runtime.HasPipeUser(_npc)) return false;
+        if (_disposed || !_world.HasSignalActor(_npc) || !_runtime.HasPipeUser(_npc)) return false;
         var cancelled = false;
         // 39342EF0 increments after erasure: an adjacent OnTalk shifts into the skipped slot.
         for (var index = 0; index < _pending.Count; index++)

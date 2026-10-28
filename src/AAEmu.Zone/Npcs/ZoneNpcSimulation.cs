@@ -355,11 +355,19 @@ public sealed class ZoneNpcSimulation : IZoneAggroWorld
         // makes managed callback removal safe; newly created owners join the next frame.
         foreach (var npc in _npcs.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray())
         {
-            if (!IsCurrent(npc) || !_world.HasAiActor(npc)) continue;
+            if (!IsCurrent(npc)) continue;
+            var gameplayReady = _world.HasAiActor(npc);
+            if (!IsCurrent(npc)) continue;
+            if (!gameplayReady && !_world.HasSignalActor(npc)) continue;
+            if (!IsCurrent(npc)) continue;
             // Native caches death before any callbacks. Death during selection affects the next frame.
             foreach (var step in ZoneNpcUpdateSchedule.Steps(frame, npc.UpdatePhase, npc.Unit.IsDead, npc.AggroEnabled))
             {
                 if (!IsCurrent(npc)) break;
+                // A real script actor can own the existing NPC AI timer before perception,
+                // navigation and the other gameplay manager leaves are admitted. Preserve
+                // the original schedule instead of starting a second timer authority.
+                if (!gameplayReady && step != ZoneNpcUpdateStep.AiTimeEvent) continue;
                 switch (step)
                 {
                     case ZoneNpcUpdateStep.RefreshAggro: npc.Aggro.RefreshTargets(); break;
@@ -384,7 +392,7 @@ public sealed class ZoneNpcSimulation : IZoneAggroWorld
                     case ZoneNpcUpdateStep.Position: _world.CheckPosition(npc); break;
                 }
             }
-            if (IsCurrent(npc) && canReplicateMovement && _world.MovementReplicationEnabled && IsCurrent(npc))
+            if (gameplayReady && IsCurrent(npc) && canReplicateMovement && _world.MovementReplicationEnabled && IsCurrent(npc))
                 _world.ReplicateMovement(npc);
         }
     }
@@ -394,7 +402,7 @@ public sealed class ZoneNpcSimulation : IZoneAggroWorld
     {
         EnsureActive();
         foreach (var npc in _npcs.Values.ToArray())
-            if (IsCurrent(npc) && _world.HasAiActor(npc)) npc.AiSignals.Update();
+            if (IsCurrent(npc) && _world.HasSignalActor(npc)) npc.AiSignals.Update();
     }
 
     /// <summary>Releases actor scripts and owned signals, and removes sender references from other actors.</summary>

@@ -62,6 +62,8 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
     private readonly ZoneStartupState _startup;
     private readonly TimeSpan _framePeriod;
     private readonly Action<string>? _trace;
+    private readonly Action<TimeSpan>? _scriptTick;
+    private readonly Action<TimeSpan>? _beginFrame;
     private bool _disposed;
 
     /// <param name="phases">The scene's one Agent-3 concrete triple coordinator (PrePhase/StepPhysics/PostPhase).</param>
@@ -74,7 +76,8 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
     /// <param name="framePeriod">The validated explicit replacement scheduling period.</param>
     public ZoneSceneFrameCoordinator(IZoneMovementFramePhases phases, IZonePhysicsBackend backend,
         ZonePlayerActorFactory playerActors, IZoneAiFramePump? ai, ZoneMovementServices movement,
-        ZoneSimulationTick simulation, ZoneStartupState startup, TimeSpan framePeriod, Action<string>? trace)
+        ZoneSimulationTick simulation, ZoneStartupState startup, TimeSpan framePeriod, Action<string>? trace,
+        Action<TimeSpan>? scriptTick = null, Action<TimeSpan>? beginFrame = null)
     {
         ArgumentNullException.ThrowIfNull(phases);
         ArgumentNullException.ThrowIfNull(backend);
@@ -94,6 +97,8 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
         _startup = startup;
         _framePeriod = framePeriod;
         _trace = trace;
+        _scriptTick = scriptTick;
+        _beginFrame = beginFrame;
     }
 
     /// <summary>The one player actor factory of this scene generation (admission-line evidence source).</summary>
@@ -114,6 +119,7 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
         var serverMs = _startup.WorldGameClock.GetTime();
         var gameSeconds = serverMs / 1000f; // same documented millisecond domain, seconds view
         var sample = new ZoneMovementFrame(frame, _framePeriod, serverMs, gameSeconds);
+        _beginFrame?.Invoke(_framePeriod);
 
         _phases.PrePhase(sample);           // eligibility, sampling, input production (clock pushed here)
         _phases.StepPhysics(_framePeriod);  // EXACTLY one Step per frame; <= 0 refused by name downstream
@@ -125,6 +131,7 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
                     _backend.CopyStatus(actor, out var status);
                     _trace($"Player physics status unit={actor.UnitObjectId} gen={actor.Generation} local=({status.Position.X}, {status.Position.Y}, {status.Position.Z}) grounded={status.IsGrounded}");
                 }
+        _scriptTick?.Invoke(_framePeriod);  // managed entity timers/proxies; exact-owner callback faults retire their NPC
         _ai?.Pump(serverMs);                // one AI authority; post-phase state observed by the tick
         _simulation.Update(frame);          // ZoneSimulationTick phases (own clocks/gates inside)
     }

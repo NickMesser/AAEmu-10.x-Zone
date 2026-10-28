@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using AAEmu.Zone.Actors;
 using AAEmu.Zone.Ai;
 using AAEmu.Zone.Combat;
@@ -58,17 +59,26 @@ public sealed class ZoneSceneReadinessNotes
 /// <summary>
 /// The scene's accumulated native float-seconds clock for the signal runtime
 /// (IZoneNpcSignalRuntime.cs:9-10: native current-time float seconds, NEVER a conversion from
-/// the wrapping millisecond timer). Advanced exactly once per frame by
-/// <see cref="ZoneSceneTickServices.UpdateHeartbeat"/> — the host engine phase that owns
-/// advancement (ZoneTimeOfDayState.cs:8) — and read by <see cref="ZoneSceneSignalRuntime"/>.
+/// the wrapping millisecond timer). Advanced exactly once per frame: managed composition does
+/// so at frame start; the native comparison keeps its UpdateHeartbeat boundary. Entity timers
+/// use the independent precise elapsed-period counter, avoiding float-to-microsecond truncation.
 /// </summary>
 public sealed class ZoneSceneScriptClock
 {
+    private long _elapsedTicks;
     public float TimeSeconds { get; private set; }
+    /// <summary>Exact elapsed scene-period microseconds for entity timer deadlines, independent of float signal time.</summary>
+    public long GameMicroseconds => _elapsedTicks / 10;
 
     public void Advance(float frameSeconds)
     {
-        if (float.IsFinite(frameSeconds) && frameSeconds > 0f) TimeSeconds += frameSeconds;
+        if (float.IsFinite(frameSeconds) && frameSeconds > 0f) Advance(TimeSpan.FromSeconds(frameSeconds));
+    }
+    public void Advance(TimeSpan elapsed)
+    {
+        if (elapsed <= TimeSpan.Zero) throw new ArgumentOutOfRangeException(nameof(elapsed));
+        _elapsedTicks = checked(_elapsedTicks + elapsed.Ticks);
+        TimeSeconds += (float)elapsed.TotalSeconds;
     }
 }
 
@@ -102,32 +112,87 @@ public sealed class ZoneSceneNpcCatalog : IZoneNativeAiActorView
     {
         public uint Generation = 1;
         public bool Retired;
+        public ZoneNpc? Owner;
+        public required ZoneSceneNpcAdmissionStatus Admission;
     }
 
     private readonly Dictionary<uint, Entry> _entries = new();
+    private readonly ConditionalWeakTable<ZoneNpc, object> _knownOwners = new();
 
     /// <summary>One generation per Initialize of a live owner; a retired identity re-enters as generation + 1.</summary>
     public ZoneActorHandle Register(ZoneNpc npc)
     {
         ArgumentNullException.ThrowIfNull(npc);
         if (!_entries.TryGetValue(npc.ObjectId, out var entry))
-            _entries[npc.ObjectId] = entry = new Entry();
+            _entries[npc.ObjectId] = entry = new Entry
+            {
+                Owner = npc,
+                Admission = Status(npc, new(npc.ObjectId, 1)),
+            };
         else if (entry.Retired)
         {
-            entry.Generation = unchecked(entry.Generation + 1);
+            if (_knownOwners.TryGetValue(npc, out _))
+                throw new InvalidOperationException("A retired NPC owner cannot be reused for a fresh actor generation.");
+            if (entry.Generation == uint.MaxValue)
+                throw new InvalidOperationException($"NPC actor generations are exhausted for unit {npc.ObjectId}.");
+            entry.Generation++;
             entry.Retired = false;
+            entry.Owner = npc;
+            entry.Admission = Status(npc, new(npc.ObjectId, entry.Generation));
         }
+        else if (!ReferenceEquals(entry.Owner, npc))
+            throw new InvalidOperationException($"NPC actor unit {npc.ObjectId} already belongs to another live owner.");
+        _knownOwners.GetValue(npc, _ => new());
         return new ZoneActorHandle(npc.ObjectId, entry.Generation);
     }
 
     public void Retire(uint objectId)
     {
-        if (_entries.TryGetValue(objectId, out var entry)) entry.Retired = true;
+        if (TryGet(objectId) is { } actor) Retire(actor);
+    }
+
+    public bool Retire(ZoneNpc npc)
+    {
+        ArgumentNullException.ThrowIfNull(npc);
+        return TryGet(npc) is { } actor && Retire(actor);
+    }
+
+    public bool Retire(ZoneActorHandle actor)
+    {
+        if (!_entries.TryGetValue(actor.UnitObjectId, out var entry) || entry.Retired || entry.Generation != actor.Generation)
+            return false;
+        entry.Retired = true;
+        entry.Owner = null;
+        entry.Admission = entry.Admission with { Phase = ZoneSceneNpcAdmissionPhase.Retired };
+        return true;
     }
 
     public ZoneActorHandle? TryGet(uint objectId) =>
         _entries.TryGetValue(objectId, out var entry) && !entry.Retired
             ? new ZoneActorHandle(objectId, entry.Generation) : null;
+
+    public ZoneActorHandle? TryGet(ZoneNpc npc)
+    {
+        ArgumentNullException.ThrowIfNull(npc);
+        return _entries.TryGetValue(npc.ObjectId, out var entry) && !entry.Retired && ReferenceEquals(entry.Owner, npc)
+            ? new(npc.ObjectId, entry.Generation) : null;
+    }
+
+    public ZoneNpc? Find(ZoneActorHandle actor) =>
+        _entries.TryGetValue(actor.UnitObjectId, out var entry) && !entry.Retired && entry.Generation == actor.Generation
+            ? entry.Owner : null;
+
+    public ZoneSceneNpcAdmissionStatus? GetAdmission(ZoneActorHandle actor) =>
+        _entries.TryGetValue(actor.UnitObjectId, out var entry) && entry.Generation == actor.Generation ? entry.Admission : null;
+
+    internal void SetAdmission(ZoneActorHandle actor, ZoneSceneNpcAdmissionPhase phase, string? refusal = null)
+    {
+        if (_entries.TryGetValue(actor.UnitObjectId, out var entry) && !entry.Retired && entry.Generation == actor.Generation)
+            entry.Admission = entry.Admission with { Phase = phase, Refusal = refusal };
+    }
+
+    private static ZoneSceneNpcAdmissionStatus Status(ZoneNpc npc, ZoneActorHandle actor) =>
+        new(actor, npc.Id, npc.TemplateId, ZoneSceneNpcAdmissionPhase.Registered, null);
 
     public ZoneActorKind GetKind(ZoneActorHandle actor)
     {
@@ -144,22 +209,11 @@ public sealed class ZoneSceneNpcCatalog : IZoneNativeAiActorView
 // ---------------------------------------------------------------------------
 
 /// <summary>
-/// Production <see cref="IZoneNpcWorld"/> composing the REAL scene subsystems: the unit
-/// registry (spatial/units), the NPC simulation's aggro tables and spawn state, the physics
-/// backend ground ray, the scene model-position source, and the AI handle catalog + the one
-/// dependency-gated native AI provider (ledger A4). Decisions bound here:
-/// <list type="bullet">
-/// <item>NO managed actor adoption: the AiRuntime mirrors ZoneNpcActorRegistry's not-adopted
-/// results exactly (:114-127, :138-149, :186-187, :195-202) because managed adoption would
-/// violate the native-driven exclusivity invariant (ZoneNativeAiProvider.cs:35-40).</item>
-/// <item><see cref="HasAiActor"/> = false is the FACTUAL state (no entity, no AI actor — the
-/// 8-row native dependency table is unresolved), and it is the exact gate
-/// ZoneNpcSimulation.Update :356 applies before any per-NPC step, so the actor-subsystem leaves
-/// below are unreachable in the tick path by construction and refuse BY NAME if ever called.
-/// Their refusals and per-NPC AI bind refusals surface through readiness, never silently.</item>
-/// <item>Return/housing/territory/abuser leaves follow the interface contract (:7-9): named
-/// NotSupportedException with the native address + TODO — no permissive defaults.</item>
-/// </list>
+/// Production NPC world over the unit/spatial registry, aggro/spawn state, selected physics
+/// queries and exact actor catalog. The selected AI backend exclusively owns each generation.
+/// An attached actor runtime can admit script signals and the original scheduled AI time event
+/// independently of the full gameplay gate. Perception, return, acquisition and motion leaves
+/// retain named refusals until their actual owners are available.
 /// </summary>
 public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
 {
@@ -180,6 +234,7 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     private readonly ZoneSceneSignalRuntime _signalRuntime;
     private readonly ZoneSceneAiRuntime _aiRuntime;
     private bool _aiRefusalSummaryTraced;
+    private bool _npcAdmissionStarted;
 
     public ZoneSceneNpcWorld(ZoneUnitRegistry registry, ZoneStartupState startup, ZoneNpcContent npcContent,
         Func<ZoneUnit, Vector3> modelPosition, Func<IZonePhysicsBackend?> backend, ZoneSceneNpcCatalog catalog,
@@ -214,6 +269,17 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     public IReadOnlyList<(uint ObjectId, string Message)> AiBindRefusals => _aiBindRefusals;
     public int AiBindRefusalCount => _aiBindRefusals.Count;
     public ZoneSceneNpcCatalog Catalog => _catalog;
+
+    /// <summary>
+    /// Attaches the scene-owned script actor runtime once, before NPC admission. NPC queues keep
+    /// this world's stable facade; ownership and disposal remain with the caller's scene scope.
+    /// </summary>
+    public void AttachAiRuntime(IZoneNpcAiRuntime runtime)
+    {
+        if (_npcAdmissionStarted)
+            throw new InvalidOperationException("The NPC actor runtime must attach before NPC admission starts.");
+        _aiRuntime.Attach(runtime);
+    }
 
     private ZoneNpcSimulation? Scene => _registry.Npcs;
     private IZonePhysicsBackend RequireBackend() =>
@@ -257,6 +323,7 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     public void Initialize(ZoneNpc npc, ZoneUnit? creator)
     {
         ArgumentNullException.ThrowIfNull(npc);
+        _npcAdmissionStarted = true;
         var handle = _catalog.Register(npc);
         try
         {
@@ -264,18 +331,26 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
                 throw new NotSupportedException(
                     "No AI provider is wired for this scene.");
             _ai.CreateNpc(handle);
+            _catalog.SetAdmission(handle, ZoneSceneNpcAdmissionPhase.ActorBound);
             if (_ai is ZoneManagedAiProvider)
             {
                 _ai.SetUpdateSchedule(handle, _framePeriod);
+                _catalog.SetAdmission(handle, ZoneSceneNpcAdmissionPhase.Scheduled);
                 _notes.AddOnce("managed-npc-behavior",
-                    "Managed NPC actor lifecycle and scheduling are active; authored behavior scripts, perception, navigation and combat are not attached. Gameplay AI remains gated.");
+                    "Managed NPC actor lifecycle, script admission and scheduling are active; perception, physical locomotion and combat remain capability gated.");
             }
         }
         catch (NotSupportedException error)
         {
+            _catalog.SetAdmission(handle, ZoneSceneNpcAdmissionPhase.Refused, error.Message);
             _aiBindRefusals.Add((npc.ObjectId, error.Message));
             if (_aiBindRefusals.Count <= 5)
                 _trace?.Invoke($"NPC AI bind refused unit={npc.ObjectId} npcId={npc.Id} gen={handle.Generation}: {error.Message}");
+        }
+        catch (Exception error)
+        {
+            _catalog.SetAdmission(handle, ZoneSceneNpcAdmissionPhase.Refused, error.Message);
+            throw;
         }
         if (creator is not null)
             _notes.AddOnce("creator-hostility",
@@ -283,7 +358,7 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
         if (_aiBindRefusals.Count == 1 && !_aiRefusalSummaryTraced)
         {
             _aiRefusalSummaryTraced = true;
-            _trace?.Invoke("NPC AI bind refusals are counted per owner and printed at readiness (dependency-gated native provider).");
+            _trace?.Invoke("NPC AI bind refusals are counted per owner and printed at readiness (actor/gameplay service admission).");
         }
     }
 
@@ -294,21 +369,18 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
         // Managed retirement invalidates its generation before invoking behavior cleanup. Even
         // a failed callback must retire this catalog identity so re-entry receives a fresh handle.
         // A failed native destroy retains its binding and therefore retains the catalog instead.
+        if (_catalog.TryGet(npc) is not { } handle) return;
         var retireCatalog = _ai is ZoneManagedAiProvider;
         try
         {
-            if (_catalog.TryGet(npc.ObjectId) is { } handle)
-            {
-                try { _ai?.RemoveNpc(handle); }
-                catch (ObjectDisposedException) { /* scene teardown already retired the provider */ }
-            }
+            try { _ai?.RemoveNpc(handle); }
+            catch (ObjectDisposedException) { /* scene teardown already retired the provider */ }
             retireCatalog = true;
         }
         finally
         {
-            if (retireCatalog)
+            if (retireCatalog && _catalog.Retire(handle))
             {
-                _catalog.Retire(npc.ObjectId);
                 _activationServices.Remove(npc.ObjectId);
             }
         }
@@ -527,15 +599,25 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     }
 
     /// <summary>
-    /// 393482D0's gate, FACTUAL: neither the entity nor the AI actor exists (native dependency
-    /// table unresolved — ZoneNativeAiProvider.ReportDependencies, 8 rows), and it is the exact
-    /// condition ZoneNpcSimulation.Update :356 / UpdateAiSignals :395 apply before every
-    /// per-NPC step. The per-NPC bind refusals recorded at Initialize are this leaf's evidence.
+    /// Complete gameplay admission is still closed. Managed script actors can exist and receive
+    /// signals, but enabling this gate would also enter unfinished perception, return, target,
+    /// movement and combat leaves. HasSignalActor independently admits their owned signal/timer path.
     /// </summary>
     public bool HasAiActor(ZoneNpc npc)
     {
         _ = npc;
         return false;
+    }
+
+    /// <summary>Exact script-ready ownership only; this does not enable incomplete gameplay-manager leaves.</summary>
+    public bool HasSignalActor(ZoneNpc npc)
+    {
+        ArgumentNullException.ThrowIfNull(npc);
+        if (!_aiRuntime.IsAttached || npc.AiSignals.IsDisposed || _catalog.TryGet(npc) is not { } actor ||
+            !_registry.Units.TryGetValue(npc.ObjectId, out var unit) || !ReferenceEquals(unit, npc.Unit)) return false;
+        var ready = _aiRuntime.HasSignalHandler(npc);
+        return ready && !npc.AiSignals.IsDisposed && _catalog.TryGet(npc) == actor &&
+            _registry.Units.TryGetValue(npc.ObjectId, out unit) && ReferenceEquals(unit, npc.Unit);
     }
 
     /// <summary>Named refusal (39345770): unreachable while <see cref="HasAiActor"/> is false — ZoneNpcSimulation.Update :356 skips the whole step sequence, including AcquireTargets, before this leaf can run. TODO(native-ai) wires it with the actor.</summary>
@@ -683,6 +765,16 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     {
         private readonly ZoneSceneNpcWorld _world;
         private readonly float _frameSeconds;
+        private IZoneNpcAiRuntime? _attached;
+        public bool IsAttached => _attached is not null;
+
+        internal void Attach(IZoneNpcAiRuntime runtime)
+        {
+            ArgumentNullException.ThrowIfNull(runtime);
+            if (_attached is not null || ReferenceEquals(runtime, this))
+                throw new InvalidOperationException("The scene NPC runtime can attach exactly one distinct actor runtime.");
+            _attached = runtime;
+        }
 
         internal ZoneSceneAiRuntime(ZoneSceneNpcWorld world, TimeSpan framePeriod)
         {
@@ -691,34 +783,39 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
         }
 
         /// <summary>Native 393401B0 is SILENT when entity/script state is missing (IZoneNpcAiRuntime doc :6-7) — no actor/script exists, so the documented silent path is the native behavior itself.</summary>
-        public void CaptureTalkPosition(ZoneNpc npc) { }
+        public void CaptureTalkPosition(ZoneNpc npc) => _attached?.CaptureTalkPosition(npc);
         /// <summary>Named refusal (CryAction 30511450/305108E0): unreachable — HasSignalHandler == false gates the pending-constructor drain (ZoneNpcAiSignals.cs:95/:133). TODO(native-ai).</summary>
-        public void RunPendingConstructors(ZoneNpc npc) =>
-            throw new NotSupportedException(
-                $"TODO(native-ai): pending behavior constructors (305108E0/30511450) require CryAction behavior dispatch + an adopted actor (IZoneNpcAiRuntime.cs:11-15).");
+        public void RunPendingConstructors(ZoneNpc npc)
+        {
+            if (_attached is { } runtime) runtime.RunPendingConstructors(npc);
+            else throw new NotSupportedException(
+                "Pending behavior constructors require an attached scene actor runtime (305108E0/30511450).");
+        }
         /// <summary>Named refusal, same gate — ACTION_DONE dispatch needs the actor behavior stack. TODO(native-ai).</summary>
-        public void DispatchScriptSignal(ZoneNpc npc, ZoneAiSignal signal) =>
-            throw new NotSupportedException(
-                $"TODO(native-ai): script signal ACTION_DONE dispatch (30511450) has no adopted actor behavior stack (IZoneNpcAiRuntime.cs:13-15).");
+        public void DispatchScriptSignal(ZoneNpc npc, ZoneAiSignal signal)
+        {
+            if (_attached is { } runtime) runtime.DispatchScriptSignal(npc, signal);
+            else throw new NotSupportedException("Script signal dispatch requires an attached scene actor runtime (30511450).");
+        }
         /// <summary>Native's documented missing-state silence (IZoneNpcAiRuntime doc :14): releasing script state that was never retained is exactly the native no-side-effect path.</summary>
-        public void ReleaseScriptState(ZoneNpc npc) { }
+        public void ReleaseScriptState(ZoneNpc npc) => _attached?.ReleaseScriptState(npc);
 
         // IZoneNpcActorRuntime — EXACT not-adopted results mirrored from ZoneNpcActorRegistry
         // (:114-127, :138-149, :186-187, :195-202): false/null/0 for a generation no actor registry adopted.
-        public bool IsEnabled(ZoneNpc npc) => false;              // AI object +68 absent
-        public bool CanReceiveSignals(ZoneNpc npc) => false;      // +29 absent — ZoneNpcActorRegistry :121 mirror
-        public bool HasSignalHandler(ZoneNpc npc) => false;       // gates every pending drain
-        public bool HasPipeUser(ZoneNpc npc) => false;
-        public uint? GetEntityId(ZoneUnit unit) => null;          // no native entity adopted
-        public uint GetUnitObjectId(uint entityId) => 0;          // no entity→unit mapping exists
-        public ZoneLuaReference? GetEntityScript(uint entityId) => null;
-        public Vector3? GetEntityPosition(uint entityId) => null;
-        public void SignalReceived(ZoneNpc npc, string name) { }  // native silent for a missing actor
+        public bool IsEnabled(ZoneNpc npc) => _attached?.IsEnabled(npc) ?? false;
+        public bool CanReceiveSignals(ZoneNpc npc) => _attached?.CanReceiveSignals(npc) ?? false;
+        public bool HasSignalHandler(ZoneNpc npc) => _attached?.HasSignalHandler(npc) ?? false;
+        public bool HasPipeUser(ZoneNpc npc) => _attached?.HasPipeUser(npc) ?? false;
+        public uint? GetEntityId(ZoneUnit unit) => _attached?.GetEntityId(unit);
+        public uint GetUnitObjectId(uint entityId) => _attached?.GetUnitObjectId(entityId) ?? 0;
+        public ZoneLuaReference? GetEntityScript(uint entityId) => _attached?.GetEntityScript(entityId);
+        public Vector3? GetEntityPosition(uint entityId) => _attached?.GetEntityPosition(entityId);
+        public void SignalReceived(ZoneNpc npc, string name) => _attached?.SignalReceived(npc, name);
         /// <summary>The REAL scene clock: this frame's period in seconds (same domain as FrameSeconds of the tick services).</summary>
-        public float FrameTimeSeconds => _frameSeconds;
+        public float FrameTimeSeconds => _attached?.FrameTimeSeconds ?? _frameSeconds;
         /// <summary>false = nothing started: no auxiliary behavior can run without an adopted actor — not a fabricated success (the finished query below answers factually for the empty set).</summary>
-        public bool StartAuxiliaryBehavior(ZoneNpc npc, string name, int kind) => false;
-        public bool IsAuxiliaryBehaviorFinished(ZoneNpc npc) => true;
+        public bool StartAuxiliaryBehavior(ZoneNpc npc, string name, int kind) => _attached?.StartAuxiliaryBehavior(npc, name, kind) ?? false;
+        public bool IsAuxiliaryBehaviorFinished(ZoneNpc npc) => _attached?.IsAuxiliaryBehaviorFinished(npc) ?? true;
     }
 }
 
@@ -918,12 +1015,15 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
     private readonly ZoneNpcManager _manager;
     private readonly ZoneSceneScriptClock _scriptClock;
     private readonly float _frameSeconds;
+    private readonly TimeSpan _framePeriod;
+    private readonly bool _advanceScriptClock;
     private readonly ZoneSceneReadinessNotes _notes;
     private readonly ZoneHeartbeatEmitter _heartbeat;
     private readonly ZoneUnitLocationReporter _locations;
 
     public ZoneSceneTickServices(ZoneUnitRegistry registry, ZoneStartupState startup, ZoneNpcManager manager,
-        ZoneSceneScriptClock scriptClock, TimeSpan framePeriod, ZoneSceneReadinessNotes notes, bool oceanSimulateOnZone = false)
+        ZoneSceneScriptClock scriptClock, TimeSpan framePeriod, ZoneSceneReadinessNotes notes, bool oceanSimulateOnZone = false,
+        bool advanceScriptClock = true)
     {
         _heartbeat = new ZoneHeartbeatEmitter(oceanSimulateOnZone);
         ArgumentNullException.ThrowIfNull(registry);
@@ -938,6 +1038,8 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
         _locations = new(registry, startup.EngineCVars.GetBool(ZoneEngineCVars.UnitLocationDebug, false));
         _scriptClock = scriptClock;
         _frameSeconds = (float)framePeriod.TotalSeconds;
+        _framePeriod = framePeriod;
+        _advanceScriptClock = advanceScriptClock;
         _notes = notes;
         notes.AddOnce("server-type-slot",
             $"server type: {ServerType} from the world name (393654B0: main_world = 3, instance worlds = 2); ZoneClient+140 itself is not read");
@@ -1024,7 +1126,7 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
     public void UpdateHeartbeat()
     {
         _startup.TimeOfDayState.Advance(_frameSeconds);
-        _scriptClock.Advance(_frameSeconds);
+        if (_advanceScriptClock) _scriptClock.Advance(_framePeriod);
         if (_heartbeat.TryCreate(_scriptClock.TimeSeconds, out var frame)) _registry.QueueNotification(frame);
     }
 
@@ -1065,6 +1167,7 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
     private readonly Func<ZoneUnit, Vector3> _modelPosition;
     private readonly Func<IZonePhysicsBackend?> _backend;
     private readonly Func<bool> _isShuttingDown;
+    private readonly IZoneNpcActorRuntime? _actorRuntime;
     private readonly ZoneSceneReadinessNotes _notes;
     private readonly Action<string>? _trace;
     private readonly Stack<uint> _freeGroupIds = [];
@@ -1084,7 +1187,8 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
 
     public ZoneSceneSpawnerServices(ZoneUnitRegistry registry, ZoneStartupState startup, ZoneNpcContent npcContent,
         TimeSpan framePeriod, Func<ZoneUnit, Vector3> modelPosition, Func<IZonePhysicsBackend?> backend,
-        Func<bool> isShuttingDown, ZoneSceneReadinessNotes notes, Action<string>? trace)
+        Func<bool> isShuttingDown, ZoneSceneReadinessNotes notes, Action<string>? trace,
+        IZoneNpcActorRuntime? actorRuntime = null)
     {
         ArgumentNullException.ThrowIfNull(registry);
         ArgumentNullException.ThrowIfNull(startup);
@@ -1101,6 +1205,7 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
         _modelPosition = modelPosition;
         _backend = backend;
         _isShuttingDown = isShuttingDown;
+        _actorRuntime = actorRuntime;
         _notes = notes;
         _trace = trace;
         notes.AddOnce("env-slot-122",
@@ -1405,8 +1510,20 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
         throw new NotSupportedException(
             $"TODO(path-finder): AI path type resolution for '{name}' requires the unowned native path engine (31058598, ZoneNpcInitialSpawnBehavior.cs:44).");
 
-    /// <summary>Null = the current entity has no script table — no entity exists (the interface's documented missing path, :43-44).</summary>
-    public ZoneLuaReference? RetainEntityScript(ZoneNpc npc) => null;
+    /// <summary>Returns the actor runtime's owned script reference for this exact registered owner.</summary>
+    public ZoneLuaReference? RetainEntityScript(ZoneNpc npc)
+    {
+        ArgumentNullException.ThrowIfNull(npc);
+        bool Current() => !_disposed && !npc.AiSignals.IsDisposed &&
+            _registry.Units.TryGetValue(npc.ObjectId, out var unit) && ReferenceEquals(unit, npc.Unit);
+        if (_actorRuntime is not { } runtime || !Current()) return null;
+        var entityId = runtime.GetEntityId(npc.Unit);
+        if (entityId is not > 0 || !Current()) return null;
+        var script = runtime.GetEntityScript(entityId.Value);
+        if (Current()) return script;
+        script?.Dispose();
+        return null;
+    }
 
     /// <summary>REAL script-error channel: traced with the exact owner + reason (blueprint routed this to the harness's script-error collector :347).</summary>
     public void ScriptError(ZoneNpc npc, string reason) =>

@@ -12,7 +12,8 @@ namespace AAEmu.Zone.Scene;
 public sealed class ZoneManagedSceneLoadingServices(
     ZoneUnitRegistry registry, ZoneStartupState startup, ZoneManagedSceneActivation activation,
     ZoneSceneContent content, int zoneKey, ZoneSceneReadinessNotes notes,
-    Action terrainReady, Action<string>? trace = null) : IZoneSceneLoadingServices
+    Action terrainReady, Action<string>? trace = null, Func<string>? scriptingStatus = null,
+    Func<string>? navigationStatus = null) : IZoneSceneLoadingServices
 {
     private bool _loaded, _disposed;
     public ZoneUnitRegistry Registry { get; } = registry ?? throw new ArgumentNullException(nameof(registry));
@@ -37,7 +38,8 @@ public sealed class ZoneManagedSceneLoadingServices(
             $"Managed scene: terrain and supported default brush proxies are loaded; " +
             $"{activation.Collision!.Report.UnsupportedBrushCount} brushes remain unsupported. Vegetation, entity, rigid-body and vehicle collision remain incomplete.");
         notes.AddOnce("managed-scripting",
-            "Managed scene: authored Lua behavior and FlowGraph execution are not attached; no Lua or CryEngine DLL is loaded.");
+            scriptingStatus?.Invoke() ?? "Managed scene: authored Lua behavior and FlowGraph execution are not attached; no Lua or CryEngine DLL is loaded.");
+        if (navigationStatus is not null) notes.AddOnce("managed-navigation", navigationStatus());
         trace?.Invoke($"Managed level loaded: zone={layout.Zone.Id}, cells={layout.Cells.Count}, terrainReady={report.TerrainReady}");
         return ValueTask.CompletedTask;
     }
@@ -69,7 +71,8 @@ public sealed class ZoneManagedSceneLoadingServices(
     {
         ObjectDisposedException.ThrowIf(_disposed, this);
         AiBounds = bounds;
-        trace?.Invoke($"Managed scene bounds published for zone {zoneKey}; navigation mesh queries remain unavailable.");
+        trace?.Invoke($"Managed scene bounds published for zone {zoneKey}; " +
+            (navigationStatus?.Invoke() ?? "navigation mesh queries remain unavailable."));
     }
 
     public void Dispose() => _disposed = true;
