@@ -18,4 +18,14 @@ python -I tools/capture/wzdecode.py captures/native.bin            # first time,
 python -I tools/capture/wzdecode.py captures/native.bin dump 0073 5 WZ   # first 5 WZ 0x0073 bodies (hex)
 ```
 
+`wzreplay.py` stands in for World: it replays a capture's WZ stream to a zone and records the zone's ZW frames, so a zone can be compared with the native one without a live World or client. It sends the frames that preceded the native ZoneLoaded, waits for the zone's own ZoneLoaded (ZW 0x001F), then sends the rest:
+
+```
+python -I tools/capture/wzreplay.py captures/native.bin 1260 captures/ours.bin --linger 60
+AAEmu.ZoneServer --config zone.json +zone w_gweonid_forest_1 +instance 0 +world_port 1260
+python -I tools/capture/wzdecode.py captures/ours.bin
+```
+
+The replay does not react to the zone, so World-assigned ids in later frames only line up while the zone issues the same requests in the same order as the native zone did.
+
 Captures contain your World's live data. Keep them out of the repository.
