@@ -25,6 +25,7 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
     private readonly Func<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame, ZoneActorMovementState?>? _movementState;
     private readonly Action<ZoneMovementFrame>? _prePhysics;
     private readonly Action<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame>? _publishPose;
+    private readonly bool _managerOwnsReplication;
     private readonly Dictionary<ZoneActorHandle, Staged> _staged = [];
     private readonly Dictionary<ZoneActorHandle, Staged> _tracked = [];
     private readonly Dictionary<ZoneActorHandle, string> _refusals = [];
@@ -50,7 +51,8 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
         ZoneActorMovementWorldOrigin worldOrigin = default,
         Func<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame, ZoneActorMovementState?>? movementState = null,
         Action<ZoneMovementFrame>? prePhysics = null,
-        Action<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame>? publishPose = null)
+        Action<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame>? publishPose = null,
+        bool managerOwnsReplication = false)
     {
         _inner = inner ?? throw new ArgumentNullException(nameof(inner));
         _units = registry ?? throw new ArgumentNullException(nameof(registry));
@@ -60,6 +62,7 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
         _outgoing = outgoing ?? throw new ArgumentNullException(nameof(outgoing));
         _diagnostics = diagnostics ?? throw new ArgumentNullException(nameof(diagnostics));
         _origin = worldOrigin; _movementState = movementState; _prePhysics = prePhysics; _publishPose = publishPose;
+        _managerOwnsReplication = managerOwnsReplication;
     }
 
     public int PrePhase(in ZoneMovementFrame frame)
@@ -144,6 +147,7 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
                 else _publishPose(staged.Actor, snapshot, frame);
                 if (!IsCurrent(staged)) { Discard(staged); continue; }
                 LastPublishedCount++;
+                if (_managerOwnsReplication) continue;
                 if (_movementState is null)
                 {
                     Refuse(staged, "NPC outgoing movement requires its actual copied CActor flags/delta/alertness owner; physical pose remains published.");

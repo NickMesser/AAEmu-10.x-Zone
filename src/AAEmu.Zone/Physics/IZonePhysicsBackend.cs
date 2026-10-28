@@ -147,6 +147,18 @@ public readonly record struct ZonePhysicsActorStatus(
 {
     /// <summary>Original status2+0x58/body572 cache; null means this backend does not copy it.</summary>
     public float? CachedLivingGroundHeight { get; init; }
+    /// <summary>
+    /// The living motor's committed blocked/contact state (native status2+144). Managed
+    /// collision resolution supplies this through its existing PriorBlocked producer; it
+    /// does not infer a contact from IsGrounded. Null means this backend does not copy it.
+    /// </summary>
+    public bool? LivingHadBlockingContact { get; init; }
+    /// <summary>
+    /// Whether the living body retains a supporting physical entity (native status2+112).
+    /// The managed static-ground profile has no retained moving support; an unowned
+    /// backend must leave this null rather than infer absence from a floor height.
+    /// </summary>
+    public bool? LivingHasRetainedGroundEntity { get; init; }
 }
 
 /// <summary>

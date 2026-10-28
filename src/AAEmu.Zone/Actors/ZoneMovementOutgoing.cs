@@ -1,7 +1,7 @@
 using AAEmu.Commons.Network;
-using AAEmu.Commons.Utils;
 using AAEmu.Zone.Physics;
 using AAEmu.Zone.Protocol;
+using AAEmu.Zone.Protocol.Units;
 using AAEmu.Zone.Units;
 
 namespace AAEmu.Zone.Actors;
@@ -29,17 +29,11 @@ namespace AAEmu.Zone.Actors;
 // The shared movement body layout is documented at MovementRelay.cs:20-25
 // ("identical in layout (MOVEMENT.md); count width differs (ZW s32 vs SC u16)").
 //
-// Quantization (each step cites its decode counterpart so the round trip closes):
-//   position  11 bytes  Helpers.ConvertPosition float→11 (Commons Helpers.cs:154-…,
-//                       comment :133-136) — the exact inverse of PacketStream
-//                       ReadPosition (PacketStream.cs:881-893) the relay's mt.Read uses
-//   velocity  i16 ×3    scale 32767/60 — inverse of UnitMovementData.DecodedVelocity's
-//                       kind-1 decode (AAEmu.Zone.Protocol Messages/UnitMovement.cs:77)
-//   rotation  sbyte ×3  direction units — mirrored from World's OUTGOING authoring
-//                       ConvertRadianToDirection (AAEmu.Game Utils/MathUtil.cs:313-322;
-//                       PositionAndRotation.cs:110-114) and decoded by the relay's
-//                       NPC mirror via ConvertDirectionToRadian (MovementRelay.cs:220-224)
-//   delta     sbyte ×3  inverse of MovementVector8.Decode (/127, UnitMovement.cs:48)
+// Shared native3938B0B0 quantization (68 whole-writer instruction controls):
+//   position11 bytes:39B11410 absolute fixed XY and clamped22-bit height.
+//   velocity i16x3:39370D80 divides by60 before clamp/floor(value*32767+.5).
+//   rotation sbytex3:393753C0 normalized axis-angle vector, decoded by3937F4A0.
+//   delta sbytex3:39370E80 clamp/floor(value*127+.5).
 //   stance sbyte, alertness byte, ActorFlags u16 — MoveTypeType field bytes
 //                       (UnitMoveType.cs:42-44); ActorFlags carries ONLY the admitted
 //                       low-5-bit mask of FromMovement (:53), so the conditional
@@ -298,47 +292,28 @@ public sealed class ZoneMovementOutgoing
 
     private QuantizedPose? Quantize(ZoneUnit unit, ZonePhysicsActorStatus status, ZoneActorMovementState admitted)
     {
-        if (!Finite(status.Position) || !Finite(status.Velocity) ||
+        if (!Finite(status.Position) || !Finite(status.Velocity) || !Finite(admitted.Delta) ||
             !Finite(new System.Numerics.Vector3(status.Orientation.X, status.Orientation.Y, status.Orientation.Z)) ||
-            !float.IsFinite(status.Orientation.W) || status.Orientation.LengthSquared() <= 0)
+            !float.IsFinite(status.Orientation.W) || !float.IsFinite(status.Orientation.LengthSquared()) || status.Orientation.LengthSquared() <= 0)
         {
             _diagnostics.ReportSkippedActor(unit.Snapshot.ObjectId,
                 "encoder sample rejected: authoritative status carries non-finite values.");
             return null;
         }
 
-        // position — 11-byte quantized world position (Helpers.ConvertPosition, the exact
-        // float→bytes direction of PacketStream.WritePosition :1318-1341).
-        var position = Helpers.ConvertPosition(status.Position.X, status.Position.Y, status.Position.Z);
-        if (position is not { Length: 11 })
-        {
-            _diagnostics.ReportSkippedActor(unit.Snapshot.ObjectId, "encoder sample rejected: position quantization failed.");
-            return null;
-        }
+        var quantizedPosition = UnitMovementQuantization.Position(LocalOnWire
+            ? ZoneMovementPoseMath.ToUnitWorldPosition(status.Position) : unit.Pose.Position);
+        var positionWriter = new ZoneWriter();
+        positionWriter.WriteUInt32(quantizedPosition.QuantizedX); positionWriter.WriteUInt32(quantizedPosition.QuantizedY);
+        positionWriter.WriteUInt16((ushort)quantizedPosition.QuantizedZ);
+        positionWriter.WriteByte((byte)((quantizedPosition.QuantizedZ >> 16) |
+            (quantizedPosition.NegativeX ? 0x80u : 0) | (quantizedPosition.NegativeY ? 0x40u : 0)));
+        var position = positionWriter.ToArray();
 
-        // rotation — roll/pitch/yaw decomposition mirrored from MathUtil.GetYawPitchRollFromQuat
-        // (AAEmu.Game Utils/MathUtil.cs:136-152), then direction units per axis mirrored from
-        // PositionAndRotation.ToRollPitchYawSBytesMovement (:110-114) → ConvertRadianToDirection
-        // (:313-322). Outgoing precedent: Npc.cs:1273-1283 authors the same triple for clients.
-        var q = status.Orientation;
-        var roll = MathF.Atan2(2f * (q.W * q.X + q.Y * q.Z), 1f - 2f * (q.X * q.X + q.Y * q.Y));
-        var sinPitch = 2f * (q.W * q.Y - q.Z * q.X);
-        var pitch = MathF.Abs(sinPitch) >= 1f
-            ? MathF.CopySign(MathF.PI / 2f, sinPitch)
-            : MathF.Asin(sinPitch);
-        var yaw = MathF.Atan2(2f * (q.W * q.Z + q.X * q.Y), 1f - 2f * (q.Y * q.Y + q.Z * q.Z));
-
-        // velocity — inverse of the kind-1 ingress decode (short / 32767 * 60, UnitMovement.cs:77).
-        var velocityScale = 32767f / 60f;
-        var velocityX = ClampShort(status.Velocity.X * velocityScale);
-        var velocityY = ClampShort(status.Velocity.Y * velocityScale);
-        var velocityZ = ClampShort(status.Velocity.Z * velocityScale);
-
-        // delta — inverse of MovementVector8.Decode (/127, UnitMovement.cs:48), from the ADMITTED
-        // state (stance/actorFlags/delta come from the selected state, PLAN section 4).
-        var deltaX = ClampDelta(admitted.Delta.X);
-        var deltaY = ClampDelta(admitted.Delta.Y);
-        var deltaZ = ClampDelta(admitted.Delta.Z);
+        // Native3938AFC0/393753C0 encodes an axis-angle vector, not three Euler angles.
+        var rotation = UnitHeading.FromQuaternion(status.Orientation);
+        var velocity = UnitMovementQuantization.ActorVelocity(status.Velocity);
+        var delta = UnitMovementQuantization.ActorDelta(admitted.Delta);
 
         var actorFlags = admitted.ActorFlags;
         if ((actorFlags & ~0x1Fu) != 0)
@@ -351,9 +326,9 @@ public sealed class ZoneMovementOutgoing
 
         return new QuantizedPose(
             position,
-            ToDirection(roll), ToDirection(pitch), ToDirection(yaw),
-            velocityX, velocityY, velocityZ,
-            deltaX, deltaY, deltaZ,
+            rotation.AxisX, rotation.AxisY, rotation.AxisZ,
+            velocity.X, velocity.Y, velocity.Z,
+            delta.X, delta.Y, delta.Z,
             admitted.Stance, admitted.Alertness, actorFlags, MoveFlags: 0,
             Grounded: status.IsGrounded,
             JumpBits: QuantizedPose.JumpBitsOf(actorFlags));
@@ -384,25 +359,6 @@ public sealed class ZoneMovementOutgoing
         return Math.Abs((int)pose.VelocityX) >= threshold ||
                Math.Abs((int)pose.VelocityY) >= threshold ||
                Math.Abs((int)pose.VelocityZ) >= threshold;
-    }
-
-    /// <summary>Mirror of MathUtil.ConvertRadianToDirection (AAEmu.Game Utils/MathUtil.cs:313-322), including its −2π caller shift (PositionAndRotation.cs:110-114) and the res &gt; 85 correction — this file cannot reference AAEmu.Game, so the arithmetic is quoted, not linked.</summary>
-    private static sbyte ToDirection(double radians)
-    {
-        var degree = (radians - 2.0 * Math.PI) * (180.0 / Math.PI);
-        if (degree < 0) degree = 360 + degree;
-        var result = (sbyte)(degree / (360f / 128));
-        if (result > 85) result = (sbyte)((degree - 360) / (360f / 128));
-        return result;
-    }
-
-    private static short ClampShort(float value) =>
-        value >= short.MaxValue ? short.MaxValue : value <= short.MinValue ? short.MinValue : (short)MathF.Round(value);
-
-    private static sbyte ClampDelta(float value)
-    {
-        var scaled = MathF.Round(value * 127f);
-        return scaled >= sbyte.MaxValue ? sbyte.MaxValue : scaled <= sbyte.MinValue ? sbyte.MinValue : (sbyte)scaled;
     }
 
     private static bool Finite(System.Numerics.Vector3 value) =>

@@ -8,6 +8,7 @@ using AAEmu.Zone.Npcs;
 using AAEmu.Zone.Physics;
 using AAEmu.Zone.Scene;
 using AAEmu.Zone.Scripting;
+using AAEmu.Zone.Terrain;
 
 namespace AAEmu.Zone.Tests;
 
@@ -161,9 +162,11 @@ public sealed class ManagedNpcRuntimeTests
         fixture.Admission.World.Initialize(npc, null);
         var handle = fixture.Admission.Catalog.TryGet(npc)!.Value;
         using (var entity = fixture.Runtime.Actors.Actors.Find(npc)!.RetainScript()!) entity.Set("failUpdate", true);
+        fixture.Runtime.Actors.Find(handle)!.SetEntityActive(true);
         var otherId = ManagedNpcAdmissionTests.Fixture.FreshObjectId();
         var other = fixture.Admission.Npc(otherId, otherId + 1_000_000, fixture.Model);
         fixture.Admission.Publish(other); fixture.Admission.World.Initialize(other, null);
+        fixture.Runtime.Actors.Find(fixture.Admission.Catalog.TryGet(other)!.Value)!.SetEntityActive(true);
         fixture.Runtime.Lua.SetGlobal("failUpdate", true);
         var faults = fixture.Runtime.TickScripts(TimeSpan.FromMilliseconds(20), fixture.Admission.Provider.RemoveNpc);
         await Assert.That(faults.Count).IsEqualTo(1);
@@ -196,7 +199,10 @@ public sealed class ManagedNpcRuntimeTests
     {
         using var fixture = new Fixture(withConstruction: true);
         await Assert.That(fixture.Runtime.PrePhysics(Frame(10), fixture.Admission.Provider.RemoveNpc).Count).IsEqualTo(0);
+        fixture.Runtime.Lua.SetGlobal("testHealthAssociation", true);
         var npc = fixture.Admission.Npc(model: fixture.Model, heading: new()); fixture.Admission.Publish(npc);
+        npc.Unit.CommitProgression(npc.Unit.Progression, new([], 17, 100, []));
+        npc.Unit.Apply(new(npc.ObjectId, 400, 0));
         fixture.Admission.World.Initialize(npc, null);
         var handle = fixture.Admission.Catalog.TryGet(npc)!.Value;
         var actor = RequireActor(fixture, handle);
@@ -210,15 +216,17 @@ public sealed class ManagedNpcRuntimeTests
         await Assert.That(initial.ForceRebuild).IsFalse();
         await Assert.That(body.CopyState().AppliedDescription.LivingMovement!.Inertia).IsEqualTo(8f);
         await Assert.That(body.CopyState().AppliedDescription.LivingMovement!.InertiaAcceleration).IsEqualTo(0f);
-        await Assert.That(services.GetActorHealth(actor)).IsEqualTo(0f);
-        await Assert.That(services.GetActorMaximumHealth(actor)).IsEqualTo(10f);
-        construction.Health.CopyFields(4, 17);
-        await Assert.That(services.GetActorHealth(actor)).IsEqualTo(4f);
-        await Assert.That(services.GetActorMaximumHealth(actor)).IsEqualTo(17f);
-        using (var result = fixture.Runtime.Lua.Execute("return observedEntity.actor:GetHealth(), observedEntity.actor:GetMaxHealth()"))
+        await Assert.That(construction.Health.HasServerUnit).IsTrue();
+        await Assert.That(services.GetActorHealth(actor)).IsEqualTo(4L);
+        await Assert.That(services.GetActorMaximumHealth(actor)).IsEqualTo(17L);
+        using (var result = fixture.Runtime.Lua.Execute("return observedEntity.actor:GetHealth(), observedEntity.actor:GetMaxHealth(),observedEntity.initialHealth,observedEntity.initialMaxHealth,observedEntity.characterHealth,observedEntity.characterMaxHealth"))
         {
-            await Assert.That(Convert.ToSingle(result[0])).IsEqualTo(4f);
-            await Assert.That(Convert.ToSingle(result[1])).IsEqualTo(17f);
+            await Assert.That(result[0]).IsEqualTo("4");
+            await Assert.That(result[1]).IsEqualTo("17");
+            await Assert.That(result[2]).IsEqualTo("100");
+            await Assert.That(result[3]).IsEqualTo("100");
+            await Assert.That(result[4]).IsEqualTo("4");
+            await Assert.That(result[5]).IsEqualTo("17");
         }
         var before = body.CopyState();
         await Assert.That(fixture.Runtime.PrePhysics(Frame(10), fixture.Admission.Provider.RemoveNpc).Count).IsEqualTo(0);
@@ -286,6 +294,8 @@ public sealed class ManagedNpcRuntimeTests
         var otherHandle = fixture.Admission.Catalog.TryGet(other)!.Value;
         var otherActor = RequireActor(fixture, otherHandle);
         var otherBody = fixture.Bodies.Find(otherHandle)!;
+        //These goal-execution controls explicitly enable AI after the original initialevent6.
+        actor.SetActive(true); otherActor.SetActive(true);
         var unsupported = fixture.Runtime.Actors.GoalPipes.Create("runtime_unowned_branch")!;
         unsupported.Append(ZoneGoalOperation.Branch, false, ZoneGoalGrouping.None, new() { Integer = 7 },
             message => throw new InvalidOperationException(message));
@@ -374,7 +384,7 @@ public sealed class ManagedNpcRuntimeTests
         await Assert.That(faults.Count).IsEqualTo(1);
         await Assert.That(faults[0].Actor).IsEqualTo(handle);
         await Assert.That(faults[0].Callback).IsEqualTo("actor behavior callback");
-        await Assert.That(faults[0].Message.Contains(dependency == "group" ? "AI.GetGroupOf" : "NpcSetCheckPosContext", StringComparison.Ordinal)).IsTrue();
+        await Assert.That(faults[0].Message.Contains(dependency == "group" ? "group queries" : "NpcSetCheckPosContext", StringComparison.Ordinal)).IsTrue();
         await Assert.That(body.IsDisposed).IsTrue(); await Assert.That(construction.IsDisposed).IsTrue(); await Assert.That(pose.IsDisposed).IsTrue();
         await Assert.That(fixture.Runtime.Count).IsEqualTo(1); await Assert.That(fixture.Admission.Provider.Count).IsEqualTo(1);
         await Assert.That(fixture.Profiles.LiveCount).IsEqualTo(1);
@@ -397,6 +407,7 @@ public sealed class ManagedNpcRuntimeTests
         var handle = fixture.Admission.Catalog.TryGet(npc)!.Value;
         var actor = RequireActor(fixture, handle);
         using var entity = actor.Entry.RetainScript()!; entity.Set("failIdleConstructor", "group");
+        actor.SetActive(true);
         var callbackCalls = 0;
         //Declared goal callback exercises the production actor-update boundary; it claims
         //no skill implementation. The actual Lua constructor supplies the swallowed error.
@@ -437,7 +448,9 @@ public sealed class ManagedNpcRuntimeTests
         var faults = fixture.Runtime.TickScripts(TimeSpan.FromMilliseconds(20), fixture.Admission.Provider.RemoveNpc);
         await Assert.That(entity.Get("afterBehaviorOnTimer")).IsEqualTo(true); //The entity timer itself returned normally.
         await Assert.That(faults.Count).IsEqualTo(1);
-        await Assert.That(faults[0].Callback).IsEqualTo("actor behavior callback");
+        //The typed host failure is attributed to the enclosing protected timer callback.
+        await Assert.That(faults[0].Callback).IsEqualTo("Server.OnTimer");
+        await Assert.That(faults[0].Message.Contains("group queries", StringComparison.Ordinal)).IsTrue();
         await Assert.That(fixture.Admission.Provider.Count + fixture.Runtime.Count + fixture.Bodies!.Count + fixture.Poses!.Count).IsEqualTo(0);
         await Assert.That(fixture.Admission.World.HasSignalActor(npc)).IsFalse();
         fixture.Admission.Provider.Pump(1000); fixture.Admission.Provider.Pump(1020);
@@ -451,7 +464,7 @@ public sealed class ManagedNpcRuntimeTests
         public void Dispose() { }
     }
 
-    private sealed class Fixture : IDisposable
+    internal sealed class Fixture : IDisposable
     {
         public ManagedNpcAdmissionTests.Fixture Admission { get; }
         public ZoneManagedNpcProfileFactory Profiles { get; }
@@ -461,12 +474,24 @@ public sealed class ManagedNpcRuntimeTests
         public ZoneManagedNpcPhysics? Bodies { get; }
         public ZoneManagedNpcActorConstruction? Construction { get; }
         public ZoneManagedNpcAiPose? Poses { get; }
+        public ZoneManagedNpcGroups? Groups { get; private set; }
+        public ZoneManagedNpcActorMotion? Motion { get; }
+        public ZoneManagedNpcReplication? Replication { get; }
+        public ZoneManagedNpcPositionChecks? PositionChecks { get; }
+        public ZoneManagedNpcPostureState? Postures { get; private set; }
+        public ZoneManagedWaterQueries? Water { get; }
+        public ZoneManagedNpcRegions? Regions { get; }
+        public AAEmu.Zone.Units.ZoneUnitSpatialIndex? Spatial { get; }
+        public ZoneMovementFrame CurrentFrame { get; set; }
+        public ZoneModelContent Models { get; }
+        public ZoneManagedNpcSceneScriptServices Components => (ZoneManagedNpcSceneScriptServices)Runtime.ScriptServices;
         public ZoneModelDefinition Model { get; } = new() { Id = 42, Name = "runtime_fixture", Subtype = "ActorModel", SubtypeId = 9 };
-        public Fixture(bool withEffects = false, bool admitProfile = true, bool withComponents = false, bool withConstruction = false)
+        public Fixture(bool withEffects = false, bool admitProfile = true, bool withComponents = false, bool withConstruction = false,
+            bool withMovement = false, ZoneEngineCVars? movementCVars = null)
         {
+            withConstruction |= withMovement;
             withComponents |= withConstruction;
             ZoneManagedNpcRuntime? runtime = null;
-            Admission = new(handle => runtime!.CreateActor(handle));
             var models = new ZoneModelContent([Model], actorModels: new ZoneActorModelContent([new()
             {
                 Id = 9, ModelFile = "objects/fixture.chr", PhysicsLivingMass = 80, PhysicsLivingGravity = 25,
@@ -476,7 +501,18 @@ public sealed class ManagedNpcRuntimeTests
             }], Enumerable.Range(1, 9).Select(id => new ZoneGameStanceDefinition
             { Id = (uint)id, ActorModelId = 9, StanceId = id, SizeX = .3f, SizeY = .3f, SizeZ = .3f, HeightCollider = 1.2f, HeightPivot = .1f, UseCapsule = true,
                 ViewOffsetZ = withConstruction ? 1.5f : 0 })));
-            Vector3 Position(AAEmu.Zone.Units.ZoneUnit unit) => withComponents ? new(1100, 1100, 10.1f) : Vector3.Zero;
+            Models = models;
+            Vector3 Position(AAEmu.Zone.Units.ZoneUnit unit) => withMovement ? ZoneMovementPoseMath.ToMeters(unit.Pose.Position) :
+                withComponents ? new(1100, 1100, 10.1f) : Vector3.Zero;
+            var content = new ZoneNpcContent([new() { Id = 11, ModelId=Model.Id, NpcAiParamId = 8 }], [], [], [], [],
+                aiParameters: [new(8, "delay=1.5")],models:models);
+            Admission = new(handle => runtime!.CreateActor(handle),content:withMovement?content:null,
+                stats:withMovement?new(new uint[]{14,15,22,23,24,25,26,27}.Select(kind=>
+                    new UnitFormulaDefinition(kind,AAEmu.Zone.Protocol.Units.ZoneUnitKind.Npc,kind,new ContentFormula("100"))),
+                    [],[new(11,0,0,0,0)],[],[],[],[],[],[]):null,
+                modelPosition:withMovement?Position:null,sceneBounds:withMovement?new(0,0,3,3):null,
+                engineCVars:movementCVars);
+            Spatial = Admission.Registry.Spatial;
             Profiles = new(Admission.Registry, Admission.Catalog, Position, models);
             if (withComponents)
             {
@@ -487,25 +523,50 @@ public sealed class ManagedNpcRuntimeTests
             if (withConstruction) Construction = new(Admission.Registry, Admission.Catalog, models);
             ZoneManagedNpcActorProfile CreateProfile(ZoneActorHandle actor, ZoneNpc npc, uint entityId) => Construction is { } construction
                 ? Profiles.CreateWithConstruction(actor, npc, entityId, construction) : Profiles.Create(actor, npc, entityId);
-            var content = new ZoneNpcContent([new() { Id = 11, NpcAiParamId = 8 }], [], [], [], [],
-                aiParameters: [new(8, "delay=1.5")]);
+            var assets=new Assets(withMovement);
             Runtime = runtime = new(Admission.Registry, Admission.Catalog, models, content, new Source(),
                 Position, () => Clock.GameMicroseconds, () => 1, () => DateTimeOffset.UnixEpoch,
                 TimeSpan.FromMilliseconds(20), createProfile: admitProfile ? CreateProfile : null,
-                createScriptServices: withComponents ? lua => new ZoneManagedNpcSceneScriptServices(lua, models, new Assets(),
+                createScriptServices: withComponents ? lua => new ZoneManagedNpcSceneScriptServices(lua, models, assets,
                     () => Bodies!, _ => new(0, 0), Position, () => Clock.GameMicroseconds, () => false,
                     ZoneCharacterAttachmentPublicationProfile.BoneOnly,
                     combat: new(Admission.Registry, Admission.Catalog, value => Admission.Registry.QueueNotification(value)),
-                    construction: Construction, poses: withConstruction ? () => Poses! : null) :
+                    construction: Construction, poses: withConstruction ? () => Poses! : null,
+                    groups:withMovement?Groups=new(lua,content):null,
+                    motion:withMovement?()=>Motion!:null,replication:withMovement?()=>Replication!:null,
+                    positionChecks:withMovement?()=>PositionChecks!:null,
+                    postures:withMovement?Postures=new(new([new(11,50,0,0,"")],[new(0,0)]),
+                        new ZoneAnimationActionContent([]),()=>1,value=>Admission.Registry.QueueNotification(value),Admission.Registry):null,
+                    npcSkills:withMovement?ZoneNpcSkillContent.Empty:null) :
                     withEffects ? lua => new ZoneManagedNpcScriptEffects(lua, () => Clock.GameMicroseconds) : null);
             if (withConstruction) Runtime.Actors.ProxyPoses = Poses = new(Runtime.Actors, Bodies!);
             if (Runtime.ScriptServices is ZoneManagedNpcSceneScriptServices components)
                 Runtime.Actors.SmartObjectStateConsumer = components.ModifySmartObjectStates;
+            if(withMovement)
+            {
+                var sectors=string.Concat(from x in Enumerable.Range(0,16)from y in Enumerable.Range(0,16)select $"<s x='{x}' y='{y}'/>");
+                var world=ZoneWorldMapContent.Read("<World name='movement' resolution='1024' unitSize='2' cellXCount='4' cellYCount='4'><ZoneList>"+
+                    "<Zone id='129' name='admitted' originX='0' originY='0'><cellList><Cell x='0' y='0'><sectorList>"+sectors+
+                    "</sectorList></Cell><Cell x='1' y='1'><sectorList>"+sectors+"</sectorList></Cell></cellList></Zone>"+
+                    "<Zone id='140' name='other'><cellList><Cell x='1' y='1'><sectorList><s x='2' y='2'/></sectorList></Cell></cellList></Zone>"+
+                    "</ZoneList></World>","movement");
+                var layout=new ZoneWorldMapLayout(world,world.Zones[0]);Regions=new(layout);
+                var cells=layout.Cells.Select(placement=>new ZoneManagedSceneCellLoadReport(placement,
+                    new(ZoneTerrainCellLoadStatus.Empty),new(null,null,null,null,
+                    ["Objects: authored asset is absent.","BigObjects: authored asset is absent."]))).ToArray();
+                Water=new(0,cells,ZoneManagedWaterQueryProfile.StaticServerWithoutOceanVortex);
+                Motion=new(Runtime.Actors,Bodies!,Construction!,Water,Components.Characters,assets,models);
+                Replication=new(Admission.Registry,Runtime.Actors,Motion,movementCVars??ZoneEngineCVars.Empty,()=>0,true);
+                PositionChecks=new(Runtime.Lua,Admission.Registry,Groups!,Regions,new(Bodies!),Bodies!,Components,
+                    Motion,Replication,Postures!,default);
+                Admission.World.AttachManagedMovement(Runtime.Actors,Motion,PositionChecks,Replication,()=>CurrentFrame);
+            }
             Admission.World.AttachAiRuntime(Runtime.Actors.Actors.AiRuntime);
             if (!Runtime.Bootstrap().Ready) throw new InvalidOperationException(Runtime.Scripts.BootstrapReport.Refusal);
         }
         public void Dispose()
-        { try { Admission.Dispose(); } finally { try { Runtime.Dispose(); } finally { try { Poses?.Dispose(); Construction?.Dispose(); Bodies?.Dispose(); } finally { Profiles.Dispose(); } } } }
+        { try { Admission.Dispose(); } finally { try { Runtime.Dispose(); } finally { try { PositionChecks?.Dispose();Replication?.Dispose();Motion?.Dispose();
+            Postures?.Dispose();Groups?.Dispose();Regions?.Dispose();Water?.Dispose();Poses?.Dispose(); Construction?.Dispose(); Bodies?.Dispose();Spatial?.Dispose(); } finally { Profiles.Dispose(); } } } }
     }
 
     private sealed class Source : IZoneScriptSource
@@ -519,6 +580,7 @@ public sealed class ManagedNpcRuntimeTests
                     AICharacter={AVAILABLE={},INTERNAL={},DEFAULT={}}
                     AICharacter.default={AnyBehavior={GO_TO_SPAWN='spawning',GO_TO_IDLE='idle'},Constructor=function(self,e)
                       e.AI.constructed=true;function e.AI:SetParamX2(p)self.param=assert(loadstring('return {'..p..'}'))()end
+                      if testHealthAssociation then e.characterHealth=e.actor:GetHealth();e.characterMaxHealth=e.actor:GetMaxHealth()end
                     end}
                     AIBehaviour={AVAILABLE={},INTERNAL={},DEFAULT={},spawning={Name='spawning'},idle={Name='idle',Constructor=function(self,e)
                       e.idleConstructorStarted=(e.idleConstructorStarted or 0)+1
@@ -538,6 +600,8 @@ public sealed class ManagedNpcRuntimeTests
                       if failUpdate and e.failUpdate then System.Error('controlled update refusal')end
                     end,OnInit=function(e)
                       observedEntity=e;BasicAI.OnReset(e)
+                      if testGroup then e.Properties.groupid=testGroup end
+                      if testHealthAssociation then e.initialHealth=e.actor:GetHealth();e.initialMaxHealth=e.actor:GetMaxHealth()end
                       if testComponents then e:HideAttachment(0,'Animated LAW',true,true);e:SetColliderMode(1);e.unit:SetSoState('Busy')end
                       if failInitialization then System.Error('controlled init refusal');return end
                       if testTimer then e:SetTimer(1,20)end
@@ -550,7 +614,7 @@ public sealed class ManagedNpcRuntimeTests
         }
     }
 
-    private sealed class Assets : IZoneAssetSource
+    private sealed class Assets(bool initialPose=false) : IZoneAssetSource
     {
         // One authored compiled-bones0x801 chunk; no attachment with the script's queried name.
         public Stream? OpenRead(string name)
@@ -561,7 +625,12 @@ public sealed class ManagedNpcRuntimeTests
             writer.Write("CryTek\0\0"u8); writer.Write(0xffff0000u); writer.Write(0x745u); writer.Write(20);
             writer.Write(1); writer.Write(0xacdc0000u); writer.Write(0x801u); writer.Write(chunk); writer.Write(19); writer.Write(size);
             writer.Write(0xacdc0000u); writer.Write(0x801u); writer.Write(chunk); writer.Write(19); writer.Write(new byte[size - 16]);
-            var bytes = output.ToArray(); Encoding.UTF8.GetBytes("root").CopyTo(bytes, chunk + 48 + 216);
+            var bytes = output.ToArray(); Encoding.UTF8.GetBytes(initialPose?"camera":"root").CopyTo(bytes, chunk + 48 + 216);
+            if(initialPose)
+            {
+                foreach(var diagonal in new[]{0,5,10})System.Buffers.Binary.BinaryPrimitives.WriteSingleLittleEndian(bytes.AsSpan(chunk+48+276+diagonal*4),1);
+                System.Buffers.Binary.BinaryPrimitives.WriteSingleLittleEndian(bytes.AsSpan(chunk+48+320),1.5f);
+            }
             return new MemoryStream(bytes, false);
         }
     }

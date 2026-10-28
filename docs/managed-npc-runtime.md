@@ -75,7 +75,7 @@ physics/scripts/AI continue on those frames. Continuous ingress fairness remains
 See [admission ownership](managed-npc-admission-queue.md).
 
 The production construction profile now composes actual descriptor-written CActor parameters,
-installed animated dynamics, independent health, character slots, collider events, smart objects,
+installed animated dynamics, actual Unit-associated actor health, character slots, collider events, smart objects,
 AI proxy poses and supported skill request/acknowledgment owners. Unsupported profiles unwind
 with their precise dependency. A script-ready owner still does not open the full gameplay gate.
 
@@ -98,12 +98,16 @@ The descriptor and frame contracts are detailed in
 The script host binds existing goal pipes, actor indices, attention targets, local signals, NPC
 aggro enablement, NPC AI time events and interaction state. `HasSignalActor` admits only exact
 script owners. The original scheduled AI-time-event step can run for these owners while the
-full `HasAiActor` gameplay gate remains closed.
+full `HasAiActor` gameplay gate remains closed. Concrete position/proximity/activation and NPC
+replication now enter through their actual per-owner partial gates.
 
-`ZoneManagedNpcScriptEffects` owns original entity timers, default-state server update callbacks,
-script update intervals and independent CActor health fields. Initial health is 0 and maximum
-health is 10 from the CActor constructor; these are not substituted from World Unit statistics.
-Later actor-health producers must copy their actual fields into the owner.
+`ZoneManagedNpcScriptEffects` owns original entity timers, default-state server update callbacks
+and script update intervals. Actor health reads its actual associated Unit. The earlier0/10
+interpretation was incorrect: those CActor fields hold water state. Original OnInit sees the
+unassociated100/100 fallback; ServerUnit3935CA90 then associates the actual Unit before NPC
+children/character construction. Getters return invariant decimal strings, preserve signed64-bit
+values, round precise HP by the original quotient/remainder rule and read actual maximum-health
+stat6. World point updates are observed through that association. See [source proof](managed-npc-health.md).
 
 The two `SetScriptUpdateRate` floats are retained separately. Event44 selects the current interval
 from actual Unit combat transitions, including death. Generation leases subscribe after binding
@@ -163,7 +167,7 @@ live physical scale changes retain explicit admission gates.
 
 `IZoneManagedNpcScriptLifecycle` binds component leases after actor adoption and before OnInit.
 The composed service owns character visibility, collider receiver, smart-object registration,
-independent actor health and entity timers. Failure and retirement unwind all of them, including
+associated actor health and entity timers. Failure and retirement unwind all of them, including
 their physical body, before releasing the script binding and proxy. Behavior smart-object changes
 reach the same real state owner as Lua, with separate literal-add and expression-modify semantics.
 
@@ -173,8 +177,8 @@ requires actual animation-driver presence, resolved actions and the NPC skill-co
 Neither is inferred from missing components. Bounded ClearCombat owns the fresh AI-unit attribute
 restore record and empty-threat path, preserves attention/attack-faction flags, and sends the actual
 combat notification. Pending flying restoration or nonempty threat retains a refusal. Full combat,
-flying-state restoration, position checks
-and animation graph behavior remain separate admission dependencies. See
+flying-state restoration and animation graph behavior remain separate admission dependencies.
+Dedicated posture and position correction now have concrete bounded owners. See
 [game-service source contracts](managed-npc-game-services.md).
 
 ## Navigation replacement
@@ -292,7 +296,37 @@ Runtime artifacts are `npc-native-free-final-{build,tests}.log`,
 `research/npc-native-free-entry-movement-comparison.jsonl` and
 `research/npc-native-free-batch-evidence.json`.
 
-Next: finish Puppet/group, position-check and animated movement producers and collider command interleaving;
+The later group/region/position/movement batch supersedes the prior group/position and0/10-health
+limitations above. It owns actual group membership, canonical authored-sector regions, ordered
+living relocation, dedicated posture and dry static-support CActor statistics. Position checks and
+NPC replication enter through explicit per-step gates; the global gameplay gate remains closed.
+The shared actor writer matches68 original instruction controls and the per-NPC cache matches45.
+See [position and replication scope](managed-npc-position-replication.md),
+[motion](managed-npc-actor-motion.md), [groups](managed-npc-groups.md),
+[regions](managed-npc-regions.md), [relocation](managed-npc-relocation.md) and
+[posture](managed-npc-posture.md). The preceding stationary replay remains historical evidence
+for its recorded assembly; it does not certify a later assembly.
+
+Actual health string transport is independently confirmed by the registrar, original PushAny and
+Lua comparison instructions. A string/number ordering error is also an original protected-script
+error. Native entity callbacks ignore EndCall's false return, retain the entity/timers and reset
+the update accumulator. The complete managed profile now does the same; typed unavailable host
+effects still refuse, even inside pcall or a yielding loadstring coroutine. Those coroutine scopes
+are thread-owned and hand host failures back to their resumer before cancelling the failed worker.
+Fresh NPCs own actual NONE0 context and dedicated hidden/inactive state before model flag1.
+See [entity scheduling](managed-npc-entity-activity.md) and [fall entry](managed-npc-fall-entry.md).
+
+Final position/movement batch:763 tests pass with no skips, analyzer build0 errors. Its fresh
+119.657second stationary entry contains80 sampled modules, zero engine/native-Lua modules,
+one ZoneLoaded and17 complete movement rows (2 player/15 NPC). Player387 remains grounded at
+the accepted local pose; its payloads match the earlier capture after normalizing Time.
+The differing heartbeat count is not a cadence/throughput comparison. Ordered EOF retirement
+completes and the replayed/final assembly hashes agree. Final logs use
+`npc-position-final2-{build,tests}.log` and `npc-position-ready-entry-*` under the runtime directory.
+Original five-resource corrections and protected-error/retirement controls are recorded separately;
+NPC8173's later IF_CAN_MOVE47 remains a concrete unsupported dependency.
+
+Next: finish Puppet look/movement and animated/dynamic movement producers;
 connect AI navigation wishes to the single scene movement authority with actual CActor outgoing
 metadata; complete posture/casting/combat dependencies, perception, acquisition and leash; then
 admit each supported behavior based on its actual dependencies. Keep general

@@ -118,7 +118,7 @@ public sealed class ZoneMovementAuthorityTests
         await Assert.That(outgoing.Build(frame)).IsEqualTo(1);
         await Assert.That(registry.TryDequeueNotification(out var saturated)).IsTrue();
         var fast = UnitMovement.Read(saturated.Body.Span[4..]);
-        await Assert.That(fast.Movement.Velocity).IsEqualTo(new MovementVector16(short.MinValue, short.MinValue, short.MinValue));
+        await Assert.That(fast.Movement.Velocity).IsEqualTo(new MovementVector16(-32767, -32767, -32767));
 
         actors.RetireAll(backend);
         await Assert.That(actor.TryCopyStatus(out _)).IsFalse();

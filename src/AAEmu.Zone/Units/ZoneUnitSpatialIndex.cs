@@ -108,6 +108,17 @@ public sealed class ZoneUnitSpatialIndex : IDisposable
         return true;
     }
 
+    /// <summary>Validate a model publication before an ordered physical relocation commits.</summary>
+    internal void ValidateUpdate(ZoneUnit unit, Vector3 position)
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        if (!_members.TryGetValue(unit, out var entry))
+            throw new InvalidOperationException("Relocation requires the exact Unit's existing spatial membership.");
+        var x = Cell(position.X, CellCountX); var y = Cell(position.Y, CellCountY);
+        if ((x != entry.X || y != entry.Y) && _cells.TryGetValue((entry.Category, x, y), out var destination))
+            CheckCapacity(destination);
+    }
+
     /// <summary>39D2D8C0. Exact instance ownership prevents an old unit from removing its replacement.</summary>
     public bool Remove(ZoneUnit unit)
     {

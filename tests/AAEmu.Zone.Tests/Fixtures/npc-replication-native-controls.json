@@ -1,0 +1,2713 @@
+{
+  "provenance": "Original393405B0,3933B510,390E0790,390E0740,390E0F00,392A47F0,392A48D0,39DAF020 and3936D860 instructions in Unicorn. Controlled ABI model snapshot/pose/velocity/stance/CActor-KeepSyncing/SAIActorState964/descriptor/cvar/timer inputs; movement structure copy and buffer-full diagnostic callbacks. No DLL loaded; not a CActor producer or full wire oracle.",
+  "dllSha256": "50edcd49d0537aa0f94db55ecf22008d7fb9ed937ea02121919199b5bf8bb7ed",
+  "cases": [
+    {
+      "name": "period_and_standing",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2000,
+        "skipStanding": 1,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 99,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 0,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": -1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 100,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 200,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 1,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 300,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 300,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "inactive_old_counter",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": false,
+            "now": 100,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 0,
+            "disabledCalls": 1,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": -1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": false,
+            "now": 101,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 0,
+            "disabledCalls": 2,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": -1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": false,
+            "now": 102,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 102,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": false,
+            "now": 103,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 102,
+            "disabledCalls": 1,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": false,
+            "now": 104,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 102,
+            "disabledCalls": 2,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "character_load_period",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2000,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 100,
+            "characterCount": 7,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 0,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": -1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 101,
+            "characterCount": 7,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 101,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 200,
+            "characterCount": 7,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 101,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 201,
+            "characterCount": 7,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 101,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 202,
+            "characterCount": 7,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 101,
+            "disabledCalls": 0,
+            "standingCalls": 1,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "load_cap_and_reset",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2000,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 179,
+            "characterCount": 5000,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 0,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": -1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 180,
+            "characterCount": 5000,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 180,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 181,
+            "characterCount": 5000,
+            "modelCanReplicate": true,
+            "reset": true
+          },
+          "expected": {
+            "lastSync": 181,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "signed_cvars",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": -1,
+        "skipStanding": -1,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": false,
+            "now": 100,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": false,
+            "now": 200,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 200,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "fastest_still_period",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2000,
+        "skipStanding": 400,
+        "fastestSync": true
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": -1,
+            "active": false,
+            "now": 99,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 0,
+            "disabledCalls": 2001,
+            "standingCalls": 400,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": -1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": -1,
+            "active": false,
+            "now": 100,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": -1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": -1,
+            "active": false,
+            "now": 101,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 101,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": -1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "change_tolerances",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2000,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 100,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.01,
+              0,
+              0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 200,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 1,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.010001,
+              0,
+              0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 300,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 300,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.010001000016927719,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.010001,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              -1
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 400,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 300,
+            "disabledCalls": 0,
+            "standingCalls": 1,
+            "position": [
+              0.010001000016927719,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.010001,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              2e-05,
+              -1
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 500,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 500,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.010001000016927719,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              1.9999999494757503e-05,
+              -1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "small_velocity_to_exact_stop",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2000,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.001,
+              0,
+              0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 100,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0010000000474974513,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0010000000474974513,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 200,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 200,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.001,
+              0,
+              0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 300,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 200,
+            "disabledCalls": 0,
+            "standingCalls": 1,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "controller_and_guarded_strafing",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2000,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 100,
+            "characterCount": 0,
+            "modelCanReplicate": true,
+            "controllerId": 27,
+            "controllerPhase": 2,
+            "guardedAllowStrafing": true
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 27,
+            "controllerPhase": 2,
+            "stance": 1,
+            "cachedAllowStrafing": true
+          },
+          "send": true,
+          "additionalMovementFlags": 12,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 200,
+            "characterCount": 0,
+            "modelCanReplicate": true,
+            "controllerId": 27,
+            "controllerPhase": 2,
+            "guardedAllowStrafing": null
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 1,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 27,
+            "controllerPhase": 2,
+            "stance": 1,
+            "cachedAllowStrafing": true
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 27
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 300,
+            "characterCount": 0,
+            "modelCanReplicate": true,
+            "guardedAllowStrafing": false
+          },
+          "expected": {
+            "lastSync": 300,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 4,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 400,
+            "characterCount": 0,
+            "modelCanReplicate": true,
+            "keepSyncing": true
+          },
+          "expected": {
+            "lastSync": 400,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "disabled_model",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2000,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 100,
+            "characterCount": 0,
+            "modelCanReplicate": false
+          },
+          "expected": {
+            "lastSync": 0,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": -1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 200,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 200,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "unsigned_wrap",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2000,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 4294967280,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 4294967280,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 2,
+            "active": true,
+            "now": 70,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 4294967280,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 2,
+            "active": true,
+            "now": 90,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 90,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 2,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "inactive_zero_wire_velocity",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 0,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              4,
+              3,
+              2
+            ],
+            "stance": 1,
+            "active": false,
+            "now": 100,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              4.0,
+              3.0,
+              2.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "negative_period_is_unsigned",
+      "settings": {
+        "movementSkip": false,
+        "syncPeriodMilliseconds": -1,
+        "skipDisabledAi": 2000,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 100,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 0,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": -1,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 4294967295,
+            "characterCount": 0,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 4294967295,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "wide_unsigned_character_tree_sizes",
+      "settings": {
+        "movementSkip": true,
+        "syncPeriodMilliseconds": 100,
+        "skipDisabledAi": 2000,
+        "skipStanding": 400,
+        "fastestSync": false
+      },
+      "steps": [
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 1,
+            "active": true,
+            "now": 100,
+            "characterCount": 18446744073709551615,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 100,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 1,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 2,
+            "active": true,
+            "now": 200,
+            "characterCount": 9223372036854775808,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 200,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 2,
+            "cachedAllowStrafing": false
+          },
+          "send": true,
+          "additionalMovementFlags": 0,
+          "wireVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "modelControllerAfter": 0
+        },
+        {
+          "input": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "stance": 3,
+            "active": true,
+            "now": 300,
+            "characterCount": 1099511627776,
+            "modelCanReplicate": true
+          },
+          "expected": {
+            "lastSync": 200,
+            "disabledCalls": 0,
+            "standingCalls": 0,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "controllerId": 0,
+            "controllerPhase": 0,
+            "stance": 2,
+            "cachedAllowStrafing": false
+          },
+          "send": false,
+          "additionalMovementFlags": 0,
+          "wireVelocity": null,
+          "modelControllerAfter": 0
+        }
+      ]
+    }
+  ]
+}

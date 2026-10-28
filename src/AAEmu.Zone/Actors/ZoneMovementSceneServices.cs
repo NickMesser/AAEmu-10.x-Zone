@@ -29,7 +29,8 @@ namespace AAEmu.Zone.Actors;
 /// <item><c>ServerMilliseconds</c> is the scene clock: history admission
 /// (<c>ZoneActorMovementHistory.AdmitTime</c>, <c>Actors/ZoneActorMovementController.cs:34-40</c>),
 /// receive-path suppression windows (:116-138), admission latches and the outgoing
-/// ZWUnitMovements per-entry <c>Time</c>. It is NOT the client packet clock
+/// player ZWUnitMovements per-entry <c>Time</c>. NPC replication has explicit local domains.
+/// It is NOT the client packet clock
 /// (<c>ZoneActorMovementState.Time</c> stays client packet-ms and is never overwritten here).</item>
 /// <item><c>GameSeconds</c> feeds elapsed-time gating in the controller
 /// (<c>IZoneActorMovementServices.GameSeconds</c>, <c>Actors/ZoneActorMovementController.cs:13</c>).</item>

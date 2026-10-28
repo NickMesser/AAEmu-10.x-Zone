@@ -2,6 +2,7 @@ using System.Numerics;
 using AAEmu.Zone.Actors;
 using AAEmu.Zone.Ai;
 using AAEmu.Zone.Content;
+using AAEmu.Zone.Hosting;
 using AAEmu.Zone.Npcs;
 using AAEmu.Zone.Protocol;
 using AAEmu.Zone.Protocol.Messages;
@@ -240,25 +241,43 @@ public sealed class ManagedNpcAdmissionTests
 
         public Fixture(Func<ZoneActorHandle, IZoneManagedAiActor>? create = null, ZoneNpcContent? content = null,
             ZoneStatContent? stats = null, Func<uint>? now = null, ZoneUnitSpatialIndex? spatialIndex = null,
-            Func<ZoneUnit, Vector3>? modelPosition = null)
+            Func<ZoneUnit, Vector3>? modelPosition = null, ZoneSpatialRegionBounds? sceneBounds = null,
+            ZoneEngineCVars? engineCVars = null)
         {
-            _registry = new(spatialIndex: spatialIndex, modelPosition: modelPosition);
+            _registry = sceneBounds is null ? new(spatialIndex: spatialIndex, modelPosition: modelPosition) :
+                new(statContent: stats ?? throw new ArgumentNullException(nameof(stats)));
             _startup = new(localGameMilliseconds: now ?? (() => 1000));
+            _startup.EngineCVars = engineCVars ?? ZoneEngineCVars.Empty;
             _content = content ?? new([], [], [], [], []);
             Provider = new(Catalog.GetKind, create ?? (_ => new ZoneManagedAiActor()));
             World = new(_registry, _startup, _content, modelPosition ?? (_ => Vector3.Zero), () => null,
                 Catalog, Provider, new(), TimeSpan.FromMilliseconds(20), new(), null);
-            _simulation = new(_registry, stats ?? new([], [], [], [], [], [], [], [], []), World, _content);
+            if (sceneBounds is { } bounds)
+            {
+                var notes = new ZoneSceneReadinessNotes();
+                _registry.InitializeSceneServices(new(World, new ZoneSceneUnitUpdateServices(_registry, _startup, notes),
+                    new ZoneSceneMovementServices(_startup, notes), modelPosition ?? throw new ArgumentNullException(nameof(modelPosition))), _content);
+                _registry.InitializeSceneSpatialIndex(bounds);
+                _simulation = _registry.Npcs!;
+            }
+            else _simulation = new(_registry, stats ?? new([], [], [], [], [], [], [], [], []), World, _content);
         }
 
-        public ZoneNpc CreateFromWire(uint modelId)
+        public ZoneNpc CreateFromWire(uint modelId, Vector3? position = null)
         {
             var writer = new ZoneWriter();
             writer.WriteBc(_objectId); writer.WriteString("timer-control");
             writer.WriteByte(0); writer.WriteByte(0); writer.WriteBoolean(false);
             new UnitIdentity(ZoneUnitKind.Npc, NpcObjectId: _objectId + 1_000_000, TemplateId: 11).Write(writer);
             writer.WriteString("");
-            writer.WriteUInt32(0); writer.WriteUInt32(0); writer.WriteUInt16(0); writer.WriteByte(0);
+            if (position is { } local)
+            {
+                var packed = UnitMovementQuantization.Position(ZoneMovementPoseMath.ToUnitWorldPosition(local));
+                writer.WriteUInt32(packed.QuantizedX); writer.WriteUInt32(packed.QuantizedY);
+                writer.WriteUInt16((ushort)packed.QuantizedZ);
+                writer.WriteByte((byte)((packed.QuantizedZ >> 16) | (packed.NegativeX ? 0x80u : 0) | (packed.NegativeY ? 0x40u : 0)));
+            }
+            else { writer.WriteUInt32(0); writer.WriteUInt32(0); writer.WriteUInt16(0); writer.WriteByte(0); }
             writer.WriteSingle(1); writer.WriteSByte(1); writer.WriteSByte(0); writer.WriteSByte(0); writer.WriteSByte(0);
             writer.WriteBytes(new byte[4]); writer.WriteUInt32(modelId);
             writer.WriteUInt64(0); writer.WriteByte(0); // No equipment or appearance extension.

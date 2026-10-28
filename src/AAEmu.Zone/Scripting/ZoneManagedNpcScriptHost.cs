@@ -10,12 +10,12 @@ namespace AAEmu.Zone.Scripting;
 /// <summary>
 /// Scene effects which require an actual owner beyond the script/actor registries. Default methods
 /// refuse by name. Implementing a callback means performing that effect, not recording success.
-/// Actor health is deliberately separate from World Unit vital stats until their mirror is owned.
+/// Actor health reads the actual associated Unit and remains signed64 until its decimal-string binding.
 /// </summary>
 public interface IZoneManagedNpcScriptServices
 {
-    float GetActorHealth(ZoneManagedNpcActor actor) => throw Missing("actor.GetHealth / actor health mirror");
-    float GetActorMaximumHealth(ZoneManagedNpcActor actor) => throw Missing("actor.GetMaxHealth / actor health mirror");
+    long GetActorHealth(ZoneManagedNpcActor actor) => throw Missing("actor.GetHealth / actor Unit association");
+    long GetActorMaximumHealth(ZoneManagedNpcActor actor) => throw Missing("actor.GetMaxHealth / actor Unit stat6");
     Vector3 GetDirectionVector(ZoneManagedNpcActor actor, int axis) => throw Missing("entity.GetDirectionVector / entity orientation");
     void SetEntityTimer(ZoneManagedNpcActor actor, int timerId, int milliseconds) => throw Missing("entity.SetTimer / entity script timer scheduler");
     void KillEntityTimer(ZoneManagedNpcActor actor, int timerId) => throw Missing("entity.KillTimer / entity script timer scheduler");
@@ -204,8 +204,9 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
 
             using var actorTable = _lua.CreateTable(); actorTable.Set("id", handle);
             //39310CF0 -> CActor virtual+240 ->392E9850 reads the actor's independent+160 field.
-            Method(bound, actorTable, "GetHealth", actor.AiObject.EntityId, _ => [_services.GetActorHealth(actor)]);
-            Method(bound, actorTable, "GetMaxHealth", actor.AiObject.EntityId, _ => [_services.GetActorMaximumHealth(actor)]);
+            //3930D390/3930D4B0 format native signed64 with XlI64toA and return Lua string tag6.
+            Method(bound, actorTable, "GetHealth", actor.AiObject.EntityId, _ => [_services.GetActorHealth(actor).ToString(System.Globalization.CultureInfo.InvariantCulture)]);
+            Method(bound, actorTable, "GetMaxHealth", actor.AiObject.EntityId, _ => [_services.GetActorMaximumHealth(actor).ToString(System.Globalization.CultureInfo.InvariantCulture)]);
             Method(bound, actorTable, "IsPlayer", actor.AiObject.EntityId, _ => [false]);
             //Dedicated39310CA0 -> actor-binding vtable39FD5B88+192 ->3930BEC0 only
             //ends the function.39311540 parses three vectors and a float before that leaf.

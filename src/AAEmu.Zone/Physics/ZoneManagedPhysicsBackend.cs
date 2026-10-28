@@ -104,6 +104,7 @@ public sealed partial class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZo
 
     public void RemoveActor(ZoneActorHandle actor)
     {
+        RetireLivingCommands(actor);
         RetireAnimatedColliderBody(actor);
         RetireLivingStanceRequests(actor);
         RetireLivingControls(actor);
@@ -118,31 +119,36 @@ public sealed partial class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZo
     {
         if (elapsed <= TimeSpan.Zero)
             throw new ArgumentOutOfRangeException(nameof(elapsed), "Physics requires a positive explicit step.");
-        DrainLivingCorrectionPoses();
-        DrainLivingStanceRequests();
-        DrainLivingVelocityRequests();
-        // Normal scene periods use at most 50 ms per integration. Catch-up is bounded to 256
-        // substeps; the complete elapsed time is still integrated rather than silently discarded.
-        var count = (int)Math.Clamp(Math.Ceiling(elapsed.TotalSeconds / .05), 1, 256);
-        count = (int)Math.Min(count, elapsed.Ticks);
-        var ticks = elapsed.Ticks / count;
-        var remainder = elapsed.Ticks % count;
-        for (var i = 0; i < count; i++)
+        if (_sceneStepActive || _npcRelocationActive)
+            throw new InvalidOperationException("Managed physics cannot reenter an active scene step or NPC relocation publication.");
+        _sceneStepActive = true;
+        try
         {
-            var period = TimeSpan.FromTicks(ticks + (i < remainder ? 1 : 0));
-            PrepareLivingStep(period);
-            foreach (var (actor, description) in _actors)
-                if (description.Profile != ZonePhysicsActorProfile.Living ||
-                    description.CollisionActive && !_livingNextControls[actor].LastIdle) RecoverActor(actor);
-            BlockHorizontalMotion((float)period.TotalSeconds);
-            var ceilings = BlockStaticMotion((float)period.TotalSeconds);
-            OwnedPhysics.Step(period, IntegrateLivingActor, CommitLivingControl);
-            foreach (var actor in ceilings)
+            DrainLivingCommands();
+            // Normal scene periods use at most 50 ms per integration. Catch-up is bounded to 256
+            // substeps; the complete elapsed time is still integrated rather than silently discarded.
+            var count = (int)Math.Clamp(Math.Ceiling(elapsed.TotalSeconds / .05), 1, 256);
+            count = (int)Math.Min(count, elapsed.Ticks);
+            var ticks = elapsed.Ticks / count;
+            var remainder = elapsed.Ticks % count;
+            for (var i = 0; i < count; i++)
             {
-                OwnedPhysics.TryReadVelocity(actor, out var velocity);
-                OwnedPhysics.ApplyVelocity(actor, new(velocity.X, velocity.Y, MathF.Min(velocity.Z, 0)));
+                var period = TimeSpan.FromTicks(ticks + (i < remainder ? 1 : 0));
+                PrepareLivingStep(period);
+                foreach (var (actor, description) in _actors)
+                    if (description.Profile != ZonePhysicsActorProfile.Living ||
+                        description.CollisionActive && !_livingNextControls[actor].LastIdle) RecoverActor(actor);
+                BlockHorizontalMotion((float)period.TotalSeconds);
+                var ceilings = BlockStaticMotion((float)period.TotalSeconds);
+                OwnedPhysics.Step(period, IntegrateLivingActor, CommitLivingControl);
+                foreach (var actor in ceilings)
+                {
+                    OwnedPhysics.TryReadVelocity(actor, out var velocity);
+                    OwnedPhysics.ApplyVelocity(actor, new(velocity.X, velocity.Y, MathF.Min(velocity.Z, 0)));
+                }
             }
         }
+        finally { _sceneStepActive = false; }
     }
 
     public void Teleport(ZoneActorHandle actor, Vector3 position, Quaternion orientation)
@@ -152,6 +158,8 @@ public sealed partial class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZo
         if (_livingControls.TryGetValue(actor, out var control)) control.ResetMotion();
         _pendingLivingVelocity.RemoveAll(request => request.Actor == actor);
         _pendingLivingCorrectionPoses.RemoveAll(request => request.Actor == actor);
+        _pendingLivingCommands.RemoveAll(command => command.Actor == actor &&
+            command.Kind != LivingCommandKind.Stance);
         _lastRecovery.Remove(actor);
     }
 
@@ -169,6 +177,10 @@ public sealed partial class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZo
         {
             CachedLivingGroundHeight = _livingControls.TryGetValue(actor, out var control)
                 ? control.CachedGroundHeight : null,
+            LivingHadBlockingContact = control?.PriorBlocked,
+            // The current support query owns terrain/static parts only. There is no
+            // native-like retained physical-entity reference in this admitted profile.
+            LivingHasRetainedGroundEntity = control is null ? null : false,
         };
     }
 

@@ -226,6 +226,8 @@ public sealed class ZoneManagedNpcBodyLease : IZoneNavigationLocomotion, IZoneAn
     { Require(); _owner.Backend.CopyStatus(Actor, out status); }
     public void CopyDescription(out ZonePhysicsActorDescription description)
     { Require(); _owner.Backend.CopyDescription(Actor, out description); }
+    internal (int FlushedCommands, bool TranslationChanged) Relocate(Vector3 previousEntityPosition, Vector3 destination)
+    { Require(); return _owner.Backend.RelocateLivingBody(Actor, previousEntityPosition, destination); }
     public ZoneManagedNpcBodySnapshot CopyState()
     {
         Require();

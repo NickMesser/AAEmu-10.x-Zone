@@ -38,4 +38,9 @@ public sealed class ZoneLuaValues : IReadOnlyList<object?>, IDisposable
     public void Dispose() { foreach (var value in _values) if (value is ZoneLuaReference reference) reference.Dispose(); }
 }
 
-public sealed class ZoneLuaException(string message) : Exception(message);
+public sealed class ZoneLuaException(string message, bool isHostFailure = false, Exception? innerException = null)
+    : Exception(message, innerException)
+{
+    /// <summary>A managed host capability/ownership failure, distinct from an authored protected Lua error.</summary>
+    public bool IsHostFailure { get; } = isHostFailure;
+}

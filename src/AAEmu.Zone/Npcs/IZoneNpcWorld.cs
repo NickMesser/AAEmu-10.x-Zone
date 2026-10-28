@@ -51,6 +51,8 @@ public interface IZoneNpcWorld
     // A script/constructor-ready actor can exist before every gameplay-manager leaf is available.
     // Existing worlds keep their single actor gate; managed composition can report these separately.
     bool HasSignalActor(ZoneNpc npc) => HasAiActor(npc);
+    bool HasPartialUpdateStep(ZoneNpc npc, ZoneNpcUpdateStep step) => step == ZoneNpcUpdateStep.AiTimeEvent;
+    bool CanReplicateMovement(ZoneNpc npc) => HasAiActor(npc);
     // Required actor subsystems; the scheduler never replaces a missing subsystem with a no-op.
     void AcquireAggroTargets(ZoneNpc npc); // 39345770, including Timers.IgnoredTargets and current activation
     // Inputs for the concrete proximity/activation state owned by this exact NPC generation.

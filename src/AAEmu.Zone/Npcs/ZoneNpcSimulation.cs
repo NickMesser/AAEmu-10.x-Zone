@@ -367,7 +367,8 @@ public sealed class ZoneNpcSimulation : IZoneAggroWorld
                 // A real script actor can own the existing NPC AI timer before perception,
                 // navigation and the other gameplay manager leaves are admitted. Preserve
                 // the original schedule instead of starting a second timer authority.
-                if (!gameplayReady && step != ZoneNpcUpdateStep.AiTimeEvent) continue;
+                if (!gameplayReady && !_world.HasPartialUpdateStep(npc, step)) continue;
+                if (!IsCurrent(npc)) break;
                 switch (step)
                 {
                     case ZoneNpcUpdateStep.RefreshAggro: npc.Aggro.RefreshTargets(); break;
@@ -392,7 +393,8 @@ public sealed class ZoneNpcSimulation : IZoneAggroWorld
                     case ZoneNpcUpdateStep.Position: _world.CheckPosition(npc); break;
                 }
             }
-            if (gameplayReady && IsCurrent(npc) && canReplicateMovement && _world.MovementReplicationEnabled && IsCurrent(npc))
+            if (IsCurrent(npc) && canReplicateMovement && (gameplayReady || _world.CanReplicateMovement(npc)) &&
+                _world.MovementReplicationEnabled && IsCurrent(npc))
                 _world.ReplicateMovement(npc);
         }
     }

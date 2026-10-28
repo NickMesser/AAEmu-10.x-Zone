@@ -34,8 +34,8 @@ public sealed partial class ZoneManagedPhysicsBackend
             throw new InvalidOperationException("Living stance request sequences are exhausted.");
         var sequence = ++_nextLivingStanceSequence;
         OwnedPhysics.TryReadPosition(actor, out var position);
-        var queuedIndex = _pendingLivingStances.Count;
         _pendingLivingStances.Add(new(actor, stance, sequence, false));
+        QueueLivingCommand(actor, LivingCommandKind.Stance, () => ApplyQueuedLivingStance(actor, sequence));
 
         // Original SetParams(-1) queues before its preflight. That preflight only tests changed
         // hc/r/raw h, and uses the OLD pivot and primitive kind. Return1 is actor acceptance,
@@ -49,6 +49,10 @@ public sealed partial class ZoneManagedPhysicsBackend
         var result = needsProbe ? SolveStance(actor, current, preflightStance,
             replacement.LivingMovement!.MaximumUnprojectionDistance, position) : StanceSolve.Clear(position);
         var accepted = result.Accepted;
+        //A scene-query callback may have retired this exact generation during preflight.
+        Require(actor);
+        var queuedIndex = _pendingLivingStances.FindIndex(request => request.Actor == actor && request.Sequence == sequence);
+        if (queuedIndex < 0) throw new InvalidOperationException("Living stance request retired during preflight.");
         _pendingLivingStances[queuedIndex] = new(actor, stance, sequence, accepted);
         refusal = result.Refusal;
         _lastLivingStance[actor] = new(sequence, accepted, ZoneManagedLivingStancePhase.Queued,
@@ -63,12 +67,12 @@ public sealed partial class ZoneManagedPhysicsBackend
     public void CopyDescription(ZoneActorHandle actor, out ZonePhysicsActorDescription description)
     { Require(actor); description = _actors[actor]; }
 
-    private void DrainLivingStanceRequests()
+    private void ApplyQueuedLivingStance(ZoneActorHandle actor, ulong sequence)
     {
-        if (_pendingLivingStances.Count == 0) return;
-        foreach (var request in _pendingLivingStances)
+        var request = _pendingLivingStances.Find(candidate => candidate.Actor == actor && candidate.Sequence == sequence);
+        if (request is null) return;
+        if (_actors.TryGetValue(request.Actor, out var current))
         {
-            if (!_actors.TryGetValue(request.Actor, out var current)) continue;
             var replacement = DescriptionForStance(current, request.Stance);
             OwnedPhysics.TryReadPosition(request.Actor, out var position);
             var changed = DimensionsChanged(current, request.Stance, includePivotAndKind: true);
@@ -76,6 +80,7 @@ public sealed partial class ZoneManagedPhysicsBackend
                 ? SolveStance(request.Actor, current, request.Stance,
                     replacement.LivingMovement!.MaximumUnprojectionDistance, position)
                 : StanceSolve.Clear(position);
+            if (!_actors.ContainsKey(request.Actor)) return;
             if (result.Accepted && changed)
             {
                 // Type1 preserves actual/requested velocity and cached grounded/support state.
@@ -88,7 +93,7 @@ public sealed partial class ZoneManagedPhysicsBackend
                 result.Accepted ? result.Position : position, result.Shift, result.Queries,
                 result.UsedFallback, result.MultipleContacts, result.Refusal);
         }
-        _pendingLivingStances.Clear();
+        _pendingLivingStances.Remove(request);
     }
 
     private void RetireLivingStanceRequests(ZoneActorHandle actor)

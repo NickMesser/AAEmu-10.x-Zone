@@ -82,7 +82,7 @@ public sealed class ZoneManagedSceneActivation : IDisposable
             using var input = _files.OpenWorldSurfaces(_layout.World) ??
                 throw new FileNotFoundException("Managed terrain setup requires the world's surface.xml.");
             var surfaces = new ZoneTerrainSurfaceBindings(ZoneTerrainSurfaceContent.Load(input), materials);
-            var nodes = Heights.InitializeNodeTree(_layout.World.Header.OceanLevel);
+            var nodes = Heights.InitializeNodeTree(ZoneTerrainWorldInitialization.ResolveOceanLevel(_layout.World));
             nodes.BindSurfaces(surfaces);
             Surfaces = surfaces;
             Materials = materials;

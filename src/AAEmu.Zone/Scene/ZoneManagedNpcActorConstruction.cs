@@ -69,7 +69,7 @@ public sealed class ZoneManagedNpcActorConstruction : IDisposable
     public int Count => _actors.Count;
     public static string CapabilitySummary =>
         "Exact model-class selection, descriptor-written CActor scalars, source-order scaled stances, " +
-        "independent constructor health and postphysicalization animated parameters; " +
+        "source-backed Unit association health and postphysicalization animated parameters; " +
         "full GameParams, actor frame statistics and outgoing movement metadata remain separate owners.";
 
     public ZoneManagedNpcActorConstruction(ZoneUnitRegistry units, ZoneSceneNpcCatalog catalog, ZoneModelContent models)
@@ -148,7 +148,7 @@ public sealed class ZoneManagedNpcActorConstructionLease : IDisposable
     public ZoneManagedNpcActorClass ClassKind { get; }
     public ZoneManagedNpcGameParameters GameParams { get; }
     public ZoneActorStanceCatalog Stances { get; }
-    public ZoneManagedNpcActorHealth Health { get; } = new();
+    public ZoneManagedNpcActorHealth Health { get; }
     public int? PhysicalizedFrame { get; private set; }
     public bool IsDisposed { get; private set; }
     public bool IsCurrent => !IsDisposed && _owner.Owns(this);
@@ -161,6 +161,7 @@ public sealed class ZoneManagedNpcActorConstructionLease : IDisposable
         ClassKind = model.Definition.MovementId switch
         { 1 or 3 => ZoneManagedNpcActorClass.Quadruped, 2 => ZoneManagedNpcActorClass.Monster, _ => ZoneManagedNpcActorClass.Player };
         GameParams = parameters; Stances = stances; _impulseRecoveryTime = model.Definition.PhysicsLivingTimeImpulseRecover;
+        Health = new(npc.Unit, () => IsCurrent);
     }
 
     /// <summary>

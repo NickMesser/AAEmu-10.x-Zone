@@ -26,7 +26,8 @@ namespace AAEmu.Zone.Actors;
 /// history admission (<c>ZoneActorMovementHistory.AdmitTime</c>,
 /// <c>Actors/ZoneActorMovementController.cs:34-40</c>), receive-path suppression windows
 /// (<c>Actors/ZoneActorMovementController.cs:118-138</c>), and the per-entry <c>Time</c>
-/// (u32 ms) of every outgoing ZWUnitMovements record this frame. It is NOT the client's
+/// (u32 ms) of the player outgoing ZWUnitMovements records this frame. NPC cadence/model
+/// timestamps use the separately sampled local domains below. This is NOT the client's
 /// packet <c>state.Time</c>, which remains the client clock it arrived on.</item>
 /// <item><see cref="GameSeconds"/> — the single sampled game clock,
 /// <c>IZoneActorMovementServices.GameSeconds</c>
@@ -47,7 +48,13 @@ public readonly record struct ZoneMovementFrame(
     uint Frame,
     TimeSpan Elapsed,
     uint ServerMilliseconds,
-    float GameSeconds);
+    float GameSeconds)
+{
+    /// <summary>CTimer0 domain for393405B0 cadence, independent of World's TimeKeeper offset.</summary>
+    public uint? LocalGameMilliseconds { get; init; }
+    /// <summary>CTimer1 / CSystem6744 stamp used by ActorUnitModel39278AC0.</summary>
+    public uint? UnpausedMilliseconds { get; init; }
+}
 
 /// <summary>
 /// The exact phase API Agent 5's frame coordinator calls once per scene frame, in this order,

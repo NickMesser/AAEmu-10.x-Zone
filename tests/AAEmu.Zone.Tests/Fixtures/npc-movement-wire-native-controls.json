@@ -1,0 +1,9490 @@
+{
+  "provenance": "Full original3938B0B0 actor writer,39B11410 fixed position,39370D80 velocity,39370E80 delta,3938AFC0/393753C0 axis-angle instructions in Unicorn. Typed writer callbacks collect raw bytes; external floorf/acosf/sinf/sqrtf use controlled scalar math ABI. No DLL loaded. Covers actor fields with no ground/hanging/push attachments.",
+  "dllSha256": "50edcd49d0537aa0f94db55ecf22008d7fb9ed937ea02121919199b5bf8bb7ed",
+  "controls": [
+    {
+      "name": "default",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_-1000",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          -1000.0,
+          1000.0,
+          -700.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470180FF7F018000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0180"
+        ],
+        [
+          "vel.y",
+          "ff7f"
+        ],
+        [
+          "vel.z",
+          "0180"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_-60.1",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          -60.099998474121094,
+          60.099998474121094,
+          -42.06999969482422
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470180FF7F41A600000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0180"
+        ],
+        [
+          "vel.y",
+          "ff7f"
+        ],
+        [
+          "vel.z",
+          "41a6"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_-60",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          -60.0,
+          60.0,
+          -42.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470180FF7F67A600000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0180"
+        ],
+        [
+          "vel.y",
+          "ff7f"
+        ],
+        [
+          "vel.z",
+          "67a6"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_-59.99999",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          -59.9999885559082,
+          59.9999885559082,
+          -41.99999237060547
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470180FF7F67A600000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0180"
+        ],
+        [
+          "vel.y",
+          "ff7f"
+        ],
+        [
+          "vel.z",
+          "67a6"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_-30",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          -30.0,
+          30.0,
+          -21.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4701C0004034D300000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "01c0"
+        ],
+        [
+          "vel.y",
+          "0040"
+        ],
+        [
+          "vel.z",
+          "34d3"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_-0.05",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          -0.05000000074505806,
+          0.05000000074505806,
+          -0.03500000014901161
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47E5FF1B00EDFF00000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "e5ff"
+        ],
+        [
+          "vel.y",
+          "1b00"
+        ],
+        [
+          "vel.z",
+          "edff"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_-0.0009155552842799158",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          -0.0009155552834272385,
+          0.0009155552834272385,
+          -0.0006408886983990669
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000100000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0100"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_-0.001",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          -0.0010000000474974513,
+          0.0010000000474974513,
+          -0.000699999975040555
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47FFFF0100000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "ffff"
+        ],
+        [
+          "vel.y",
+          "0100"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_0.0",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_0.0009155552842799158",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0009155552834272385,
+          -0.0009155552834272385,
+          0.0006408886983990669
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4701000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0100"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_0.05",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.05000000074505806,
+          -0.05000000074505806,
+          0.03500000014901161
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C471B00E5FF130000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "1b00"
+        ],
+        [
+          "vel.y",
+          "e5ff"
+        ],
+        [
+          "vel.z",
+          "1300"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_30",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          30.0,
+          -30.0,
+          21.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47004001C0CC2C00000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0040"
+        ],
+        [
+          "vel.y",
+          "01c0"
+        ],
+        [
+          "vel.z",
+          "cc2c"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_59.99999",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          59.9999885559082,
+          -59.9999885559082,
+          41.99999237060547
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47FF7F0180995900000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "ff7f"
+        ],
+        [
+          "vel.y",
+          "0180"
+        ],
+        [
+          "vel.z",
+          "9959"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_60",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          60.0,
+          -60.0,
+          42.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47FF7F0180995900000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "ff7f"
+        ],
+        [
+          "vel.y",
+          "0180"
+        ],
+        [
+          "vel.z",
+          "9959"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_60.1",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          60.099998474121094,
+          -60.099998474121094,
+          42.06999969482422
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47FF7F0180BF5900000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "ff7f"
+        ],
+        [
+          "vel.y",
+          "0180"
+        ],
+        [
+          "vel.z",
+          "bf59"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "velocity_1000",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          1000.0,
+          -1000.0,
+          700.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47FF7F0180FF7F00000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "ff7f"
+        ],
+        [
+          "vel.y",
+          "0180"
+        ],
+        [
+          "vel.z",
+          "ff7f"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_-3",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          -3.0,
+          3.0,
+          -2.0999999046325684
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47000000000000000000817F8101020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "81"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "7f"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "81"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_-1",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          -1.0,
+          1.0,
+          -0.699999988079071
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47000000000000000000817FA701020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "81"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "7f"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "a7"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_-0.999",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          -0.9990000128746033,
+          0.9990000128746033,
+          -0.6992999911308289
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47000000000000000000817FA701020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "81"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "7f"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "a7"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_-0.5",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          -0.5,
+          0.5,
+          -0.3499999940395355
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47000000000000000000C140D401020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "c1"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "40"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "d4"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_-0.003937007874015748",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          -0.003937007859349251,
+          0.003937007859349251,
+          -0.0027559055015444756
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000010001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "01"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_0",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_0.003937007874015748",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.003937007859349251,
+          -0.003937007859349251,
+          0.0027559055015444756
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000001000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "01"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_0.5",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.5,
+          -0.5,
+          0.3499999940395355
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000040C12C01020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "40"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "c1"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "2c"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_0.999",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.9990000128746033,
+          -0.9990000128746033,
+          0.6992999911308289
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470000000000000000007F815901020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "7f"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "81"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "59"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_1",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          1.0,
+          -1.0,
+          0.699999988079071
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470000000000000000007F815901020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "7f"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "81"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "59"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "delta_3",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          3.0,
+          -3.0,
+          2.0999999046325684
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470000000000000000007F817F01020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "7f"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "81"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "7f"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "height_-200",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": -200,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A0000004000000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "00"
+        ],
+        [
+          "iz1",
+          "00"
+        ],
+        [
+          "iz2",
+          "40"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "height_-100",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": -100,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A0000004000000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "00"
+        ],
+        [
+          "iz1",
+          "00"
+        ],
+        [
+          "iz2",
+          "40"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "height_-99.99999",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": -99.99999,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A0000004000000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "00"
+        ],
+        [
+          "iz1",
+          "00"
+        ],
+        [
+          "iz2",
+          "40"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "height_0",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A0078864100000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "78"
+        ],
+        [
+          "iz1",
+          "86"
+        ],
+        [
+          "iz2",
+          "41"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "height_366.3365",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "height_4095.9998",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 4095.9998,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A0000004000000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "00"
+        ],
+        [
+          "iz1",
+          "00"
+        ],
+        [
+          "iz2",
+          "40"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "height_4096",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 4096,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A0000004000000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "00"
+        ],
+        [
+          "iz1",
+          "00"
+        ],
+        [
+          "iz2",
+          "40"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "height_5000",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 5000,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A0000004000000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "00"
+        ],
+        [
+          "iz1",
+          "00"
+        ],
+        [
+          "iz2",
+          "40"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "fixed_0",
+      "input": {
+        "fixedX": 0,
+        "fixedY": 0,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "0178563412000000000000000000E41C0700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "00"
+        ],
+        [
+          "ix1",
+          "00"
+        ],
+        [
+          "ix2",
+          "00"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "00"
+        ],
+        [
+          "iy1",
+          "00"
+        ],
+        [
+          "iy2",
+          "00"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "07"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "fixed_-1",
+      "input": {
+        "fixedX": -1,
+        "fixedY": 1,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "0178563412000000000000000000E41C8700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "00"
+        ],
+        [
+          "ix1",
+          "00"
+        ],
+        [
+          "ix2",
+          "00"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "00"
+        ],
+        [
+          "iy1",
+          "00"
+        ],
+        [
+          "iy2",
+          "00"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "87"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "fixed_-34359738367",
+      "input": {
+        "fixedX": -34359738367,
+        "fixedY": 34359738367,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "0178563412000000000000000000E41C8700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "00"
+        ],
+        [
+          "ix1",
+          "00"
+        ],
+        [
+          "ix2",
+          "00"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "00"
+        ],
+        [
+          "iy1",
+          "00"
+        ],
+        [
+          "iy2",
+          "00"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "87"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "fixed_-34359738368",
+      "input": {
+        "fixedX": -34359738368,
+        "fixedY": 34359738368,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "0178563412000100000001000000E41C8700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "01"
+        ],
+        [
+          "ix1",
+          "00"
+        ],
+        [
+          "ix2",
+          "00"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "01"
+        ],
+        [
+          "iy1",
+          "00"
+        ],
+        [
+          "iy2",
+          "00"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "87"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "fixed_-9223372036854775808",
+      "input": {
+        "fixedX": -9223372036854775808,
+        "fixedY": 9223372036854775807,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "017856341200000000F0FFFFFF0FE41C8700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "00"
+        ],
+        [
+          "ix1",
+          "00"
+        ],
+        [
+          "ix2",
+          "00"
+        ],
+        [
+          "ix3",
+          "f0"
+        ],
+        [
+          "iy0",
+          "ff"
+        ],
+        [
+          "iy1",
+          "ff"
+        ],
+        [
+          "iy2",
+          "ff"
+        ],
+        [
+          "iy3",
+          "0f"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "87"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[1, 0, 0]_1e-05",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          4.999999873689376e-06,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[1, 0, 0]_0.7",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.34289780259132385,
+          0.0,
+          0.0,
+          0.939372718334198
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470000000000000E000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "0e"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[1, 0, 0]_3.141592653589793",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          6.123234262925839e-17
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000040000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "40"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[1, 0, 0]_4.7",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.7114733457565308,
+          0.0,
+          0.0,
+          -0.7027130722999573
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470000000000005F000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "5f"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[1, 0, 0]_6.283185307179586",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          1.2246468525851679e-16,
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470000000000007F000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "7f"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0, 1, 0]_1e-05",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          4.999999873689376e-06,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0, 1, 0]_0.7",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.34289780259132385,
+          0.0,
+          0.939372718334198
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47000000000000000E0000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "0e"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0, 1, 0]_3.141592653589793",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          1.0,
+          0.0,
+          6.123234262925839e-17
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000400000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "40"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0, 1, 0]_4.7",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.7114733457565308,
+          0.0,
+          -0.7027130722999573
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47000000000000005F0000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "5f"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0, 1, 0]_6.283185307179586",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          1.2246468525851679e-16,
+          0.0,
+          -1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470000000000007F000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "7f"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0, 0, 1]_1e-05",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          4.999999873689376e-06,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0, 0, 1]_0.7",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.34289780259132385,
+          0.939372718334198
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000E00000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "0e"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0, 0, 1]_3.141592653589793",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          1.0,
+          6.123234262925839e-17
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000004000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "40"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0, 0, 1]_4.7",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.7114733457565308,
+          -0.7027130722999573
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000005F00000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "5f"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0, 0, 1]_6.283185307179586",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          1.2246468525851679e-16,
+          -1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470000000000007F000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "7f"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0.577350269, 0.577350269, 0.577350269]_1e-05",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          2.886751417463529e-06,
+          2.886751417463529e-06,
+          2.886751417463529e-06,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0.577350269, 0.577350269, 0.577350269]_0.7",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.1979721486568451,
+          0.1979721486568451,
+          0.1979721486568451,
+          0.939372718334198
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000008080800000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "08"
+        ],
+        [
+          "rot.y",
+          "08"
+        ],
+        [
+          "rot.z",
+          "08"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0.577350269, 0.577350269, 0.577350269]_3.141592653589793",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.5773502588272095,
+          0.5773502588272095,
+          0.5773502588272095,
+          6.123234262925839e-17
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000025252500000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "25"
+        ],
+        [
+          "rot.y",
+          "25"
+        ],
+        [
+          "rot.z",
+          "25"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0.577350269, 0.577350269, 0.577350269]_4.7",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.41076934337615967,
+          0.41076934337615967,
+          0.41076934337615967,
+          -0.7027130722999573
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000037373700000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "37"
+        ],
+        [
+          "rot.y",
+          "37"
+        ],
+        [
+          "rot.z",
+          "37"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "quat_[0.577350269, 0.577350269, 0.577350269]_6.283185307179586",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          7.070501648086865e-17,
+          7.070501648086865e-17,
+          7.070501648086865e-17,
+          -1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 0,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C470000000000007F000000000001020000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "7f"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "fall_-10",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 4736,
+        "fallVelocity": -10.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47000000000000000000000000010280120000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "8012"
+        ],
+        [
+          "actor.fallVel",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "fall_0",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 4736,
+        "fallVelocity": 0.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47000000000000000000000000010280120000",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "8012"
+        ],
+        [
+          "actor.fallVel",
+          "0000"
+        ]
+      ]
+    },
+    {
+      "name": "fall_0.000976577401388571",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 4736,
+        "fallVelocity": 0.0009765774011611938,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C47000000000000000000000000010280120100",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "8012"
+        ],
+        [
+          "actor.fallVel",
+          "0100"
+        ]
+      ]
+    },
+    {
+      "name": "fall_30",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 4736,
+        "fallVelocity": 30.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001028012003C",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "8012"
+        ],
+        [
+          "actor.fallVel",
+          "003c"
+        ]
+      ]
+    },
+    {
+      "name": "fall_128",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 4736,
+        "fallVelocity": 128.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001028012FFFF",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "8012"
+        ],
+        [
+          "actor.fallVel",
+          "ffff"
+        ]
+      ]
+    },
+    {
+      "name": "fall_200",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": 1,
+        "alertness": 2,
+        "actorFlags": 4736,
+        "fallVelocity": 200.0,
+        "movementFlags": 0,
+        "controllerId": 0,
+        "phase": 0,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634120069D33600BA6A0A00E41C4700000000000000000000000001028012FFFF",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "00"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "01"
+        ],
+        [
+          "actor.alertness",
+          "02"
+        ],
+        [
+          "actor.flags",
+          "8012"
+        ],
+        [
+          "actor.fallVel",
+          "ffff"
+        ]
+      ]
+    },
+    {
+      "name": "controller_phase",
+      "input": {
+        "fixedX": 123456789123456789,
+        "fixedY": -23456789123456789,
+        "z": 366.3365,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "delta": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stance": -1,
+        "alertness": -2,
+        "actorFlags": 4620,
+        "fallVelocity": 0.0,
+        "movementFlags": 28,
+        "controllerId": 27,
+        "phase": 2,
+        "time": 305419896
+      },
+      "expectedPayload": "01785634121C1B0000000269D33600BA6A0A00E41C47000000000000000000000000FFFE0C12",
+      "fields": [
+        [
+          "type",
+          "01"
+        ],
+        [
+          "time",
+          "78563412"
+        ],
+        [
+          "flags",
+          "1c"
+        ],
+        [
+          "scType",
+          "1b000000"
+        ],
+        [
+          "phase",
+          "02"
+        ],
+        [
+          "ix0",
+          "69"
+        ],
+        [
+          "ix1",
+          "d3"
+        ],
+        [
+          "ix2",
+          "36"
+        ],
+        [
+          "ix3",
+          "00"
+        ],
+        [
+          "iy0",
+          "ba"
+        ],
+        [
+          "iy1",
+          "6a"
+        ],
+        [
+          "iy2",
+          "0a"
+        ],
+        [
+          "iy3",
+          "00"
+        ],
+        [
+          "iz0",
+          "e4"
+        ],
+        [
+          "iz1",
+          "1c"
+        ],
+        [
+          "iz2",
+          "47"
+        ],
+        [
+          "vel.x",
+          "0000"
+        ],
+        [
+          "vel.y",
+          "0000"
+        ],
+        [
+          "vel.z",
+          "0000"
+        ],
+        [
+          "rot.x",
+          "00"
+        ],
+        [
+          "rot.y",
+          "00"
+        ],
+        [
+          "rot.z",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.x",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.y",
+          "00"
+        ],
+        [
+          "actor.deltaMovement.z",
+          "00"
+        ],
+        [
+          "actor.stance",
+          "ff"
+        ],
+        [
+          "actor.alertness",
+          "fe"
+        ],
+        [
+          "actor.flags",
+          "0c12"
+        ]
+      ]
+    }
+  ]
+}

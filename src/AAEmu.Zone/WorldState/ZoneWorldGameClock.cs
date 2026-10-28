@@ -60,8 +60,21 @@ public sealed class ZoneWorldGameClock : IDisposable
     public uint GetTime()
     {
         ObjectDisposedException.ThrowIf(IsDisposed, this);
-        var local = _localGameMilliseconds();
+        var local = GetLocalTime();
         return GetTime(local);
+    }
+
+    /// <summary>
+    /// Samples the replacement host's local monotonic clock, before World's TimeKeeper offset.
+    /// The dedicated host does not pause or scale time: native CTimer0 (game) and1 (unpaused)
+    /// share this sample here. Introducing either behavior requires owning both producers.
+    /// </summary>
+    public uint GetLocalTime()
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        var local = _localGameMilliseconds();
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        return local;
     }
 
     /// <summary>CTimer 0x365AD250 / TimeKeeper::GetRemoteTime; unsigned millisecond wrap is retained.</summary>

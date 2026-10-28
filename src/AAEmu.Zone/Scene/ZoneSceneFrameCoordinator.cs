@@ -33,7 +33,7 @@ namespace AAEmu.Zone.Scene;
 ///
 /// Clock domains, sampled EXACTLY ONCE per frame here (never mixed, IZoneMovementFramePhases.cs:
 /// 9-34): <c>ServerMilliseconds</c> = the scene clock
-/// (<c>ZoneStartupState.WorldGameClock.GetTime()</c>, the World-aligned CTimer domain — never
+/// (<c>ZoneStartupState.WorldGameClock.GetTime(uint)</c>, the World-aligned TimeKeeper domain — never
 /// server uptime, ZoneWorldGameClock.cs:60-72); <c>GameSeconds</c> = the same sample divided by
 /// 1000 (same documented domain); <c>Elapsed</c> = the configured frame period, validated
 /// 0 &lt; period ≤ 10 s at ZoneSceneActivation.cs:81-82; <c>Frame</c> = the session's
@@ -132,9 +132,11 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
     private void RunFrameCore(uint frame)
     {
         // ONE sample for every leaf of this frame (pump discipline, IZoneAiFramePump.cs:8-12).
-        var serverMs = _startup.WorldGameClock.GetTime();
+        var localMs = _startup.WorldGameClock.GetLocalTime();
+        var serverMs = _startup.WorldGameClock.GetTime(localMs);
         var gameSeconds = serverMs / 1000f; // same documented millisecond domain, seconds view
-        var sample = new ZoneMovementFrame(frame, _framePeriod, serverMs, gameSeconds);
+        var sample = new ZoneMovementFrame(frame, _framePeriod, serverMs, gameSeconds)
+        { LocalGameMilliseconds = localMs, UnpausedMilliseconds = localMs };
         _beginFrame?.Invoke(_framePeriod);
 
         _phases.PrePhase(sample);           // eligibility, sampling, input production (clock pushed here)

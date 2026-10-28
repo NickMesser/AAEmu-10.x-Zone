@@ -1,35 +1,68 @@
 using AAEmu.Zone.Actors;
 using AAEmu.Zone.Scene;
+using AAEmu.Zone.Units;
 
 namespace AAEmu.Zone.Scripting;
 
 /// <summary>
-/// The independent CActor health fields, not World Unit statistics. Native392E6BC0 constructs
-/// its stats at+136 through392E7D80: current+160 is0 and maximum+184 is10. Later health producers
-/// must copy their actual fields explicitly; this class does not implement combat or SetHealth.
+/// CActor392D7400/392D7460 read their associated Unit, or100 before either association exists.
+/// The dedicated profile owns the server-Unit104 producer; client-Unit112 is a separate profile.
+/// Health stays signed64 throughout. The unrelated stats160/184 are water state.
 /// </summary>
 public sealed class ZoneManagedNpcActorHealth
 {
-    public float CurrentHealth { get; private set; }
-    public float MaximumHealth { get; private set; }
-    public ZoneManagedNpcActorHealth(float currentHealth = 0, float maximumHealth = 10) => CopyFields(currentHealth, maximumHealth);
-    public void CopyFields(float currentHealth, float maximumHealth)
+    private ZoneUnit? _expectedUnit, _serverUnit;
+    private Func<bool>? _current;
+    public bool HasServerUnit => _serverUnit is not null;
+    public ZoneManagedNpcActorHealth() { }
+    internal ZoneManagedNpcActorHealth(ZoneUnit expectedUnit, Func<bool> current) => BindOwner(expectedUnit, current);
+    internal void BindOwner(ZoneUnit expectedUnit, Func<bool> current)
     {
-        if (!float.IsFinite(currentHealth) || !float.IsFinite(maximumHealth))
-            throw new ArgumentException("Copied CActor health fields must be finite.");
-        CurrentHealth = currentHealth; MaximumHealth = maximumHealth;
+        ArgumentNullException.ThrowIfNull(expectedUnit); ArgumentNullException.ThrowIfNull(current);
+        if (_expectedUnit is not null && !ReferenceEquals(expectedUnit, _expectedUnit))
+            throw new InvalidOperationException("CActor health cannot bind a different Unit allocation.");
+        _expectedUnit = expectedUnit; _current ??= current;
     }
+    /// <summary>392E0190: call only at the actual server-Unit association event, independently of Lua construction.</summary>
+    public void AssociateServerUnit(ZoneUnit unit)
+    {
+        Require();
+        if (_expectedUnit is null || !ReferenceEquals(unit, _expectedUnit))
+            throw new InvalidOperationException("The CActor server-Unit association must retain its exact owned Unit.");
+        _serverUnit = unit;
+    }
+    public long CurrentHealth
+    {
+        get
+        {
+            Require();
+            return _serverUnit is null ? 100 : ReadCurrent(_serverUnit.PreciseHealth);
+        }
+    }
+    public long MaximumHealth
+    {
+        get
+        {
+            Require();
+            if (_serverUnit is null) return 100;
+            return _serverUnit.Stats is { IsComplete: true } stats ? stats.MaximumHealth :
+                throw new NotSupportedException("Associated CActor.GetMaxHealth requires the Unit's complete native stat6 owner.");
+        }
+    }
+    internal static long ReadCurrent(long preciseHealth) => preciseHealth / 100 + (preciseHealth % 100 != 0 ? 1L : 0L);
+    private void Require()
+    { if (_current is not null && !_current()) throw new ObjectDisposedException(nameof(ZoneManagedNpcActorHealth), "The exact CActor/Unit health generation retired."); }
 }
 
-public sealed record ZoneManagedNpcScriptFault(ZoneActorHandle Actor, string Callback, string Message);
+public sealed record ZoneManagedNpcScriptFault(ZoneActorHandle Actor, string Callback, string Message, bool RetireActor = true);
 
-public readonly record struct ZoneManagedNpcScriptEffectState(float CurrentHealth, float MaximumHealth,
+public readonly record struct ZoneManagedNpcScriptEffectState(long CurrentHealth, long MaximumHealth,
     float CombatInterval, float PeaceInterval, float SelectedInterval, float AccumulatedTime,
     int Timers, bool HasUpdate, bool Faulted, string? Failure);
 
 /// <summary>
 /// Generation-owned entity timers, default-state dedicated-server script updates, and copied
-/// actor health. Other IZoneManagedNpcScriptServices effects keep their named refusals.
+/// Unit-backed actor health. Other IZoneManagedNpcScriptServices effects keep their named refusals.
 /// The scene supplies the game clock and invokes Tick at its documented frame boundary.
 /// This owns Lua references, never the runtime, actor, or entity binding.
 /// </summary>
@@ -38,6 +71,7 @@ public sealed class ZoneManagedNpcScriptEffects : IZoneManagedNpcScriptServices,
     private readonly IZoneLuaRuntime _lua;
     private readonly Func<long> _gameMicroseconds;
     private readonly Action<string>? _trace;
+    private readonly bool _preserveNativeScriptErrors;
     private readonly Dictionary<ZoneActorHandle, ZoneManagedNpcScriptEffectsLease> _actors = [];
     private readonly SortedDictionary<(long Deadline, long Sequence), Timer> _timers = [];
     private readonly Queue<ZoneManagedNpcScriptFault> _faults = [];
@@ -46,10 +80,15 @@ public sealed class ZoneManagedNpcScriptEffects : IZoneManagedNpcScriptServices,
     public bool IsDisposed { get; private set; }
     public int Count => _actors.Count;
     public int TimerCount => _timers.Count;
+    public ulong ProtectedErrorCount { get; private set; }
     public IReadOnlyList<ZoneManagedNpcScriptFault> Faults => _faults.ToArray();
 
-    public ZoneManagedNpcScriptEffects(IZoneLuaRuntime lua, Func<long> gameMicroseconds, Action<string>? trace = null)
-    { _lua = lua ?? throw new ArgumentNullException(nameof(lua)); _gameMicroseconds = gameMicroseconds ?? throw new ArgumentNullException(nameof(gameMicroseconds)); _trace = trace; }
+    public ZoneManagedNpcScriptEffects(IZoneLuaRuntime lua, Func<long> gameMicroseconds, Action<string>? trace = null,
+        bool preserveNativeScriptErrors = false)
+    {
+        _lua = lua ?? throw new ArgumentNullException(nameof(lua)); _gameMicroseconds = gameMicroseconds ?? throw new ArgumentNullException(nameof(gameMicroseconds));
+        _trace = trace; _preserveNativeScriptErrors = preserveNativeScriptErrors;
+    }
 
     IDisposable IZoneManagedNpcScriptLifecycle.BindEntity(ZoneManagedNpcScriptBinding binding) => BindEntity(binding, new());
     IReadOnlyList<ZoneManagedNpcScriptFault> IZoneManagedNpcScriptLifecycle.Tick(TimeSpan elapsed) => Tick(elapsed);
@@ -64,6 +103,7 @@ public sealed class ZoneManagedNpcScriptEffects : IZoneManagedNpcScriptServices,
         Check(); ArgumentNullException.ThrowIfNull(binding); ArgumentNullException.ThrowIfNull(health);
         binding.RequireCurrent();
         if (!ReferenceEquals(binding.Script.Runtime, _lua)) throw new ArgumentException("Entity effects require their own exact Lua runtime.");
+        health.BindOwner(binding.Actor.Npc.Unit, () => binding.IsCurrent);
         if (_actors.TryGetValue(binding.Actor.Handle, out var previous))
         {
             if (previous.IsCurrent) throw new InvalidOperationException("This actor generation already owns script effects.");
@@ -82,8 +122,8 @@ public sealed class ZoneManagedNpcScriptEffects : IZoneManagedNpcScriptServices,
         finally { timer?.Dispose(); update?.Dispose(); }
     }
 
-    public float GetActorHealth(ZoneManagedNpcActor actor) => Require(actor).Health.CurrentHealth;
-    public float GetActorMaximumHealth(ZoneManagedNpcActor actor) => Require(actor).Health.MaximumHealth;
+    public long GetActorHealth(ZoneManagedNpcActor actor) => Require(actor).Health.CurrentHealth;
+    public long GetActorMaximumHealth(ZoneManagedNpcActor actor) => Require(actor).Health.MaximumHealth;
 
     //32033420 forwards both float parameters to script-proxy virtual+72/320732C0.
     //That setter writes+40/+44 only; it does not select a new current interval at+36.
@@ -157,7 +197,7 @@ public sealed class ZoneManagedNpcScriptEffects : IZoneManagedNpcScriptServices,
                 var seconds = (float)elapsed.TotalSeconds;
                 foreach (var owner in _actors.Values.ToArray())
                 {
-                    if (!owner.IsCurrent || !owner.HasUpdate) continue;
+                    if (!owner.IsCurrent || !owner.HasUpdate || !owner.Binding.Actor.IsEntityScriptUpdateEligible) continue;
                     owner.AccumulatedTime = seconds + owner.AccumulatedTime;
                     if (owner.AccumulatedTime <= owner.SelectedInterval) continue;
                     if (owner.OnUpdate is { } function)
@@ -176,11 +216,24 @@ public sealed class ZoneManagedNpcScriptEffects : IZoneManagedNpcScriptServices,
         try { owner.Binding.InvokeCallback(function, arguments); }
         catch (Exception error)
         {
-            owner.IsFaulted = true; owner.Failure = $"{name}: {error.Message}";
-            Kill(owner, -1);
-            var fault = new ZoneManagedNpcScriptFault(owner.Binding.Actor.Handle, name, error.Message);
+            var retire = !_preserveNativeScriptErrors || error is not ZoneLuaException { IsHostFailure: false };
+            if (retire)
+            {
+                owner.IsFaulted = true; owner.Failure = $"{name}: {error.Message}";
+                Kill(owner, -1);
+            }
+            else
+            {
+                //32073E20 ignores protected EndCall's false return. Preserve owner and
+                //timers;32071E70 still resets the accumulator after this dispatch returns.
+                ProtectedErrorCount++;
+                var key = $"{name}: {error.Message}";
+                if (owner.LastReportedProtectedError == key) return;
+                owner.LastReportedProtectedError = key;
+            }
+            var fault = new ZoneManagedNpcScriptFault(owner.Binding.Actor.Handle, name, error.Message, retire);
             if (_faults.Count == 256) _faults.Dequeue(); _faults.Enqueue(fault); faults.Add(fault);
-            _trace?.Invoke($"Managed NPC script {fault.Actor} refused {name}: {error.Message}");
+            _trace?.Invoke($"Managed NPC script {fault.Actor} {(retire ? "refused" : "reported protected error in")} {name}: {error.Message}");
         }
     }
 
@@ -236,6 +289,7 @@ public sealed class ZoneManagedNpcScriptEffectsLease : IDisposable
     internal float SelectedInterval { get; set; } = 1f / 3f;
     internal float AccumulatedTime { get; set; } = 10f;
     internal bool HasUpdate { get; }
+    internal string? LastReportedProtectedError;
     public ZoneActorHandle Actor => Binding.Actor.Handle;
     public ZoneManagedNpcActorHealth Health { get; }
     public bool IsDisposed { get; private set; }

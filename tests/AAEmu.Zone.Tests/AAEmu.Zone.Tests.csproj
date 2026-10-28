@@ -11,5 +11,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Fixtures\npc-collider-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-reference-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-region-zone129.xml" />
+    <EmbeddedResource Include="Fixtures\npc-region-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-replication-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-movement-wire-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-posture-native-controls.json" />
   </ItemGroup>
 </Project>

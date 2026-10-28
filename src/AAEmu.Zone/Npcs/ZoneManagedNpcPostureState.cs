@@ -2,6 +2,7 @@ using AAEmu.Zone.Content;
 using AAEmu.Zone.Protocol;
 using AAEmu.Zone.Protocol.Units;
 using AAEmu.Zone.Scene;
+using AAEmu.Zone.Units;
 
 namespace AAEmu.Zone.Npcs;
 
@@ -15,6 +16,8 @@ public sealed record ZoneNpcAnimationAction(uint Id, int ActionState);
 public sealed record ZoneNpcPostureDriverProfile(ZoneModelDefinition Model, bool AnimationDriverPresent,
     IReadOnlyList<int> NativeOverrideTypes, ActorPosture InitialPosture, bool InitiallyLooted = false);
 
+public enum ZoneNpcPostureDriverOrigin { ExplicitProfile, FreshDedicatedActorModel }
+
 /// <summary>
 /// Original default-posture selection, actor-model posture, animation-action cache and World
 /// notification. CurrentAnimationId is the actual consumer used by ZoneNpcPostureState.
@@ -26,16 +29,56 @@ public sealed class ZoneManagedNpcPostureState : IDisposable
     private readonly Func<uint, ZoneNpcAnimationAction?> _actions;
     private readonly Func<float> _hour;
     private readonly Action<ZoneFrame> _send;
+    private readonly ZoneUnitRegistry? _notifications;
     private readonly Dictionary<Actors.ZoneActorHandle, ZoneManagedNpcPostureLease> _actors = [];
     public bool IsDisposed { get; private set; }
     public ZoneManagedNpcPostureState(ZoneNpcPostureContent content, Func<uint, ZoneNpcAnimationAction?> resolveAction,
-        Func<float> hour, Action<ZoneFrame> send)
+        Func<float> hour, Action<ZoneFrame> send, ZoneUnitRegistry? notifications = null)
     {
         _content = content ?? throw new ArgumentNullException(nameof(content)); _actions = resolveAction ?? throw new ArgumentNullException(nameof(resolveAction));
         _hour = hour ?? throw new ArgumentNullException(nameof(hour)); _send = send ?? throw new ArgumentNullException(nameof(send));
+        _notifications = notifications;
     }
 
-    public ZoneManagedNpcPostureLease Bind(ZoneManagedNpcActor actor, ZoneNpcPostureDriverProfile profile)
+    public ZoneManagedNpcPostureState(ZoneNpcPostureContent content, ZoneAnimationActionContent actions,
+        Func<float> hour, Action<ZoneFrame> send, ZoneUnitRegistry? notifications = null)
+        : this(content, Resolver(actions), hour, send, notifications) { }
+
+    private static Func<uint, ZoneNpcAnimationAction?> Resolver(ZoneAnimationActionContent actions)
+    {
+        ArgumentNullException.ThrowIfNull(actions);
+        return id => actions.Actions.TryGetValue(id, out var action) ? new(action.Id, action.ActionState) : null;
+    }
+
+    /// <summary>
+    /// Actual fresh dedicated ActorUnitModel lifecycle:394606E0 constructs driver24 null,
+    ///3945F390 resets it;39277D00 calls driver-link producer3945F1E0 only on client288.
+    /// This profile is selected explicitly, rather than inferred from absent assets or physics.
+    /// Loaded NPC skill children supply the complete condition1 posture-override inventory.
+    /// </summary>
+    public ZoneManagedNpcPostureLease BindDedicatedConstruction(ZoneManagedNpcActor actor,
+        ZoneManagedNpcActorConstructionLease construction, ZoneModelContent models, ZoneNpcSkillContent skills)
+    {
+        Check(); ArgumentNullException.ThrowIfNull(actor); ArgumentNullException.ThrowIfNull(construction);
+        ArgumentNullException.ThrowIfNull(models); ArgumentNullException.ThrowIfNull(skills);
+        if (!actor.HasActor || !construction.IsCurrent || construction.Actor != actor.Handle ||
+            !ReferenceEquals(construction.Npc, actor.Npc) || construction.ModelId != actor.Npc.Unit.Snapshot.ModelId ||
+            !models.Models.TryGetValue(construction.ModelId, out var model) || model.Kind != ZoneModelKind.Actor ||
+            models.ActorForModel(model.Id)?.Id != construction.ActorModelId)
+            throw new InvalidOperationException("Dedicated posture construction requires the exact current CActor and actual World ActorModel.");
+        var initial = actor.Npc.Unit.Snapshot.Posture;
+        if (initial.Type is not (0 or 4) || initial.Type == 4 && initial.Actor is null)
+            throw new NotSupportedException("Actor-model posture admission requires an actual empty or actor World posture.");
+        var conditions = Array.AsReadOnly(skills.ForNpc(actor.Npc.TemplateId).Select(row => row.Condition).ToArray());
+        var profile = new ZoneNpcPostureDriverProfile(model, false, conditions,
+            initial.Actor ?? new(0, false), initial.Looted);
+        return Bind(actor, profile, construction);
+    }
+
+    public ZoneManagedNpcPostureLease Bind(ZoneManagedNpcActor actor, ZoneNpcPostureDriverProfile profile) => Bind(actor, profile, null);
+
+    private ZoneManagedNpcPostureLease Bind(ZoneManagedNpcActor actor, ZoneNpcPostureDriverProfile profile,
+        ZoneManagedNpcActorConstructionLease? construction)
     {
         Check(); ArgumentNullException.ThrowIfNull(actor); ArgumentNullException.ThrowIfNull(profile);
         ArgumentNullException.ThrowIfNull(profile.Model);
@@ -47,7 +90,7 @@ public sealed class ZoneManagedNpcPostureState : IDisposable
             if (previous.IsCurrent) throw new InvalidOperationException("This actor generation already owns its model posture.");
             previous.Dispose();
         }
-        var owner = new ZoneManagedNpcPostureLease(this, actor, profile.AnimationDriverPresent, profile.NativeOverrideTypes.Contains(1));
+        var owner = new ZoneManagedNpcPostureLease(this, actor, profile.AnimationDriverPresent, profile.NativeOverrideTypes.Contains(1), construction);
         Apply(owner, profile.InitialPosture, profile.InitiallyLooted, false);
         _actors.Add(actor.Handle, owner); return owner;
     }
@@ -65,7 +108,10 @@ public sealed class ZoneManagedNpcPostureState : IDisposable
         if (enabled && owner.CurrentAnimationId == desired.AnimationId) return;
         var posture = new ActorPosture(desired.AnimationId, enabled);
         Apply(owner, posture, false, false); Require(actor);
-        _send(PostureFrame(actor.Npc.ObjectId, posture, false));
+        var frame = PostureFrame(actor.Npc.ObjectId, posture, false);
+        if (_notifications is null) _send(frame);
+        else if (!_notifications.QueueNotification(frame, actor.Npc.Unit, owner))
+            throw new InvalidOperationException("The exact NPC Unit retired before its posture notification was queued.");
     }
 
     /// <summary>WZ393631B0 ->3935C470 applies through the same model/cache setter, without an outgoing echo.</summary>
@@ -106,7 +152,11 @@ public sealed class ZoneManagedNpcPostureState : IDisposable
     { Check(); return Find(actor) ?? throw new InvalidOperationException("Model posture requires its exact live owned actor generation."); }
     private void Check() => ObjectDisposedException.ThrowIf(IsDisposed, this);
     internal void Retire(ZoneManagedNpcPostureLease owner)
-    { if (_actors.TryGetValue(owner.Actor.Handle, out var current) && ReferenceEquals(current, owner)) _actors.Remove(owner.Actor.Handle); }
+    {
+        if (!_actors.TryGetValue(owner.Actor.Handle, out var current) || !ReferenceEquals(current, owner)) return;
+        _actors.Remove(owner.Actor.Handle);
+        _notifications?.DiscardNotifications(owner.Actor.Npc.Unit, owner);
+    }
     public void Dispose()
     { if (IsDisposed) return; IsDisposed = true; foreach (var owner in _actors.Values.ToArray()) owner.Dispose(); }
 }
@@ -115,14 +165,17 @@ public sealed class ZoneManagedNpcPostureState : IDisposable
 public sealed class ZoneManagedNpcPostureLease : IZoneNpcPostureModel, IDisposable
 {
     private readonly ZoneManagedNpcPostureState _owner;
+    private readonly ZoneManagedNpcActorConstructionLease? _construction;
     internal ZoneManagedNpcActor Actor { get; }
     internal bool HasNativeOverride { get; }
-    internal uint[] Actions { get; } = new uint[9]; //3945F390 initializes all slots to invalid0.
+    internal uint[] Actions { get; } = new uint[9]; //394606E0/3945F390 initialize all slots to invalid0.
     public bool AnimationDriverPresent { get; }
+    public ZoneNpcPostureDriverOrigin DriverOrigin => _construction is null ?
+        ZoneNpcPostureDriverOrigin.ExplicitProfile : ZoneNpcPostureDriverOrigin.FreshDedicatedActorModel;
     public ActorPosture Posture { get; internal set; } = new(0, false);
     public bool Looted { get; internal set; }
     public bool IsDisposed { get; private set; }
-    public bool IsCurrent => !IsDisposed && !_owner.IsDisposed && Actor.HasActor;
+    public bool IsCurrent => !IsDisposed && !_owner.IsDisposed && Actor.HasActor && (_construction is null || _construction.IsCurrent);
     public ZoneModelKind Kind => ZoneModelKind.Actor;
     public uint CurrentAnimationId
     {
@@ -134,7 +187,8 @@ public sealed class ZoneManagedNpcPostureLease : IZoneNpcPostureModel, IDisposab
             return Actions[2] != 0 ? Actions[2] : 2u;
         }
     }
-    internal ZoneManagedNpcPostureLease(ZoneManagedNpcPostureState owner, ZoneManagedNpcActor actor, bool present, bool hasOverride)
-    { _owner = owner; Actor = actor; AnimationDriverPresent = present; HasNativeOverride = hasOverride; }
+    internal ZoneManagedNpcPostureLease(ZoneManagedNpcPostureState owner, ZoneManagedNpcActor actor, bool present, bool hasOverride,
+        ZoneManagedNpcActorConstructionLease? construction)
+    { _owner = owner; Actor = actor; AnimationDriverPresent = present; HasNativeOverride = hasOverride; _construction = construction; }
     public void Dispose() { if (IsDisposed) return; IsDisposed = true; Array.Clear(Actions); _owner.Retire(this); }
 }

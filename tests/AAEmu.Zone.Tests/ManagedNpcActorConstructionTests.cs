@@ -11,7 +11,7 @@ namespace AAEmu.Zone.Tests;
 public sealed class ManagedNpcActorConstructionTests
 {
     [Test]
-    public async Task ActualWorldModelInstallsDescriptorScalarsAndIndependentActorHealth()
+    public async Task ActualWorldModelInstallsDescriptorScalarsAndUnassociatedActorHealth()
     {
         using var world = new World(templateModel: new() { Id=99,Subtype="PrefabModel",SubtypeId=456 });
         var actor = world.State;
@@ -21,8 +21,9 @@ public sealed class ManagedNpcActorConstructionTests
         //Distinct values retain native descriptor-to-field order, including the integer casts.
         await Assert.That(actor.GameParams).IsEqualTo(new ZoneManagedNpcGameParameters(
             101,102,103,104,105,106,107,108,109,110,111,112,113,114,20,11,117,118,119));
-        await Assert.That(actor.Health.CurrentHealth).IsEqualTo(0f);
-        await Assert.That(actor.Health.MaximumHealth).IsEqualTo(10f);
+        await Assert.That(actor.Health.CurrentHealth).IsEqualTo(100L);
+        await Assert.That(actor.Health.MaximumHealth).IsEqualTo(100L);
+        await Assert.That(actor.Health.HasServerUnit).IsFalse();
         await Assert.That(world.Npc.Unit.Snapshot.PreciseHealth).IsNotEqualTo(0L);
         await Assert.That(actor.Stances.Default.Physicalization.Size).IsEqualTo(new Vector3(.3f,.7f,.3f));
         await Assert.That(() => actor.CopyAnimatedParameters()).Throws<InvalidOperationException>();
@@ -115,7 +116,9 @@ public sealed class ManagedNpcActorConstructionTests
     {
         using var world = new World();
         var old = world.State;
-        old.Health.CopyFields(4,21);
+        old.Npc.Unit.CommitProgression(old.Npc.Unit.Progression, new([], 21, 100, []));
+        old.Health.AssociateServerUnit(old.Npc.Unit);
+        await Assert.That(old.Health.MaximumHealth).IsEqualTo(21L);
         world.Admission.Catalog.Retire(world.Npc);
         world.Admission.Registry.RemovePrepared(world.Npc.Unit);
         var replacement = world.Admission.Npc(world.Npc.ObjectId,world.Npc.Id,world.Models.Models[17],17);
@@ -125,7 +128,9 @@ public sealed class ManagedNpcActorConstructionTests
         await Assert.That(handle.Generation).IsGreaterThan(old.Actor.Generation);
         await Assert.That(old.IsCurrent).IsFalse();
         await Assert.That(world.Construction.Find(old.Actor)).IsNull();
-        await Assert.That(fresh.Health.MaximumHealth).IsEqualTo(10f);
+        await Assert.That(fresh.Health.MaximumHealth).IsEqualTo(100L);
+        await Assert.That(fresh.Health.HasServerUnit).IsFalse();
+        await Assert.That(() => old.Health.CurrentHealth).Throws<ObjectDisposedException>();
         old.Dispose();
         await Assert.That(ReferenceEquals(world.Construction.Find(handle),fresh)).IsTrue();
     }

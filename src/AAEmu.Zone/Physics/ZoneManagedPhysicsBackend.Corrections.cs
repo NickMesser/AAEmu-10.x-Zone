@@ -43,29 +43,33 @@ public sealed partial class ZoneManagedPhysicsBackend
         requested.Z = correction.Velocity.Z;
         OwnedPhysics.ApplyVelocity(actor, correction.Velocity);
         control.Requested = requested;
-        _pendingLivingCorrectionPoses.Add((actor, position));
+        var request = (Actor: actor, Position: position);
+        _pendingLivingCorrectionPoses.Add(request);
+        QueueLivingCommand(actor, LivingCommandKind.Correction, () => ApplyQueuedLivingCorrectionPose(request));
         // GroundTransition detaches a retained platform; this admitted profile retains none.
         // The original leaves952/1120 untouched: neither flag2 nor the one-shot mode changes.
         refusal = string.Empty;
         return true;
     }
 
-    private void DrainLivingCorrectionPoses()
+    private void ApplyQueuedLivingCorrectionPose((ZoneActorHandle Actor, Vector3 Position) request)
     {
-        foreach (var request in _pendingLivingCorrectionPoses)
+        if (_actors.TryGetValue(request.Actor, out var description))
         {
-            if (!_actors.TryGetValue(request.Actor, out var description)) continue;
             if (!description.CollisionActive)
-            { OwnedPhysics.CommitLivingDimensionsPose(request.Actor, request.Position); continue; }
-            OwnedPhysics.TryReadOrientation(request.Actor, out var orientation);
-            OwnedPhysics.TryReadVelocity(request.Actor, out var velocity);
+                OwnedPhysics.CommitLivingDimensionsPose(request.Actor, request.Position);
+            else
+            {
+                OwnedPhysics.TryReadOrientation(request.Actor, out var orientation);
+                OwnedPhysics.TryReadVelocity(request.Actor, out var velocity);
             // Retain the scene's existing traversed-correction guard. The original queues a
             // flags49 type0 pose directly; exact collision policy/queue interleaving remains
             // separate parity work. This guard must not turn velocity restoration into a wish.
-            ApplyPose(request.Actor, request.Position, orientation);
-            OwnedPhysics.ApplyVelocity(request.Actor, velocity);
+                ApplyPose(request.Actor, request.Position, orientation);
+                OwnedPhysics.ApplyVelocity(request.Actor, velocity);
+            }
         }
-        _pendingLivingCorrectionPoses.Clear();
+        _pendingLivingCorrectionPoses.Remove(request);
     }
 
     internal static Vector3 LivingCorrectionPosition(Vector3 current, Vector3 target,

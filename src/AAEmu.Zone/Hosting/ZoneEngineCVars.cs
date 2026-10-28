@@ -22,6 +22,14 @@ public sealed class ZoneEngineCVars
     /// <summary>Native registration 3A518550 -> 3A638EA0, default 0; enables ZWUnitLocation each frame.</summary>
     public const string UnitLocationDebug = "unit_location_debug";
 
+    //393405B0/3934A170: native registration defaults at3A518E08..3A518E30.
+    public const string NpcMovementSkip = "npc_movement_skip";
+    public const string NpcMoveSyncPeriod = "npc_move_sync_period";
+    public const string NpcMoveSkipDisabledAi = "npc_move_skip_disabledAI";
+    public const string NpcMoveSkipStanding = "npc_move_skip_standing";
+    public const string NpcEnableFastestSync = "npc_enable_fastest_sync";
+    public const string NpcSyncTogether = "npc_sync_together";
+
     private readonly Dictionary<string, string> _values = new(StringComparer.OrdinalIgnoreCase);
 
     public static ZoneEngineCVars Empty => new();
@@ -65,4 +73,12 @@ public sealed class ZoneEngineCVars
         _values.TryGetValue(name, out var value) && double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var number)
             ? number != 0
             : engineDefault;
+
+    public int GetInt(string name, int engineDefault) =>
+        _values.TryGetValue(name, out var value) && int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var number)
+            ? number : engineDefault;
+
+    public float GetFloat(string name, float engineDefault) =>
+        _values.TryGetValue(name, out var value) && float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var number)
+            ? number : engineDefault;
 }

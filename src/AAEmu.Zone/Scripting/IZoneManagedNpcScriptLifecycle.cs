@@ -17,9 +17,17 @@ public interface IZoneManagedNpcAuthoredChildren
     void InstallAuthoredChildren(ZoneManagedNpcScriptBinding binding);
 }
 
+/// <summary>39346960 model publication after the original character constructor succeeds.</summary>
+public interface IZoneManagedNpcInitializationLifecycle
+{
+    void CompleteInitialization(ZoneManagedNpcScriptBinding binding);
+}
+
 /// <summary>Actual event29 and post-physics AI proxy publication, on the scene's one sampled frame.</summary>
 public interface IZoneManagedNpcFrameLifecycle
 {
     IReadOnlyList<ZoneManagedNpcScriptFault> PrePhysics(AAEmu.Zone.Actors.ZoneMovementFrame frame);
     IReadOnlyList<ZoneManagedNpcScriptFault> PublishPose(AAEmu.Zone.Actors.ZoneActorHandle actor);
+    IReadOnlyList<ZoneManagedNpcScriptFault> PublishPhysicalPose(AAEmu.Zone.Actors.ZoneActorHandle actor,
+        AAEmu.Zone.Physics.ZoneManagedNpcBodySnapshot body, AAEmu.Zone.Actors.ZoneMovementFrame frame) => PublishPose(actor);
 }

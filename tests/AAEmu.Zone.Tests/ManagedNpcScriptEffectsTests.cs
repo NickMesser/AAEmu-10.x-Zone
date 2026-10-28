@@ -9,20 +9,23 @@ namespace AAEmu.Zone.Tests;
 public sealed class ManagedNpcScriptEffectsTests
 {
     [Test]
-    public async Task InitializationUsesIndependentCopiedActorHealthAndOwnsTheEntityTimer()
+    public async Task InitializationUsesUnassociatedActorFallbackThenReadsTheActualUnitAndOwnsTheEntityTimer()
     {
         using var fixture = new Fixture(); using var actor = fixture.Admit();
         var readiness = fixture.Host.Initialize(actor.Binding);
         await Assert.That(readiness.SignalReady).IsTrue();
         await Assert.That(readiness.GameplayReady).IsFalse();
-        await Assert.That(actor.Prepared.EntityScript.Get("lastHealth")).IsEqualTo(10L);
-        await Assert.That(fixture.Effects.GetActorHealth(actor.Actor)).IsEqualTo(0f);
+        await Assert.That(actor.Prepared.EntityScript.Get("lastHealth")).IsEqualTo("100");
+        await Assert.That(fixture.Effects.GetActorHealth(actor.Actor)).IsEqualTo(100L);
         await Assert.That(fixture.Effects.CopyState(actor.Actor).Timers).IsEqualTo(1);
         await Assert.That(actor.Actor.Npc.Timers.AiTimeEventEnabled).IsFalse();
-        actor.Effects.Health.CopyFields(7, 731);
+        var unit = actor.Actor.Npc.Unit;
+        unit.CommitProgression(unit.Progression, new([], 731, 100, []));
+        actor.Effects.Health.AssociateServerUnit(unit);
+        unit.Apply(new(unit.Snapshot.ObjectId, 700, 0));
         using var values = fixture.Lua.Execute("return entity.actor:GetHealth(),entity.actor:GetMaxHealth()");
-        await Assert.That(values[0]).IsEqualTo(7L);
-        await Assert.That(values[1]).IsEqualTo(731L);
+        await Assert.That(values[0]).IsEqualTo("7");
+        await Assert.That(values[1]).IsEqualTo("731");
         await Assert.That(() => fixture.Lua.Execute("entity:HideAttachment(0,'unowned attachment',true,true)"))
             .Throws<ZoneLuaException>();
     }
@@ -31,6 +34,7 @@ public sealed class ManagedNpcScriptEffectsTests
     public async Task UpdateIntervalsNeedSelectionAndUseStrictFloatAccumulationOncePerTick()
     {
         using var fixture = new Fixture(); using var actor = fixture.Admit();
+        actor.Actor.SetEntityActive(true);
         fixture.Effects.SetScriptUpdateRate(actor.Actor, 1, 2);
         var initial = fixture.Effects.CopyState(actor.Actor);
         await Assert.That(initial.SelectedInterval).IsEqualTo(1f / 3f);

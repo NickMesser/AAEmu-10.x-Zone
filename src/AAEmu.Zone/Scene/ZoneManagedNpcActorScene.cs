@@ -140,6 +140,9 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     public ZoneManagedNpcActor? Find(ZoneActorHandle actor) =>
         !IsDisposed && _actors.TryGetValue(actor, out var current) && IsCurrent(current) ? current : null;
 
+    public ZoneManagedNpcActor? Find(ZoneNpc npc) => _catalog.TryGet(npc) is { } handle &&
+        Find(handle) is { } actor && ReferenceEquals(actor.Npc, npc) ? actor : null;
+
     internal bool IsCurrent(ZoneManagedNpcActor actor) => !IsDisposed &&
         _actors.TryGetValue(actor.Handle, out var current) && ReferenceEquals(current, actor) &&
         ReferenceEquals(_catalog.Find(actor.Handle), actor.Npc) &&
@@ -239,7 +242,7 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
 }
 
 /// <summary>One exact NPC generation's actor phase and behavior services; the enclosing scene owns physics.</summary>
-public sealed class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcBehaviorServices
+public sealed partial class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcBehaviorServices
 {
     private readonly ZoneManagedNpcActorScene _scene;
     private bool _retired;

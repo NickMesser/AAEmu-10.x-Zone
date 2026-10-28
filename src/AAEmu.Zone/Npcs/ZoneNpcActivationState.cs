@@ -136,7 +136,8 @@ public sealed class ZoneNpcActivationState(bool modelUsesLargeSightRange) : IDis
         {
             var dedicated = scene.IsDedicated;
             if (IsDisposed) return;
-            if (!dedicated)
+            //3933B580 checks gEnv.bClient==0: the dedicated server owns this Hide.
+            if (dedicated)
             {
                 entity.Hide(!active);
                 if (IsDisposed) return;

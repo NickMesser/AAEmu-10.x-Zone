@@ -42,7 +42,7 @@ public static class ZoneSceneHost
         ZoneSceneBackendSelection Backends,
         ZoneNpcSpawnerPlacementContent Placements,
         Action<string> Trace,
-        ZoneNpcSkillContent? NpcSkills = null);
+        ZoneNpcSkillContent? NpcSkills = null, ZoneAnimationActionContent? AnimationActions = null);
 
     /// <summary>Environment override for <see cref="ZoneRuntimeConfiguration.LuaLibraryPath"/>.</summary>
     public const string LuaLibraryEnvironment = "AAEMU_ZONE_LUA_LIBRARY";

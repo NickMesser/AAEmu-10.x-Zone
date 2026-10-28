@@ -235,6 +235,11 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     private readonly ZoneSceneAiRuntime _aiRuntime;
     private bool _aiRefusalSummaryTraced;
     private bool _npcAdmissionStarted;
+    private ZoneManagedNpcActorScene? _managedActors;
+    private ZoneManagedNpcActorMotion? _managedMotion;
+    private ZoneManagedNpcPositionChecks? _managedPositionChecks;
+    private ZoneManagedNpcReplication? _managedReplication;
+    private Func<ZoneMovementFrame>? _managedFrame;
 
     public ZoneSceneNpcWorld(ZoneUnitRegistry registry, ZoneStartupState startup, ZoneNpcContent npcContent,
         Func<ZoneUnit, Vector3> modelPosition, Func<IZonePhysicsBackend?> backend, ZoneSceneNpcCatalog catalog,
@@ -280,6 +285,31 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
             throw new InvalidOperationException("The NPC actor runtime must attach before NPC admission starts.");
         _aiRuntime.Attach(runtime);
     }
+
+    public void AttachManagedMovement(ZoneManagedNpcActorScene actors, ZoneManagedNpcActorMotion motion,
+        ZoneManagedNpcPositionChecks positions, ZoneManagedNpcReplication replication, Func<ZoneMovementFrame> frame)
+    {
+        if (_npcAdmissionStarted || _managedActors is not null)
+            throw new InvalidOperationException("Managed NPC movement owners attach once, before NPC admission.");
+        _managedActors = actors; _managedMotion = motion; _managedPositionChecks = positions;
+        _managedReplication = replication; _managedFrame = frame;
+        //Native ai_UpdateAllAlways defaults0. The immutable
+        //dedicated/World configuration seeds the shared proxy and NPC activation owner.
+        actors.GlobalAiUpdateAlways = _startup.EngineCVars.GetBool("ai_UpdateAllAlways", false);
+    }
+    private ZoneManagedNpcActor? ManagedActor(ZoneNpc npc) => _catalog.TryGet(npc) is { } handle &&
+        _managedActors?.Find(handle) is { } actor && ReferenceEquals(actor.Npc, npc) ? actor : null;
+    public bool HasPartialUpdateStep(ZoneNpc npc, ZoneNpcUpdateStep step) => step switch
+    {
+        ZoneNpcUpdateStep.AiTimeEvent => true,
+        ZoneNpcUpdateStep.Proximity or ZoneNpcUpdateStep.Activation =>
+            _registry.Spatial is not null && ManagedActor(npc) is { EntityInitializationCompleted: true },
+        ZoneNpcUpdateStep.Position => ManagedActor(npc) is { } actor && _managedPositionChecks?.IsBound(actor) == true,
+        _ => false,
+    };
+    public bool CanReplicateMovement(ZoneNpc npc) => ManagedActor(npc) is { } actor &&
+        _managedReplication?.IsBound(actor) == true && _managedMotion?.Find(actor.Handle)?.State.Frame is { } frame &&
+        _managedFrame?.Invoke().Frame == frame;
 
     private ZoneNpcSimulation? Scene => _registry.Npcs;
     private IZonePhysicsBackend RequireBackend() =>
@@ -638,7 +668,7 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     public IZoneNpcActivationServices GetActivationServices(ZoneNpc npc)
     {
         ArgumentNullException.ThrowIfNull(npc);
-        if (!_activationServices.TryGetValue(npc.ObjectId, out var services))
+        if (!_activationServices.TryGetValue(npc.ObjectId, out var services) || !ReferenceEquals(services.Npc, npc))
             _activationServices[npc.ObjectId] = services = new ZoneSceneActivationServices(this, npc, _registry);
         return services;
     }
@@ -661,10 +691,15 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
         throw new NotSupportedException(
             $"TODO(native-ai): crowd-buff update (39347060) for npcId {npc.Id} requires an adopted AI actor (gate ZoneNpcSimulation.cs:358).");
 
-    /// <summary>Named refusal (3933D0E0): unreachable behind the HasAiActor gate — position checks read the actor proxy that does not exist. TODO(native-ai).</summary>
-    public void CheckPosition(ZoneNpc npc) =>
-        throw new NotSupportedException(
-            $"TODO(native-ai): position check (3933D0E0) for npcId {npc.Id} requires an adopted AI actor (gate ZoneNpcSimulation.cs:358).");
+    /// <summary>3933D0E0 runs at the original Position cadence for its exact owned partial profile.</summary>
+    public void CheckPosition(ZoneNpc npc)
+    {
+        if (ManagedActor(npc) is not { } actor || _managedPositionChecks is null)
+            throw new NotSupportedException($"NPC position check for {npc.Id} requires its actual admitted correction owners.");
+        try { _managedPositionChecks.Check(actor); }
+        catch (Exception error) when (error is NotSupportedException or ZoneLuaException or InvalidDataException)
+        { RetireManagedMovement(actor, "position check", error.Message); }
+    }
 
     /// <summary>
     /// The movement-replication gate, decided FALSE and reported (readiness partial leaf): the
@@ -678,6 +713,7 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     {
         get
         {
+            if (_managedReplication is not null) return !_managedReplication.IsDisposed;
             _notes.AddOnce("npc-movement-replication",
                 "NPC movement replication: gate OFF — no authoritative NPC motion source exists (TODO(native-ai)/TODO(ctor-bodies)); spawn poses come from the wire");
             return false;
@@ -685,9 +721,19 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     }
 
     /// <summary>Named refusal, unreachable while <see cref="MovementReplicationEnabled"/> is false (gate read at ZoneNpcSimulation.Update :385 before this leaf). TODO(native-ai)/TODO(ctor-bodies) flip both together.</summary>
-    public void ReplicateMovement(ZoneNpc npc) =>
-        throw new NotSupportedException(
-            $"TODO(native-ai): NPC movement replication (393405B0) for npcId {npc.Id} has no motion source while MovementReplicationEnabled is false (gate ZoneNpcSimulation.cs:387).");
+    public void ReplicateMovement(ZoneNpc npc)
+    {
+        if (ManagedActor(npc) is not { } actor || _managedReplication is null || _managedFrame is null)
+            throw new NotSupportedException($"NPC replication for {npc.Id} requires its actual CActor and movement cache owners.");
+        try { _managedReplication.Sample(actor, _managedFrame()); }
+        catch (Exception error) when (error is NotSupportedException or ZoneLuaException or InvalidDataException)
+        { RetireManagedMovement(actor, "movement replication", error.Message); }
+    }
+    private void RetireManagedMovement(ZoneManagedNpcActor actor, string callback, string reason)
+    {
+        _ai!.RemoveNpc(actor.Handle);
+        RecordAiAdmissionRefusal(actor.Handle, $"{callback}: {reason}");
+    }
 
     /// <summary>39261710 composition over reachable state: hostile faction, player-controlled kinds only, own aggro-share group excluded — the stealth/dead flags are the caller's earlier gates (ZoneNpcSimulation :536).</summary>
     private bool AcquireCore(ZoneNpc npc, ZoneUnit target)
@@ -717,6 +763,7 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
         private readonly ZoneSceneNpcWorld _world;
         private readonly ZoneNpc _npc;
         private readonly ZoneUnitRegistry _registry;
+        internal ZoneNpc Npc => _npc;
 
         internal ZoneSceneActivationServices(ZoneSceneNpcWorld world, ZoneNpc npc, ZoneUnitRegistry registry)
         {
@@ -725,15 +772,15 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
 
         public bool HasUnit =>
             _registry.Units.TryGetValue(_npc.ObjectId, out var current) && ReferenceEquals(current, _npc.Unit);
-        public float PlayerSightRange => 120f;   // player_unit_sight_range native default, ZoneNpcActivationState.cs:15
-        public float PlayerSightRangeBig => 250f; // player_unit_sight_range_big native default, :13
+        public float PlayerSightRange => _world._startup.EngineCVars.GetFloat("player_unit_sight_range", 120f);
+        public float PlayerSightRangeBig => _world._startup.EngineCVars.GetFloat("player_unit_sight_range_big", 250f);
         public Vector3 GetPosition() => _world.GetPosition(_npc.Unit);
-        /// <summary>Null = no native entity adopted for this generation (documented missing-entity path, :15 / :78-80).</summary>
-        public IZoneNpcActivationEntity? GetEntity() => null;
+        /// <summary>Only the actual managed entity of this exact catalog/Unit generation is returned.</summary>
+        public IZoneNpcActivationEntity? GetEntity() => _world.ManagedActor(_npc);
         /// <summary>This dedicated process runs server type 2 (ZoneSceneLoadingServices.ServerType) — the native dedicated flag reads true.</summary>
         public bool IsDedicated => true;
-        /// <summary>Unreachable while GetEntity() is null — the flag is only consulted after an AI actor exists (:107-111); the env slot has no accessor, TODO(env-slot).</summary>
-        public bool GlobalAiUpdateAlways => false;
+        public bool GlobalAiUpdateAlways => _world._managedActors?.GlobalAiUpdateAlways ??
+            _world._startup.EngineCVars.GetBool("ai_UpdateAllAlways", false);
     }
 
     // -----------------------------------------------------------------------
@@ -1029,10 +1076,11 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
     private readonly ZoneSceneReadinessNotes _notes;
     private readonly ZoneHeartbeatEmitter _heartbeat;
     private readonly ZoneUnitLocationReporter _locations;
+    private readonly Func<ZoneManagedNpcReplication?>? _npcReplication;
 
     public ZoneSceneTickServices(ZoneUnitRegistry registry, ZoneStartupState startup, ZoneNpcManager manager,
         ZoneSceneScriptClock scriptClock, TimeSpan framePeriod, ZoneSceneReadinessNotes notes, bool oceanSimulateOnZone = false,
-        bool advanceScriptClock = true)
+        bool advanceScriptClock = true, Func<ZoneManagedNpcReplication?>? npcReplication = null)
     {
         _heartbeat = new ZoneHeartbeatEmitter(oceanSimulateOnZone);
         ArgumentNullException.ThrowIfNull(registry);
@@ -1049,6 +1097,7 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
         _frameSeconds = (float)framePeriod.TotalSeconds;
         _framePeriod = framePeriod;
         _advanceScriptClock = advanceScriptClock;
+        _npcReplication = npcReplication;
         _notes = notes;
         notes.AddOnce("server-type-slot",
             $"server type: {ServerType} from the world name (393654B0: main_world = 3, instance worlds = 2); ZoneClient+140 itself is not read");
@@ -1140,7 +1189,7 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
     }
 
     /// <summary>Ownerless body — ctor note. See the class doc: report-don't-kill (ZoneSimulationTick never dies on an unowned phase).</summary>
-    public void UpdateMovementBuffers() { }
+    public void UpdateMovementBuffers() => _npcReplication?.Invoke()?.Flush();
 
     /// <summary>The tick releases its services when the scene retires them (ZoneSimulationTick.DisposeServices); manager/registry lifetimes belong to the scene resource scope, not here.</summary>
     public void Dispose() { }
@@ -1177,6 +1226,11 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
     private readonly Func<IZonePhysicsBackend?> _backend;
     private readonly Func<bool> _isShuttingDown;
     private readonly IZoneNpcActorRuntime? _actorRuntime;
+    private readonly Func<ZoneManagedNpcActorScene?>? _managedActorScene;
+    private readonly Func<ZoneManagedNpcPostureState?>? _managedPostures;
+    private readonly Func<ZoneMovementFrame>? _managedMovementFrame;
+    private readonly Func<ZoneManagedWaterQueries?>? _managedWaterQueries;
+    private readonly Func<ZoneManagedNpcGroups?>? _managedGroups;
     private readonly ZoneSceneReadinessNotes _notes;
     private readonly Action<string>? _trace;
     private readonly Stack<uint> _freeGroupIds = [];
@@ -1197,7 +1251,9 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
     public ZoneSceneSpawnerServices(ZoneUnitRegistry registry, ZoneStartupState startup, ZoneNpcContent npcContent,
         TimeSpan framePeriod, Func<ZoneUnit, Vector3> modelPosition, Func<IZonePhysicsBackend?> backend,
         Func<bool> isShuttingDown, ZoneSceneReadinessNotes notes, Action<string>? trace,
-        IZoneNpcActorRuntime? actorRuntime = null)
+        IZoneNpcActorRuntime? actorRuntime = null, Func<ZoneManagedNpcActorScene?>? managedActorScene = null,
+        Func<ZoneManagedNpcPostureState?>? managedPostures = null, Func<ZoneMovementFrame>? managedMovementFrame = null,
+        Func<ZoneManagedWaterQueries?>? managedWaterQueries = null, Func<ZoneManagedNpcGroups?>? managedGroups = null)
     {
         ArgumentNullException.ThrowIfNull(registry);
         ArgumentNullException.ThrowIfNull(startup);
@@ -1215,6 +1271,9 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
         _backend = backend;
         _isShuttingDown = isShuttingDown;
         _actorRuntime = actorRuntime;
+        _managedActorScene = managedActorScene; _managedPostures = managedPostures; _managedMovementFrame = managedMovementFrame;
+        _managedWaterQueries = managedWaterQueries;
+        _managedGroups = managedGroups;
         _notes = notes;
         _trace = trace;
         notes.AddOnce("env-slot-122",
@@ -1226,16 +1285,16 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
             "npc_editor_no_npc: production dedicated build is not editor mode — false, gate unread (read only when env+150 set) TODO(editor-slot)");
         notes.AddOnce("spawner-type-filter",
             "spawner type filter (39C537F0): no loaded filter set has an owner in this scene — nothing filtered TODO(spawner-type-filter)");
-        notes.AddOnce("water-level",
-            "spawn water level: cell water volumes have no level query owner — candidates resolve to air TODO(water-level)");
+        if (managedWaterQueries is null)
+            notes.AddOnce("water-level", "spawn water level: this comparison composition has no actual level-query owner.");
         notes.AddOnce("spawn-script",
             "NPC spawn scripts: no authored spawn-script source resolved for this scene TODO(npc-spawn-script)");
         notes.AddOnce("forbidden-templates",
             "forbidden NPC template list: no owner for the native blacklist — no template forbidden by policy TODO(forbidden-template-list)");
         notes.AddOnce("navigation-services",
             "spawn navigation checks: GetNavigationType/IsPointInNavigationShape unowned — unreachable while SpawnValidationMode is 0 TODO(navigation-services)");
-        notes.AddOnce("movement-rate-limit",
-            "NPC movement rate limit: env/config gate unowned — limit disabled, gate object still runs (ZoneNpcManager :98-108) TODO(movement-rate-limit)");
+        if (managedMovementFrame is null)
+            notes.AddOnce("movement-rate-limit", "NPC movement rate limit has no sampled local game clock; disabled in this composition.");
         notes.AddOnce("drawing",
             "debug drawing (env+120 / config 3A607CE8): no owners — DebugDrawingAvailable=false gates every draw call TODO(drawing-config)");
         notes.AddOnce("cvar-3A607D38",
@@ -1370,8 +1429,10 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
         return 0f;
     }
 
-    /// <summary>Once-reported at readiness (ctor note): cell water volumes have no level-query owner in this scene — candidates resolve as air, never a fabricated depth.</summary>
-    public float GetWaterLevel(Vector3 candidate, float radius) => 0f;
+    /// <summary>39349120 passes the spawn brief radius as3013FCB0's area-query range, with flags2.</summary>
+    public float GetWaterLevel(Vector3 candidate, float radius) => _managedWaterQueries is { } query
+        ? (query() ?? throw new NotSupportedException("Spawn water queries require the completed actual scene water inventory.")).GetWaterLevel(candidate, radius)
+        : 0f; //Legacy native-comparison provider retains its separately reported unowned query.
 
     /// <summary>
     /// REAL re-anchoring through the scene's terrain ray: when raisedAnchor is set or the ground
@@ -1427,8 +1488,10 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
     // IZoneNpcManagerServices / IZoneNpcPostureServices
     // ------------------------------------------------------------------
     /// <summary>Env/config gate unowned (ctor note) — the gate OBJECT still runs every manager update (ZoneNpcManager :98-108); disabling the limit is the reported configuration, not a skipped gate.</summary>
-    public bool MovementRateLimitEnabled => false;
-    public uint MovementIntervalMilliseconds => 0; // unused while the limit is disabled (manager reads it only inside the limited branch :102)
+    public bool MovementRateLimitEnabled => _managedMovementFrame is not null && _startup.EngineCVars.GetBool(ZoneEngineCVars.NpcSyncTogether, true);
+    public uint MovementIntervalMilliseconds => unchecked((uint)_startup.EngineCVars.GetInt(ZoneEngineCVars.NpcMoveSyncPeriod, 100));
+    uint IZoneNpcManagerServices.TimeMilliseconds => _managedMovementFrame is { } frame
+        ? frame().LocalGameMilliseconds ?? throw new NotSupportedException("NPC manager movement gate requires its sampled CTimer0 clock.") : TimeMilliseconds;
     /// <summary>env+120 has no accessor (ctor note) — drawing capability off, which gates every draw call at ZoneNpcManager :123-126.</summary>
     public bool DebugDrawingAvailable => false;
     public bool DrawSpawners => false;
@@ -1441,7 +1504,8 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
     }
 
     /// <summary>Null = the current actor model cannot be published — actor publication is unowned (ctor/readiness note actor-publication via the update services). The posture pass still runs for real over FindPostures + Hour and emits its signal-queue work where an actor exists.</summary>
-    public IZoneNpcPostureModel? GetCurrentModel(ZoneNpc npc) => null;
+    public IZoneNpcPostureModel? GetCurrentModel(ZoneNpc npc) => _managedActorScene?.Invoke()?.Find(npc) is { } actor
+        ? _managedPostures?.Invoke()?.Find(actor) : null;
 
     /// <summary>REAL content: the NPC's configured posture set rows (null = the set is absent, exactly the interface's contract — ZoneNpcPostureState.cs:18-19).</summary>
     public IReadOnlyList<ZoneNpcPosture>? FindPostures(uint postureSetId) =>
@@ -1454,7 +1518,11 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
     public float NextRandomFloat() => Random.Shared.NextSingle();
 
     /// <summary>39344AA0 is CONDITIONAL: "if an entity/AI object exists, set its actual AI group to the empty group" (ZoneNpcSpawnerRegistry doc :12-13). No entity/AI object exists for any owner here, so the native half correctly has nothing to set — the documented native-conditional path, not a permissive default.</summary>
-    public void ClearActorGroup(ZoneNpc npc) { }
+    public void ClearActorGroup(ZoneNpc npc)
+    {
+        if (_managedActorScene?.Invoke()?.Find(npc) is not { } actor) return;
+        (_managedGroups?.Invoke() ?? throw new NotSupportedException("NPC group clearing requires its actual group-record and membership owner.")).ClearActorGroup(actor);
+    }
 
     // ------------------------------------------------------------------
     // IZoneNpcGroupServices

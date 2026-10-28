@@ -64,7 +64,7 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
         _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
         _models = models ?? throw new ArgumentNullException(nameof(models));
         _createProfile = createProfile;
-        Lua = new();
+        Lua = new(refuseCaughtHostFailures: true);
         try
         {
             Loader = new(Lua, source, message => trace?.Invoke(message), () => 0);
@@ -143,6 +143,7 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
                 effectsLease = components.BindEntity(binding);
             var readiness = Scripts.Initialize(binding);
             if (!readiness.SignalReady) throw new NotSupportedException(readiness.Refusal ?? "Authored NPC initialization did not admit script signals.");
+            if (ScriptServices is IZoneManagedNpcInitializationLifecycle initialized) initialized.CompleteInitialization(binding);
             var owner = new OwnedActor(this, actor, prepared, binding, profile, effectsLease);
             _live.Add(handle, owner);
             actor = null; prepared = null; binding = null; profile = null; effectsLease = null;
@@ -208,6 +209,14 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
         return ConsumeFaults(ScriptServices is IZoneManagedNpcFrameLifecycle components ? components.PublishPose(actor) : [], retireProviderActor);
     }
 
+    public IReadOnlyList<ZoneManagedNpcScriptFault> PublishPhysicalPose(ZoneActorHandle actor,
+        AAEmu.Zone.Physics.ZoneManagedNpcBodySnapshot body, ZoneMovementFrame frame, Action<ZoneActorHandle> retireProviderActor)
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        return ConsumeFaults(ScriptServices is IZoneManagedNpcFrameLifecycle components
+            ? components.PublishPhysicalPose(actor, body, frame) : [], retireProviderActor);
+    }
+
     private IReadOnlyList<ZoneManagedNpcScriptFault> ConsumeFaults(IReadOnlyList<ZoneManagedNpcScriptFault> faults,
         Action<ZoneActorHandle> retireProviderActor)
     {
@@ -215,6 +224,7 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
         foreach (var fault in faults)
         {
             if (!_live.ContainsKey(fault.Actor)) continue;
+            if (!fault.RetireActor) continue;
             retireProviderActor(fault.Actor);
             if (_live.ContainsKey(fault.Actor))
                 throw new InvalidOperationException("The script fault consumer did not retire its exact provider actor.");

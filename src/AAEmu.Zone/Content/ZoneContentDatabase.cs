@@ -76,6 +76,8 @@ public sealed class ZoneContentDatabase : IDisposable
 
     public ZoneNpcSkillContent LoadNpcSkillContent() => ZoneNpcSkillContent.Load(_connection);
 
+    public ZoneAnimationActionContent LoadAnimationActionContent() => ZoneAnimationActionContent.Load(_connection);
+
     public ZoneNpcContent LoadNpcContent(ZoneModelContent? models = null, bool loadSpawnerContent = true) =>
         ZoneNpcContent.Load(_connection, models ?? ZoneModelContent.Load(_connection), loadSpawnerContent);
 

@@ -58,7 +58,9 @@ public sealed partial class ZoneManagedPhysicsBackend
             throw new NotSupportedException("Living wishes require a registered authored living body.");
         if (mode is not (ZonePhysicsLivingVelocityMode.Normal or ZonePhysicsLivingVelocityMode.Immediate))
             throw new NotSupportedException("Only the verified original living velocity modes0 and3 are supported.");
-        _pendingLivingVelocity.Add((actor, requestedVelocity, mode));
+        var request = (Actor: actor, Requested: requestedVelocity, Mode: mode);
+        _pendingLivingVelocity.Add(request);
+        QueueLivingCommand(actor, LivingCommandKind.Velocity, () => ApplyQueuedLivingVelocity(request));
     }
 
     public void CopyLivingControlState(ZoneActorHandle actor, out ZoneManagedLivingControlState state)
@@ -72,11 +74,10 @@ public sealed partial class ZoneManagedPhysicsBackend
             control.SuspensionOffset, control.SuspensionVelocity, control.SuspensionAcceleration, control.SuspensionTime);
     }
 
-    private void DrainLivingVelocityRequests()
+    private void ApplyQueuedLivingVelocity((ZoneActorHandle Actor, Vector3 Requested, ZonePhysicsLivingVelocityMode Mode) request)
     {
-        foreach (var request in _pendingLivingVelocity)
+        if (_livingControls.TryGetValue(request.Actor, out var control))
         {
-            if (!_livingControls.TryGetValue(request.Actor, out var control)) continue;
             control.Requested = request.Requested;
             control.LastMode = request.Mode;
             control.ForceRequestedOnce = request.Mode == ZonePhysicsLivingVelocityMode.Immediate;
@@ -84,7 +85,7 @@ public sealed partial class ZoneManagedPhysicsBackend
             // Both modes write the wish, not actual velocity. Mode3's actual override
             // occurs in movement preparation, after the early recovery/idle phase.
         }
-        _pendingLivingVelocity.Clear();
+        _pendingLivingVelocity.Remove(request);
     }
 
     private void RetireLivingControls(ZoneActorHandle actor)

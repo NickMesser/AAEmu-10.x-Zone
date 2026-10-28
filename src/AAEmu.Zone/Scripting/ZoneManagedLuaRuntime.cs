@@ -19,14 +19,21 @@ public sealed partial class ZoneManagedLuaRuntime : IZoneLuaRuntime
     private readonly LuaTable _globals;
     private readonly LuaTable _invoke;
     private readonly Dictionary<int, object> _references = [];
+    //A loadstring continuation can suspend inside Protect on its worker. Its stack must
+    //not be the resumer's stack: the resumer completes a different protected call.
+    private readonly ThreadLocal<Stack<ProtectedCall>> _protectedCalls = new(() => []);
+    private sealed class ProtectedCall { public ZoneLuaException? HostFailure; }
+    private readonly bool _refuseCaughtHostFailures;
+    internal int ActiveProtectedCallCount => IsDisposed ? 0 : _protectedCalls.Value!.Count;
     private int _nextReference, _callDepth;
     [ThreadStatic] private static Stack<ZoneManagedLuaRuntime>? _callbackScopes;
     private bool IsCallbackThread => _callbackScopes is { Count: > 0 } scopes && ReferenceEquals(scopes.Peek(), this);
     public bool IsDisposed { get; private set; }
     public int RetainedReferenceCount { get { if (IsCallbackThread) return _references.Count; lock (_gate) return _references.Count; } }
 
-    public ZoneManagedLuaRuntime()
+    public ZoneManagedLuaRuntime(bool refuseCaughtHostFailures = false)
     {
+        _refuseCaughtHostFailures = refuseCaughtHostFailures;
         try
         {
             // Copy the Lua libraries into a plain table: host file loading and CLR globals
@@ -92,7 +99,7 @@ public sealed partial class ZoneManagedLuaRuntime : IZoneLuaRuntime
             _invoke.SetValue("vector", helpers[3], true);
             InstallCoroutines();
         }
-        catch { _compiler.Dispose(); throw; }
+        catch { _protectedCalls.Dispose(); _compiler.Dispose(); throw; }
     }
 
     public ZoneLuaValues Execute(string source, string chunkName = "=zone")
@@ -183,7 +190,14 @@ public sealed partial class ZoneManagedLuaRuntime : IZoneLuaRuntime
                     return new LuaResult(returned.Select(Push).ToArray()!);
                 });
             }
-            catch (Exception error) { throw new LuaRuntimeException(InvocationMessage(error), 1, true); }
+            catch (Exception error)
+            {
+                while (error is TargetInvocationException { InnerException: { } inner }) error = inner;
+                var failure = FindHostFailure(error) ?? error as ZoneLuaException ??
+                    new ZoneLuaException(error.Message, error is not LuaException, error);
+                if (failure.IsHostFailure) RecordHostFailure(failure);
+                throw new LuaRuntimeException(failure.Message, failure);
+            }
             finally { _callbackScopes.Pop(); }
         }), false));
     }
@@ -293,12 +307,45 @@ public sealed partial class ZoneManagedLuaRuntime : IZoneLuaRuntime
             try { return operation(); } finally { _callDepth--; }
         }
     }
-    private static T Protect<T>(Func<T> operation)
+    private T Protect<T>(Func<T> operation)
     {
-        try { return operation(); }
-        catch (LuaException error) { throw new ZoneLuaException(error.Message); }
+        var calls = _protectedCalls.Value!;
+        var scope = new ProtectedCall(); calls.Push(scope);
+        try
+        {
+            var result = operation();
+            //An authored pcall may handle a script error. An unimplemented host effect
+            //still refuses admission even when Lua catches its textual exception.
+            if (_refuseCaughtHostFailures && scope.HostFailure is { } failure) throw new ZoneLuaException(failure.Message, true, failure);
+            return result;
+        }
+        catch (LuaException error)
+        {
+            var failure = scope.HostFailure ?? FindHostFailure(error);
+            throw new ZoneLuaException(failure?.Message ?? error.Message, failure is not null, failure ?? (Exception)error);
+        }
         catch (TargetInvocationException error) when (error.InnerException is { } inner)
-        { throw new ZoneLuaException(InvocationMessage(inner)); }
+        {
+            var failure = scope.HostFailure ?? FindHostFailure(inner);
+            throw new ZoneLuaException(failure?.Message ?? InvocationMessage(inner), failure is not null, failure ?? inner);
+        }
+        finally
+        {
+            calls.Pop();
+            if (scope.HostFailure is { } failure && calls.TryPeek(out var outer)) outer.HostFailure ??= failure;
+        }
+    }
+    private void RecordHostFailure(ZoneLuaException failure)
+    {
+        if (!_refuseCaughtHostFailures) return;
+        if (_protectedCalls.Value!.TryPeek(out var scope)) scope.HostFailure ??= failure;
+        if (_runningCoroutine is { } coroutine && ReferenceEquals(coroutine.Owner, this)) coroutine.RecordHostFailure(failure);
+    }
+    private static ZoneLuaException? FindHostFailure(Exception error)
+    {
+        for (Exception? current = error; current is not null; current = current.InnerException)
+            if (current is ZoneLuaException { IsHostFailure: true } failure) return failure;
+        return null;
     }
     private static string InvocationMessage(Exception error)
     {
@@ -327,7 +374,7 @@ public sealed partial class ZoneManagedLuaRuntime : IZoneLuaRuntime
         {
             if (IsDisposed) return;
             if (_callDepth != 0) throw new InvalidOperationException("A Lua runtime cannot close during an active script call.");
-            IsDisposed = true; RetireCoroutines(); _references.Clear(); _compiler.Dispose();
+            IsDisposed = true; RetireCoroutines(); _references.Clear(); _protectedCalls.Dispose(); _compiler.Dispose();
         }
     }
     object? IZoneLuaRuntime.Get(ZoneLuaReference table, object key, int? expectedType) => Get(table, key, expectedType);

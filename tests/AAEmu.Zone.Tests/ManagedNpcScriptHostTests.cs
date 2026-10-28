@@ -210,7 +210,7 @@ public sealed class ManagedNpcScriptHostTests
         public float PeaceInterval { get; private set; }
         public List<int> SavedOptions { get; } = [];
         public void SaveUnitAttr(ZoneManagedNpcActor actor, int option) => SavedOptions.Add(option);
-        public float GetActorMaximumHealth(ZoneManagedNpcActor actor) => 731;
+        public long GetActorMaximumHealth(ZoneManagedNpcActor actor) => 731;
         public void SetEntityTimer(ZoneManagedNpcActor actor, int timerId, int milliseconds) => EntityTimers[(actor.Handle, timerId)] = milliseconds;
         public void SetScriptUpdateRate(ZoneManagedNpcActor actor, float combatInterval, float peaceInterval)
         { ScriptProxyResets++; CombatInterval = combatInterval; PeaceInterval = peaceInterval; }

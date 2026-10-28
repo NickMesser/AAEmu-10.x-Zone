@@ -71,6 +71,7 @@ public sealed partial class ZoneManagedLuaRuntime
         private CancellationTokenSource? _retirement;
         private Thread? _worker;
         private bool _running, _completed, _retired;
+        private ZoneLuaException? _hostFailure;
         internal ZoneManagedLuaRuntime Owner { get; } = owner;
         internal string Status
         {
@@ -100,11 +101,19 @@ public sealed partial class ZoneManagedLuaRuntime
                 else _resumes!.Add(arguments);
             }
             var result = _results!.Take(_retirement!.Token);
+            ZoneLuaException? hostFailure;
+            lock (_stateGate) { hostFailure = _hostFailure; _hostFailure = null; }
+            //A closure may have no worker-side Protect; a loadstring can keep one open
+            //across yield. Transfer the actual host failure to the resumer in both cases.
+            if (hostFailure is not null) Owner.RecordHostFailure(hostFailure);
             // The Lua thread object may remain in a script table. It keeps only its dead
             // state after completion, rather than rooting functions, workers and queues.
-            if (_completed) Dispose();
+            if (_completed || hostFailure is not null) Dispose();
             return result;
         }
+
+        internal void RecordHostFailure(ZoneLuaException failure)
+        { lock (_stateGate) _hostFailure ??= failure; }
 
         private void Run()
         {

@@ -1,0 +1,658 @@
+{
+  "scope": "Copied original reset/cache setter/current getter instructions. The queue reset runs its genuine empty-list branch. Only the descriptor resolver is redirected to actual anim_actions id/state rows. No driver object, signal/mount/tool calls, graph tick or nonempty queue/free branch is executed.",
+  "binary": "D:\\ArcheAge Returns 10.0.2.13 - 8yx - r575 - 2026-06-18\\Bin64\\x2game-dev_dedicate.dll",
+  "addresses": [
+    "3945BB70",
+    "3945DDB0",
+    "3945F390",
+    "394623E0"
+  ],
+  "actionRows": [
+    {
+      "id": 2,
+      "actionState": 2
+    },
+    {
+      "id": 9,
+      "actionState": 3
+    },
+    {
+      "id": 13,
+      "actionState": 4
+    },
+    {
+      "id": 18,
+      "actionState": 5
+    },
+    {
+      "id": 19,
+      "actionState": 6
+    },
+    {
+      "id": 20,
+      "actionState": 7
+    },
+    {
+      "id": 97,
+      "actionState": 8
+    }
+  ],
+  "databaseActionCount": 434,
+  "unsupportedExternalCalls": 0,
+  "engineModulesLoaded": {
+    "cryaisystem_dedicate.dll": false,
+    "cryphysics_dedicate.dll": false,
+    "x2game-dev_dedicate.dll": false,
+    "lua51.dll": false
+  },
+  "relocations": [
+    [
+      "3945BB70",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945BB9A",
+      "3A5281F0",
+      "mapped-data"
+    ],
+    [
+      "3945DDE0",
+      "39BFE4A0",
+      "mapped-call"
+    ],
+    [
+      "3945DDF2",
+      "3A00BEA0",
+      "mapped-data"
+    ],
+    [
+      "3945DDFC",
+      "39F88648",
+      "mapped-data"
+    ],
+    [
+      "3945DE24",
+      "3945ABE0",
+      "mapped-call"
+    ],
+    [
+      "3945DE38",
+      "3945CE70",
+      "mapped-call"
+    ],
+    [
+      "3945DE5D",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945DE7B",
+      "3945D2F0",
+      "mapped-call"
+    ],
+    [
+      "3945F3B3",
+      "394623E0",
+      "mapped-call"
+    ],
+    [
+      "3945F3B8",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945F3C6",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945F3CF",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945F3D8",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945F3E1",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945F3EA",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945F3F3",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945F3FF",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945F40B",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "3945F417",
+      "3A78ECA0",
+      "mapped-data"
+    ],
+    [
+      "39462453",
+      "39D83D46",
+      "mapped-call"
+    ],
+    [
+      "3946246B",
+      "39D83D46",
+      "mapped-call"
+    ],
+    [
+      "39462473",
+      "39D83D46",
+      "mapped-call"
+    ]
+  ],
+  "controls": [
+    {
+      "operation": "reset",
+      "driverPresent": false,
+      "modelOwner": 305419896,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 2
+    },
+    {
+      "operation": "set-absent-driver",
+      "action": 0,
+      "activate": true,
+      "descriptorCalls": [],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-absent-driver",
+      "action": 1,
+      "activate": true,
+      "descriptorCalls": [],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-absent-driver",
+      "action": 2,
+      "activate": true,
+      "descriptorCalls": [],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-absent-driver",
+      "action": 9,
+      "activate": true,
+      "descriptorCalls": [],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-absent-driver",
+      "action": 13,
+      "activate": true,
+      "descriptorCalls": [],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-absent-driver",
+      "action": 18,
+      "activate": true,
+      "descriptorCalls": [],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-absent-driver",
+      "action": 19,
+      "activate": true,
+      "descriptorCalls": [],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-absent-driver",
+      "action": 20,
+      "activate": true,
+      "descriptorCalls": [],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-absent-driver",
+      "action": 97,
+      "activate": true,
+      "descriptorCalls": [],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-absent-driver",
+      "action": 65535,
+      "activate": true,
+      "descriptorCalls": [],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 2,
+      "action": 2,
+      "activate": true,
+      "descriptorCalls": [
+        2
+      ],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 8,
+      "action": 97,
+      "activate": true,
+      "descriptorCalls": [
+        97
+      ],
+      "current": 97,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 7,
+      "action": 20,
+      "activate": true,
+      "descriptorCalls": [
+        20
+      ],
+      "current": 20,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        20,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 6,
+      "action": 19,
+      "activate": true,
+      "descriptorCalls": [
+        19
+      ],
+      "current": 19,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        19,
+        20,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 5,
+      "action": 18,
+      "activate": true,
+      "descriptorCalls": [
+        18
+      ],
+      "current": 18,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        18,
+        19,
+        20,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 4,
+      "action": 13,
+      "activate": true,
+      "descriptorCalls": [
+        13
+      ],
+      "current": 13,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        13,
+        18,
+        19,
+        20,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 3,
+      "action": 9,
+      "activate": true,
+      "descriptorCalls": [
+        9
+      ],
+      "current": 9,
+      "cache": [
+        0,
+        0,
+        2,
+        9,
+        13,
+        18,
+        19,
+        20,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 3,
+      "action": 9,
+      "activate": false,
+      "descriptorCalls": [
+        9
+      ],
+      "current": 13,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        13,
+        18,
+        19,
+        20,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 4,
+      "action": 13,
+      "activate": false,
+      "descriptorCalls": [
+        13
+      ],
+      "current": 18,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        18,
+        19,
+        20,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 5,
+      "action": 18,
+      "activate": false,
+      "descriptorCalls": [
+        18
+      ],
+      "current": 19,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        19,
+        20,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 6,
+      "action": 19,
+      "activate": false,
+      "descriptorCalls": [
+        19
+      ],
+      "current": 20,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        20,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 7,
+      "action": 20,
+      "activate": false,
+      "descriptorCalls": [
+        20
+      ],
+      "current": 97,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        97
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 8,
+      "action": 97,
+      "activate": false,
+      "descriptorCalls": [
+        97
+      ],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "set-cache",
+      "state": 2,
+      "action": 2,
+      "activate": false,
+      "descriptorCalls": [
+        2
+      ],
+      "current": 2,
+      "cache": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}
