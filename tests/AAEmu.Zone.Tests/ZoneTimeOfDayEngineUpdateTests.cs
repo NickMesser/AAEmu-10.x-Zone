@@ -55,7 +55,8 @@ public sealed class ZoneTimeOfDayEngineUpdateTests
     [Test]
     public async Task ContinentHostIsServerType3AndInstancesAre2()
     {
-        await Assert.That(ZoneServerType.For(0)).IsEqualTo(3);
-        await Assert.That(ZoneServerType.For(7)).IsEqualTo(2);
+        await Assert.That(ZoneServerType.For("main_world")).IsEqualTo(3);
+        await Assert.That(ZoneServerType.For("instance_world")).IsEqualTo(2);
+        await Assert.That(ZoneServerType.For(null)).IsEqualTo(2);
     }
 }

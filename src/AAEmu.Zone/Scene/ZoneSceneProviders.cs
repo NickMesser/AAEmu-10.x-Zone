@@ -933,7 +933,7 @@ public sealed class ZoneSceneTickServices : IZoneSimulationTickServices
 
     /// <summary>Managers are constructed before this service in the scene factory — that construction order IS the 39333490 initialization gate; ticks themselves only start at session receive after phase Completed.</summary>
     public bool IsInitialized => true;
-    public int ServerType => _startup.JoinRequest is { } join ? ZoneServerType.For(join.InstanceId) : ZoneServerType.Instance; // see ZoneServerType
+    public int ServerType => _startup.WorldName is { } world ? ZoneServerType.For(world) : ZoneServerType.Instance; // see ZoneServerType
 
     // Ownerless phases: bodies intentionally empty; the ctor registered their named readiness lines.
     public void UpdateContentReload() { }
