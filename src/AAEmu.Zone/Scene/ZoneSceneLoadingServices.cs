@@ -86,12 +86,12 @@ public sealed class ZoneSceneLoadingServices : IZoneSceneLoadingServices
     public ZoneUnitRegistry Registry { get; }
 
     /// <summary>
-    /// ZoneClient+8C (39332130/39332730). This dedicated process runs the server-type-2
-    /// (dedicated) slot; the slot itself has no recovered accessor in this tree, so the value is
-    /// the recorded dedicated constant and the missing accessor is named once at readiness
-    /// (TODO(server-type-slot)). Type 3 is what omits the time-of-day phase — it is never 3 here.
+    /// The native server type (39332130/39332730), set by 393654B0: 3 for a main_world zone, 2 for
+    /// instance worlds (ZoneServerType.For over the configured world name). Without a world name
+    /// (detached sessions) it stays the recorded dedicated constant 2. Type 3 is what omits the
+    /// time-of-day phase.
     /// </summary>
-    public int ServerType => DedicatedServerType;
+    public int ServerType => _startup.WorldName is { } world ? ZoneServerType.For(world) : DedicatedServerType;
 
     /// <summary>
     /// 39332730's environment+150 read: nonzero omits spatial and AI bounds publication. No

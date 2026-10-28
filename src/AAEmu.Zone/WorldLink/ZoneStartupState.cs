@@ -123,4 +123,10 @@ public sealed class ZoneStartupState
                 throw new NotSupportedException($"Zone startup does not yet handle WZ opcode 0x{frame.Opcode:X4}.");
         }
     }
+
+    /// <summary>
+    /// The zone's world (configuration worldName), which selects the native server type
+    /// (ZoneServerType.For). Set by the host after synchronization; null for detached sessions.
+    /// </summary>
+    public string? WorldName { get; set; }
 }
