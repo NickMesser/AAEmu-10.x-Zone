@@ -1,9 +1,9 @@
 # AAEmu 10.x Zone
 
-An experimental C# zone server for [AAEmu 10.x](https://github.com/AAEmu/AAEmu-10.x). World launches it in place of the native dedicated zone (dedicated host + `x2game-dev_dedicate.dll`). It replaces all X2 game logic and still hosts the client's CryEngine `*_dedicate` engine modules for scene, physics and AI. This source is **unfinished and not ready for gameplay**. Content readers, World/Zone protocol handling and simulation components exist, but a complete playable scene and sustained real-client validation have not been established. **[TASKS.md](TASKS.md)** lists what is missing compared with the original zone, ordered by milestone.
+An experimental C# zone server for [AAEmu 10.x](https://github.com/AAEmu/AAEmu-10.x). World launches it in place of the native dedicated zone (dedicated host + `x2game-dev_dedicate.dll`). The managed host runs without CryEngine DLLs: it loads authored terrain, admits players and publishes authoritative movement through the World protocol. This source is **unfinished and not ready for gameplay**. Static mesh collision, authored NPC behavior, navigation, dynamic objects and other gameplay systems still need replacements. **[TASKS.md](TASKS.md)** tracks gameplay parity; the **[CryEngine removal plan](docs/tasks/cryengine-removal.md)** records module coverage and remaining work.
 
 ```
-client ⇄ AAEmu-10.x World ⇄ (WZ/ZW, port 1240) ⇄ AAEmu.ZoneServer ⇄ CryEngine *_dedicate modules
+client ⇄ AAEmu-10.x World ⇄ (WZ/ZW, port 1240) ⇄ AAEmu.ZoneServer (managed scene)
 ```
 
 The build targets **.NET 10**. This repository does not contain the World or Login servers, a game client, a content database or proprietary engine binaries. It cannot operate a complete server by itself.
@@ -50,8 +50,8 @@ Copy [zone.example.json](src/AAEmu.ZoneServer/zone.example.json) outside this re
 
 - A configured decrypted `game.compact` export, opened read-only. Its actual filename may be `game_decrypted.sqlite3`; the unrelated `compact.sqlite` substitute is refused.
 - Authorized local game assets, accessed through configured loose directories and/or `game_pak`.
-- The exact compatible Windows AMD64 engine modules required by native framework, physics and AI paths. `ZoneNativeEngine.Identities.cs` records the accepted module hashes. This source does not supply or grant rights to those modules or assets.
-- A 64-bit Lua 5.1 library with the LNUM `double int64` patch (for example [LuaDist/lualnum](https://github.com/LuaDist/lualnum) compiled as a DLL with `LUA_BUILD_AS_DLL LNUM_DOUBLE LNUM_INT64`). Set `luaLibraryPath` in the zone configuration; `AAEMU_ZONE_LUA_LIBRARY` overrides it. There is no default path.
+- Managed mode (`"engineBackend": "managed"`, as in the example) requires no engine directory or Lua library. Terrain and conservative actor bounds are supported; static mesh collision and authored NPC behavior remain incomplete.
+- The optional [native comparison mode](src/AAEmu.ZoneServer/zone.native.example.json) requires the exact compatible Windows AMD64 engine modules. `ZoneNativeEngine.Identities.cs` records the accepted hashes. It also requires a 64-bit Lua 5.1 library with the LNUM `double int64` patch, configured by `luaLibraryPath` or `AAEMU_ZONE_LUA_LIBRARY`. No engine binaries or game assets are supplied by this source.
 - A compatible World server for startup exchange or host experiments, with an explicitly configured endpoint. Use an isolated development World; startup joins affect that World's connection lifecycle.
 
 For a read-only content check after building:
@@ -66,9 +66,9 @@ The diagnostics tool's `--help` lists the other checks. Native checks need the e
 
 World's `ZoneHostSupervisor` starts one process per zone instance with `-dedicated +world_ip … +world_port … +zone <map> +sv_map <map> +instance <id> +sv_port <port> +db_location <path> …` and the `AAEMU_ZONE_DLL`, `AAEMU_ZONE_SAVE_DIR` and `AAEMU_ZONE_LOG_NAME` environment variables. `AAEmu.ZoneServer` accepts that launch directly:
 
-- **Base configuration.** Inputs World does not pass (engine directory, asset sources, world map, frame period) come from `zone.json`. The server takes it from `--config`, the `+zone_config` CVar, `AAEMU_ZONE_CONFIG`, or `zone.json` beside the executable, in that order.
+- **Base configuration.** Inputs World does not pass (backend, asset sources, world map, frame period) come from `zone.json`. The server takes it from `--config`, the `+zone_config` CVar, `AAEMU_ZONE_CONFIG`, or `zone.json` beside the executable, in that order.
 - **What World's launch overrides.** World's endpoint, zone and content database override the configuration. The zone key is always resolved from the content database. Logs go to `AAEMU_ZONE_SAVE_DIR`/`AAEMU_ZONE_LOG_NAME` when set. ZWJoin reports `+instance` and `+sv_port`.
-- **Player admission.** Set `"physicsBackend": "owned"` (as in the example). The native backend refuses players until the native `CPlayer` actor is published into ActorSystem; the owned backend admits the player with an unbound flow actor and makes this host the movement authority.
+- **Player admission.** Set `"engineBackend": "managed"` as in the example. It selects managed terrain/AI and admits a managed player body without engine entities. Existing `"physicsBackend": "owned"` configurations keep their native terrain dependency; use the native comparison example when that behavior is wanted.
 - **Coordinates.** Use World's default continent coordinates on the unit wire (`AAEMU_WZ_UNIT_POS_LOCAL` unset). Physics and spatial queries use zone-local meters; the host applies the world-map origin at admission and publication. The optional `+unit_location_debug 1` enables the native per-frame position reports; its default is off.
 - **Spawner placements.** These are read from `game/worlds/<world>/level_design/zone/<key>/zone_server/npc_spawners.g` in the configured assets unless `spawnerFile` or `--spawner-file` names a file.
 - **`AAEMU_ZONE_DLL`.** It is ignored: this process replaces that module.

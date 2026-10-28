@@ -29,9 +29,10 @@ public sealed class ZoneSceneRegistryServices
 }
 
 /// <summary>
-/// Required native level-completion leaves. Implementations must finish their actual configured
-/// assets, terrain/object/physics, dedicated navigation, scripts and actors in LoadLevelAsync;
-/// unsupported prerequisites must fail. There is deliberately no default provider.
+/// Required level-completion leaves. Implementations must finish the selected backend's required
+/// assets and terrain in LoadLevelAsync; unsupported prerequisites must fail. A managed provider
+/// reports its narrower collision and behavior capabilities explicitly instead of claiming native
+/// scene parity. There is deliberately no default provider.
 /// Outbound messages use the supplied registry's notification queue, preserving cross-phase order.
 /// An owning-thread provider must preserve that context or explicitly await its owner's SwitchTo
 /// before touching engine state after context-free I/O. Cancellation callbacks only signal work.

@@ -8,5 +8,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="zone.example.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="zone.native.example.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

@@ -15,11 +15,13 @@ This repository becomes the **zone server for AAEmu 10.x**. World runs it in pla
  AAEmu.ZoneServer  (this repo, src/AAEmu.ZoneServer → src/AAEmu.Zone)
     replaces:  the dedicated host + x2game-dev_dedicate.dll (all X2 game logic; ZoneNativeEngine
                refuses to load any x2game module)
-    still hosts: CryEngine *_dedicate engine modules from the client's Bin64 (system, physics,
-               3D engine/terrain, entity system, CryAction, CryAISystem) for scene, physics and AI
+    managed:   authored terrain and player physics without CryEngine modules
+    comparison: optional original CryEngine scene/physics adapters; see zone.native.example.json
 ```
 
 ## How this list was made
+
+Current engine-removal work (2026-10-28): `engineBackend=managed` now runs a separate scene host without engine/Lua paths. Three parallel implementation tracks added authored scene loading, managed terrain/body collision and an owned AI lifecycle/scheduler. All **172 standalone tests pass**. A production-host TCP test covers readiness, player landing/movement and ordered EOF retirement while checking loaded modules. An isolated real zone-129 replay also loads six cells, admits player 387 with no native body, confirms it grounded at local `(1172.5996,1646.5,366.33508)`, and emits movement/location reports with **zero CryEngine modules loaded**. Static mesh collision, authored NPC behavior, navigation, entities/FlowGraphs and vehicles remain unfinished. See the detailed [CryEngine removal tasks and module matrix](docs/tasks/cryengine-removal.md).
 
 Current implementation progress (2026-10-28): the owned backend has admitted a real player in zone 129 (commits `fa837e4`, `28850a2`). Cooldown reset/reduce/charge-change packets now update per-unit timer maps, and the rolling scene update advances them; see CMB-02/CMB-10 for the remaining start/modifier paths. The coverage snapshot below is the original audit, not a claim that these later changes are absent. Full gameplay parity remains open.
 

@@ -1,0 +1,174 @@
+# CryEngine module removal
+
+Target: run the zone process with no CryEngine dedicated modules installed or loaded, then
+replace the gameplay and collision capabilities they supplied. A terrain-only player scene is
+the first milestone; it is not full feature parity.
+
+Use [`zone.example.json`](../../src/AAEmu.ZoneServer/zone.example.json) with
+`"engineBackend": "managed"`. This selects `managed-terrain` physics and managed AI by default.
+Neither `engineDirectory` nor `luaLibraryPath` is required. Assets and the read-only content
+database remain required. Mixed native providers are rejected before startup.
+
+The native comparison configuration is
+[`zone.native.example.json`](../../src/AAEmu.ZoneServer/zone.native.example.json). Existing
+`physicsBackend=owned` and its legacy `managed` alias still use native terrain and static
+queries. They do not remove CryEngine. Existing configurations retain their original semantics.
+
+## Current replacement boundary (2026-10-28)
+
+| Module | Managed replacement in this change | Remaining capability gaps |
+| --- | --- | --- |
+| `crysystem.dll` | Configured assets, content, clocks, scene owner, startup/frame/shutdown composition | Finish diagnostics, platform checks and capability policies across every scene type |
+| `cry3dengine_dedicate.dll` | World/cell selection, authored heightmaps, terrain surfaces, seams, decoded object/vegetation/entity placements | Physicalized static meshes, visibility/area behavior, water volumes and procedural objects |
+| `cryphysics_dedicate.dll` | Character integration, bounded terrain rays, continuous terrain box sweeps, overlaps, actor bounds, material IDs | Exact capsules, oriented bodies, static mesh collision, friction, rigid bodies, swimming, vehicles and ragdolls |
+| `cryentitysystem_dedicate.dll` | Player/NPC identity generations, registry/spatial membership and managed player lifecycle | General entity proxies, components, areas, attachments and entity-script state |
+| `cryaction_dedicate.dll` | Player movement controller/frame pipeline and managed goal-pipe execution adapter | Authored behavior construction, game-object actions, signal bindings and FlowGraphs |
+| `cryaisystem_dedicate.dll` | Provider ownership, active/target state, signals, generation retirement and deterministic update scheduling | Perception, authored behavior admission, navigation, locomotion, leash and combat decisions |
+| `cryscriptsystem.dll` | Managed mode has no Lua bootstrap or script DLL dependency | Replacement interpreter or translated behavior layer and the game script API |
+| `cryanimation.dll` | Authored model/stance dimensions and movement parameters are consumed as data | Server-relevant skeleton collision, animation events and motion driven by animation |
+| `cryrendernull.dll` | Managed host is headless and never constructs a renderer | No renderer is required; retain checks that no rendering service enters the server path |
+| `tbb*`, `xlcommon.dll`, `xldiag.dll`, engine CRT dependencies | Engine startup is bypassed entirely | Remove native comparison deployment dependencies after replacement coverage is sufficient |
+
+New production owners are `ZoneManagedSceneHost`, `ZoneManagedSceneActivation`,
+`ZoneManagedTerrainGeometry`, `ZoneManagedPhysicsBackend`, `ZoneManagedAiProvider` and
+`ZoneManagedAiActor`. They reuse existing content readers, unit/NPC registries, World protocol,
+scene retirement, owned integration and movement publication. Native ABI adapters remain for
+comparison; managed scene startup never constructs them.
+
+## Implemented first milestone
+
+- [x] **CE-01 — Independent host composition.** Native-free configuration, World join once,
+  ordered loading, `ZWZoneLoaded`, authoritative player admission, frame pipeline and retirement.
+  No engine/Lua directory is required and the native engine-input builder is not called.
+- [x] **CE-02 — Authored managed terrain.** Load the selected cells at zone-local coordinates,
+  apply XML surface slots and version-24 overrides, preserve seam behavior and holes, and unload
+  current samples on retirement. Failed cells retain named diagnostics and prevent terrain readiness.
+- [x] **CE-03 — Managed collision foundation.** Rays intersect authored two-meter triangles and
+  report normals/materials. Sweeps/overlaps and registered actor bounds support basic character
+  collision. Missing cells, unloaded cells and hole slot 31 provide no floor. Capsules currently
+  use conservative upright bounds; terrain collision does not imply object collision.
+- [x] **CE-04 — Managed AI ownership and execution seam.** Fresh behavior state per generation,
+  exclusion across managed/native providers, deterministic wrapped-clock scheduling, target
+  retirement, callback-safe cancellation and disposal, and an adapter to existing goal pipes.
+  The production host currently admits idle managed NPC control state. Its gameplay AI gate stays
+  closed until authored behavior and supporting services are attached; unsupported signals fail.
+- [x] **CE-05 — Evidence without engine modules.** Synthetic host integration checks join,
+  readiness, player landing/movement, clean World EOF and player-before-terrain retirement while
+  inspecting loaded modules. A separate real-content zone-129 replay also reaches readiness,
+  admits captured player 387 with `physicalId=0`, emits movement/location reports and retires.
+
+All 172 standalone tests pass, including 31 new configuration, physics, AI and scene/host cases.
+The solution builds successfully; existing analyzer warnings remain.
+
+Real-content replay evidence is kept outside the repository: `managed-entry-verified-zone.log`,
+`managed-entry-verified-modules.json` and `captures/managed-entry-output-verified.bin` under the local runtime
+artifact directory. The ready process inventory contained 76 modules and **zero CryEngine
+modules**. The captured player stayed at World `(10388.599609375, 15982.5, 366.3350830078125)`;
+zone origin `(9,14)` maps this to local `(1172.599609375, 1646.5, 366.3350830078125)`.
+The final build's physics status trace confirms `grounded=True` at that position.
+This input contains stationary movement samples. A sustained real-client walk/jump/re-entry
+session remains an acceptance check; replay alone does not prove that interaction.
+
+## Remaining implementation tasks
+
+### CE-06 — Authored static mesh collision (P0)
+
+`ZoneManagedSceneActivation.Report.Cells[*].Objects` retains the authored object, vegetation,
+entity and big-object descriptions. Add managed geometry decoding for their referenced compiled
+mesh/physical proxy resources. Resolve nested geometry, material IDs, scales, rotations and local
+cell offsets. Cache immutable geometry by asset identity and place instances in a spatial index.
+Missing or unsupported resources must remain in a per-resource coverage report.
+
+Acceptance: rays, sweeps and overlaps hit a known zone-129 wall, roof, stair and bridge at the same
+positions/materials as recorded native queries. A terrain miss under a bridge must still hit its
+mesh. Walking into a building must stop. Unloaded instances must immediately stop colliding.
+Do not use render bounds as if they were authored collision geometry.
+
+### CE-07 — Character collision and movement fidelity (P0)
+
+Replace conservative capsule bounds with true capsule queries. Add stance transitions, authored
+gravity and slope/step limits, ground snapping, ceilings, sliding, fall/landing state and collision
+surface response. Preserve the scene's single movement authority and World coordinate boundary.
+Extend movement for swimming, gliding, ladders, mounts and moving platforms as their owners land.
+
+Acceptance: recorded stance sizes and jump arcs, slope ascent/descent, stair climbing, a low
+ceiling and a capsule passing a corner behave correctly; re-entry cannot reuse a retired body.
+Run meaningful terrain and static-mesh cases rather than comparing an implementation to itself.
+
+### CE-08 — Authored NPC behavior admission (P0)
+
+Attach the existing NPC signal/actor/goal-pipe runtimes to managed provider actors. Resolve
+authored AI file and initial behavior per NPC, construct the behavior stack, route signals and
+provide the required managed script/entity API. Define a supported behavior set and report each
+unsupported script/action. Remove the `HasAiActor` gameplay gate only for admitted behaviors
+whose dependencies are present. Do not flip it globally: several reachable leaves still refuse.
+
+Acceptance: an authored idle/talk NPC executes its initialization and a named signal; a hostile
+NPC runs its actual authored state transitions; missing behavior remains a named admission
+refusal; removal, failure and re-entry release every actor/listener/target generation.
+
+### CE-09 — Managed perception, navigation and locomotion (P0)
+
+Wire authored navigation areas/shapes and path data into an owned query service. Add supported
+path search, forbidden-area/capability checks, territory/leash predicates, line-of-sight against
+terrain and static collision, perception/alertness, target selection and movement requests.
+AI requests movement through the scene authority, never a second physics writer.
+
+Acceptance: NPCs route around an authored obstacle, cannot path through a wall, lose line of sight,
+return to their spawn territory and clear dead/retired targets. Exercise disconnected navigation
+regions, unsupported traversal types and missing cell data with explicit outcomes.
+
+### CE-10 — Entity components, areas and FlowGraphs (P1)
+
+Replace the native entity-system services with generation-owned components and managed event
+dispatch. Instantiate relevant authored entities and areas from retained placements. Port the
+server FlowGraph node behavior into managed graph execution, including timers, references,
+activation order and teardown. Start with zone 129's ServerOnly elevator and related area events.
+
+Acceptance: elevator starts from authored graph input, moves its collision surface, carries a
+player and retires cleanly; `ZWEnterArea`/`ZWLeaveArea` follow actual crossings; graph callbacks
+cannot retain a removed entity or a previous scene generation.
+
+### CE-11 — Script execution without engine libraries (P1)
+
+Select and implement a compatible managed script execution/translation layer. Existing authored
+scripts depend on Lua 5.1 plus integer behavior and game bindings; replacing the DLL requires
+validating those semantics, script source resolution, reference lifetimes and error behavior.
+Keep this independent from the native comparison host's `ZoneLuaRuntime`.
+
+Acceptance: execute representative authored AI/entity scripts with the required number/string/
+table/metatable/coroutine semantics, install their used game bindings and reproduce signal/state
+transitions. No replacement may silently skip a failed script and claim behavior readiness.
+
+### CE-12 — Dynamic bodies, vehicles and animation inputs (P1)
+
+Add the server-relevant physical proxy and skeleton data readers, attachments/bonds, moving
+doodads/gimmicks, water/buoyancy, rigid bodies and vehicle/boat controllers. Separate authored
+geometry loading from the dynamic solver. Resolve motion driven by animation and collision events
+that gameplay consumes; headless operation does not make those inputs optional.
+
+Acceptance: reference ship/slave/transfer cases, moving platforms, attachment removal and water
+entry/exit work without a native body; the backend capability report tracks each supported class.
+
+### CE-13 — Deployment and World launch cleanup (P1)
+
+Make managed mode the documented deployment path, retain an explicit native comparison example,
+and fail clearly on a native-only diagnostic command with managed configuration. In the separate
+World repository, remove the `ZoneHost.NativeDll` existence preflight when launching this managed
+executable. That World change is external to this repository.
+
+Acceptance: run from a clean directory containing the published .NET application and configured
+assets/content only, with engine directories absent and no engine paths on `PATH`; World launches
+and restarts both a continent and an instance zone. Module inventory stays engine-free.
+
+### CE-14 — Replacement parity suite and final native deletion (P1)
+
+Grow recorded geometry/AI/graph/movement cases alongside the replacements. Compare against
+recorded original results or the explicit native comparison host, retaining resource coverage and
+known differences. Include walk, jump, logout/re-entry, multiple actors, NPC combat, objects and
+long-running tick/retirement checks. Only remove `Native/*`, native diagnostic modes and native
+deployment inputs once the corresponding capabilities have independent replacement evidence.
+
+Acceptance: all required server scenarios run with no engine DLLs installed; capability reports
+have no unowned prerequisite for the accepted gameplay scope; removing comparison code does not
+change World wire behavior or invalidate recorded parity checks.

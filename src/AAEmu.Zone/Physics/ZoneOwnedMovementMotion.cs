@@ -8,22 +8,33 @@ namespace AAEmu.Zone.Physics;
 /// motion; repeated client poses and horizontal movement requests must not erase that integration.
 /// Explicit scene teleports still call the backend directly. Positions use engine zone-local meters.
 /// </summary>
-public sealed class ZoneOwnedMovementMotion(ZoneOwnedPhysicsBackend backend) : IZonePhysicsMotion
+public sealed class ZoneOwnedMovementMotion : IZonePhysicsMotion
 {
-    public void ApplyVelocity(ZoneActorHandle actor, Vector3 velocity)
+    private readonly IZonePhysicsBackend _backend;
+    private readonly IZonePhysicsMotion _motion;
+
+    public ZoneOwnedMovementMotion(ZoneOwnedPhysicsBackend backend) : this(backend, backend) { }
+
+    public ZoneOwnedMovementMotion(IZonePhysicsBackend backend, IZonePhysicsMotion motion)
     {
-        backend.CopyStatus(actor, out var current);
-        backend.ApplyVelocity(actor, new(velocity.X, velocity.Y, current.Velocity.Z));
+        _backend = backend ?? throw new ArgumentNullException(nameof(backend));
+        _motion = motion ?? throw new ArgumentNullException(nameof(motion));
     }
 
-    public void ApplyImpulse(ZoneActorHandle actor, Vector3 impulse) => backend.ApplyImpulse(actor, impulse);
+    public void ApplyVelocity(ZoneActorHandle actor, Vector3 velocity)
+    {
+        _backend.CopyStatus(actor, out var current);
+        _motion.ApplyVelocity(actor, new(velocity.X, velocity.Y, current.Velocity.Z));
+    }
+
+    public void ApplyImpulse(ZoneActorHandle actor, Vector3 impulse) => _motion.ApplyImpulse(actor, impulse);
 
     public void ApplyPose(ZoneActorHandle actor, Vector3 position, Quaternion orientation)
     {
-        backend.CopyStatus(actor, out var current);
-        backend.ApplyPose(actor, new(position.X, position.Y, current.Position.Z), orientation);
+        _backend.CopyStatus(actor, out var current);
+        _motion.ApplyPose(actor, new(position.X, position.Y, current.Position.Z), orientation);
         // The backend's explicit pose correction clears velocity. A regular turn/correction
         // changes neither the integrated vertical velocity nor the pending horizontal velocity.
-        backend.ApplyVelocity(actor, current.Velocity);
+        _motion.ApplyVelocity(actor, current.Velocity);
     }
 }

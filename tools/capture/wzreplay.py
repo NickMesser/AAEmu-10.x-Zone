@@ -50,6 +50,7 @@ def main():
     out = open(a.out, 'wb')
     t0 = time.time()
     rx = b''
+    observed_opcodes = set()
 
     def record(data):
         out.write(struct.pack('<BdI', 0, time.time() - t0, len(data)) + data)
@@ -58,6 +59,8 @@ def main():
     def pump(sock, until_opcode=None, timeout=0.0):
         """Read ZW frames; return True once until_opcode is seen."""
         nonlocal rx
+        if until_opcode is not None and until_opcode in observed_opcodes:
+            return True
         sock.settimeout(timeout if timeout else 0.001)
         deadline = time.time() + timeout
         while True:
@@ -73,6 +76,7 @@ def main():
             while len(rx) >= 4 and len(rx) >= struct.unpack_from('<H', rx)[0] + 2:
                 ln, op = struct.unpack_from('<HH', rx)
                 rx = rx[ln + 2:]
+                observed_opcodes.add(op)
                 if op == until_opcode:
                     seen = True
             if seen or time.time() >= deadline:

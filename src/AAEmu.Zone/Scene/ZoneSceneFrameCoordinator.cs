@@ -3,7 +3,6 @@ using System.Numerics;
 using AAEmu.Zone.Actors;
 using AAEmu.Zone.Ai;
 using AAEmu.Zone.Hosting;
-using AAEmu.Zone.Native.Ai;
 using AAEmu.Zone.Physics;
 using AAEmu.Zone.Units;
 using AAEmu.Zone.WorldLink;
@@ -57,7 +56,7 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
     private readonly IZoneMovementFramePhases _phases;
     private readonly IZonePhysicsBackend _backend;
     private readonly ZonePlayerActorFactory _playerActors;
-    private readonly ZoneNativeAiProvider? _ai;
+    private readonly IZoneAiFramePump? _ai;
     private readonly ZoneMovementServices _movement;
     private readonly ZoneSimulationTick _simulation;
     private readonly ZoneStartupState _startup;
@@ -68,13 +67,13 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
     /// <param name="phases">The scene's one Agent-3 concrete triple coordinator (PrePhase/StepPhysics/PostPhase).</param>
     /// <param name="backend">The scene's one physics adapter; StepPhysics maps 1:1 onto its single Step.</param>
     /// <param name="playerActors">The scene's one player lifecycle — retire order seam for <see cref="RemovePlayer"/>.</param>
-    /// <param name="ai">The scene's one dependency-gated native AI provider, pumped here; null only for managed-AI scenes (TODO(managed-ai)).</param>
+    /// <param name="ai">The scene's selected AI provider. Pumped once here and disposed during frame retirement when it owns resources.</param>
     /// <param name="movement">The concrete IZoneActorMovementServices shared with the controllers this coordinator binds.</param>
     /// <param name="simulation">The scene's tick; RunFrame completes the frame by updating it after the pump.</param>
     /// <param name="startup">Connection clocks sampled once per frame (never a wall clock of our own).</param>
     /// <param name="framePeriod">The validated explicit replacement scheduling period.</param>
     public ZoneSceneFrameCoordinator(IZoneMovementFramePhases phases, IZonePhysicsBackend backend,
-        ZonePlayerActorFactory playerActors, ZoneNativeAiProvider? ai, ZoneMovementServices movement,
+        ZonePlayerActorFactory playerActors, IZoneAiFramePump? ai, ZoneMovementServices movement,
         ZoneSimulationTick simulation, ZoneStartupState startup, TimeSpan framePeriod, Action<string>? trace)
     {
         ArgumentNullException.ThrowIfNull(phases);
@@ -99,7 +98,7 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
 
     /// <summary>The one player actor factory of this scene generation (admission-line evidence source).</summary>
     public ZonePlayerActorFactory PlayerActors => _playerActors;
-    /// <summary>The scene's AI pump (null in managed-AI scenes — TODO(managed-ai)).</summary>
+    /// <summary>The scene's selected AI pump, sharing the frame clock.</summary>
     public IZoneAiFramePump? AiPump => _ai;
 
     /// <summary>
@@ -119,6 +118,13 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
         _phases.PrePhase(sample);           // eligibility, sampling, input production (clock pushed here)
         _phases.StepPhysics(_framePeriod);  // EXACTLY one Step per frame; <= 0 refused by name downstream
         _phases.PostPhase(sample);          // correction, CommitPose, spatial, entity mirror, ZW encode
+        if (_trace is not null)
+            foreach (var actor in _registeredActors)
+                if (_reportedActorStatus.Add(actor))
+                {
+                    _backend.CopyStatus(actor, out var status);
+                    _trace($"Player physics status unit={actor.UnitObjectId} gen={actor.Generation} local=({status.Position.X}, {status.Position.Y}, {status.Position.Z}) grounded={status.IsGrounded}");
+                }
         _ai?.Pump(serverMs);                // one AI authority; post-phase state observed by the tick
         _simulation.Update(frame);          // ZoneSimulationTick phases (own clocks/gates inside)
     }
@@ -140,6 +146,7 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
         if (_playerActors.FindByUnitObjectId(unitObjectId) is not { IsLive: true } actor) return;
         _backend.RemoveActor(actor.Handle); // mandated BEFORE factory.Retire (IZoneActorLifecycle.cs:80-82)
         _registeredActors.Remove(actor.Handle);
+        _reportedActorStatus.Remove(actor.Handle);
         _trace?.Invoke($"Player actor retiring unit={actor.Handle.UnitObjectId} gen={actor.Handle.Generation} (backend.RemoveActor -> factory.Retire)");
         _playerActors.Retire(actor.Handle);
     }
@@ -205,6 +212,7 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
     }
 
     private readonly HashSet<ZoneActorHandle> _registeredActors = [];
+    private readonly HashSet<ZoneActorHandle> _reportedActorStatus = [];
 
     /// <summary>
     /// Retires backend registrations and player bodies/entities before the scene's terrain,
@@ -215,10 +223,15 @@ public sealed class ZoneSceneFrameCoordinator : IDisposable
         if (_disposed) return;
         _disposed = true;
         List<Exception>? errors = null;
-        try { _playerActors.RetireAll(_backend); }
+        try
+        {
+            _playerActors.RetireAll(_backend);
+            _trace?.Invoke($"Scene player actors retired count={_playerActors.LiveCount}");
+        }
         catch (Exception error) { (errors ??= []).Add(error); }
         _registeredActors.Clear();
-        try { _ai?.Dispose(); }
+        _reportedActorStatus.Clear();
+        try { (_ai as IDisposable)?.Dispose(); }
         catch (Exception error) { (errors ??= []).Add(error); }
         if (errors is not null) throw new AggregateException("Scene frame retirement failed.", errors);
     }

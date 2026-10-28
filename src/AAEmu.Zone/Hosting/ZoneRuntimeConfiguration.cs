@@ -2,7 +2,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 using AAEmu.Zone.Content;
-using AAEmu.Zone.Native.Ai;
 using AAEmu.Zone.Scene;
 
 namespace AAEmu.Zone.Hosting;
@@ -17,7 +16,8 @@ public sealed record ZoneConfiguredAsset(string Kind, string Path);
 public sealed class ZoneRuntimeConfiguration
 {
     public string ContentDatabasePath { get; private set; }
-    public string EngineDirectory { get; }
+    /// <summary>Required only by the native comparison host; unused by the managed host.</summary>
+    public string? EngineDirectory { get; }
     public string LogDirectory { get; private set; }
     public string ZoneName { get; private set; }
     public int ZoneKey { get; private set; }
@@ -30,12 +30,8 @@ public sealed class ZoneRuntimeConfiguration
     public int? TerrainTexturePoolSize { get; }
     public TimeSpan? FramePeriod { get; }
     /// <summary>
-    /// Scene backend selection resolved from the optional physicsBackend/aiBackend keys
-    /// (camelCase, defaults = ZoneSceneBackendSelection.Default — resolves the contract's
-    /// TODO(scene-creation) at THIS consumer, ZoneSceneBackendSelection.cs:46-48). Managed
-    /// physics is rejected BY NAME here (:8-11) and managed AI is refused as TODO(managed-ai)
-    /// (:25-27); aiDependencyGated=false is rejected because the native provider is
-    /// dependency-gated by construction (ZoneNativeAiProvider.cs:44-47).
+    /// Scene backend selection. engineBackend=managed defaults to managed terrain and AI,
+    /// and requires neither engineDirectory nor a Lua DLL. Legacy owned physics remains hybrid.
     /// </summary>
     public ZoneSceneBackendSelection Backends { get; }
     /// <summary>
@@ -51,7 +47,10 @@ public sealed class ZoneRuntimeConfiguration
         ContentDatabasePath = Resolve(input.ContentDatabasePath, directory, "contentDatabasePath");
         if (Path.GetFileName(ContentDatabasePath).Equals("compact.sqlite", StringComparison.OrdinalIgnoreCase))
             throw new InvalidDataException("Use the configured decrypted game.compact export, not compact.sqlite.");
-        EngineDirectory = Resolve(input.EngineDirectory, directory, "engineDirectory");
+        Backends = ParseBackends(input.EngineBackend, input.PhysicsBackend, input.AiBackend, input.AiDependencyGated);
+        EngineDirectory = Backends.Engine == ZoneEngineBackendKind.Native
+            ? Resolve(input.EngineDirectory, directory, "engineDirectory")
+            : string.IsNullOrWhiteSpace(input.EngineDirectory) ? null : Resolve(input.EngineDirectory, directory, "engineDirectory");
         LogDirectory = Resolve(input.LogDirectory, directory, "logDirectory");
         ZoneName = Required(input.ZoneName, "zoneName");
         if (input.ZoneKey <= 0) throw new InvalidDataException("zoneKey must be positive.");
@@ -83,16 +82,20 @@ public sealed class ZoneRuntimeConfiguration
                 throw new InvalidDataException("framePeriodMilliseconds must be between 1 and 4294967294.");
             FramePeriod = TimeSpan.FromMilliseconds(milliseconds);
         }
-        Backends = ParseBackends(input.PhysicsBackend, input.AiBackend, input.AiDependencyGated);
         ScriptRoot = string.IsNullOrWhiteSpace(input.ScriptRoot) ? null : Resolve(input.ScriptRoot, directory, "scriptRoot");
         SpawnerFile = string.IsNullOrWhiteSpace(input.SpawnerFile) ? null : Resolve(input.SpawnerFile, directory, "spawnerFile");
         LuaLibraryPath = string.IsNullOrWhiteSpace(input.LuaLibraryPath) ? null : Resolve(input.LuaLibraryPath, directory, "luaLibraryPath");
     }
 
     /// <summary>Backend strings → selection record, each refusal named at the config boundary (before any engine/network work).</summary>
-    private static ZoneSceneBackendSelection ParseBackends(string? physics, string? ai, bool? dependencyGated)
+    private static ZoneSceneBackendSelection ParseBackends(string? engine, string? physics, string? ai, bool? dependencyGated)
     {
-        var selection = ZoneSceneBackendSelection.Default;
+        var selection = engine switch
+        {
+            null or "native" => ZoneSceneBackendSelection.Default,
+            "managed" => ZoneSceneBackendSelection.NativeFree,
+            _ => throw new InvalidDataException($"Unknown engineBackend '{engine}'; expected native or managed."),
+        };
         if (physics is not null)
             selection = selection with
             {
@@ -102,8 +105,9 @@ public sealed class ZoneRuntimeConfiguration
                     // Agent 8: the owned implementation exists (ZoneOwnedPhysicsBackend). It becomes the
                     // movement authority; the ground still comes from the native terrain raycast.
                     "managed" or "owned" => ZonePhysicsBackendKind.Managed,
+                    "managed-terrain" => ZonePhysicsBackendKind.ManagedTerrain,
                     var other => throw new InvalidDataException(
-                        $"Unknown physicsBackend '{other}'; expected native-terrain or managed.")
+                        $"Unknown physicsBackend '{other}'; expected native-terrain, owned or managed-terrain.")
                 }
             };
         if (ai is not null)
@@ -112,8 +116,7 @@ public sealed class ZoneRuntimeConfiguration
                 Ai = ai switch
                 {
                     "native" => ZoneAiBackendKind.Native,
-                    "managed" => throw new NotSupportedException(
-                        "aiBackend=managed is refused: TODO(managed-ai) (ZoneSceneBackendSelection.cs:25-27)."),
+                    "managed" => ZoneAiBackendKind.Managed,
                     var other => throw new InvalidDataException(
                         $"Unknown aiBackend '{other}'; expected native or managed.")
                 }
@@ -122,6 +125,12 @@ public sealed class ZoneRuntimeConfiguration
             throw new InvalidDataException(
                 "aiDependencyGated=false is not supported: the native AI provider is dependency-gated by design " +
                 "(ZoneNativeAiProvider.cs:44-47); omit the key or set it true.");
+        if (selection.Engine == ZoneEngineBackendKind.Managed &&
+            (selection.Physics != ZonePhysicsBackendKind.ManagedTerrain || selection.Ai != ZoneAiBackendKind.Managed))
+            throw new InvalidDataException("engineBackend=managed requires physicsBackend=managed-terrain and aiBackend=managed; omit those keys to use these defaults.");
+        if (selection.Engine == ZoneEngineBackendKind.Native &&
+            (selection.Physics == ZonePhysicsBackendKind.ManagedTerrain || selection.Ai == ZoneAiBackendKind.Managed))
+            throw new InvalidDataException("Managed terrain and AI require engineBackend=managed; the native comparison host retains its own providers.");
         return selection;
     }
 
@@ -221,7 +230,7 @@ public sealed class ZoneRuntimeConfiguration
     private sealed class Document
     {
         public required string ContentDatabasePath { get; init; }
-        public required string EngineDirectory { get; init; }
+        public string? EngineDirectory { get; init; }
         public required string LogDirectory { get; init; }
         public required string ZoneName { get; init; }
         public required int ZoneKey { get; init; }
@@ -233,7 +242,7 @@ public sealed class ZoneRuntimeConfiguration
         public required AssetDocument?[] AssetSources { get; init; }
         public int? TerrainTexturePoolSize { get; init; }
         public double? FramePeriodMilliseconds { get; init; }
-        // Optional scene backend keys (camelCase; absent = ZoneSceneBackendSelection.Default).
+        public string? EngineBackend { get; init; }
         public string? PhysicsBackend { get; init; }
         public string? AiBackend { get; init; }
         public bool? AiDependencyGated { get; init; }

@@ -36,7 +36,9 @@ public static class ZoneServerStartup
             foreach (var name in launch.IgnoredCVars)
                 Console.WriteLine($"CVar +{name} {launch.CVars[name]} has no replacement owner yet and is ignored.");
         }
-        Console.WriteLine($"Configured engine directory: {configuration.EngineDirectory}.");
+        Console.WriteLine(configuration.Backends.Engine == ZoneEngineBackendKind.Managed
+            ? "Managed scene host: CryEngine modules and Lua DLL are not required."
+            : $"Configured engine directory: {configuration.EngineDirectory}.");
         Console.WriteLine($"Configured asset sources: {string.Join(" -> ", configuration.AssetSources.Select(source => $"{source.Kind}:{source.Path}"))}");
 
         var contentNameComparer = WorldContentNameComparer.ForLocale(configuration.Locale);
@@ -68,14 +70,18 @@ public static class ZoneServerStartup
             startup.EngineCVars.GetBool(ZoneEngineCVars.TimeOfDayEngineUpdate, true);
         Console.WriteLine($"{ZoneEngineCVars.TimeOfDayEngineUpdate} = {(startup.TimeOfDayState.EngineUpdateEnabled ? 1 : 0)}; server type {ZoneServerType.For(startup.WorldName)}.");
 
-        var engineInputs = ZoneEngineInputs.Create(configuration, layout, content, loaded.Models, "zone-host.log");
+        (Native.Engine.ZoneNativeEngineOptions? Options, ZoneModelAuxiliaryContent? Auxiliary) engineInputs = configuration.Backends.Engine == ZoneEngineBackendKind.Native
+            ? ZoneEngineInputs.Create(configuration, layout, content, loaded.Models, "zone-host.log")
+            : ((Native.Engine.ZoneNativeEngineOptions?)null, (ZoneModelAuxiliaryContent?)null);
         Action<string> trace = message => Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] {message}");
         var hostInputs = new ZoneSceneHost.ZoneHostInputs(
             engineInputs.Options, loaded.Models, engineInputs.Auxiliary, layout, assets, loaded.Stats, loaded.Npcs,
             loaded.SpawnerControllers, loaded.World, loaded.Achievements, loaded.Loot, loaded.Scene, zone, battlefield,
             startup, configuration, configuration.Backends, placements, trace);
         await ZoneSceneHost.RunAsync(hostInputs, client.GetStream(), shutdown).ConfigureAwait(false);
-        trace("Host session retired in order (frame -> loading -> tick -> spawners -> activation -> engine).");
+        trace(configuration.Backends.Engine == ZoneEngineBackendKind.Managed
+            ? "Managed host session retired in order (frame -> loading -> tick -> spawners -> terrain)."
+            : "Host session retired in order (frame -> loading -> tick -> spawners -> activation -> engine).");
         // The receive loop only returns without cancellation when World closed the connection (ZW-03).
         // Dedicated server types 2 and 3 run console "quit" natively (3936D7E0): orderly exit, distinct code.
         var serverType = ZoneServerType.For(startup.WorldName);

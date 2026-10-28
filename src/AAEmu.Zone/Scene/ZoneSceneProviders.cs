@@ -170,8 +170,9 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     private readonly Func<ZoneUnit, Vector3> _modelPosition;
     private readonly Func<IZonePhysicsBackend?> _backend;
     private readonly ZoneSceneNpcCatalog _catalog;
-    private readonly ZoneNativeAiProvider? _ai;
+    private readonly IZoneAiProvider? _ai;
     private readonly ZoneSceneScriptClock _scriptClock;
+    private readonly TimeSpan _framePeriod;
     private readonly ZoneSceneReadinessNotes _notes;
     private readonly Action<string>? _trace;
     private readonly Dictionary<uint, ZoneSceneActivationServices> _activationServices = new();
@@ -182,7 +183,7 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
 
     public ZoneSceneNpcWorld(ZoneUnitRegistry registry, ZoneStartupState startup, ZoneNpcContent npcContent,
         Func<ZoneUnit, Vector3> modelPosition, Func<IZonePhysicsBackend?> backend, ZoneSceneNpcCatalog catalog,
-        ZoneNativeAiProvider? ai, ZoneSceneScriptClock scriptClock, TimeSpan framePeriod,
+        IZoneAiProvider? ai, ZoneSceneScriptClock scriptClock, TimeSpan framePeriod,
         ZoneSceneReadinessNotes notes, Action<string>? trace)
     {
         ArgumentNullException.ThrowIfNull(registry);
@@ -202,6 +203,7 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
         _catalog = catalog;
         _ai = ai;
         _scriptClock = scriptClock;
+        _framePeriod = framePeriod;
         _notes = notes;
         _trace = trace;
         _signalRuntime = new(this, scriptClock);
@@ -260,8 +262,14 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
         {
             if (_ai is null)
                 throw new NotSupportedException(
-                    "No native AI provider is wired for this scene (managed-AI scenes stay behind TODO(managed-ai), ZoneSceneBackendSelection.cs:25-27).");
+                    "No AI provider is wired for this scene.");
             _ai.CreateNpc(handle);
+            if (_ai is ZoneManagedAiProvider)
+            {
+                _ai.SetUpdateSchedule(handle, _framePeriod);
+                _notes.AddOnce("managed-npc-behavior",
+                    "Managed NPC actor lifecycle and scheduling are active; authored behavior scripts, perception, navigation and combat are not attached. Gameplay AI remains gated.");
+            }
         }
         catch (NotSupportedException error)
         {
@@ -283,13 +291,27 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     public void Remove(ZoneNpc npc)
     {
         ArgumentNullException.ThrowIfNull(npc);
-        if (_catalog.TryGet(npc.ObjectId) is { } handle)
+        // Managed retirement invalidates its generation before invoking behavior cleanup. Even
+        // a failed callback must retire this catalog identity so re-entry receives a fresh handle.
+        // A failed native destroy retains its binding and therefore retains the catalog instead.
+        var retireCatalog = _ai is ZoneManagedAiProvider;
+        try
         {
-            try { _ai?.RemoveNpc(handle); }
-            catch (ObjectDisposedException) { /* scene teardown already retired the provider; catalog still retires below */ }
+            if (_catalog.TryGet(npc.ObjectId) is { } handle)
+            {
+                try { _ai?.RemoveNpc(handle); }
+                catch (ObjectDisposedException) { /* scene teardown already retired the provider */ }
+            }
+            retireCatalog = true;
         }
-        _catalog.Retire(npc.ObjectId);
-        _activationServices.Remove(npc.ObjectId);
+        finally
+        {
+            if (retireCatalog)
+            {
+                _catalog.Retire(npc.ObjectId);
+                _activationServices.Remove(npc.ObjectId);
+            }
+        }
     }
 
     /// <summary>Owner death clears its threat table for real (ZoneAggroTable.Clear :148-160); reverse memberships unwind through IZoneAggroWorld.EntryRemoved (ZoneNpcSimulation :547-552). The native AI death EVENT has no owner until TODO(native-ai) — documented, gated with the rest of the actor path.</summary>
@@ -372,7 +394,7 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     {
         var backend = RequireBackend();
         if (backend.TryGround(new Vector3(position.X, position.Y, position.Z + 4096f), 8192f, out var ground))
-            return ground.Position.Y;
+            return ground.Position.Z;
         _notes.AddOnce("terrain-ray-miss",
             $"terrain height: at least one ray miss returned the caller's own Z (outside loaded cells) TODO(terrain-height-fallback)");
         return position.Z;
@@ -1228,7 +1250,7 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
     public float GetTerrainHeight(float x, float y)
     {
         var backend = RequireBackend();
-        if (backend.TryGround(new Vector3(x, y, 4096f), 8192f, out var ground)) return ground.Position.Y;
+        if (backend.TryGround(new Vector3(x, y, 4096f), 8192f, out var ground)) return ground.Position.Z;
         _notes.AddOnce("spawner-terrain-ray-miss",
             "spawner terrain ray: at least one placement candidate fell outside the loaded window (height 0) TODO(terrain-height-fallback)");
         return 0f;
@@ -1250,7 +1272,7 @@ public sealed class ZoneSceneSpawnerServices : IZoneNpcSpawnerFactoryServices, I
         var backend = RequireBackend();
         if (!backend.TryGround(new Vector3(position.X, position.Y, position.Z + 100f), 200f, out var ground))
             return false;
-        var groundZ = ground.Position.Y;
+        var groundZ = ground.Position.Z;
         if (!raisedAnchor && MathF.Abs(groundZ - position.Z) <= 0.01f) return false;
         adjusted = new Vector3(position.X, position.Y, groundZ);
         return true;

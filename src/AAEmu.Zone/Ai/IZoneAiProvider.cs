@@ -14,14 +14,12 @@ namespace AAEmu.Zone.Ai;
 /// a fresh <see cref="CreateNpc"/> call — never a resurrected one.</item>
 /// <item>One scene owner: exactly one provider instance serves a scene generation, chosen once
 /// at scene creation through <see cref="ZoneSceneBackendSelection"/>.</item>
-/// <item>Provider exclusivity across implementations: the production implementation today is the
-/// temporary NATIVE AI provider (the embedded engine's AI, constructed and retired only inside
-/// its adapter type). The managed provider is unfinished and preserved for later replacement —
-/// TODO(managed-ai): complete it and admit it through <c>ZoneSceneBackendSelection.Ai</c>. It
-/// must not run for native-driven NPCs: a generation created by one provider receives every
+/// <item>Provider exclusivity across implementations: scene creation chooses either the managed
+/// provider or the native comparison adapter. Both use the neutral backend ownership gate.
+/// A generation created by one provider receives every
 /// signal, activation, target and scheduling call only from that same instance and retires
 /// through <see cref="RemoveNpc"/> on it; scene creation never routes a native-driven NPC to the
-/// managed implementation, and the unfinished managed implementation never picks up native-driven
+/// managed implementation, and the managed implementation never picks up native-driven
 /// NPC state on its own.</item>
 /// </list>
 ///

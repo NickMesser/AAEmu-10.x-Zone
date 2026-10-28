@@ -4,11 +4,50 @@ using Microsoft.Data.Sqlite;
 
 using AAEmu.Zone.Content;
 using AAEmu.Zone.Hosting;
+using AAEmu.Zone.Scene;
 
 namespace AAEmu.Zone.Tests;
 
 public sealed class RuntimeConfigurationTests
 {
+    [Test]
+    public async Task ManagedHostNeedsNoEngineOrLuaPathsAndRejectsAccidentalNativeDependencies()
+    {
+        using var fixture = new Fixture();
+        var values = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(fixture.ConfigurationJson())!;
+        values.Remove("engineDirectory");
+        values["engineBackend"] = JsonSerializer.SerializeToElement("managed");
+        var managed = ZoneRuntimeConfiguration.Read(JsonSerializer.Serialize(values), fixture.ConfigurationDirectory);
+        await Assert.That(managed.EngineDirectory).IsNull();
+        await Assert.That(managed.LuaLibraryPath).IsNull();
+        await Assert.That(managed.Backends).IsEqualTo(ZoneSceneBackendSelection.NativeFree);
+        await Assert.That(managed.WithLaunch(null, null, "test_zone", 456, null, null).Backends)
+            .IsEqualTo(ZoneSceneBackendSelection.NativeFree);
+
+        values["physicsBackend"] = JsonSerializer.SerializeToElement("owned");
+        await Assert.That(() => ZoneRuntimeConfiguration.Read(JsonSerializer.Serialize(values), fixture.ConfigurationDirectory))
+            .Throws<InvalidDataException>();
+        values["physicsBackend"] = JsonSerializer.SerializeToElement("managed-terrain");
+        values["aiBackend"] = JsonSerializer.SerializeToElement("native");
+        await Assert.That(() => ZoneRuntimeConfiguration.Read(JsonSerializer.Serialize(values), fixture.ConfigurationDirectory))
+            .Throws<InvalidDataException>();
+        values.Remove("physicsBackend"); values.Remove("aiBackend"); values.Remove("engineBackend");
+        await Assert.That(() => ZoneRuntimeConfiguration.Read(JsonSerializer.Serialize(values), fixture.ConfigurationDirectory))
+            .Throws<InvalidDataException>(); // native mode still needs an explicit engine path.
+    }
+
+    [Test]
+    public async Task ExistingOwnedConfigurationRetainsItsNativeTerrainDependency()
+    {
+        using var fixture = new Fixture();
+        var values = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(fixture.ConfigurationJson())!;
+        values["physicsBackend"] = JsonSerializer.SerializeToElement("owned");
+        var owned = ZoneRuntimeConfiguration.Read(JsonSerializer.Serialize(values), fixture.ConfigurationDirectory);
+        await Assert.That(owned.Backends.Engine).IsEqualTo(ZoneEngineBackendKind.Native);
+        await Assert.That(owned.Backends.Physics).IsEqualTo(ZonePhysicsBackendKind.Managed);
+        await Assert.That(owned.Backends.Ai).IsEqualTo(ZoneAiBackendKind.Native);
+    }
+
     [Test]
     public async Task ConfigurationAnchorsPathsAndKeepsOrderedReadOnlySourcesWithoutStartingRuntimeServices()
     {

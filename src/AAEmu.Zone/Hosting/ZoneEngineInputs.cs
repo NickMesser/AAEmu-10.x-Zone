@@ -20,6 +20,8 @@ public static class ZoneEngineInputs
             throw new ArgumentException("Composed framework startup requires a configuration so the engine directory, asset sources and log directory are explicit.");
         if (layout is null)
             throw new ArgumentException("Composed framework startup requires a configuration so the configured World map can be read from its asset source.");
+        if (configuration.Backends.Engine != ZoneEngineBackendKind.Native || configuration.EngineDirectory is null)
+            throw new ArgumentException("Native framework inputs require engineBackend=native and engineDirectory.");
         var workingDirectory = SingleAssetSource(configuration, "directory");
         var gamePak = SingleAssetSource(configuration, "archive");
         var auxiliary = content.LoadModelAuxiliaryContent();

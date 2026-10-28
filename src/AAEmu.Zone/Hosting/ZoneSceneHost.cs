@@ -13,47 +13,19 @@ using AAEmu.Zone.WorldState;
 namespace AAEmu.Zone.Hosting;
 
 /// <summary>
-/// Persistent-host composition helper — Agent 5's registered file (IMPLEMENTATION_OWNERSHIP.md
-/// section 6). Builds BOTH factories plus every scene-owned object for one scene generation and
-/// hands the two runner callbacks (plan C2 / §1 turn C):
-/// loadScene = engine → ResolveWorldLayout → coordinator Create (both factories) →
-/// CompleteLoadingAsync(placements, controllers) → physics-backed frame assembly → readiness
-/// announcement; adoptSession = ZoneSession.AdoptScene with the relationship factory, content
-/// indexes and the frame coordinator.
-///
-/// Ownership order inside loadScene (ZoneSceneResourceScope LIFO, registered exactly once per
-/// allocation before the next fallible step): engine → activation → spawner registry → manager →
-/// (coordinator adds) spawner factory → simulation/tick → loading → frame coordinator LAST, so
-/// disposal runs frame objects → loading (lua) → tick → factory → manager → spawner registry →
-/// activation (RetirePhysicsWorld trace) → engine (Shutdown). ZoneSession drains both producers
-/// before any of that runs (ZoneSession.cs:262-277 → EndReceiveAsync → Cleanup, which stops
-/// NPC/movement producers before _resources.Dispose — ZoneSceneCoordinator.cs:302-320).
-///
-/// Named decisions carried here:
-/// <list type="bullet">
-/// <item>Player factory is constructed MANAGED-IDENTITY only
-/// (<c>new ZonePlayerActorFactory(models)</c>): the native triple (entity services, physics
-/// world, engine) cannot be assembled before registry construction because the engine admits
-/// exactly ONE entity borrower (ZoneNativeEngine.Entities.cs:19-20) and that lease belongs to
-/// ZoneSceneActivation.Create — and activation cannot Create before the coordinator exists.
-/// Consequence is NAMED, never silent: native admission stages are skipped, physicalId stays 0,
-/// D2/P1 dependency rows stay unresolved, and the readiness table prints
-/// blocked-activation-entities-accessor as the exact unlock (a one-line entities accessor on
-/// ZoneSceneActivation — Agent 1 file, orchestrator-cleared pattern like PhysicsWorld).</item>
-/// <item>Physics/AI backend selection asserted by name here even after config validation —
-/// scene creation must reject Managed physics (ZoneSceneBackendSelection.cs:8-11) and managed AI
-/// (TODO(managed-ai), :25-27) at the point of construction.</item>
-/// <item>The unit wire follows World's default continent coordinates. Engine and spatial poses
-/// are zone-local; admission and outgoing publication apply the layout's 1024 m cell origin.</item>
-/// </list>
+/// Selects the independent managed host or the native comparison composition. Each runs one
+/// synchronized World connection through loading, readiness, frame dispatch and ordered retirement.
+/// The native composition borrows engine entities/terrain only after its activation completes;
+/// the managed composition never creates those services. Unit wire poses use continent coordinates
+/// while physics and spatial queries use the layout's zone-local meters.
 /// </summary>
 public static class ZoneSceneHost
 {
     /// <summary>Everything ZoneServerStartup hands over after content load + the single synchronization (sync-once preserved).</summary>
     public sealed record ZoneHostInputs(
-        ZoneNativeEngineOptions EngineOptions,
+        ZoneNativeEngineOptions? EngineOptions,
         ZoneModelContent Models,
-        ZoneModelAuxiliaryContent Auxiliary,
+        ZoneModelAuxiliaryContent? Auxiliary,
         ZoneWorldMapLayout Layout,
         IZoneAssetSource Assets,
         ZoneStatContent Stats,
@@ -89,6 +61,10 @@ public static class ZoneSceneHost
     {
         ArgumentNullException.ThrowIfNull(inputs);
         ArgumentNullException.ThrowIfNull(connection);
+        if (inputs.Backends.Engine == ZoneEngineBackendKind.Managed)
+            return ZoneManagedSceneHost.RunAsync(inputs, connection, shutdown);
+        ArgumentNullException.ThrowIfNull(inputs.EngineOptions);
+        ArgumentNullException.ThrowIfNull(inputs.Auxiliary);
         var trace = inputs.Trace;
         // --host requires framePeriodMilliseconds; named before any engine/network work.
         var framePeriod = inputs.Configuration.FramePeriod ?? throw new ArgumentException(

@@ -106,7 +106,6 @@ public sealed class ZoneNativeAiProvider : IZoneAiProvider, IZoneAiFramePump, ID
     internal const string UpdateDependency = "native scheduled actor update";
 
     private static readonly object GlobalGate = new();
-    private static readonly Dictionary<ZoneActorHandle, ZoneNativeAiProvider> GlobalBindings = new();
 
     private readonly IZoneNativeAiActorView _actors;
     private readonly NativeAiAccess _native;
@@ -173,10 +172,10 @@ public sealed class ZoneNativeAiProvider : IZoneAiProvider, IZoneAiFramePump, ID
         return parameters is not null;
     }
 
-    /// <summary>Whether any provider instance of this type currently binds the exact generation.</summary>
+    /// <summary>Whether either backend currently owns the exact generation, including a construction reservation.</summary>
     public static bool IsBound(ZoneActorHandle actor)
     {
-        lock (GlobalGate) return GlobalBindings.ContainsKey(actor);
+        return ZoneAiBackendBindings.IsBound(actor);
     }
 
     /// <summary>Structured native dependency status; the sole authority on whether a native pass can run.</summary>
@@ -190,23 +189,28 @@ public sealed class ZoneNativeAiProvider : IZoneAiProvider, IZoneAiFramePump, ID
             throw new ArgumentException($"The AI provider binds NPC generations only; handle {actor} is {kind}.", nameof(actor));
         lock (GlobalGate)
         {
-            if (_bindings.ContainsKey(actor) || GlobalBindings.ContainsKey(actor))
+            if (_bindings.ContainsKey(actor) || !ZoneAiBackendBindings.TryClaim(actor, this))
                 throw new InvalidOperationException($"Handle {actor} already has one AI backend bound; one AI backend per NPC.");
         }
-        // Admission order: native construction publishes first, the binding only on success,
-        // so a failed construct leaves no partial registration (the rollback discipline of
+        // Reserve exclusivity before construction, publish the local binding only on success,
+        // and release the reservation on failure (the rollback discipline of
         // ZoneNpcActorRegistry.Adopt, Npcs/ZoneNpcActorRegistry.cs:94-113).
-        _native.ConstructNpcActor(actor);
+        try { _native.ConstructNpcActor(actor); }
+        catch
+        {
+            ZoneAiBackendBindings.Release(actor, this);
+            throw;
+        }
         var binding = new Binding(actor);
         lock (GlobalGate)
         {
-            if (_bindings.ContainsKey(actor) || GlobalBindings.ContainsKey(actor))
+            if (_bindings.ContainsKey(actor))
             {
                 _native.DestroyNpcActor(actor);
+                ZoneAiBackendBindings.Release(actor, this);
                 throw new InvalidOperationException($"Handle {actor} acquired another AI backend during construction.");
             }
             _bindings.Add(actor, binding);
-            GlobalBindings.Add(actor, this);
         }
     }
 
@@ -229,8 +233,7 @@ public sealed class ZoneNativeAiProvider : IZoneAiProvider, IZoneAiFramePump, ID
         {
             if (_bindings.TryGetValue(actor, out var current) && ReferenceEquals(current, binding))
                 _bindings.Remove(actor);
-            if (GlobalBindings.TryGetValue(actor, out var owner) && ReferenceEquals(owner, this))
-                GlobalBindings.Remove(actor);
+            ZoneAiBackendBindings.Release(actor, this);
         }
     }
 
@@ -323,8 +326,7 @@ public sealed class ZoneNativeAiProvider : IZoneAiProvider, IZoneAiFramePump, ID
         lock (GlobalGate)
         {
             foreach (var pair in _bindings)
-                if (GlobalBindings.TryGetValue(pair.Key, out var owner) && ReferenceEquals(owner, this))
-                    GlobalBindings.Remove(pair.Key);
+                ZoneAiBackendBindings.Release(pair.Key, this);
             _bindings.Clear();
         }
     }
