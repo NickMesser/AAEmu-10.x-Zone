@@ -406,6 +406,13 @@ public sealed partial class ZoneSession
                 var schedule = GameScheduleMessage.Read(frame.Opcode, frame.Body.Span);
                 GameSchedules?.Handle(schedule); // Native ignores these before its post-load readiness gate.
                 break;
+            case WzOpcodes.TowerDefReload: TowerDefs?.Reload(TowerDefReload.Read(frame.Body.Span)); break;
+            case WzOpcodes.TowerDefQueryPlayability:
+                if (TowerDefs?.QueryPlayability(TowerDefQueryPlayability.Read(frame.Body.Span)) is { } playability) Registry.QueueNotification(playability);
+                break;
+            case WzOpcodes.TowerDefStart: TowerDefs?.Start(TowerDefSpotMessage.Read(frame.Body.Span)); break;
+            case WzOpcodes.TowerDefEnd: TowerDefs?.End(TowerDefSpotMessage.Read(frame.Body.Span)); break;
+            case WzOpcodes.TowerDefWaveStart: TowerDefs?.WaveStart(TowerDefWaveStart.Read(frame.Body.Span)); break;
             case WzOpcodes.UnitMovement:
                 // Movement-model admission seam (registered member scope): nothing in production
                 // constructed ZoneActorMovementController before this host, and the registry's

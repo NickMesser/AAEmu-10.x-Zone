@@ -251,6 +251,7 @@ Summary count: 133 registered; 56 decoded+dispatched; 77 absent (0 missing from 
 - Confidence: medium
 
 ### WZ-10: Siege/conflict extras and TowerDef
+- Status: **Partial** — TowerDef done as state + playability: five packets decoded (`TowerDefMessages.cs`), dispatched in `ZoneSession.DispatchCore`, `ZoneTowerDefController` answers QueryPlayability per native `393591D0` (reply only when the tower has a phase, a nonzero primary spawner type and >=1 physical spawner of that type in this zone, and is not already running; so zone 129 stays silent as the native capture shows). Start/End/WaveStart keep running-set and wave state but do not yet fire the native spawner event (type 5) into the spot's spawner. GameActivity and AttackFaction not done.
 - Priority: P2
 - Native evidence: TowerDefReload `sub_39363FA0`, TowerDefQueryPlayability `sub_39363FC0` (replies ZW TowerDefReportPlayability 0x32), TowerDefStart `sub_39363FE0`, TowerDefEnd `sub_39364000`, TowerDefWaveStart `sub_39364020`, GameActivityStart/End `sub_393640B0`/`sub_393640E0` (log only), AttackFaction `sub_39365450`.
 - Repo state: Dominion/Siege/ConflictZone are done (ZoneSiegeState.cs). TowerDef packets absent (only spawner-controller content refs). GameActivity absent (native no-op log, trivially add). `ZoneUnit.AttackFactionFlags` exists (ZoneUnit.cs:25) but WZ AttackFaction does not set it.

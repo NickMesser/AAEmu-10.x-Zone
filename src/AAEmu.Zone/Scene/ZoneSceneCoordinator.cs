@@ -326,4 +326,7 @@ public sealed class ZoneSceneCoordinator : IDisposable
         var failure = _cleanupFinished.Task.GetAwaiter().GetResult();
         if (failure is not null) ExceptionDispatchInfo.Capture(failure).Throw();
     }
+
+    /// <summary>The scene's TowerDef manager (native 39359xxx); owned by the spawner factory like the game schedules.</summary>
+    public ZoneTowerDefController TowerDefs => _components.Spawners.TowerDefs;
 }
