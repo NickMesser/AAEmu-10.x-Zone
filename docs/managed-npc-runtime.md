@@ -224,6 +224,17 @@ Observed end-to-end runs of about125–142seconds leave startup/receive throughp
 Artifacts are `npc-components-{entry,final-entry}-*`, `captures/npc-components-*-output.bin`,
 `npc-components-final-tests.log` and `research/entry-movement-comparison.jsonl` in the runtime directory.
 
+The final accepted build (`2b2ed94`) completes in120.625seconds with80 modules, zero forbidden
+modules, player387 grounded at local `(1172.5996,1646.5,366.3365)`, one ZoneLoaded and three
+movement rows for387. All three timestamp-normalized payloads match the previous accepted
+replay (SHA256 `180C555000D965425C7528522AE2A5462F916907EBECCA95B4BFC1A2231EBCD8`).
+The final stream contains no partial frame and no UnitLocation debug rows. World/listener exit0
+and zone exit3 match the configured disconnect policy; frame/terrain/session retirement is ordered.
+Artifacts use the separate `npc-components-accepted-entry-*` prefix and
+`captures/npc-components-accepted-entry-output.bin`. The original-resource NPC control and final
+558-test run cover the separate component/behavior boundaries; production NPC CreateProfile is
+still refused before class compilation until the remaining admission dependencies are supplied.
+
 Local evidence is under `D:/aaemu-runtime/research`: `zone129-original-script-controls.json`,
 `zone129-original-script-comparison.json`, `zone129-production-script-host-bootstrap.json`,
 `zone129-navigation-runtime.json`, `npc-script-proxy-services-source.md` and
