@@ -68,6 +68,7 @@ World's `ZoneHostSupervisor` starts one process per zone instance with `-dedicat
 
 - **Base configuration.** Inputs World does not pass (engine directory, asset sources, world map, frame period) come from `zone.json`. The server takes it from `--config`, the `+zone_config` CVar, `AAEMU_ZONE_CONFIG`, or `zone.json` beside the executable, in that order.
 - **What World's launch overrides.** World's endpoint, zone and content database override the configuration. The zone key is always resolved from the content database. Logs go to `AAEMU_ZONE_SAVE_DIR`/`AAEMU_ZONE_LOG_NAME` when set. ZWJoin reports `+instance` and `+sv_port`.
+- **Player admission.** Set `"physicsBackend": "owned"` (as in the example). The native backend refuses players until the native `CPlayer` actor is published into ActorSystem; the owned backend admits the player with an unbound flow actor and makes this host the movement authority.
 - **Spawner placements.** These are read from `game/worlds/<world>/level_design/zone/<key>/zone_server/npc_spawners.g` in the configured assets unless `spawnerFile` or `--spawner-file` names a file.
 - **`AAEMU_ZONE_DLL`.** It is ignored: this process replaces that module.
 - **World configuration.** Set `ZoneHost.Executable` to `AAEmu.ZoneServer.exe` and `ZoneHost.WorkingDirectory` to the client directory that `+db_location` is relative to. World's preflight still requires `ZoneHost.NativeDll` to name an existing file (TASKS.md WC-03).
