@@ -43,7 +43,7 @@ public sealed class ZoneNavigationLegacyGraphLinkRow
 }
 
 /// <summary>
-/// The complete version55 network body consumed by dedicated 31104438 ->31103988. Authored
+/// The complete version55 network body shared by dedicated31103988 and streamed311030A8. Authored
 /// rows remain separate from node reuse, modifier lookup, runtime pools and link construction.
 /// Reading this content alone does not produce a ready navigation graph.
 /// </summary>
@@ -75,6 +75,18 @@ public sealed class ZoneNavigationLegacyGraphContent
 
     public static ZoneNavigationLegacyGraphContent Load(Stream stream)
         => LoadCore(stream, throwOnMissingFirstNode: true)!;
+
+    /// <summary>311030A8 streamed records; unlike 31103988 this path does not require node key1.</summary>
+    public static ZoneNavigationLegacyGraphContent LoadStreaming(Stream stream)
+    {
+        ArgumentNullException.ThrowIfNull(stream);
+        using var copy = new MemoryStream(); stream.CopyTo(copy);
+        var reader = new Reader(copy.GetBuffer().AsSpan(0, checked((int)copy.Length)));
+        var version = reader.UInt32("version");
+        if (version != 55)
+            throw new NotSupportedException($"Streamed network version {version} is unsupported; native requires version 55.");
+        return new(ref reader);
+    }
 
     // The startup caller must distinguish native key1 failure from malformed managed input.
     // Do not publish an incomplete graph or weaken the public reader's validation contract.

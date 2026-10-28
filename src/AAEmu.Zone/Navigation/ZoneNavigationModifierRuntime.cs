@@ -154,6 +154,22 @@ public sealed class ZoneNavigationModifierRuntime
         ResetCore();
     }
 
+    /// <summary>31149764 appends streamed modifiers; duplicate names still consume an ID.</summary>
+    internal void ImportStreaming(ZoneNavigationAreaContent content)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        EnsureNotLoading();
+        foreach (var row in content.NavigationModifierRows)
+        {
+            var id = _ids.Allocate();
+            var key = NameKey(row.Name.Bytes);
+            if (_byName.ContainsKey(key)) continue;
+            var modifier = new ZoneNavigationRuntimeModifier(id, row);
+            _byName.Add(key, modifier);
+            _byId.Add(id, modifier);
+        }
+    }
+
     private void ResetCore()
     {
         // 3113AA0C clears modifier records and their ID index, then 3113AA6C
