@@ -729,6 +729,8 @@ public sealed class ZoneSceneUnitUpdateServices : IZoneUnitUpdateServices
         _registry = registry;
         _startup = startup;
         _notes = notes;
+        notes.AddOnce("cooldown-start-modifiers",
+            "cooldown timers: World reset/reduce/charge changes and stopped-cast durations are mirrored; ordinary fire/GCD/charge starts still require skill modifiers TODO(cooldown-start-modifiers)");
     }
 
     /// <summary>The single scene clock (ZoneWorldGameClock.GetTime — World-aligned CTimer domain, :60-72), sampled per scheduler call exactly like the native clock read.</summary>
@@ -769,12 +771,11 @@ public sealed class ZoneSceneUnitUpdateServices : IZoneUnitUpdateServices
         throw new NotSupportedException(
             $"TODO(actor-publication): unit model publication for unit {unit.Snapshot.ObjectId} requires the unowned GameObject/ActorSystem composition (ZonePlayerActorFactory.ActorPublicationDependency).");
 
-    /// <summary>39BF7A90 skill timers have no skill-runtime owner in this tree — once-reported at readiness TODO(skill-runtime); the scheduler still receives its real elapsed delta, so no timing information is invented here.</summary>
+    /// <summary>39BF7A90: advance the exact live unit's cooldown maps using the rolling scheduler's elapsed milliseconds.</summary>
     public void UpdateSkills(ZoneUnit unit, uint elapsedMilliseconds)
     {
-        _ = unit; _ = elapsedMilliseconds;
-        _notes.AddOnce("skill-runtime",
-            "skill updates: per-unit skill timers (39BF7A90) have no skill-runtime owner TODO(skill-runtime)");
+        ArgumentNullException.ThrowIfNull(unit);
+        if (_registry.IsCurrent(unit)) unit.Cooldowns.Advance(elapsedMilliseconds);
     }
 
     /// <summary>

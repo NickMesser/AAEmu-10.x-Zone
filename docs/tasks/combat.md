@@ -45,7 +45,7 @@
 - Confidence: medium
 
 ### CMB-02: Add WZ message codecs and opcodes for the skill/damage/knockback/cooldown/plot packets
-- Status: **Partial** — codecs for 0x2B-0x31 and 0x3A-0x3D done in `src/AAEmu.Zone.Protocol/Messages/SkillMessages.cs`; knockback/blink/impulse/invisible/cooldown/controller packets still absent.
+- Status: **Partial** — codecs for 0x2B-0x31 and 0x3A-0x3D in `src/AAEmu.Zone.Protocol/Messages/SkillMessages.cs`; cooldown reset/reduce/charge-change (0x39/0x86/0x88) decoded and dispatched by `SkillCooldownChanges.cs`. Knockback/blink/impulse/invisible/controller packets remain.
 - Priority: P1
 - Native evidence: registrars/handlers WZSkillStarted `39363460`, SkillFired `393634B0`, SkillEnded `39363510`, SkillStopped `39363530`, CastingStopped `39363550`, UnitDamaged `39363580`, UnitHealed `393635B0`, KnockBackUnit `393635D0`, BlinkUnit `39369B10`, ImpulseUnit `39363600`, UnitInvisible `39363660`, OnUnitBlinked `39363420`, SkillCooldownReset `39364D00`, CooldownReduce `393652F0`, ChangeChargeSkillCooldown `393653F0`, PlotEvent `393636D0`, PlotEnded `39363760`, PlotCastingStopped `39363780`, PlotChannelingStopped `393637B0`, CreateSkillController `39362F50`, SkillControllerState `39362F00`, ZombieCharacter `39364380`, AttackOnQuest `3936E3F0`, AttackFaction and FactionImmigrateNpcSpawnerCondition (last two registrars `39384D80` -> `39365450`, `393914B0` -> `3936E940`; assignment to packet name unverified). Registration order in `sub_3936F740`; note my registrar-order enumeration is 1 lower than repo numbering from 0x38 onward (offset-based check: SkillCooldownReset registrar stores at `a1+464` = 0x39), so keep repo `WzOpcodes` values and pair by packet type.
 - Repo state: `WzOpcodes.cs` declares most constants (0x2B-0x35, 0x39-0x3D, 0x86-0x89) but `AAEmu.Zone.Protocol/Messages/` has no codec for any of them; `ZoneSession.ReceiveCore` falls to the default "not implemented" counter.
@@ -112,9 +112,10 @@
 - Confidence: medium
 
 ### CMB-10: Mirror the per-unit skill cooldown manager
+- Status: **Partial** — `ZoneCooldownManager` owns allocation-scoped skill, tag, charge and global timers. WZ reset/reduce/charge-change handlers, signed adjustments, tag membership/related-tag flags, switched cooldowns, native one-charge-per-update recovery, and the rolling `UpdateSkills` timer pass are implemented. Matching `CastingStopped` packets start the World-supplied duration. `ZoneSkillContent` loads the cooldown/charge columns and `tagged_skills`, including native text-null tag defaults. Remaining: ordinary fire, GCD and charge starts through the full equipment/buff/attribute modifier calculation (`39BF5720`/`39BF7980`), buff-end starts, GM ignore-cooldown state and NPC skill eligibility consumers. `ZoneCooldownTests` covers wire bodies, truncation, tag sharing/deduplication, timer arithmetic, charge recovery, dispatch and allocation reuse; the real 38,043-skill catalog passes `--check-content`.
 - Priority: P1
 - Native evidence: per-unit object at unit+31912: reset `39BF9120`/`39BF91E0`, `39BF7970`, `39BF93B0`, `39BF9BB0`; start `39BFA200` -> `39BF5720` (cooldown computation) -> `39BFA070`; handlers `39364D00` (CooldownReset), `393652F0` (Reduce), `393653F0` (ChargeChange); cooldown-modifying attributes via `39BF6BF0`; `39BF96F0` second-tag cooldown.
-- Repo state: absent.
+- Repo state: timer maps and incoming changes are implemented; automatic local start/modifier paths remain as listed in the status above.
 - Work: implement `ZoneCooldownManager` (per skill id, cooldown tag, charge counts, GCD tags) fed by World packets and by local starts (skill end / buff end); expose `GetRemaining(skill)`.
 - Depends on: CMB-02, CMB-04.
 - Confidence: medium

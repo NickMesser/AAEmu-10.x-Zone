@@ -170,7 +170,7 @@ public sealed class ZoneUnitRegistry
             throw new InvalidDataException("Zone unit registry reached its configured capacity.");
         var progression = ZoneProgressionState.FromSnapshot(snapshot, _content);
         var stats = _stats?.Calculate(snapshot, progression: progression);
-        var unit = new ZoneUnit(snapshot, stats, progression);
+        var unit = new ZoneUnit(snapshot, stats, progression, _content?.Skills);
         unit.SetBuffTimingEnabled(_buffContent is not null &&
             ZoneBuffTiming.RequiresUpdate(snapshot.Identity.Kind, snapshot.Buffs, _buffContent));
         // 39450870 applies initial effects in good/bad/hidden order after model creation.
@@ -285,6 +285,34 @@ public sealed class ZoneUnitRegistry
         if (Spatial is null || !IsCurrent(unit) || Spatial.GetMembership(unit) is null) return false;
         var position = _modelPosition!(unit);
         return IsCurrent(unit) && Spatial.Update(unit, position);
+    }
+
+    public bool ResetCooldowns(SkillCooldownReset message)
+    {
+        if (!_units.TryGetValue(message.ObjectId, out var unit)) return false;
+        unit.Cooldowns.Reset(message);
+        return true;
+    }
+
+    public bool ReduceCooldowns(SkillCooldownReduce message)
+    {
+        if (!_units.TryGetValue(message.ObjectId, out var unit)) return false;
+        unit.Cooldowns.Reduce(message);
+        return true;
+    }
+
+    public bool ChangeChargeCooldown(ChargeSkillCooldownChange message)
+    {
+        if (!_units.TryGetValue(message.ObjectId, out var unit)) return false;
+        unit.Cooldowns.ChangeCharge(message);
+        return true;
+    }
+
+    /// <summary>39456630: World supplies the resolved cooldown when a matching casting timeline stops.</summary>
+    public bool StartStoppedCastingCooldown(CastingStopped message)
+    {
+        if (message.Duration == 0 || !_units.TryGetValue(message.ObjectId, out var unit)) return false;
+        return unit.Cooldowns.StartSkill(unchecked((uint)message.SkillId), unchecked((uint)message.Duration));
     }
 
     public bool UpdatePoints(ReadOnlySpan<byte> body)

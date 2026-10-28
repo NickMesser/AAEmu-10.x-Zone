@@ -584,7 +584,17 @@ public sealed partial class ZoneSession
             case WzOpcodes.SkillFired: Skills.Fire(SkillFired.Read(frame.Body.Span)); break;
             case WzOpcodes.SkillEnded: Skills.End(SkillEnded.Read(frame.Body.Span)); break;
             case WzOpcodes.SkillStopped: Skills.Stop(SkillStopped.Read(frame.Body.Span)); break;
-            case WzOpcodes.CastingStopped: Skills.StopCasting(CastingStopped.Read(frame.Body.Span)); break;
+            case WzOpcodes.CastingStopped:
+            {
+                var message = CastingStopped.Read(frame.Body.Span);
+                if (Skills.Casts.TryGetValue(message.ObjectId, out var cast) && cast.Timeline == (ushort)message.Timeline)
+                    Registry.StartStoppedCastingCooldown(message);
+                Skills.StopCasting(message);
+                break;
+            }
+            case WzOpcodes.SkillCooldownReset: Registry.ResetCooldowns(SkillCooldownReset.Read(frame.Body.Span)); break;
+            case WzOpcodes.SkillCooldownReduce: Registry.ReduceCooldowns(SkillCooldownReduce.Read(frame.Body.Span)); break;
+            case WzOpcodes.ChangeChargeSkillCooldown: Registry.ChangeChargeCooldown(ChargeSkillCooldownChange.Read(frame.Body.Span)); break;
             case WzOpcodes.UnitDamaged: Skills.Damage(UnitDamaged.Read(frame.Body.Span)); break;
             case WzOpcodes.UnitHealed: Skills.Heal(UnitHealed.Read(frame.Body.Span)); break;
             case WzOpcodes.PlotEvent: Skills.Plot(PlotEvent.Read(frame.Body.Span)); break;

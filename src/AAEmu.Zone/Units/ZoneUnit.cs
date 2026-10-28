@@ -1,11 +1,13 @@
 using AAEmu.Zone.Actors;
 using AAEmu.Zone.Combat;
+using AAEmu.Zone.Content;
 using AAEmu.Zone.Protocol.Messages;
 using AAEmu.Zone.Protocol.Units;
 
 namespace AAEmu.Zone.Units;
 
-public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, ZoneProgressionState? progression = null)
+public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, ZoneProgressionState? progression = null,
+    ZoneSkillContent? skillContent = null)
 {
     public UnitStateSnapshot Snapshot { get; } = snapshot;
     public ZoneVitalStats? Stats { get; private set; } = stats;
@@ -16,6 +18,7 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
     public IReadOnlyList<sbyte> GmModes { get; private set; } =
         Array.AsReadOnly(snapshot.GmModes.Count == 0 ? new sbyte[9] : snapshot.GmModes.ToArray());
     public ZoneProgressionState Progression { get; private set; } = progression ?? ZoneProgressionState.FromSnapshot(snapshot);
+    public ZoneCooldownManager Cooldowns { get; } = new(skillContent ?? ZoneSkillContent.Empty);
     public long PreciseHealth { get; private set; } = snapshot.PreciseHealth;
     public long PreciseMana { get; private set; } = snapshot.PreciseMana;
     public ZoneUnitPose Pose { get; private set; } = ZoneUnitPose.FromSnapshot(snapshot);

@@ -21,6 +21,8 @@ This repository becomes the **zone server for AAEmu 10.x**. World runs it in pla
 
 ## How this list was made
 
+Current implementation progress (2026-10-28): the owned backend has admitted a real player in zone 129 (commits `fa837e4`, `28850a2`). Cooldown reset/reduce/charge-change packets now update per-unit timer maps, and the rolling scene update advances them; see CMB-02/CMB-10 for the remaining start/modifier paths. The coverage snapshot below is the original audit, not a claim that these later changes are absent. Full gameplay parity remains open.
+
 On 2026-10-27, 13 parallel audits compared three things:
 
 - **The original zone.** The Hex-Rays export of the client's `Bin64/x2game-dev_dedicate.dll` (ArcheAge 10.0.2.13 r575, 89,574 functions) and its string/RTTI/CVar dumps. Every task cites native function addresses, strings or RTTI names.
@@ -232,7 +234,7 @@ Generated from the area reports; status comes from each task's `- Status:` line.
 | CMB-07 | Implement ZoneBuffMan create/destroy side effects on the unit |  | [combat](docs/tasks/combat.md#cmb-07-implement-zonebuffman-createdestroy-side-effects-on-the-unit) |
 | CMB-08 | Load the full BuffDesc (buffs table and companion tables) |  | [combat](docs/tasks/combat.md#cmb-08-load-the-full-buffdesc-buffs-table-and-companion-tables) |
 | CMB-09 | Implement unit crowd-control/status state consumers (stun, sleep, root, silence, walk-only, cannot-jump, blank-minded, glide) |  | [combat](docs/tasks/combat.md#cmb-09-implement-unit-crowd-controlstatus-state-consumers-stun-sleep-root-silence-walk-only-cannot-jump-blank-minded-glide) |
-| CMB-10 | Mirror the per-unit skill cooldown manager |  | [combat](docs/tasks/combat.md#cmb-10-mirror-the-per-unit-skill-cooldown-manager) |
+| CMB-10 | Mirror the per-unit skill cooldown manager | Partial | [combat](docs/tasks/combat.md#cmb-10-mirror-the-per-unit-skill-cooldown-manager) |
 | CMB-11 | Implement the NPC AI skill pipeline (pick, can-use, use, stop) |  | [combat](docs/tasks/combat.md#cmb-11-implement-the-npc-ai-skill-pipeline-pick-can-use-use-stop) |
 | CMB-12 | Implement the Lua ScriptBindUnit combat API used by AI scripts |  | [combat](docs/tasks/combat.md#cmb-12-implement-the-lua-scriptbindunit-combat-api-used-by-ai-scripts) |
 | CMB-13 | Skill target/range/obstacle validation helpers |  | [combat](docs/tasks/combat.md#cmb-13-skill-targetrangeobstacle-validation-helpers) |
