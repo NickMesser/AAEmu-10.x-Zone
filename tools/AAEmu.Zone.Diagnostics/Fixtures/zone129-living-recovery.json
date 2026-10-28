@@ -1,0 +1,963 @@
+[
+  {
+    "name": "free_idle",
+    "stepSeconds": 0.01,
+    "frames": 2,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "free_requested_velocity",
+    "stepSeconds": 0.01,
+    "frames": 2,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "velocity": [
+          1,
+          0,
+          0
+        ],
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ]
+      }
+    ],
+    "minimumFirstBodyTravel": 0.015
+  },
+  {
+    "name": "wall_capsule_overlap_idle",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          768.867726488631,
+          942.6329599439013,
+          230.09661587874092
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "setupPosition": [
+          768.867726488631,
+          942.6329599439013,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "wall_capsule_overlap_inward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          768.867726488631,
+          942.6329599439013,
+          230.09661587874092
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "velocity": [
+          -0.48861560149154587,
+          -0.10608861380494501,
+          -0.0
+        ],
+        "setupPosition": [
+          768.867726488631,
+          942.6329599439013,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "wall_capsule_overlap_outward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          768.867726488631,
+          942.6329599439013,
+          230.09661587874092
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "velocity": [
+          0.48861560149154587,
+          0.10608861380494501,
+          0.0
+        ],
+        "setupPosition": [
+          768.867726488631,
+          942.6329599439013,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "wall_cylinder_overlap_idle",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          768.867726488631,
+          942.6329599439013,
+          230.09661587874092
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "setupPosition": [
+          768.867726488631,
+          942.6329599439013,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "wall_cylinder_overlap_inward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          768.867726488631,
+          942.6329599439013,
+          230.09661587874092
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "velocity": [
+          -0.48861560149154587,
+          -0.10608861380494501,
+          -0.0
+        ],
+        "setupPosition": [
+          768.867726488631,
+          942.6329599439013,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "wall_cylinder_overlap_outward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          768.867726488631,
+          942.6329599439013,
+          230.09661587874092
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "velocity": [
+          0.48861560149154587,
+          0.10608861380494501,
+          0.0
+        ],
+        "setupPosition": [
+          768.867726488631,
+          942.6329599439013,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "roof_capsule_overlap_idle",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          762.7439112988338,
+          1273.114910670312,
+          260.9994073306365
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "setupPosition": [
+          762.7439112988338,
+          1273.114910670312,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "roof_capsule_overlap_inward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          762.7439112988338,
+          1273.114910670312,
+          260.9994073306365
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "velocity": [
+          -0.3075613678719072,
+          -0.29700836444662343,
+          -0.25921426743430437
+        ],
+        "setupPosition": [
+          762.7439112988338,
+          1273.114910670312,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "roof_capsule_overlap_outward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          762.7439112988338,
+          1273.114910670312,
+          260.9994073306365
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "velocity": [
+          0.3075613678719072,
+          0.29700836444662343,
+          0.25921426743430437
+        ],
+        "setupPosition": [
+          762.7439112988338,
+          1273.114910670312,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "roof_cylinder_overlap_idle",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          762.7367818274614,
+          1273.1080258243824,
+          260.9933985763128
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "setupPosition": [
+          762.7367818274614,
+          1273.1080258243824,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "roof_cylinder_overlap_inward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          762.7367818274614,
+          1273.1080258243824,
+          260.9933985763128
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "velocity": [
+          -0.3075613678719072,
+          -0.29700836444662343,
+          -0.25921426743430437
+        ],
+        "setupPosition": [
+          762.7367818274614,
+          1273.1080258243824,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "roof_cylinder_overlap_outward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          762.7367818274614,
+          1273.1080258243824,
+          260.9933985763128
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "velocity": [
+          0.3075613678719072,
+          0.29700836444662343,
+          0.25921426743430437
+        ],
+        "setupPosition": [
+          762.7367818274614,
+          1273.1080258243824,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "stair_capsule_overlap_idle",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          899.8374332586924,
+          462.8172353830469,
+          303.66246375514555
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "setupPosition": [
+          899.8374332586924,
+          462.8172353830469,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "stair_capsule_overlap_inward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          899.8374332586924,
+          462.8172353830469,
+          303.66246375514555
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "velocity": [
+          -0.0,
+          -0.22849733819204782,
+          -0.44473471467735565
+        ],
+        "setupPosition": [
+          899.8374332586924,
+          462.8172353830469,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "stair_capsule_overlap_outward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          899.8374332586924,
+          462.8172353830469,
+          303.66246375514555
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "velocity": [
+          0.0,
+          0.22849733819204782,
+          0.44473471467735565
+        ],
+        "setupPosition": [
+          899.8374332586924,
+          462.8172353830469,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "stair_cylinder_overlap_idle",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          899.8374332586924,
+          462.79738333967566,
+          303.6238248243189
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "setupPosition": [
+          899.8374332586924,
+          462.79738333967566,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "stair_cylinder_overlap_inward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          899.8374332586924,
+          462.79738333967566,
+          303.6238248243189
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "velocity": [
+          -0.0,
+          -0.22849733819204782,
+          -0.44473471467735565
+        ],
+        "setupPosition": [
+          899.8374332586924,
+          462.79738333967566,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "stair_cylinder_overlap_outward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          899.8374332586924,
+          462.79738333967566,
+          303.6238248243189
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "velocity": [
+          0.0,
+          0.22849733819204782,
+          0.44473471467735565
+        ],
+        "setupPosition": [
+          899.8374332586924,
+          462.79738333967566,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bridge_capsule_overlap_idle",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          1243.9200144548035,
+          1018.6183242397893,
+          206.77492401100693
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "setupPosition": [
+          1243.9200144548035,
+          1018.6183242397893,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bridge_capsule_overlap_inward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          1243.9200144548035,
+          1018.6183242397893,
+          206.77492401100693
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "velocity": [
+          -0.0,
+          -0.0,
+          -0.5
+        ],
+        "setupPosition": [
+          1243.9200144548035,
+          1018.6183242397893,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bridge_capsule_overlap_outward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          1243.9200144548035,
+          1018.6183242397893,
+          206.77492401100693
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.16,
+        "velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "setupPosition": [
+          1243.9200144548035,
+          1018.6183242397893,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bridge_cylinder_overlap_idle",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          1243.9200144548035,
+          1018.6183242397893,
+          206.69492401100695
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "setupPosition": [
+          1243.9200144548035,
+          1018.6183242397893,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bridge_cylinder_overlap_inward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          1243.9200144548035,
+          1018.6183242397893,
+          206.69492401100695
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "velocity": [
+          -0.0,
+          -0.0,
+          -0.5
+        ],
+        "setupPosition": [
+          1243.9200144548035,
+          1018.6183242397893,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bridge_cylinder_overlap_outward",
+    "stepSeconds": 0.01,
+    "frames": 5,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "cylinder",
+        "position": [
+          1243.9200144548035,
+          1018.6183242397893,
+          206.69492401100695
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.24,
+        "heightPivot": 0,
+        "gravity": 0,
+        "halfHeight": 0.16,
+        "velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "setupPosition": [
+          1243.9200144548035,
+          1018.6183242397893,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "player_capsule_origin_below_floor_0.1",
+    "stepSeconds": 0.01,
+    "frames": 12,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          1243.9200144548035,
+          1018.6183242397893,
+          206.71492401100696
+        ],
+        "radius": 0.4,
+        "heightCollider": 1.2,
+        "heightPivot": 0,
+        "gravity": 25,
+        "segmentHalfHeight": 0.32,
+        "setupPosition": [
+          1243.9200144548035,
+          1018.6183242397893,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "player_capsule_origin_below_floor_0.9",
+    "stepSeconds": 0.01,
+    "frames": 12,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          1243.9200144548035,
+          1018.6183242397893,
+          205.91492401100695
+        ],
+        "radius": 0.4,
+        "heightCollider": 1.2,
+        "heightPivot": 0,
+        "gravity": 25,
+        "segmentHalfHeight": 0.32,
+        "setupPosition": [
+          1243.9200144548035,
+          1018.6183242397893,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "capsule_bottom_below_pivot_created_on_floor",
+    "stepSeconds": 0.01,
+    "frames": 12,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          1243.9200144548035,
+          1018.6183242397893,
+          206.81492401100695
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.2,
+        "heightPivot": 0,
+        "gravity": 25,
+        "segmentHalfHeight": 0.16,
+        "setupPosition": [
+          1243.9200144548035,
+          1018.6183242397893,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "capsule_bottom_below_pivot_falling_from_above",
+    "stepSeconds": 0.01,
+    "frames": 45,
+    "bodies": [
+      {
+        "name": "actor",
+        "shape": "capsule",
+        "position": [
+          1243.9200144548035,
+          1018.6183242397893,
+          207.11492401100696
+        ],
+        "radius": 0.08,
+        "heightCollider": 0.2,
+        "heightPivot": 0,
+        "gravity": 25,
+        "segmentHalfHeight": 0.16,
+        "setupPosition": [
+          1243.9200144548035,
+          1018.6183242397893,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "living_pair_overlap_idle",
+    "stepSeconds": 0.01,
+    "frames": 10,
+    "bodies": [
+      {
+        "name": "a",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.2,
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ]
+      },
+      {
+        "name": "b",
+        "shape": "capsule",
+        "position": [
+          512.3,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.2,
+        "setupPosition": [
+          522.3,
+          512,
+          1000
+        ]
+      }
+    ]
+  },
+  {
+    "name": "living_pair_overlap_moving_inward",
+    "stepSeconds": 0.01,
+    "frames": 10,
+    "bodies": [
+      {
+        "name": "a",
+        "shape": "capsule",
+        "position": [
+          512,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.2,
+        "velocity": [
+          0.5,
+          0,
+          0
+        ],
+        "setupPosition": [
+          512,
+          512,
+          1000
+        ]
+      },
+      {
+        "name": "b",
+        "shape": "capsule",
+        "position": [
+          512.3,
+          512,
+          1000
+        ],
+        "radius": 0.2,
+        "heightCollider": 0.4,
+        "heightPivot": 0,
+        "gravity": 0,
+        "segmentHalfHeight": 0.2,
+        "setupPosition": [
+          522.3,
+          512,
+          1000
+        ]
+      }
+    ]
+  }
+]

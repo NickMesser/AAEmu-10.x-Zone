@@ -19,10 +19,17 @@ namespace AAEmu.Zone.Physics;
 public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysicsMotion
 {
     public const float MinimumWalkableNormalZ = .7f;
+    /// <summary>Original CPhysicalWorld's default unprojection clearance (world+244).</summary>
+    public const float RecoveryClearance = .01f;
+    /// <summary>Native early-overlap per-geometry unprojection bound, in living collider radii.</summary>
+    public const float RecoveryRadiusLimit = 2.5f;
+    /// <summary>A replacement numerical work bound; the native overlap pass has no equivalent fixed cap.</summary>
+    public const int RecoveryIterationLimit = 96;
     private readonly Dictionary<ZoneActorHandle, ZonePhysicsActorDescription> _actors = [];
     private readonly Dictionary<uint, ZoneActorHandle> _liveIdentities = [];
     private readonly Dictionary<uint, uint> _lastGeneration = [];
     private readonly HashSet<ZoneActorHandle> _retired = [];
+    private readonly Dictionary<ZoneActorHandle, ZoneManagedActorRecovery> _lastRecovery = [];
     private readonly IZoneCollisionSurfaces? _surfaces;
     private readonly ZoneManagedSceneGroundQuery _groundQuery;
 
@@ -32,7 +39,12 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         Geometry = geometry ?? throw new ArgumentNullException(nameof(geometry));
         StaticGeometry = staticGeometry;
         _groundQuery = new(geometry, staticGeometry,
-            groundPivotHeight: actor => _actors.TryGetValue(actor, out var description) ? description.GroundPivotHeight : 0);
+            groundPivotHeight: actor => _actors.TryGetValue(actor, out var description) ? description.GroundPivotHeight : 0,
+            actorDescription: actor =>
+            {
+                Require(actor);
+                return _actors[actor];
+            });
         OwnedPhysics = new(_groundQuery);
         _surfaces = surfaces;
     }
@@ -49,6 +61,7 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     {
         "Only decoded and admitted static collision proxies are present; scene coverage reports retain unsupported resources.",
         "Character colliders stay upright; arbitrary body rotation, stance transitions, the authored IgnoreCollision flag and native suspension/step dynamics are not implemented.",
+        "Living overlap recovery is proactive; the original idle, fall and contact-cache gate is not implemented.",
         "Vehicle, rigid-body, ragdoll, swimming and actor stacking dynamics are not implemented.",
         "Material ids are resolved, but friction and elasticity response are not implemented.",
     });
@@ -56,6 +69,9 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     public void AddActor(ZoneActorHandle actor, ZonePhysicsActorDescription description)
     {
         ArgumentNullException.ThrowIfNull(description);
+        if (!Enum.IsDefined(description.Profile)) throw new ArgumentOutOfRangeException(nameof(description), "Unknown actor physics profile.");
+        if (description.Profile == ZonePhysicsActorProfile.Living && description.Shape.Kind == ZonePhysicsShapeKind.Box)
+            throw new ArgumentException("Authored living bodies require a capsule or cylinder shape.", nameof(description));
         ZoneManagedTerrainGeometry.ValidateShape(description.Shape);
         if (!float.IsFinite(description.Mass) || description.Mass <= 0)
             throw new ArgumentOutOfRangeException(nameof(description), "An actor requires a finite positive mass.");
@@ -76,6 +92,7 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     public void RemoveActor(ZoneActorHandle actor)
     {
         _retired.Add(actor);
+        _lastRecovery.Remove(actor);
         if (!_actors.Remove(actor)) return;
         _liveIdentities.Remove(actor.UnitObjectId);
         OwnedPhysics.RemoveActor(actor);
@@ -94,6 +111,7 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         for (var i = 0; i < count; i++)
         {
             var period = TimeSpan.FromTicks(ticks + (i < remainder ? 1 : 0));
+            foreach (var actor in _actors.Keys) RecoverActor(actor);
             BlockHorizontalMotion((float)period.TotalSeconds);
             var ceilings = BlockStaticMotion((float)period.TotalSeconds);
             OwnedPhysics.Step(period);
@@ -108,7 +126,8 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     public void Teleport(ZoneActorHandle actor, Vector3 position, Quaternion orientation)
     {
         Require(actor);
-        OwnedPhysics.ApplyPose(actor, position, orientation);
+        OwnedPhysics.Teleport(actor, position, orientation);
+        _lastRecovery.Remove(actor);
     }
 
     public void CopyStatus(ZoneActorHandle actor, out ZonePhysicsActorStatus status)
@@ -118,7 +137,9 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         OwnedPhysics.TryReadOrientation(actor, out var orientation);
         OwnedPhysics.TryReadVelocity(actor, out var velocity);
         OwnedPhysics.TryReadGrounded(actor, out var grounded);
-        status = new(position, orientation, velocity, grounded, false);
+        // Native status2 (35029A30) reports airborne state for collision-active living
+        // bodies; the native adapter exposes grounded as its exact complement.
+        status = new(position, orientation, velocity, grounded, !grounded);
     }
 
     public bool TrySweep(ZonePhysicsShape shape, Vector3 origin, Vector3 displacement,
@@ -185,6 +206,12 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     public void ApplyPose(ZoneActorHandle actor, Vector3 position, Quaternion orientation)
     {
         Require(actor);
+        ZoneManagedTerrainGeometry.ValidateFinite(position, nameof(position));
+        if (!float.IsFinite(orientation.X) || !float.IsFinite(orientation.Y) ||
+            !float.IsFinite(orientation.Z) || !float.IsFinite(orientation.W) ||
+            !float.IsFinite(orientation.LengthSquared()) || orientation.LengthSquared() <= 0)
+            throw new ArgumentException("A pose correction requires a finite nonzero orientation.", nameof(orientation));
+        RecoverActor(actor);
         OwnedPhysics.TryReadPosition(actor, out var previous);
         var description = _actors[actor];
         var shape = description.Shape;
@@ -221,6 +248,13 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     {
         Require(actor);
         return OwnedPhysics.TryReadGroundMaterial(actor, out var material) ? material : null;
+    }
+
+    /// <summary>Last successful nonzero recovery for this exact actor generation; copied diagnostics only.</summary>
+    public bool TryReadLastRecovery(ZoneActorHandle actor, out ZoneManagedActorRecovery recovery)
+    {
+        Require(actor);
+        return _lastRecovery.TryGetValue(actor, out recovery);
     }
 
     public bool TryReadHeight(ZoneActorHandle actor, out float height)
@@ -319,6 +353,100 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         return float.IsFinite(best);
     }
 
+    private void RecoverActor(ZoneActorHandle actor)
+    {
+        var description = _actors[actor];
+        OwnedPhysics.TryReadPosition(actor, out var origin);
+        OwnedPhysics.TryReadVelocity(actor, out var velocity);
+        var offset = new Vector3(0, 0, description.CenterOffsetZ);
+        var center = origin + offset;
+        if (!Finite(center)) throw RecoveryFailure(actor, "the authored collider center is non-finite");
+        var correctedOrigin = origin;
+        var visited = new HashSet<Vector3> { center };
+        var ambiguousChoices = 0;
+        for (var iteration = 0; iteration <= RecoveryIterationLimit; iteration++)
+        {
+            if (!TryDeepestPenetration(description, center, out var contact))
+            {
+                if (iteration != 0)
+                {
+                    // Stage the entire solve before touching authority state. The center and entity
+                    // origin receive the same displacement; authored pivot/part offsets stay intact.
+                    var translation = correctedOrigin - origin;
+                    if (!Finite(translation) || !Finite(correctedOrigin))
+                        throw RecoveryFailure(actor, "the staged entity-origin correction is non-finite");
+                    OwnedPhysics.CorrectContactPose(actor, correctedOrigin, velocity);
+                    _lastRecovery[actor] = new(translation, iteration, ambiguousChoices);
+                }
+                return;
+            }
+            if (iteration == RecoveryIterationLimit)
+                throw RecoveryFailure(actor, "the bounded contact solve did not reach clearance");
+            // Explicit box bodies keep the backend's generic kinematic profile and numerical
+            // guard. A native living radius bound only exists for capsule/cylinder bodies.
+            if (description.Profile == ZonePhysicsActorProfile.Living &&
+                contact.Depth - ZoneManagedStaticGeometry.PenetrationTolerance > RecoveryRadiusLimit * description.Shape.Radius)
+                throw RecoveryFailure(actor, "the contact exceeds the verified 2.5-radius per-geometry unprojection bound");
+
+            var correction = contact.Normal * (contact.Depth + RecoveryClearance);
+            var squared = correction.LengthSquared();
+            if (!Finite(correction) || !float.IsFinite(squared) || squared <= 0)
+                throw RecoveryFailure(actor, "the contact requires an unsupported or non-finite unprojection");
+            var nextOrigin = correctedOrigin + correction;
+            var next = nextOrigin + offset;
+            if (!Finite(nextOrigin) || !Finite(next) || next == center)
+                throw RecoveryFailure(actor, "the correction exceeds finite coordinate precision");
+            if (!visited.Add(next))
+                throw RecoveryFailure(actor, "incompatible contacts produced a recovery cycle");
+
+            // Static early unprojection is pose-only in the original living step. Preserve all
+            // velocity here; subsequent ordinary sweeps and ground support own its response.
+            center = next;
+            correctedOrigin = nextOrigin;
+            if (contact.IsAmbiguous) ambiguousChoices++;
+        }
+    }
+
+    private bool TryDeepestPenetration(ZonePhysicsActorDescription description, Vector3 center, out ZonePhysicsPenetration deepest)
+    {
+        var shape = description.Shape;
+        var found = false;
+        var best = default(ZonePhysicsPenetration);
+        var support = default(ZonePhysicsGroundHit);
+        var reference = center - new Vector3(0, 0, description.CenterOffsetZ + description.GroundPivotHeight);
+        var preservePointSupport = description.Profile == ZonePhysicsActorProfile.Kinematic &&
+            _groundQuery.TrySupportContact(reference, out support, out _);
+        foreach (var contact in Geometry.GetPenetrations(shape, center)) Consider(contact);
+        if (StaticGeometry is not null)
+            foreach (var contact in StaticGeometry.GetPenetrations(shape, center)) Consider(contact);
+        // The original early pass admits other PE_LIVING only with prior-contact byte flag 0x80.
+        // Its state producer is unowned. Actor bodies still participate in ordinary sweeps
+        // and overlap queries; forcing them into this solve would change native admission.
+        deepest = best;
+        return found;
+
+        void Consider(ZonePhysicsPenetration contact)
+        {
+            // The existing generic kinematic profile follows a point support, so its footprint
+            // can intersect an uphill surface while the reference point already rests on that
+            // same plane. Preserve that contract without calling it native living floor policy.
+            // This never suppresses closed volumes, remote floors or steep wall constraints.
+            if (preservePointSupport && contact.IsSurfaceContact && contact.Normal.Z >= MinimumWalkableNormalZ &&
+                MathF.Abs(Vector3.Dot(contact.Position - support.Position, support.Normal)) <= _groundQuery.ContactTolerance)
+                return;
+            // Exact MTDs exclude clearance. The certified numerical bracket permits at most this
+            // residual; repeatedly treating it as a new penetration would move resting actors.
+            if (contact.Depth <= ZoneManagedStaticGeometry.PenetrationTolerance || found && contact.Depth <= best.Depth) return;
+            best = contact;
+            found = true;
+        }
+    }
+
+    private static InvalidOperationException RecoveryFailure(ZoneActorHandle actor, string detail) =>
+        new($"Managed character recovery refused for {actor}: {detail}. Staged pose and velocity were not committed.");
+
+    private static bool Finite(Vector3 value) => float.IsFinite(value.X) && float.IsFinite(value.Y) && float.IsFinite(value.Z);
+
     private Vector3 Center(ZoneActorHandle actor, ZonePhysicsActorDescription description)
     {
         OwnedPhysics.TryReadPosition(actor, out var origin);
@@ -332,3 +460,6 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     }
 
 }
+
+/// <summary>Copied last successful controller unprojection; deterministic tie choices are visible.</summary>
+public readonly record struct ZoneManagedActorRecovery(Vector3 Translation, int Passes, int AmbiguousContactCount);

@@ -220,6 +220,34 @@ public sealed class ZoneManagedTriangleMesh
         }
     }
 
+    /// <summary>BVH support lookup for verified solid convex resources, without scanning every face.</summary>
+    internal Vector3 SupportLocal(Vector3 direction)
+    {
+        if (!SolidConvex) throw new InvalidOperationException("Surface meshes do not expose a convex-volume support map.");
+        var best = _vertices[_indices[0]];
+        var bestProjection = Project(best);
+        Span<int> stack = stackalloc int[64]; var count = 1; stack[0] = 0;
+        while (count > 0)
+        {
+            var node = _nodes[stack[--count]];
+            var upper = new Vector3(direction.X >= 0 ? node.Bounds.Maximum.X : node.Bounds.Minimum.X,
+                direction.Y >= 0 ? node.Bounds.Maximum.Y : node.Bounds.Minimum.Y,
+                direction.Z >= 0 ? node.Bounds.Maximum.Z : node.Bounds.Minimum.Z);
+            if (Project(upper) <= bestProjection) continue;
+            if (node.Count == 0) { stack[count++] = node.Left; stack[count++] = node.Right; continue; }
+            for (var i = node.First; i < node.First + node.Count; i++)
+                for (var corner = 0; corner < 3; corner++)
+                {
+                    var vertex = _vertices[_indices[_triangleOrder[i] * 3 + corner]];
+                    var projection = Project(vertex);
+                    if (projection <= bestProjection) continue;
+                    bestProjection = projection; best = vertex;
+                }
+        }
+        return best;
+        double Project(Vector3 point) => (double)point.X * direction.X + (double)point.Y * direction.Y + (double)point.Z * direction.Z;
+    }
+
     private readonly record struct Node(ZoneManagedBounds Bounds, int Left, int Right, int First, int Count);
     private readonly record struct SolidPlane(double X, double Y, double Z, double PointX, double PointY, double PointZ, double Tolerance)
     {

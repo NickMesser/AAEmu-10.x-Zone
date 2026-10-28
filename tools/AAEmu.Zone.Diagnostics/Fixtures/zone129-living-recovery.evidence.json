@@ -1,0 +1,568 @@
+[
+  {
+    "name": "free_idle",
+    "scope": "Above all previously inventoried authored scene proxy bounds; no collider expected."
+  },
+  {
+    "name": "free_requested_velocity",
+    "scope": "Above all previously inventoried authored scene proxy bounds; no collider expected."
+  },
+  {
+    "name": "wall_capsule_overlap_idle",
+    "target": "wall",
+    "surfacePoint": [
+      768.8286372405116,
+      942.6244728547969,
+      230.33661587874093
+    ],
+    "surfaceNormal": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/gw_wall_c.cgf",
+    "triangle": 32,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.08,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "wall_capsule_overlap_inward",
+    "target": "wall",
+    "surfacePoint": [
+      768.8286372405116,
+      942.6244728547969,
+      230.33661587874093
+    ],
+    "surfaceNormal": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/gw_wall_c.cgf",
+    "triangle": 32,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.08,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "wall_capsule_overlap_outward",
+    "target": "wall",
+    "surfacePoint": [
+      768.8286372405116,
+      942.6244728547969,
+      230.33661587874093
+    ],
+    "surfaceNormal": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/gw_wall_c.cgf",
+    "triangle": 32,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.08,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "wall_cylinder_overlap_idle",
+    "target": "wall",
+    "surfacePoint": [
+      768.8286372405116,
+      942.6244728547969,
+      230.33661587874093
+    ],
+    "surfaceNormal": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/gw_wall_c.cgf",
+    "triangle": 32,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.07999999999999999,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "wall_cylinder_overlap_inward",
+    "target": "wall",
+    "surfacePoint": [
+      768.8286372405116,
+      942.6244728547969,
+      230.33661587874093
+    ],
+    "surfaceNormal": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/gw_wall_c.cgf",
+    "triangle": 32,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.07999999999999999,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "wall_cylinder_overlap_outward",
+    "target": "wall",
+    "surfacePoint": [
+      768.8286372405116,
+      942.6244728547969,
+      230.33661587874093
+    ],
+    "surfaceNormal": [
+      0.9772312029830917,
+      0.21217722760989002,
+      0.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/gw_wall_c.cgf",
+    "triangle": 32,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.07999999999999999,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "roof_capsule_overlap_idle",
+    "target": "roof",
+    "surfacePoint": [
+      762.6682828408191,
+      1273.0418771655645,
+      261.1756672859192
+    ],
+    "surfaceNormal": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ],
+    "originalProxy": "game/objects/env/01_nuia/001_housing/housing_house/housing_b_roof01_1f.cgf",
+    "triangle": 212,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.1629485655789774,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "roof_capsule_overlap_inward",
+    "target": "roof",
+    "surfacePoint": [
+      762.6682828408191,
+      1273.0418771655645,
+      261.1756672859192
+    ],
+    "surfaceNormal": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ],
+    "originalProxy": "game/objects/env/01_nuia/001_housing/housing_house/housing_b_roof01_1f.cgf",
+    "triangle": 212,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.1629485655789774,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "roof_capsule_overlap_outward",
+    "target": "roof",
+    "surfacePoint": [
+      762.6682828408191,
+      1273.0418771655645,
+      261.1756672859192
+    ],
+    "surfaceNormal": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ],
+    "originalProxy": "game/objects/env/01_nuia/001_housing/housing_house/housing_b_roof01_1f.cgf",
+    "triangle": 212,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.1629485655789774,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "roof_cylinder_overlap_idle",
+    "target": "roof",
+    "surfacePoint": [
+      762.6682828408191,
+      1273.0418771655645,
+      261.1756672859192
+    ],
+    "surfaceNormal": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ],
+    "originalProxy": "game/objects/env/01_nuia/001_housing/housing_house/housing_b_roof01_1f.cgf",
+    "triangle": 212,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.1513582422855481,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "roof_cylinder_overlap_inward",
+    "target": "roof",
+    "surfacePoint": [
+      762.6682828408191,
+      1273.0418771655645,
+      261.1756672859192
+    ],
+    "surfaceNormal": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ],
+    "originalProxy": "game/objects/env/01_nuia/001_housing/housing_house/housing_b_roof01_1f.cgf",
+    "triangle": 212,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.1513582422855481,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "roof_cylinder_overlap_outward",
+    "target": "roof",
+    "surfacePoint": [
+      762.6682828408191,
+      1273.0418771655645,
+      261.1756672859192
+    ],
+    "surfaceNormal": [
+      0.6151227357438144,
+      0.5940167288932469,
+      0.5184285348686087
+    ],
+    "originalProxy": "game/objects/env/01_nuia/001_housing/housing_house/housing_b_roof01_1f.cgf",
+    "triangle": 212,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.1513582422855481,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "stair_capsule_overlap_idle",
+    "target": "stair",
+    "surfacePoint": [
+      899.8374332586924,
+      462.7339183489481,
+      303.7403000394503
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/ruins_stairway.cgf",
+    "triangle": 38,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.2223151086967538,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "stair_capsule_overlap_inward",
+    "target": "stair",
+    "surfacePoint": [
+      899.8374332586924,
+      462.7339183489481,
+      303.7403000394503
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/ruins_stairway.cgf",
+    "triangle": 38,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.2223151086967538,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "stair_capsule_overlap_outward",
+    "target": "stair",
+    "surfacePoint": [
+      899.8374332586924,
+      462.7339183489481,
+      303.7403000394503
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/ruins_stairway.cgf",
+    "triangle": 38,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.2223151086967538,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "stair_cylinder_overlap_idle",
+    "target": "stair",
+    "surfacePoint": [
+      899.8374332586924,
+      462.7339183489481,
+      303.7403000394503
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/ruins_stairway.cgf",
+    "triangle": 38,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.17887468280748148,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "stair_cylinder_overlap_inward",
+    "target": "stair",
+    "surfacePoint": [
+      899.8374332586924,
+      462.7339183489481,
+      303.7403000394503
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/ruins_stairway.cgf",
+    "triangle": 38,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.17887468280748148,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "stair_cylinder_overlap_outward",
+    "target": "stair",
+    "surfacePoint": [
+      899.8374332586924,
+      462.7339183489481,
+      303.7403000394503
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.45699467638409563,
+      0.8894694293547113
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/ruins_stairway.cgf",
+    "triangle": 38,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.17887468280748148,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "bridge_capsule_overlap_idle",
+    "target": "bridge",
+    "surfacePoint": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.81492401100695
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/bridge_selemenlake_a1.cgf",
+    "triangle": 49,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.24,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "bridge_capsule_overlap_inward",
+    "target": "bridge",
+    "surfacePoint": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.81492401100695
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/bridge_selemenlake_a1.cgf",
+    "triangle": 49,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.24,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "bridge_capsule_overlap_outward",
+    "target": "bridge",
+    "surfacePoint": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.81492401100695
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/bridge_selemenlake_a1.cgf",
+    "triangle": 49,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.24,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "bridge_cylinder_overlap_idle",
+    "target": "bridge",
+    "surfacePoint": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.81492401100695
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/bridge_selemenlake_a1.cgf",
+    "triangle": 49,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.16,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "bridge_cylinder_overlap_inward",
+    "target": "bridge",
+    "surfacePoint": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.81492401100695
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/bridge_selemenlake_a1.cgf",
+    "triangle": 49,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.16,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "bridge_cylinder_overlap_outward",
+    "target": "bridge",
+    "surfacePoint": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.81492401100695
+    ],
+    "surfaceNormal": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "originalProxy": "game/objects/env/01_nuia/04_gw/bridge_selemenlake_a1.cgf",
+    "triangle": 49,
+    "intendedBodyPenetration": 0.04,
+    "support": 0.16,
+    "scope": "Full scene and original dimensions-validation adjustment both retained; later surfaces may intercept."
+  },
+  {
+    "name": "player_capsule_origin_below_floor_0.1",
+    "surfacePoint": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.81492401100695
+    ],
+    "requestedOriginGap": -0.1,
+    "bodyBottomGapBeforeCreation": 0.38,
+    "supportStartGap": 0.78,
+    "scope": "Real captured player dimensions, independent ground-pivot vs capsule bottom; full scene may select adjacent geometry."
+  },
+  {
+    "name": "player_capsule_origin_below_floor_0.9",
+    "surfacePoint": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.81492401100695
+    ],
+    "requestedOriginGap": -0.9,
+    "bodyBottomGapBeforeCreation": -0.42000000000000004,
+    "supportStartGap": -0.020000000000000018,
+    "scope": "Real captured player dimensions, independent ground-pivot vs capsule bottom; full scene may select adjacent geometry."
+  },
+  {
+    "name": "capsule_bottom_below_pivot_created_on_floor",
+    "surfacePoint": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.81492401100695
+    ],
+    "requestedOriginGap": 0,
+    "bodyBottomGapBeforeCreation": -0.04,
+    "supportStartGap": 0.04,
+    "scope": "Capsule hc=.2 < outerHalfZ=.24 but hc>segmentHalfHeight=.16; retains any native creation/step hover."
+  },
+  {
+    "name": "capsule_bottom_below_pivot_falling_from_above",
+    "surfacePoint": [
+      1243.9200144548035,
+      1018.6183242397893,
+      206.81492401100695
+    ],
+    "requestedOriginGap": 0.3,
+    "bodyBottomGapBeforeCreation": 0.26,
+    "supportStartGap": 0.33999999999999997,
+    "scope": "Capsule hc=.2 < outerHalfZ=.24 but hc>segmentHalfHeight=.16; retains any native creation/step hover."
+  },
+  {
+    "name": "living_pair_overlap_idle",
+    "intendedRadialOverlap": 0.1,
+    "scope": "Two original full unbound PE_LIVING bodies in creation order; no static proxy expected at this elevation."
+  },
+  {
+    "name": "living_pair_overlap_moving_inward",
+    "intendedRadialOverlap": 0.1,
+    "scope": "Two original full unbound PE_LIVING bodies in creation order; no static proxy expected at this elevation."
+  },
+  {
+    "name": "sphere_scaled_living_overlap_center",
+    "authoredSphere": {
+      "kind": 4,
+      "center": [
+        466.7816039732377,
+        851.5072386113976,
+        239.02888757599314
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "radius": 0.2769973103689451,
+      "halfHeight": 0.0
+    },
+    "originalProxy": "game/objects/env/02_harihara/001_hdeco/hdeco_rw_sandtent_add03.cgf",
+    "expectedIsolatedRadialDepth": 0.3569973103689451,
+    "originalLivingUnprojectionBound": 0.2,
+    "scope": "Original placed curved proxy, configured at clear altitude then pose-set; full scene and nearby surfaces remain eligible."
+  },
+  {
+    "name": "sphere_scaled_living_overlap_shallow",
+    "authoredSphere": {
+      "kind": 4,
+      "center": [
+        466.7816039732377,
+        851.5072386113976,
+        239.02888757599314
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "radius": 0.2769973103689451,
+      "halfHeight": 0.0
+    },
+    "originalProxy": "game/objects/env/02_harihara/001_hdeco/hdeco_rw_sandtent_add03.cgf",
+    "expectedIsolatedRadialDepth": 0.03999999999999998,
+    "originalLivingUnprojectionBound": 0.2,
+    "scope": "Original placed curved proxy, configured at clear altitude then pose-set; full scene and nearby surfaces remain eligible."
+  }
+]

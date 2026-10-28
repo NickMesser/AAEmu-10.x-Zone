@@ -74,7 +74,16 @@ internal static class ZoneManagedTriangleQueries
         Vector3 a, Vector3 b, Vector3 c, out float fraction, out Vector3 normal, out Vector3 position)
     {
         if (shape.Kind == ZonePhysicsShapeKind.Box) return Sweep(origin, shape.HalfExtents, displacement, a, b, c, out fraction, out normal, out position);
-        if (Vector3.Cross(b - a, c - a).LengthSquared() < 1e-18f)
+        var face = Vector3.Cross(b - a, c - a);
+        if (face.LengthSquared() < 1e-18f)
+        { fraction = 0; normal = position = default; return false; }
+        var faceNormal = Vector3.Normalize(face);
+        var signed = Vector3.Dot(origin - a, faceNormal);
+        var radius = Vector3.Dot(ZoneManagedConvexTarget.ShapeSupport(shape, faceNormal), faceNormal);
+        var speed = Vector3.Dot(displacement, faceNormal);
+        // The face plane already separates these shapes for the entire segment. Approaching
+        // an internal edge within the convex distance tolerance cannot create a tangent wall.
+        if (signed >= radius - Epsilon && speed >= -Epsilon || signed <= -radius + Epsilon && speed <= Epsilon)
         { fraction = 0; normal = position = default; return false; }
         return ZoneManagedConvexQueries.Sweep(ZoneManagedConvexTarget.ForTriangle(a, b, c), origin, shape, displacement, out fraction, out normal, out position);
     }

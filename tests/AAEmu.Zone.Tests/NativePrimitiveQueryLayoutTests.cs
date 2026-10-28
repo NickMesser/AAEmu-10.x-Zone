@@ -18,7 +18,7 @@ public sealed class NativePrimitiveQueryLayoutTests
         await Layout("PrimitiveBox", 64, ("M00", 0), ("M11", 16), ("M22", 32),
             ("Oriented", 36), ("Center", 40), ("HalfExtents", 52));
         await Layout("PrimitiveAxial", 32, ("Center", 0), ("Axis", 12), ("Radius", 24), ("HalfHeight", 28));
-        await Layout("PrimitiveContact", 136, ("Distance", 0), ("Position", 8), ("Normal", 20),
+        await Layout("PrimitiveContact", 136, ("Distance", 0), ("Position", 8), ("Normal", 20), ("UnprojectionDirection", 32),
             ("PhysicalMaterialId", 56), ("EntityId", 60), ("PartId", 64));
     }
 

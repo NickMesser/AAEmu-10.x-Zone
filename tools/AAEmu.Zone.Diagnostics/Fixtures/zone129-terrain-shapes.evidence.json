@@ -1,0 +1,596 @@
+[
+  {
+    "name": "terrain0_box_overlap_above",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 2.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_box_overlap_surface",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 0.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_box_overlap_near_below",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": -0.01999999999998181,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_box_overlap_vertical_nominal_touch",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": 0.160000000000025,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_box_overlap_submerged_10m",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_box_sweep_approach_down",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_box_sweep_away_up",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_box_sweep_submerged_horizontal",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_box_sweep_from_below_up",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": -1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_capsule_overlap_above",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 2.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_capsule_overlap_surface",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 0.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_capsule_overlap_near_below",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": -0.01999999999998181,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_capsule_overlap_vertical_nominal_touch",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": 0.2400000000000091,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_capsule_overlap_submerged_10m",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_capsule_sweep_approach_down",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_capsule_sweep_away_up",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_capsule_sweep_submerged_horizontal",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_capsule_sweep_from_below_up",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": -1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_cylinder_overlap_above",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 2.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_cylinder_overlap_surface",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 0.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_cylinder_overlap_near_below",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": -0.01999999999998181,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_cylinder_overlap_vertical_nominal_touch",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": 0.160000000000025,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_cylinder_overlap_submerged_10m",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_cylinder_sweep_approach_down",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_cylinder_sweep_away_up",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_cylinder_sweep_submerged_horizontal",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain0_cylinder_sweep_from_below_up",
+    "originalTerrainRayPoint": [
+      512,
+      512,
+      305.42047
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": -1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_box_overlap_above",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 2.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_box_overlap_surface",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 0.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_box_overlap_near_below",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": -0.01999999999999602,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_box_overlap_vertical_nominal_touch",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": 0.1599999999999966,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_box_overlap_submerged_10m",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_box_sweep_approach_down",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_box_sweep_away_up",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_box_sweep_submerged_horizontal",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_box_sweep_from_below_up",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": -1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_capsule_overlap_above",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 2.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_capsule_overlap_surface",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 0.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_capsule_overlap_near_below",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": -0.01999999999999602,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_capsule_overlap_vertical_nominal_touch",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": 0.23999999999999488,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_capsule_overlap_submerged_10m",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_capsule_sweep_approach_down",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_capsule_sweep_away_up",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_capsule_sweep_submerged_horizontal",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_capsule_sweep_from_below_up",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": -1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_cylinder_overlap_above",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 2.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_cylinder_overlap_surface",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 0.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_cylinder_overlap_near_below",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": -0.01999999999999602,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_cylinder_overlap_vertical_nominal_touch",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": 0.1599999999999966,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_cylinder_overlap_submerged_10m",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_cylinder_sweep_approach_down",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": true,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_cylinder_sweep_away_up",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": 1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_cylinder_sweep_submerged_horizontal",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": false,
+    "centerHeightRelativeToRay": -10.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  },
+  {
+    "name": "terrain1_cylinder_sweep_from_below_up",
+    "originalTerrainRayPoint": [
+      2560,
+      512,
+      121.803444
+    ],
+    "expectedHit": null,
+    "centerHeightRelativeToRay": -1.0,
+    "scope": "Original terrain mask0x100; vertical nominal touching is not guaranteed plane tangency on a slope; static brushes cannot intercept."
+  }
+]

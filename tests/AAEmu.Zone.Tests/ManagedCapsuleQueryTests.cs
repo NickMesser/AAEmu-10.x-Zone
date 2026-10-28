@@ -65,20 +65,21 @@ public sealed class ManagedCapsuleQueryTests
     }
 
     [Test]
-    public async Task TerrainCapsulesPreserveSolidBelowHolesAndLoadedCellEdges()
+    public async Task TerrainCapsulesUseSurfaceTrianglesAndPreserveHolesAndLoadedCellEdges()
     {
         var heights = new ZoneTerrainHeightField();
         heights.LoadCell(1, 1, TerrainHeightFieldTests.CreateCell(0, 0));
         var terrain = new ZoneManagedTerrainGeometry(heights);
         var capsule = ZonePhysicsShape.Capsule(1, .5f);
-        await Assert.That(terrain.TryCollide(capsule, new(1100, 1100, -10))).IsTrue();
-        await Assert.That(terrain.TryCollide(capsule, new(1023.2f, 1023.2f, -10))).IsFalse();
-        await Assert.That(terrain.TryCollide(capsule, new(1023.4f, 1023.4f, -10))).IsTrue();
-        await Assert.That(terrain.TryCollide(capsule, new(1023.2f, 1100, -10))).IsTrue();
+        await Assert.That(terrain.TryCollide(capsule, new(1100, 1100, -10))).IsFalse();
+        await Assert.That(terrain.TryCollide(capsule, new(1100, 1100, 0))).IsTrue();
+        await Assert.That(terrain.TryCollide(capsule, new(1023.2f, 1023.2f, 0))).IsFalse();
+        await Assert.That(terrain.TryCollide(capsule, new(1023.4f, 1023.4f, 0))).IsTrue();
+        await Assert.That(terrain.TryCollide(capsule, new(1023.2f, 1100, 0))).IsTrue();
         heights.UnloadCell(1, 1);
-        await Assert.That(terrain.TryCollide(capsule, new(1100, 1100, -10))).IsFalse();
+        await Assert.That(terrain.TryCollide(capsule, new(1100, 1100, 0))).IsFalse();
         heights.LoadCell(1, 1, TerrainHeightFieldTests.CreateCell(0, 0, sample: (_, _, _, _) => 31));
-        await Assert.That(terrain.TryCollide(capsule, new(1100, 1100, -10))).IsFalse();
+        await Assert.That(terrain.TryCollide(capsule, new(1100, 1100, 0))).IsFalse();
     }
 
     [Test]

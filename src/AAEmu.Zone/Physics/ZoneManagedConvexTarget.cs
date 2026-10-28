@@ -2,12 +2,13 @@ using System.Numerics;
 
 namespace AAEmu.Zone.Physics;
 
-internal enum ZoneManagedConvexTargetKind { Primitive, Shape, Triangle, Terrain }
+internal enum ZoneManagedConvexTargetKind { Primitive, Shape, Triangle, Terrain, SolidMesh }
 
 internal readonly record struct ZoneManagedConvexTarget
 {
     public ZoneManagedConvexTargetKind Kind { get; init; }
     public ZoneManagedPrimitiveGeometry? Primitive { get; init; }
+    public ZoneManagedTriangleMesh? Mesh { get; init; }
     public Matrix4x4 Transform { get; init; }
     public ZonePhysicsShape Shape { get; init; }
     public Vector3 Center { get; init; }
@@ -15,14 +16,18 @@ internal readonly record struct ZoneManagedConvexTarget
     public Vector3 B { get; init; }
     public Vector3 C { get; init; }
     public float Bottom { get; init; }
+    public int SourceTriangle { get; init; }
 
     public static ZoneManagedConvexTarget ForPrimitive(ZoneManagedPrimitiveGeometry primitive, Matrix4x4 transform) =>
         new() { Kind = ZoneManagedConvexTargetKind.Primitive, Primitive = primitive, Transform = transform,
             Center = Vector3.Transform(primitive.Center, transform) };
     public static ZoneManagedConvexTarget ForShape(ZonePhysicsShape shape, Vector3 center) =>
         new() { Kind = ZoneManagedConvexTargetKind.Shape, Shape = shape, Center = center };
+    public static ZoneManagedConvexTarget ForSolidMesh(ZoneManagedTriangleMesh mesh, Matrix4x4 transform) =>
+        new() { Kind = ZoneManagedConvexTargetKind.SolidMesh, Mesh = mesh, Transform = transform,
+            Center = Vector3.Transform(mesh.BoundsMinimum * .5f + mesh.BoundsMaximum * .5f, transform) };
     public static ZoneManagedConvexTarget ForTriangle(Vector3 a, Vector3 b, Vector3 c) =>
-        new() { Kind = ZoneManagedConvexTargetKind.Triangle, Center = a, A = a, B = b, C = c };
+        new() { Kind = ZoneManagedConvexTargetKind.Triangle, Center = a, A = a, B = b, C = c, SourceTriangle = -1 };
     public static ZoneManagedConvexTarget ForTerrain(Vector3 a, Vector3 b, Vector3 c, float bottom) =>
         new() { Kind = ZoneManagedConvexTargetKind.Terrain, Center = a, A = a, B = b, C = c, Bottom = bottom };
 
@@ -31,6 +36,12 @@ internal readonly record struct ZoneManagedConvexTarget
         if (Kind == ZoneManagedConvexTargetKind.Primitive)
             return Vector3.TransformNormal(Primitive!.SupportOffset(Vector3.TransformNormal(direction, Matrix4x4.Transpose(Transform))), Transform);
         if (Kind == ZoneManagedConvexTargetKind.Shape) return ShapeSupport(Shape, direction);
+        if (Kind == ZoneManagedConvexTargetKind.SolidMesh)
+        {
+            var local = Mesh!.SupportLocal(Vector3.TransformNormal(direction, Matrix4x4.Transpose(Transform)));
+            var anchor = Mesh.BoundsMinimum * .5f + Mesh.BoundsMaximum * .5f;
+            return Vector3.TransformNormal(local - anchor, Transform);
+        }
         var a = A - Center; var b = B - Center; var c = C - Center;
         if (Kind == ZoneManagedConvexTargetKind.Terrain && direction.Z < 0)
             a.Z = b.Z = c.Z = Bottom - Center.Z;
@@ -118,6 +129,14 @@ internal static class ZoneManagedShapeQueries
         { fraction = 0; normal = point = default; return false; }
         return ZoneManagedConvexQueries.Sweep(ZoneManagedConvexTarget.ForShape(targetShape, targetCenter), center, shape, displacement,
             out fraction, out normal, out point);
+    }
+
+    public static bool TryPenetration(ZonePhysicsShape shape, Vector3 center, ZonePhysicsShape targetShape, Vector3 targetCenter,
+        out ZonePhysicsPenetration penetration)
+    {
+        ZoneManagedTerrainGeometry.ValidateShape(shape); ZoneManagedTerrainGeometry.ValidateShape(targetShape);
+        ZoneManagedTerrainGeometry.ValidateFinite(center, nameof(center)); ZoneManagedTerrainGeometry.ValidateFinite(targetCenter, nameof(targetCenter));
+        return ZoneManagedPenetrationQueries.Try(ZoneManagedConvexTarget.ForShape(targetShape, targetCenter), shape, center, 0, false, out penetration);
     }
 
     // Preserve the existing exact slab result for actor box pairs; curved pairs use their actual

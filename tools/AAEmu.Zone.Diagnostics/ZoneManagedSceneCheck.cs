@@ -27,7 +27,8 @@ internal static class ZoneManagedSceneCheck
         ZoneSceneCollisionProbes.Run(probesPath, probeOutputPath, "managed",
             (System.Numerics.Vector3 origin, System.Numerics.Vector3 displacement, out Physics.ZonePhysicsHit hit) =>
                 collision.RayGeometry.Raycast(origin, displacement, out hit));
-        ZoneSceneShapeProbes.RunManaged(shapeProbesPath, shapeProbeOutputPath, collision.Geometry);
+        ZoneSceneShapeProbes.RunManaged(shapeProbesPath, shapeProbeOutputPath, collision.Geometry,
+            new Physics.ZoneManagedTerrainGeometry(scene.Heights, scene.Surfaces));
         if (coveragePath is not null)
         {
             var value = new { terrain = new { report.TerrainReady, report.TerrainLoadedCells, report.EmptyTerrainCells }, collision = collision.Report };

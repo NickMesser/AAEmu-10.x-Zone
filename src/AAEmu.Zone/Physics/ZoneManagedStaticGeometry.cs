@@ -29,6 +29,8 @@ public sealed class ZoneManagedStaticGeometry
     /// span a longer interval along a nearly tangent trajectory. Raw ray solutions do not use it.
     /// </summary>
     public const float AnalyticContactTolerance = ZoneManagedPrimitiveQueries.ContactTolerance;
+    /// <summary>Numerical depth convergence/residual threshold, excluding controller clearance.</summary>
+    public const float PenetrationTolerance = ZoneManagedPenetrationQueries.Tolerance;
     private const float BucketSize = 64;
     private const int MaximumInstanceBuckets = 512;
     private const int MaximumQueryBuckets = 4096;
@@ -281,6 +283,82 @@ public sealed class ZoneManagedStaticGeometry
             _lastQuery = new(boundsTests, _queryInstances.Count, triangleTests);
             return collided;
         }
+    }
+
+    /// <summary>
+    /// Copies positive overlap unprojections. General triangles remain independent two-sided
+    /// surface contacts; flagged convex resources and analytic primitives return whole-volume
+    /// minimum translations. Depth reaches touch, without a clearance gap. Equal-depth direction
+    /// choices are deterministic and flagged; unreliable numerical solutions throw explicitly.
+    /// </summary>
+    public IReadOnlyList<ZonePhysicsPenetration> GetPenetrations(ZonePhysicsShape shape, Vector3 position)
+    {
+        ZoneManagedTerrainGeometry.ValidateShape(shape);
+        ZoneManagedTerrainGeometry.ValidateFinite(position, nameof(position));
+        var bounds = new ZoneManagedBounds(position - shape.BoundingHalfExtents, position + shape.BoundingHalfExtents);
+        ZoneManagedTerrainGeometry.ValidateFinite(bounds.Minimum, nameof(shape));
+        ZoneManagedTerrainGeometry.ValidateFinite(bounds.Maximum, nameof(shape));
+        lock (_gate)
+        {
+            CollectCandidates(bounds, out var boundsTests);
+            var contacts = new List<ZonePhysicsPenetration>();
+            var triangleTests = 0;
+            foreach (var instance in _queryInstances)
+            {
+                if (instance.Primitive is { } primitive)
+                {
+                    if (ZoneManagedPenetrationQueries.Try(ZoneManagedConvexTarget.ForPrimitive(primitive, instance.LocalToWorld),
+                        shape, position, primitive.PhysicalMaterialId, false, out var contact)) contacts.Add(contact);
+                    continue;
+                }
+                var mesh = instance.Mesh!;
+                if (mesh.SolidConvex)
+                {
+                    if (ZoneManagedPenetrationQueries.Try(ZoneManagedConvexTarget.ForSolidMesh(mesh, instance.LocalToWorld),
+                        shape, position, 0, false, out var contact))
+                    {
+                        var material = SolidContactMaterial(instance, contact, ref triangleTests);
+                        contacts.Add(new(contact.Depth, contact.Normal, contact.Position, material, false, contact.IsAmbiguous));
+                    }
+                    continue;
+                }
+                mesh.QueryBounds(bounds.Transform(instance.WorldToLocal), _queryTriangles);
+                foreach (var triangle in _queryTriangles)
+                {
+                    triangleTests++;
+                    WorldTriangle(instance, triangle, out var a, out var b, out var c, out var material);
+                    if (Vector3.Cross(b - a, c - a).LengthSquared() < 1e-18f) continue;
+                    var target = ZoneManagedConvexTarget.ForTriangle(a, b, c) with
+                        { Mesh = mesh, Transform = instance.LocalToWorld, SourceTriangle = triangle };
+                    if (ZoneManagedPenetrationQueries.Try(target, shape, position, material, true,
+                        out var contact)) contacts.Add(contact);
+                }
+            }
+            _lastQuery = new(boundsTests, _queryInstances.Count, triangleTests);
+            return ZoneManagedPenetrationCollection.Snapshot(contacts);
+        }
+    }
+
+    private ushort SolidContactMaterial(Instance instance, ZonePhysicsPenetration contact, ref int triangleTests)
+    {
+        var extent = new Vector3(MathF.Max(.001f, PenetrationTolerance * 4));
+        instance.Mesh!.QueryBounds(new ZoneManagedBounds(contact.Position - extent, contact.Position + extent).Transform(instance.WorldToLocal), _queryTriangles);
+        if (_queryTriangles.Count == 0) throw ZoneManagedPenetrationMath.Failure("solid contact witness has no nearby authored face");
+        var best = double.PositiveInfinity; var alignment = -1f; ushort material = 0;
+        foreach (var triangle in _queryTriangles)
+        {
+            triangleTests++;
+            WorldTriangle(instance, triangle, out var a, out var b, out var c, out var candidate);
+            ZoneManagedPenetrationMath.ClosestTriangle(ZoneManagedDouble3.From(contact.Position), ZoneManagedDouble3.From(a),
+                ZoneManagedDouble3.From(b), ZoneManagedDouble3.From(c), out var wa, out var wb, out var wc);
+            var point = ZoneManagedDouble3.From(a) * wa + ZoneManagedDouble3.From(b) * wb + ZoneManagedDouble3.From(c) * wc;
+            var squared = (point - ZoneManagedDouble3.From(contact.Position)).Squared;
+            var n = Vector3.Cross(b - a, c - a);
+            var score = n.LengthSquared() > 0 ? MathF.Abs(Vector3.Dot(Vector3.Normalize(n), contact.Normal)) : 0;
+            if (squared > best + 1e-12 || Math.Abs(squared - best) <= 1e-12 && score <= alignment) continue;
+            best = squared; material = candidate; alignment = score;
+        }
+        return material;
     }
 
     private void CollectCandidates(ZoneManagedBounds bounds, out int boundsTests)

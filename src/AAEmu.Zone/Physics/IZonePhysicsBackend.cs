@@ -9,6 +9,9 @@ namespace AAEmu.Zone.Physics;
 /// </summary>
 public enum ZonePhysicsShapeKind { Box, Capsule, Cylinder }
 
+/// <summary>Generic character kinematics, or the authored living dimensions/controller profile.</summary>
+public enum ZonePhysicsActorProfile { Kinematic, Living }
+
 /// <summary>
 /// Backend-neutral shape dimensions. For a box, <see cref="HalfExtents"/> contains its three
 /// half sizes. For a capsule or cylinder, X is the radius, Z is the axial segment half-length,
@@ -47,6 +50,7 @@ public readonly record struct ZonePhysicsShape
 /// </summary>
 public sealed record ZonePhysicsActorDescription(ZonePhysicsShape Shape, float Mass)
 {
+    public ZonePhysicsActorProfile Profile { get; init; } = ZonePhysicsActorProfile.Kinematic;
     /// <summary>
     /// Collider center relative to the actor origin. Null preserves the legacy feet-origin
     /// convention for explicitly constructed descriptions. Authored living bodies set this to
@@ -73,6 +77,7 @@ public sealed record ZonePhysicsActorDescription(ZonePhysicsShape Shape, float M
         ArgumentNullException.ThrowIfNull(stance);
         return new(new(stance.Size, stance.UseCapsule ? ZonePhysicsShapeKind.Capsule : ZonePhysicsShapeKind.Cylinder), mass)
         {
+            Profile = ZonePhysicsActorProfile.Living,
             ColliderCenterOffsetZ = stance.HeightCollider - stance.HeightPivot,
             GroundPivotHeight = stance.HeightPivot,
             Gravity = gravity,

@@ -1,0 +1,1396 @@
+{
+  "backend": "native",
+  "queryProfile": "explicit target per probe: static=mask1(default), terrain=mask0x100; native required/any geometry flags2/2",
+  "centerConvention": "raw primitive center; no actor or stance offset",
+  "complete": true,
+  "normalConvention": "normal is collider-outward for sweeps; original nativeContactNormal is retained and negated for that convention; overlap normal is not compared",
+  "requested": 54,
+  "results": [
+    {
+      "name": "terrain0_box_overlap_above",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_box_overlap_surface",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        511.78934,
+        512,
+        305.58047
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.2906674102266676,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6048263,
+        0,
+        -0.79635745
+      ],
+      "nativeUnprojectionDirection": [
+        -1,
+        -0,
+        -0
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_box_overlap_near_below",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        511.81564,
+        512,
+        305.5605
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.26434844851975237,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6048263,
+        0,
+        -0.79635745
+      ],
+      "nativeUnprojectionDirection": [
+        -1,
+        -0,
+        -0
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_box_overlap_vertical_nominal_touch",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        511.95346,
+        512.07587,
+        305.46454
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.055485137856463036,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6175293,
+        0.07583232,
+        -0.78288394
+      ],
+      "nativeUnprojectionDirection": [
+        0.6031395,
+        -0.07463206,
+        0.7941365
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_box_overlap_submerged_10m",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_box_sweep_approach_down",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.7691479,
+      "position": [
+        511.92,
+        512.08,
+        305.49133
+      ],
+      "normal": [
+        0.6017967,
+        -0.099964954,
+        0.79236853
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.7691479,
+      "nativeContactDistance": 0.7691478952666209,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6017967,
+        0.099964954,
+        -0.79236853
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_box_sweep_away_up",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_box_sweep_submerged_horizontal",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_box_sweep_from_below_up",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.76509035,
+      "position": [
+        512.08,
+        512,
+        305.34555
+      ],
+      "normal": [
+        -0.6835024,
+        -0,
+        -0.72994834
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.76509035,
+      "nativeContactDistance": 0.7650903372818905,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        0.6835024,
+        0,
+        0.72994834
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_capsule_overlap_above",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_capsule_overlap_surface",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        512.0647,
+        511.9885,
+        305.35925
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.19786358505482418,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6829321,
+        0.040842824,
+        -0.7293393
+      ],
+      "nativeUnprojectionDirection": [
+        0.6031395,
+        -0.07463206,
+        0.7941365
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_capsule_overlap_near_below",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        512.07355,
+        511.9874,
+        305.3509
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.21252621036914723,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6829321,
+        0.040842824,
+        -0.7293393
+      ],
+      "nativeUnprojectionDirection": [
+        0.6031395,
+        -0.07463206,
+        0.7941365
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_capsule_overlap_vertical_nominal_touch",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        511.96188,
+        512.0068,
+        305.4503
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.016630600666179232,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6017967,
+        0.099964954,
+        -0.79236853
+      ],
+      "nativeUnprojectionDirection": [
+        0.6031395,
+        -0.07463206,
+        0.7941365
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_capsule_overlap_submerged_10m",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_capsule_sweep_approach_down",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.7390331,
+      "position": [
+        511.95184,
+        512.008,
+        305.45804
+      ],
+      "normal": [
+        0.6017967,
+        -0.099964954,
+        0.79236853
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.7390331,
+      "nativeContactDistance": 0.7390331055167636,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6017967,
+        0.099964954,
+        -0.79236853
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_capsule_sweep_away_up",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_capsule_sweep_submerged_horizontal",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_capsule_sweep_from_below_up",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.73039955,
+      "position": [
+        512.0547,
+        512,
+        305.36926
+      ],
+      "normal": [
+        -0.68359995,
+        0,
+        -0.72985685
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.73039955,
+      "nativeContactDistance": 0.7303995402560528,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        0.68359995,
+        -0,
+        0.72985685
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_cylinder_overlap_above",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_cylinder_overlap_surface",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        512.0242,
+        511.9919,
+        305.3974
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.17244191381439933,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6829321,
+        0.040842824,
+        -0.7293393
+      ],
+      "nativeUnprojectionDirection": [
+        0.6031395,
+        -0.07463206,
+        0.7941365
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_cylinder_overlap_near_below",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        512.033,
+        511.9908,
+        305.38907
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.18710693018755295,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6829321,
+        0.040842824,
+        -0.7293393
+      ],
+      "nativeUnprojectionDirection": [
+        0.6031395,
+        -0.07463206,
+        0.7941365
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_cylinder_overlap_vertical_nominal_touch",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        511.95053,
+        512.00946,
+        305.45926
+      ],
+      "normal": null,
+      "physicalMaterialId": 115,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.04882762133308675,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6017967,
+        0.099964954,
+        -0.79236853
+      ],
+      "nativeUnprojectionDirection": [
+        0.6031395,
+        -0.07463206,
+        0.7941365
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_cylinder_overlap_submerged_10m",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_cylinder_sweep_approach_down",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.7784045,
+      "position": [
+        511.92108,
+        512.0131,
+        305.48206
+      ],
+      "normal": [
+        0.6017967,
+        -0.099964954,
+        0.79236853
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.7784045,
+      "nativeContactDistance": 0.778404447670124,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.6017967,
+        0.099964954,
+        -0.79236853
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_cylinder_sweep_away_up",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_cylinder_sweep_submerged_horizontal",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain0_cylinder_sweep_from_below_up",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.76508665,
+      "position": [
+        512.08,
+        512,
+        305.34555
+      ],
+      "normal": [
+        -0.6835024,
+        0,
+        -0.72994834
+      ],
+      "physicalMaterialId": 115,
+      "nativeReturn": 0.76508665,
+      "nativeContactDistance": 0.7650866708680637,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        0.6835024,
+        -0,
+        0.72994834
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_box_overlap_above",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_box_overlap_surface",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        2558.753,
+        512,
+        121.96345
+      ],
+      "normal": null,
+      "physicalMaterialId": 105,
+      "nativeReturn": 1,
+      "nativeContactDistance": 1.3270057678714413,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        0.12726405,
+        -0,
+        0.99186885
+      ],
+      "nativeUnprojectionDirection": [
+        -1,
+        -0,
+        -0
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_box_overlap_near_below",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        2558.909,
+        512,
+        121.94345
+      ],
+      "normal": null,
+      "physicalMaterialId": 105,
+      "nativeReturn": 1,
+      "nativeContactDistance": 1.1711562448214574,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.12726405,
+        -0,
+        -0.99186885
+      ],
+      "nativeUnprojectionDirection": [
+        -1,
+        -0,
+        -0
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_box_overlap_vertical_nominal_touch",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        2559.923,
+        511.9245,
+        121.82745
+      ],
+      "normal": null,
+      "physicalMaterialId": 105,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.024617972819294273,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.12512332,
+        -0.18264619,
+        -0.9751844
+      ],
+      "nativeUnprojectionDirection": [
+        0.12512332,
+        0.18264619,
+        0.9751844
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_box_overlap_submerged_10m",
+      "shape": "box",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_box_sweep_approach_down",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.8147519,
+      "position": [
+        2559.92,
+        511.92,
+        121.82869
+      ],
+      "normal": [
+        0.12512332,
+        0.18264619,
+        0.9751844
+      ],
+      "physicalMaterialId": 105,
+      "nativeReturn": 0.8147519,
+      "nativeContactDistance": 0.8147519076375658,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.12512332,
+        -0.18264619,
+        -0.9751844
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_box_sweep_away_up",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_box_sweep_submerged_horizontal",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_box_sweep_from_below_up",
+      "shape": "box",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.8301779,
+      "position": [
+        2560.08,
+        512,
+        121.793625
+      ],
+      "normal": [
+        -0.12186101,
+        0,
+        -0.9925472
+      ],
+      "physicalMaterialId": 105,
+      "nativeReturn": 0.8301779,
+      "nativeContactDistance": 0.8301779212762881,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        0.12186101,
+        -0,
+        0.9925472
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_capsule_overlap_above",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_capsule_overlap_surface",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        2560.0203,
+        512.039,
+        121.79855
+      ],
+      "normal": null,
+      "physicalMaterialId": 105,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.24033493920485163,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.121635444,
+        -0.060815834,
+        -0.99071
+      ],
+      "nativeUnprojectionDirection": [
+        0.12512332,
+        0.18264619,
+        0.9751844
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_capsule_overlap_near_below",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        2560.023,
+        512.04266,
+        121.79803
+      ],
+      "normal": null,
+      "physicalMaterialId": 105,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.26029372658386435,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.121635444,
+        -0.060815834,
+        -0.99071
+      ],
+      "nativeUnprojectionDirection": [
+        0.12512332,
+        0.18264619,
+        0.9751844
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_capsule_overlap_vertical_nominal_touch",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        2559.9902,
+        511.98575,
+        121.807365
+      ],
+      "normal": null,
+      "physicalMaterialId": 105,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.001994430781074669,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.12512332,
+        -0.18264619,
+        -0.9751844
+      ],
+      "nativeUnprojectionDirection": [
+        0.12512332,
+        0.18264619,
+        0.9751844
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_capsule_overlap_submerged_10m",
+      "shape": "capsule",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_capsule_sweep_approach_down",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.7579605,
+      "position": [
+        2559.99,
+        511.98538,
+        121.807465
+      ],
+      "normal": [
+        0.12512332,
+        0.18264619,
+        0.9751844
+      ],
+      "physicalMaterialId": 105,
+      "nativeReturn": 0.7579605,
+      "nativeContactDistance": 0.7579604983326385,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.12512332,
+        -0.18264619,
+        -0.9751844
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_capsule_sweep_away_up",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_capsule_sweep_submerged_horizontal",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_capsule_sweep_from_below_up",
+      "shape": "capsule",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.75939566,
+      "position": [
+        2560.0098,
+        512,
+        121.802246
+      ],
+      "normal": [
+        -0.12186874,
+        0,
+        -0.9925462
+      ],
+      "physicalMaterialId": 105,
+      "nativeReturn": 0.75939566,
+      "nativeContactDistance": 0.7593956360270193,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        0.12186874,
+        -0,
+        0.9925462
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_cylinder_overlap_above",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_cylinder_overlap_surface",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        2559.9766,
+        511.96573,
+        121.812874
+      ],
+      "normal": null,
+      "physicalMaterialId": 105,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.1737445908441855,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.12512332,
+        -0.18264619,
+        -0.9751844
+      ],
+      "nativeUnprojectionDirection": [
+        0.12512332,
+        0.18264619,
+        0.9751844
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_cylinder_overlap_near_below",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        2559.979,
+        511.9693,
+        121.8119
+      ],
+      "normal": null,
+      "physicalMaterialId": 105,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.19324838847951042,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.12512332,
+        -0.18264619,
+        -0.9751844
+      ],
+      "nativeUnprojectionDirection": [
+        0.12512332,
+        0.18264619,
+        0.9751844
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_cylinder_overlap_vertical_nominal_touch",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "hit",
+      "hit": true,
+      "distance": null,
+      "position": [
+        2559.957,
+        511.93723,
+        121.82072
+      ],
+      "normal": null,
+      "physicalMaterialId": 105,
+      "nativeReturn": 1,
+      "nativeContactDistance": 0.01771153725160723,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.12512332,
+        -0.18264619,
+        -0.9751844
+      ],
+      "nativeUnprojectionDirection": [
+        0.12512332,
+        0.18264619,
+        0.9751844
+      ],
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_cylinder_overlap_submerged_10m",
+      "shape": "cylinder",
+      "operation": "overlap",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_cylinder_sweep_approach_down",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.8218341,
+      "position": [
+        2559.9548,
+        511.934,
+        121.82161
+      ],
+      "normal": [
+        0.12512332,
+        0.18264619,
+        0.9751844
+      ],
+      "physicalMaterialId": 105,
+      "nativeReturn": 0.8218341,
+      "nativeContactDistance": 0.821834091132041,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        -0.12512332,
+        -0.18264619,
+        -0.9751844
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_cylinder_sweep_away_up",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_cylinder_sweep_submerged_horizontal",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "miss",
+      "hit": false,
+      "distance": null,
+      "position": null,
+      "normal": null,
+      "physicalMaterialId": null,
+      "nativeReturn": 0,
+      "nativeContactDistance": null,
+      "nativeEntityId": null,
+      "nativePartId": null,
+      "diagnostic": null,
+      "nativeContactNormal": null,
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    },
+    {
+      "name": "terrain1_cylinder_sweep_from_below_up",
+      "shape": "cylinder",
+      "operation": "sweep",
+      "outcome": "hit",
+      "hit": true,
+      "distance": 0.83017427,
+      "position": [
+        2560.08,
+        512,
+        121.793625
+      ],
+      "normal": [
+        -0.12186102,
+        0,
+        -0.9925472
+      ],
+      "physicalMaterialId": 105,
+      "nativeReturn": 0.83017427,
+      "nativeContactDistance": 0.8301742554951528,
+      "nativeEntityId": -1,
+      "nativePartId": 0,
+      "diagnostic": null,
+      "nativeContactNormal": [
+        0.12186102,
+        -0,
+        0.9925472
+      ],
+      "nativeUnprojectionDirection": null,
+      "target": "terrain"
+    }
+  ]
+}

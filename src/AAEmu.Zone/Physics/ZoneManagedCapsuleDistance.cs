@@ -6,7 +6,7 @@ namespace AAEmu.Zone.Physics;
 internal static class ZoneManagedCapsuleDistance
 {
     public static ZoneManagedConvexDistance Triangle(ZonePhysicsShape capsule, Vector3 center,
-        Vector3 worldA, Vector3 worldB, Vector3 worldC, bool solidBelow)
+        Vector3 worldA, Vector3 worldB, Vector3 worldC, bool solidBelow, bool includeRadius = true)
     {
         var a = V.From(worldA) - V.From(center); var b = V.From(worldB) - V.From(center); var c = V.From(worldC) - V.From(center);
         var face = V.Cross(b - a, c - a).Unit;
@@ -42,7 +42,7 @@ internal static class ZoneManagedCapsuleDistance
         var distance = Math.Sqrt(best);
         var normal = distance > 1e-12 ? (onAxis - onTarget) * (1 / distance)
             : solidBelow || V.Dot(face, -a) >= 0 ? face : face * -1;
-        return new(Math.Max(0, distance - capsule.Radius), normal.Float, (V.From(center) + onTarget).Float);
+        return new(includeRadius ? Math.Max(0, distance - capsule.Radius) : distance, normal.Float, (V.From(center) + onTarget).Float);
 
         void Check(V axis, V target)
         {

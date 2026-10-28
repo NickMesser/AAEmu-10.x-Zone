@@ -163,22 +163,14 @@ public sealed class ZoneNativePhysicsBackendAdapter : IZonePhysicsBackend, IZone
     }
 
     /// <summary>
-    /// The scene-authoritative repositioning seam, now backed by the RE-VERIFIED living move action
-    /// (body vtable +0x50 = 3502A300, "CLivingEntity:Action(action_move)"; pe_action = {int type;
-    /// float x,y,z; int mode;}, type 1, mode 0 = absolute; evidence and reproduce steps in
-    /// AAEmuResearch/ZoneAuthority/pose-write). The write is APPLIED AND THEN READ BACK: the
-    /// native body decides, and a body that defers the action (class byte at or below the inline
-    /// floor) or a read-back that did not land raises the refusal with the observed numbers. No
-    /// position is ever reported as moved unless the engine moved it.
+    /// Refuses repositioning until the production position-parameter binding owns body/transform
+    /// updates. Original3502A300 action type1 controls velocity; no action or transform is written.
     /// </summary>
     private void ApplyAbsoluteMove(Registration registration, Vector3 position, string operation)
     {
         if (!_world.TryApplyLivingMove(registration.Body, position, absolute: true, out _, out var refusal))
             throw new NotSupportedException(
-                $"{operation} refused by name: the native living body did not accept the absolute move action — {refusal}. " +
-                $"The action entry is verified (RE: cryphysics_dedicate 3502A300, vtable +0x50); a body that defers " +
-                $"the record needs the native frame pump, so no transform is published and nothing is faked " +
-                $"(ZonePlayerActorFactory.cs:58/:68-72, ZonePlayerActor.Teleport ZonePlayerActorFactory.cs:648-655).");
+                $"{operation} refused by name: {refusal}. No native velocity action or entity transform was written.");
     }
 
     /// <summary>

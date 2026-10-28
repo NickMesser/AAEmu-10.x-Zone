@@ -96,7 +96,7 @@ public sealed class ManagedPhysicsTests
     }
 
     [Test]
-    public async Task TerrainBoxesSweepContinuouslyAndOverlapSolidGround()
+    public async Task TerrainBoxesSweepContinuouslyAndOverlapTheAuthoredSurface()
     {
         var geometry = FlatGeometry(out _);
         var shape = new ZonePhysicsShape(new(.5f, .5f, 1), false);
@@ -106,7 +106,7 @@ public sealed class ManagedPhysicsTests
         await Assert.That(hit.Normal).IsEqualTo(Vector3.UnitZ);
         await Assert.That(geometry.TryCollide(shape, new(1100, 1100, 134))).IsFalse();
         await Assert.That(geometry.TryCollide(shape, new(1100, 1100, 133))).IsTrue();
-        await Assert.That(geometry.TryCollide(shape, new(1100, 1100, 100))).IsTrue();
+        await Assert.That(geometry.TryCollide(shape, new(1100, 1100, 100))).IsFalse();
         await Assert.That(geometry.TrySweep(shape, new(1100, 1100, 133), new(10, 0, 0), out _)).IsFalse();
         await Assert.That(geometry.TrySweep(shape, new(1100, 1100, 133), new(0, 0, 10), out _)).IsFalse();
     }

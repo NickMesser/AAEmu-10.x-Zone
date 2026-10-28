@@ -363,45 +363,12 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
         [FieldOffset(0x44)] public int ThreadSafe;
     }
 
-    // ------------------------------------------------------------------
-    // Living move action (RE-VERIFIED 2026-09-23; evidence below).
-    // ------------------------------------------------------------------
-
     /// <summary>
-    /// pe_action as the native action handler reads it (cryphysics_dedicate.dll base 0x35000000,
-    /// body vtable +0x50 = 3502A300, whose own literal is "CLivingEntity:Action(action_move)"):
-    /// type 1 = move, mode 0/3 = absolute position, mode 2 = relative delta; both set the dirty
-    /// flag body+0x77 |= 2. Decompile and reproduce steps: AAEmuResearch/ZoneAuthority/pose-write.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    private struct LivingAction
-    {
-        public int Type;
-        public float X;
-        public float Y;
-        public float Z;
-        public int Mode;
-    }
-
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    private delegate int LivingActionCall(nint entity, void* action, int threadSafe);
-
-    /// <summary>Native body class byte; the producer applies INLINE only when it is greater than this.</summary>
-    private const byte InlineActionClassFloor = 6;
-
-    /// <summary>
-    /// Applies the recovered living MOVE action and VERIFIES it against the native read-back.
-    ///
-    /// The producer (35023650) takes the inline branch — apply now, no queue — only when
-    /// <c>body+0x47 &gt; 6</c> and <c>threadSafe &gt; -1</c>; otherwise the record is deferred to a
-    /// pump that only exists inside the native frame loop, and the body does not move. Rather than
-    /// assume, this method applies and then READS THE BODY BACK: a landed move returns true with
-    /// the observed status, and anything else returns false with the exact refusal — the body class
-    /// byte, the native return code and the before/after positions. Motion is therefore never
-    /// reported unless the engine actually moved the body.
-    ///
-    /// Velocity and impulse are deliberately NOT routed here: the recovered action ABI is
-    /// positional, so a velocity is expressed as a per-frame relative move by the frame owner.
+    /// Refuses the production living pose-write seam after validating and reading the live body.
+    /// Original3502A300 action type1 writes requested/actual velocity, not position, and reads a
+    /// 24-byte record including its final time field. It must never receive a position or the
+    /// former truncated20-byte record. The separately scoped diagnostic position parameters do
+    /// not bind this production body/transform update owner.
     /// </summary>
     public bool TryApplyLivingMove(LivingEntity body, Vector3 value, bool absolute,
         out ZoneNativeLivingStatus observed, out string refusal)
@@ -409,56 +376,12 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
         ArgumentNullException.ThrowIfNull(body);
         if (!Finite(value)) throw new ArgumentOutOfRangeException(nameof(value),
             "A living move requires a finite world vector (engine-local frame).");
-        ZoneNativeLivingStatus before, after;
-        byte bodyClass;
-        int result;
-        // ONE operation gate for the whole apply-and-verify: the native status and action calls
-        // reenter the engine, so nothing inside may open a second operation.
-        using (var operation = Enter())
-        {
-            before = ReadLivingStatusCore(body);
-            bodyClass = Marshal.ReadByte(body.Pointer + 0x47);
-            if (bodyClass <= InlineActionClassFloor)
-            {
-                observed = before;
-                refusal = $"the native body class byte 0x{bodyClass:X2} is at or below the inline-action floor " +
-                    $"0x{InlineActionClassFloor:X2}, so action move is DEFERRED to the native frame pump and the " +
-                    $"body did not move (position stayed {before.Position})";
-                return false;
-            }
-            var vtable = Marshal.ReadIntPtr(body.Pointer);
-            var slot = vtable == 0 ? 0 : Marshal.ReadIntPtr(vtable + 0x50);
-            if (slot == 0)
-            {
-                observed = before;
-                refusal = "the living proxy published a null action entry at vtable +0x50; no move was applied";
-                return false;
-            }
-            var action = new LivingAction { Type = 1, X = value.X, Y = value.Y, Z = value.Z, Mode = absolute ? 0 : 2 };
-            var call = Marshal.GetDelegateForFunctionPointer<LivingActionCall>(slot);
-            try
-            {
-                result = call(body.Pointer, &action, 0);
-            }
-            catch (Exception error) { NativeInvocationFailed(error); throw; }
-            CompleteCall();
-            after = ReadLivingStatusCore(body);
-        }
-        observed = after;
-        var expected = absolute ? value : before.Position + value;
-        if (result == 0 || !Landed(after.Position, expected))
-        {
-            refusal = $"action move (type 1, mode {(absolute ? 0 : 2)}) returned {result} and the read-back did not " +
-                $"land: before={before.Position} requested={value} expected={expected} after={after.Position}";
-            return false;
-        }
-        refusal = string.Empty;
-        return true;
+        using var operation = Enter();
+        observed = ReadLivingStatusCore(body);
+        refusal = $"blocked-native-pose-write: no production {(absolute ? "absolute" : "relative")} living pose write is bound; " +
+            "original3502A300 action type1 is a24-byte velocity action, not a position write";
+        return false;
     }
-
-    private static bool Landed(Vector3 observed, Vector3 expected) =>
-        Math.Abs(observed.X - expected.X) < 0.001f && Math.Abs(observed.Y - expected.Y) < 0.001f &&
-        Math.Abs(observed.Z - expected.Z) < 0.001f;
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     private delegate nint CreateLivingCall(nint world, int type, LivingPose* pose, nint foreignData, int foreignKind, int id, byte nativeEntity70);
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]

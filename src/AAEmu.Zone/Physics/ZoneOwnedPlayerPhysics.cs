@@ -5,35 +5,12 @@ using AAEmu.Zone.Actors;
 namespace AAEmu.Zone.Physics;
 
 /// <summary>
-/// OWNED player physics (Agent 8): the movement authority that does not depend on the native
-/// CryPhysics body at all.
-///
-/// Why this type exists, and why it is honest rather than a shortcut: the native pose-write path
-/// cannot move the player today. The recovered living action (<c>body vtable +0x50 =
-/// 3502A300</c>) only applies INLINE when <c>body+0x47 &gt; 6</c>, and the BOUND player body
-/// admitted by the live host reads <c>body+0x47 = 0x03</c> — the same value the unbound probe body
-/// reported — so the action is deferred to a native frame pump this host does not own. Every
-/// motion gate therefore refuses by name. That is the correct behavior for a host that is not the
-/// physics authority.
-///
-/// This class makes the host the authority instead: it owns the player's transform, integrates
-/// gravity, and resolves the ground with the scene's REAL terrain query
-/// (<see cref="IZoneTerrainPhysicsWorld.RaycastTerrain"/>), which is already working in the live
-/// scene. Nothing here is invented: the ground is the engine's terrain, and the integration is
-/// ordinary kinematics. What this class deliberately does NOT do is claim the native body moved —
-/// <see cref="TryReadPosition"/> reports the OWNED position, and the caller is told which authority
-/// produced it, so no caller can mistake this for native agreement.
-///
-/// Invariants:
-/// <list type="bullet">
-/// <item>Handle-keyed, never UnitObjectId alone (one authority per actor, matching
-/// <see cref="IZonePhysicsMotion"/>): a retired handle is rejected, never silently reused.</item>
-/// <item>Copied values only; no native pointer crosses this boundary.</item>
-/// <item>Named refusals: non-finite input, an unknown handle, and a step with no ground are all
-/// reported, never smoothed over.</item>
-/// <item>Each actor keeps its explicit signed gravity. Ground support and authored pivot height
-/// come from the scene provider, with legacy zero-pivot/default-gravity behavior retained.</item>
-/// </list>
+/// Owns copied actor poses and velocities independently of any native physical body. Integrates
+/// each actor's explicit signed gravity and resolves its authored ground reference through the
+/// scene provider. Missing surface samples mean free fall; a missing provider is a named refusal.
+/// Handle identities and caller-controlled retirement preserve one authority per generation.
+/// Legacy providers retain zero-pivot/default-gravity behavior. Reading this authority's pose
+/// does not imply that a comparison native body moved, and no native pointer crosses this boundary.
 /// </summary>
 public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
 {
@@ -71,6 +48,15 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
             TryGround(new(nextPosition.X, nextPosition.Y, previousPosition.Z + 2000f),
                 new(nextPosition.X, nextPosition.Y, previousPosition.Z - 4000f),
                 out position, out physicalMaterialId);
+
+        /// <summary>
+        /// Actor-aware support query. Scene providers can use copied authored living dimensions;
+        /// existing providers retain their previous trajectory-based support behavior.
+        /// Positions are ground references, with the actor's pivot already subtracted.
+        /// </summary>
+        bool TryCharacterGround(ZoneActorHandle actor, Vector3 previousPosition, Vector3 nextPosition,
+            bool wasGrounded, out Vector3 position, out ushort physicalMaterialId) =>
+            TryCharacterGround(previousPosition, nextPosition, wasGrounded, out position, out physicalMaterialId);
     }
 
     /// <summary>Legacy default signed Z acceleration in m/s²; an actor can supply authored gravity.</summary>
@@ -108,7 +94,8 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
         RequireFinite(position, nameof(position));
         RequireFinite(orientation, nameof(orientation));
         if (!float.IsFinite(gravity)) throw new ArgumentOutOfRangeException(nameof(gravity), "Owned gravity must be finite.");
-        if (orientation.LengthSquared() <= 0) throw new ArgumentException("Owned orientation must be a nonzero rotation.", nameof(orientation));
+        if (!float.IsFinite(orientation.LengthSquared()) || orientation.LengthSquared() <= 0)
+            throw new ArgumentException("Owned orientation must be a finite nonzero rotation.", nameof(orientation));
         if (_bodies.ContainsKey(actor))
             throw new InvalidOperationException($"Owned physics already owns actor {actor}; one authority per actor.");
         _bodies.Add(actor, new Body { Position = position, Orientation = orientation, Gravity = gravity });
@@ -145,13 +132,47 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
     {
         RequireFinite(position, nameof(position));
         RequireFinite(orientation, nameof(orientation));
-        if (orientation.LengthSquared() <= 0) throw new ArgumentException("Owned orientation must be a nonzero rotation.", nameof(orientation));
+        if (!float.IsFinite(orientation.LengthSquared()) || orientation.LengthSquared() <= 0)
+            throw new ArgumentException("Owned orientation must be a finite nonzero rotation.", nameof(orientation));
         var body = OwnedBody(actor);
         body.Position = position;
         body.Orientation = orientation;
         // An authoritative pose is a correction: the velocity it implies is zero, so a correction
         // never carries stale motion into the next step.
         body.Velocity = Vector3.Zero;
+    }
+
+    /// <summary>
+    /// Explicit authoritative repositioning. The new location has no validated support until
+    /// the scene queries it; a previous ground/material must not survive a teleport.
+    /// </summary>
+    public void Teleport(ZoneActorHandle actor, Vector3 position, Quaternion orientation)
+    {
+        ApplyPose(actor, position, orientation);
+        ClearGroundContact(OwnedBody(actor));
+    }
+
+    /// <summary>
+    /// Commits one scene-validated contact correction. Orientation and authored gravity remain
+    /// unchanged; the caller supplies the resolved velocity instead of fabricating pose velocity.
+    /// All values are checked before either position, velocity or cached support is changed.
+    /// </summary>
+    internal void CorrectContactPose(ZoneActorHandle actor, Vector3 position, Vector3 velocity)
+    {
+        RequireFinite(position, nameof(position));
+        RequireFinite(velocity, nameof(velocity));
+        var body = OwnedBody(actor);
+        body.Position = position;
+        body.Velocity = velocity;
+        ClearGroundContact(body);
+    }
+
+    private static void ClearGroundContact(Body body)
+    {
+        body.Grounded = false;
+        body.HasGround = false;
+        body.GroundZ = 0;
+        body.GroundMaterialId = 0;
     }
 
     /// <summary>
@@ -180,7 +201,7 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
             // caught by the first owned-physics test run, which is exactly what it is for.
             body.Velocity += new Vector3(0f, 0f, body.Gravity * seconds);
             var next = body.Position + body.Velocity * seconds;
-            if (_terrain.TryCharacterGround(body.Position - pivotOffset, next - pivotOffset, body.Grounded,
+            if (_terrain.TryCharacterGround(actor, body.Position - pivotOffset, next - pivotOffset, body.Grounded,
                 out var ground, out var materialId))
             {
                 body.GroundZ = ground.Z;

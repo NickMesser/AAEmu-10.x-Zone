@@ -60,7 +60,7 @@ internal static class ZoneManagedConvexQueries
         throw Failure("conservative advancement exceeded its iteration limit");
     }
 
-    private static ZoneManagedConvexDistance Distance(ZoneManagedConvexTarget target, Vector3 center, ZonePhysicsShape shape)
+    internal static ZoneManagedConvexDistance Distance(ZoneManagedConvexTarget target, Vector3 center, ZonePhysicsShape shape)
     {
         if (shape.UseCapsule && target.Kind is ZoneManagedConvexTargetKind.Triangle or ZoneManagedConvexTargetKind.Terrain)
             return ZoneManagedCapsuleDistance.Triangle(shape, center, target.A, target.B, target.C, target.Kind == ZoneManagedConvexTargetKind.Terrain);

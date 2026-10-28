@@ -20,7 +20,7 @@ queries. They do not remove CryEngine. Existing configurations retain their orig
 | --- | --- | --- |
 | `crysystem.dll` | Configured assets, content, clocks, scene owner, startup/frame/shutdown composition | Finish diagnostics, platform checks and capability policies across every scene type |
 | `cry3dengine_dedicate.dll` | World/cell selection, authored heightmaps/surfaces/seams, decoded placements, default/picking CGF proxies including referenced source streams and curved primitives | Vegetation, visibility/area behavior, water volumes and procedural objects |
-| `cryphysics_dedicate.dll` | Character integration, true upright capsule/cylinder queries, authored initial collider/pivot/mass/gravity, terrain/static and analytic queries, shared-mesh BVHs, affine instances, combined sweeps and material IDs | Stance transitions, suspension, authored slope/step behavior, penetration recovery, friction, rigid bodies, swimming, vehicles, ragdolls and exact tangent conformance |
+| `cryphysics_dedicate.dll` | Character integration, true upright capsule/cylinder queries, authored initial collider/pivot/mass/gravity, static overlap recovery, bounded buried-pivot support, terrain/static and analytic queries, shared-mesh BVHs, affine instances, combined sweeps and material IDs | Stance transitions, suspension, authored slope/step behavior, complete recovery contact ordering/state, friction, rigid bodies, swimming, vehicles, ragdolls and exact tangent conformance |
 | `cryentitysystem_dedicate.dll` | Player/NPC identity generations, registry/spatial membership and managed player lifecycle | General entity proxies, components, areas, attachments and entity-script state |
 | `cryaction_dedicate.dll` | Player movement controller/frame pipeline and managed goal-pipe execution adapter | Authored behavior construction, game-object actions, signal bindings and FlowGraphs |
 | `cryaisystem_dedicate.dll` | Provider ownership, active/target state, signals, generation retirement and deterministic update scheduling | Perception, authored behavior admission, navigation, locomotion, leash and combat decisions |
@@ -59,7 +59,8 @@ comparison; managed scene startup never constructs them.
 
 The first native-free milestone passed 172 standalone tests, including 31 new configuration,
 physics, AI and scene/host cases. The static/reference/curved milestone passed 247 tests; the
-current character-shape implementation passes 272 standalone tests.
+character-shape implementation passed 272 standalone tests. The overlap/support and corrected
+terrain implementation passes 329 standalone tests.
 The solution builds successfully; existing analyzer warnings remain.
 
 Real-content replay evidence is kept outside the repository: `managed-entry-verified-zone.log`,
@@ -220,8 +221,70 @@ The complete outputs retain every residual. Artifacts: `native-character-shape-r
 The [132-request corpus and original native results](../../tools/AAEmu.Zone.Diagnostics/Fixtures/README.md)
 are also checked into the repository, including the unresolved controls.
 
+Implemented next: copied penetration depth/direction/witness/material against true query shapes,
+static triangles, whole closed convex proxies, affine analytic targets and terrain top surfaces.
+The controller stages recovery before ordinary movement, adds the original 0.01 m clearance,
+uses the verified per-query 2.5-radius bound for authored living bodies and preserves velocity
+during early static correction. Deterministic ambiguous choices are reported. Finite/cycle checks
+and a replacement 96-pass numerical bound fail before committing staged pose/velocity; that work
+bound is not claimed as a native constant. Ground support can also repair an initially buried foot
+pivot within the original `HeightCollider - segmentHalfHeight` limit, without recentring its collider
+or adopting distant overhead terrain. Explicit teleports immediately invalidate cached support.
+
+Independent controls cover all nine box/capsule/cylinder actor pairs, triangle planes/corners,
+contained solid volumes vs empty mesh interiors, nonuniform/sheared/mirrored affine targets,
+terrain curved footprints and coordinates near 8000. Controller controls cover wall recovery,
+outward/sliding motion, ordinary pose corrections, zero-motion contact clearance, ties, atomic
+failure, generation retirement, unload, explicit generic box profiles and authored buried-pivot
+support, airborne state and the strict authored support boundary near Z=8000. Exact support-bound
+certificates also resolve the reviewed near-spherical diagonal-target EPA exhaustion cases without
+changing iteration limits or tolerances; uncertified cases retain bounded EPA and explicit failure.
+All 329 standalone tests pass. The 108-ray output and all previous result fields of the 132 raw
+shape controls remain
+unchanged, including their known residuals.
+
+The real-content recovery replay again admits player 387 grounded at
+`(1172.5996,1646.5,366.33502)`, with authored center 1.2/pivot 0/gravity -25, and retires before
+terrain on World EOF. Listener exit is 0 and zone exit 3 follows its configured disconnect policy.
+The ready process has 76 modules and zero CryEngine/Lua modules. Artifacts:
+`recovery-final-entry-zone.log`, `recovery-final-entry-replay.log`,
+`recovery-final-entry-modules.json` and `captures/recovery-final-entry-output.bin`.
+The module snapshot was taken after the grounded player status was observed. Final corpus
+verification is recorded in `recovery-final-verification-summary.json`.
+
+The original-body diagnostic now verifies position with the original 72-byte type-0 parameters,
+submits a complete 24-byte type-1 velocity action, steps the actual living list with world flag 8
+and copies pose, velocities, dimensions, support and flags. Flag 0 only advancing world time is
+not recovery evidence. The former position-labelled 20-byte velocity action was invalid and has
+been removed; the native production pose adapter remains a named refusal. Diagnostic bindings
+remain isolated from managed startup and production movement ownership.
+
+The checked-in [living and terrain fixtures](../../tools/AAEmu.Zone.Diagnostics/Fixtures/README.md)
+retain 32 base living cases, ten followups (38 distinct living cases overall), 54 terrain-only
+primitive queries and their original copied results/control attribution. Actual living-list
+membership and elapsed body time establish that those bodies were stepped. Idle, moving,
+gravity-only and tiny-request controls distinguish the original early idle shortcut from raw
+query behavior. The full idle/fall/contact-cache predicate remains unowned; the managed controller's
+proactive recovery is explicitly reported as a replacement policy.
+
+The terrain oracle corrected two earlier assumptions: deeply submerged shapes do not overlap the
+terrain, and upward shape sweeps can hit its two-sided top triangles. Physics rays and shape queries
+now sample all four global vertices through their individual current-leaf scalar heights;
+renderer/GetHeight coarse-quad behavior is unchanged. Native shape materials pass through a signed
+triangle byte (negative values fall back to fresh terrain part index 0), while rays retain full
+integer map indices. Controls independently verify this positive alias; the negative branch has
+source and standalone-test evidence but was not executed in the recorded native window.
+
+All 54 terrain hit/miss decisions now agree, and all 12 shared positive sweep material IDs agree.
+The six downward sweeps have maximum travel difference 0.000628 m and normal-vector difference
+0.000000131. The six upward crossings retain adjacent-face selection differences: maximum travel
+difference 0.004911 m and normal-vector difference 0.060844. No tolerance was widened to hide those
+residuals. External comparison artifacts are `managed-terrain-shape-corrected-results.json` and
+`terrain-corrected-parity-summary.json`.
+
 Remaining: stance transitions, arbitrary character rotation, authored slope/step limits, native
-suspension, penetration recovery, fall/landing state and friction/elasticity response. The authored
+suspension, exact recovery ordering and prior stuck-contact state, fall/landing state and
+friction/elasticity response. The authored
 `IgnoreCollision` callback/state path has no managed owner. Some special stances put the collider
 below the pivot support plane and need native suspension/contact behavior; preserve their actual
 dimensions rather than recentering them. Existing single-authority movement, wall correction,
@@ -229,9 +292,9 @@ ceiling support, generation retirement and explicit teleports must remain intact
 gliding, ladders, mounts and moving platforms require their own owners.
 
 Remaining acceptance: full recorded stance transitions and jump arcs across movement states,
-authored slope ascent/descent, stair climbing, penetration recovery and a sustained real-client
-walk/jump/logout/re-entry session. Native-free replay and isolated geometry controls alone do not
-establish complete living-controller parity.
+authored slope ascent/descent, stair climbing, full native recovery/contact-state conformance and
+a sustained real-client walk/jump/logout/re-entry session. Native-free replay and isolated geometry
+controls alone do not establish complete living-controller parity.
 
 ### CE-08 — Authored NPC behavior admission (P0)
 

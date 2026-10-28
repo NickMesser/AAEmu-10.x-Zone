@@ -38,6 +38,8 @@ public static class Program
             Console.WriteLine("      Loads authored terrain and supported static proxies without engine or Lua DLLs.");
             Console.WriteLine("      Either scene check accepts --scene-probes <rays.json> --scene-probe-output <hits.json>.");
             Console.WriteLine("      --scene-shape-probes <shapes.json> --scene-shape-probe-output <hits.json> compares explicit box/capsule/cylinder queries.");
+            Console.WriteLine("      Shape target is static by default; target:terrain selects only the heightfield(original mask0x100).");
+            Console.WriteLine("      Native scene check accepts --scene-living-probes <cases.json> --scene-living-probe-output <states.json> to step controlled full living bodies.");
             Console.WriteLine("  --probe-pose-write / --probe-player-admission --config <runtime.json>: native research probes.");
             Console.WriteLine("  Select exactly one mode per run.");
             Console.WriteLine("  --config <runtime.json> supplies explicit paths, asset priority, zone identity, endpoint and logs.");
@@ -91,7 +93,8 @@ public static class Program
             if (options.ContainsKey("--check-scene"))
                 return await CheckSceneAsync(configuration, content, models, layout, assets, shutdown.Token,
                     options.GetValueOrDefault("--scene-probes"), options.GetValueOrDefault("--scene-probe-output"),
-                    options.GetValueOrDefault("--scene-shape-probes"), options.GetValueOrDefault("--scene-shape-probe-output")).ConfigureAwait(false);
+                    options.GetValueOrDefault("--scene-shape-probes"), options.GetValueOrDefault("--scene-shape-probe-output"),
+                    options.GetValueOrDefault("--scene-living-probes"), options.GetValueOrDefault("--scene-living-probe-output")).ConfigureAwait(false);
             if (options.ContainsKey("--probe-pose-write"))
                 return await ProbePoseWriteAsync(configuration, content, models, layout, assets, shutdown.Token).ConfigureAwait(false);
             if (options.ContainsKey("--probe-player-admission"))
@@ -247,7 +250,8 @@ public static class Program
     private static async Task<int> CheckSceneAsync(ZoneRuntimeConfiguration? configuration,
         ZoneContentDatabase content, ZoneModelContent models, ZoneWorldMapLayout? layout,
         IZoneAssetSource? assets, CancellationToken shutdown, string? probesPath = null, string? probeOutputPath = null,
-        string? shapeProbesPath = null, string? shapeProbeOutputPath = null)
+        string? shapeProbesPath = null, string? shapeProbeOutputPath = null,
+        string? livingProbesPath = null, string? livingProbeOutputPath = null)
     {
         var inputs = ZoneEngineInputs.Create(configuration, layout, content, models, "check-scene.log");
         var options = inputs.Options;
@@ -320,6 +324,9 @@ public static class Program
                     if (shapeProbesPath is not null)
                         TrySceneStep("StaticShapeProbes", () => ZoneSceneShapeProbes.RunNative(
                             shapeProbesPath, shapeProbeOutputPath, scene.PhysicsWorld!));
+                    if (livingProbesPath is not null)
+                        TrySceneStep("LivingRecoveryProbes", () => ZoneLivingRecoveryProbes.Run(
+                            livingProbesPath, livingProbeOutputPath, scene.PhysicsWorld!, shutdown));
                     TrySceneStep("RetireScene", () => scene.Dispose());
                 }
                 if (engine is not null)
@@ -381,11 +388,8 @@ public static class Program
     }
 
     /// <summary>
-    /// Evidence mode: recover the living-body pose/velocity write ABI at runtime. Loads the real
-    /// scene through the composed framework engine (a bare CSystem publishes a null living factory
-    /// at world vtable +0xb0), then sweeps every registered parameter type through the body's
-    /// SetParams entry and reports only OBSERVED read-back changes. Exit 0 = the sweep ran and every
-    /// application is accounted for; the ABI itself is reported by hit count, never assumed.
+    /// Legacy pose-write probe. Its former position-labelled velocity action has been removed;
+    /// ZonePoseWriteProbe now reports the named missing pose ABI without submitting that action.
     /// </summary>
     private static async Task<int> ProbePoseWriteAsync(ZoneRuntimeConfiguration? configuration,
         ZoneContentDatabase content, ZoneModelContent models, ZoneWorldMapLayout? layout,
@@ -602,7 +606,7 @@ public static class Program
                     throw new ArgumentException($"Duplicate option {key}.");
                 continue;
             }
-            if (key is not ("--config" or "--content-db" or "--zone" or "--world-host" or "--world-port" or "--locale" or "--spawner-file" or "--terrain-file" or "--world-file" or "--world-name" or "--research-igame-slot" or "--research-igame-value" or "--collision-report" or "--scene-probes" or "--scene-probe-output" or "--scene-shape-probes" or "--scene-shape-probe-output"))
+            if (key is not ("--config" or "--content-db" or "--zone" or "--world-host" or "--world-port" or "--locale" or "--spawner-file" or "--terrain-file" or "--world-file" or "--world-name" or "--research-igame-slot" or "--research-igame-value" or "--collision-report" or "--scene-probes" or "--scene-probe-output" or "--scene-shape-probes" or "--scene-shape-probe-output" or "--scene-living-probes" or "--scene-living-probe-output"))
                 throw new ArgumentException($"Unknown option {key}.");
             if (++i == args.Length || args[i].StartsWith("--", StringComparison.Ordinal))
                 throw new ArgumentException($"Missing value for {key}.");
@@ -621,6 +625,10 @@ public static class Program
             throw new ArgumentException("--scene-shape-probe-output requires --scene-shape-probes.");
         if (options.ContainsKey("--scene-shape-probes") && !(options.ContainsKey("--check-managed-scene") || options.ContainsKey("--check-scene")))
             throw new ArgumentException("--scene-shape-probes requires a managed or native scene check.");
+        if (options.ContainsKey("--scene-living-probe-output") && !options.ContainsKey("--scene-living-probes"))
+            throw new ArgumentException("--scene-living-probe-output requires --scene-living-probes.");
+        if (options.ContainsKey("--scene-living-probes") && !options.ContainsKey("--check-scene"))
+            throw new ArgumentException("--scene-living-probes requires the original native scene check.");
         if (options.ContainsKey("--world-file") != options.ContainsKey("--world-name"))
             throw new ArgumentException("World map validation requires both --world-file and --world-name.");
         return options;

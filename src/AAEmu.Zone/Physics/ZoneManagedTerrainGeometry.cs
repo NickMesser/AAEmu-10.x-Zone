@@ -10,9 +10,10 @@ namespace AAEmu.Zone.Physics;
 /// surface-slot-31 holes have no geometry. This class neither loads nor calls an engine module.
 /// </summary>
 /// <remarks>
-/// Shape positions are centers. Box sweeps use continuous triangle separating axes; overlaps
-/// include the solid below the terrain. Upright capsule/cylinder queries use convex support or
-/// exact capsule segment distances; their bounding boxes select candidates only.
+/// Shape positions are centers. All shapes intersect the authored two-sided top triangles;
+/// fully submerged bodies do not collide with an invented solid below the heightfield. Box
+/// sweeps use continuous triangle separating axes. Upright capsule/cylinder queries use convex
+/// support or exact capsule segment distances; their bounding boxes select candidates only.
 /// This provider contains terrain only: authored static meshes, caves, vegetation, vehicles and
 /// water collision need separate geometry providers and are not implied by a terrain miss.
 /// </remarks>
@@ -112,8 +113,9 @@ public sealed class ZoneManagedTerrainGeometry(
     }
 
     /// <summary>
-    /// Continuous box, upright capsule or cylinder sweep against loaded solid terrain. Curved
-    /// queries use the shared one-mm separation tolerance, not an enclosing box substitute.
+    /// Continuous box, upright capsule or cylinder sweep against loaded two-sided terrain
+    /// triangles. Curved queries use the shared one-mm separation tolerance, not an enclosing
+    /// box substitute. Both downward approaches and upward crossings from below can collide.
     /// </summary>
     public bool TrySweep(ZonePhysicsShape shape, Vector3 origin, Vector3 displacement, out ZonePhysicsHit hit)
         => TrySweepCore(shape, origin, displacement, float.PositiveInfinity, out hit);
@@ -141,30 +143,19 @@ public sealed class ZoneManagedTerrainGeometry(
             Check(b, d, c, surface);
         }
         if (!float.IsFinite(nearest)) return false;
-        hit = new(nearest * displacement.Length(), bestPosition, bestNormal, ResolveMaterial(bestSurface));
+        hit = new(nearest * displacement.Length(), bestPosition, bestNormal, ResolveShapeMaterial(bestSurface));
         return true;
 
         void Check(Vector3 a, Vector3 b, Vector3 c, int surface)
         {
             var faceNormal = Vector3.Normalize(Vector3.Cross(b - a, c - a));
             if (faceNormal.Z >= maximumNormalZ) return;
-            if (shape.Kind != ZonePhysicsShapeKind.Box)
-            {
-                if (Vector3.Dot(displacement, faceNormal) >= -Epsilon) return;
-                var bottom = MathF.Min(origin.Z, origin.Z + displacement.Z) - shape.BoundingHalfExtents.Z - 1;
-                if (!ZoneManagedConvexQueries.Sweep(ZoneManagedConvexTarget.ForTerrain(a, b, c, bottom), origin, shape, displacement,
-                    out var contactFraction, out var contactNormal, out var position) || contactFraction >= nearest) return;
-                nearest = contactFraction; bestNormal = contactNormal; bestPosition = position; bestSurface = surface;
-                return;
-            }
-            if (!SweepTriangle(shape.HalfExtents, origin, displacement, a, b, c, out var fraction, out var normal) ||
+            if (!ZoneManagedTriangleQueries.Sweep(shape, origin, displacement, a, b, c, out var fraction, out var normal, out var position) ||
                 fraction >= nearest) return;
             nearest = fraction;
             bestNormal = normal;
             bestSurface = surface;
-            var center = origin + displacement * fraction;
-            var radius = Vector3.Dot(Vector3.Abs(normal), shape.HalfExtents);
-            bestPosition = ClosestPointOnTriangle(center - normal * radius, a, b, c);
+            bestPosition = position;
         }
     }
 
@@ -176,17 +167,41 @@ public sealed class ZoneManagedTerrainGeometry(
         {
             if (!_terrain.TryReadManagedPhysicsQuad(x, y, out var heights, out _)) continue;
             CreateTriangles(x, y, heights, out var a, out var b, out var c, out var d);
-            if (shape.Kind != ZonePhysicsShapeKind.Box)
-            {
-                var bottom = position.Z - shape.BoundingHalfExtents.Z - 1;
-                if (ZoneManagedConvexQueries.Overlaps(ZoneManagedConvexTarget.ForTerrain(a, b, c, bottom), position, shape) ||
-                    ZoneManagedConvexQueries.Overlaps(ZoneManagedConvexTarget.ForTerrain(b, d, c, bottom), position, shape)) return true;
-                continue;
-            }
-            if (OverlapsSolidBelow(position, shape.HalfExtents, a, b, c) ||
-                OverlapsSolidBelow(position, shape.HalfExtents, b, d, c)) return true;
+            if (ZoneManagedTriangleQueries.Overlaps(shape, position, a, b, c) ||
+                ZoneManagedTriangleQueries.Overlaps(shape, position, b, d, c)) return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Copies exact upward terrain support unprojections over each authored triangle/true shape
+    /// footprint. These are explicitly constrained surface contacts, not whole nonconvex-world
+    /// minimum translations. Eligibility requires a real top-surface intersection; wholly
+    /// submerged bodies, internal grid sides, holes and unloaded cells supply no early recovery
+    /// contacts. Depth reaches touch and excludes controller clearance.
+    /// </summary>
+    public IReadOnlyList<ZonePhysicsPenetration> GetPenetrations(ZonePhysicsShape shape, Vector3 position)
+    {
+        ValidateShape(shape); ValidateFinite(position, nameof(position));
+        var contacts = new List<ZonePhysicsPenetration>();
+        foreach (var (x, y) in SweepCells(position, Vector3.Zero, shape.BoundingHalfExtents))
+        {
+            if (!_terrain.TryReadManagedPhysicsQuad(x, y, out var heights, out var material)) continue;
+            CreateTriangles(x, y, heights, out var a, out var b, out var c, out var d);
+            var physical = ResolveShapeMaterial(material);
+            if (ZoneManagedTerrainPenetration.Try(shape, position, a, b, c, physical, out var first)) contacts.Add(first);
+            if (ZoneManagedTerrainPenetration.Try(shape, position, b, d, c, physical, out var second)) contacts.Add(second);
+        }
+        return ZoneManagedPenetrationCollection.Snapshot(contacts);
+    }
+
+    private ushort ResolveShapeMaterial(int index)
+    {
+        // 35155180 stores mesh triangle IDs in bytes; 3514E580/35093100 read them as signed.
+        // 35037930 substitutes the fresh terrain part's default slot 0 for a negative ID before
+        // applying its 2048-entry mapping (3508B860/350212E0). Raw rays retain their full index.
+        var triangleId = unchecked((sbyte)(byte)index);
+        return ResolveMaterial(triangleId >= 0 ? triangleId : 0);
     }
 
     private ushort ResolveMaterial(int index)
@@ -232,119 +247,6 @@ public sealed class ZoneManagedTerrainGeometry(
         return fraction >= -Epsilon && fraction <= 1 + Epsilon;
     }
 
-    private static bool SweepTriangle(Vector3 extents, Vector3 origin, Vector3 displacement,
-        Vector3 a, Vector3 b, Vector3 c, out float fraction, out Vector3 normal)
-    {
-        var triangleNormal = Vector3.Normalize(Vector3.Cross(b - a, c - a));
-        fraction = 0;
-        normal = triangleNormal;
-        // The heightfield is solid below its upward face. Tangential travel across an internal
-        // triangle edge is not a wall, and travel out of the solid is not a blocking contact.
-        if (Vector3.Dot(displacement, triangleNormal) >= -Epsilon) return false;
-        if (OverlapsSolidBelow(origin, extents, a, b, c))
-            return true;
-
-        Span<Vector3> axes = stackalloc Vector3[13];
-        axes[0] = Vector3.UnitX;
-        axes[1] = Vector3.UnitY;
-        axes[2] = Vector3.UnitZ;
-        axes[3] = triangleNormal;
-        ReadOnlySpan<Vector3> edges = [b - a, c - b, a - c];
-        for (var i = 0; i < 3; i++)
-        {
-            axes[4 + i * 3] = Vector3.Cross(edges[i], Vector3.UnitX);
-            axes[5 + i * 3] = Vector3.Cross(edges[i], Vector3.UnitY);
-            axes[6 + i * 3] = Vector3.Cross(edges[i], Vector3.UnitZ);
-        }
-        var enter = 0f;
-        var exit = 1f;
-        foreach (var axisValue in axes)
-        {
-            if (axisValue.LengthSquared() < 1e-12f) continue;
-            var axis = Vector3.Normalize(axisValue);
-            var p0 = Vector3.Dot(a - origin, axis);
-            var p1 = Vector3.Dot(b - origin, axis);
-            var p2 = Vector3.Dot(c - origin, axis);
-            var radius = Vector3.Dot(Vector3.Abs(axis), extents);
-            var minimum = MathF.Min(p0, MathF.Min(p1, p2)) - radius;
-            var maximum = MathF.Max(p0, MathF.Max(p1, p2)) + radius;
-            var speed = Vector3.Dot(displacement, axis);
-            if (MathF.Abs(speed) < 1e-8f)
-            {
-                if (minimum > Epsilon || maximum < -Epsilon) return false;
-                continue;
-            }
-            var first = minimum / speed;
-            var last = maximum / speed;
-            var enteringNormal = -axis;
-            if (first > last) { (first, last) = (last, first); enteringNormal = axis; }
-            if (first > enter) { enter = first; normal = enteringNormal; }
-            exit = MathF.Min(exit, last);
-            if (enter > exit + Epsilon) return false;
-        }
-        if (enter < 0 || enter > 1 || exit < 0) return false;
-        fraction = enter;
-        return Vector3.Dot(displacement, normal) < -Epsilon;
-    }
-
-    // Clip the triangle to the box's XY footprint. Its highest remaining point tells whether
-    // any part of the box enters the solid terrain below, even when the entire box is underground.
-    private static bool OverlapsSolidBelow(Vector3 center, Vector3 extents, Vector3 a, Vector3 b, Vector3 c)
-    {
-        Span<Vector3> polygon = stackalloc Vector3[8];
-        Span<Vector3> scratch = stackalloc Vector3[8];
-        polygon[0] = a; polygon[1] = b; polygon[2] = c;
-        var count = 3;
-        for (var edge = 0; edge < 4; edge++)
-        {
-            var axis = edge / 2;
-            var lower = edge % 2 == 0;
-            var boundary = Component(center, axis) + (lower ? -1 : 1) * Component(extents, axis);
-            var resultCount = 0;
-            for (var i = 0; i < count; i++)
-            {
-                var previous = polygon[(i + count - 1) % count];
-                var current = polygon[i];
-                var previousDistance = Component(previous, axis) - boundary;
-                var currentDistance = Component(current, axis) - boundary;
-                var previousInside = lower ? previousDistance >= 0 : previousDistance <= 0;
-                var currentInside = lower ? currentDistance >= 0 : currentDistance <= 0;
-                if (previousInside != currentInside)
-                    scratch[resultCount++] = Vector3.Lerp(previous, current, previousDistance / (previousDistance - currentDistance));
-                if (currentInside) scratch[resultCount++] = current;
-            }
-            if (resultCount == 0) return false;
-            scratch[..resultCount].CopyTo(polygon);
-            count = resultCount;
-        }
-        var bottom = center.Z - extents.Z;
-        for (var i = 0; i < count; i++)
-            if (bottom <= polygon[i].Z + Epsilon) return true;
-        return false;
-    }
-
-    private static Vector3 ClosestPointOnTriangle(Vector3 point, Vector3 a, Vector3 b, Vector3 c)
-    {
-        var ab = b - a; var ac = c - a; var ap = point - a;
-        var d1 = Vector3.Dot(ab, ap); var d2 = Vector3.Dot(ac, ap);
-        if (d1 <= 0 && d2 <= 0) return a;
-        var bp = point - b;
-        var d3 = Vector3.Dot(ab, bp); var d4 = Vector3.Dot(ac, bp);
-        if (d3 >= 0 && d4 <= d3) return b;
-        var vc = d1 * d4 - d3 * d2;
-        if (vc <= 0 && d1 >= 0 && d3 <= 0) return a + ab * (d1 / (d1 - d3));
-        var cp = point - c;
-        var d5 = Vector3.Dot(ab, cp); var d6 = Vector3.Dot(ac, cp);
-        if (d6 >= 0 && d5 <= d6) return c;
-        var vb = d5 * d2 - d1 * d6;
-        if (vb <= 0 && d2 >= 0 && d6 <= 0) return a + ac * (d2 / (d2 - d6));
-        var va = d3 * d6 - d5 * d4;
-        if (va <= 0 && d4 - d3 >= 0 && d5 - d6 >= 0)
-            return b + (c - b) * ((d4 - d3) / ((d4 - d3) + (d5 - d6)));
-        var inverse = 1 / (va + vb + vc);
-        return a + ab * (vb * inverse) + ac * (vc * inverse);
-    }
-
     private static IEnumerable<(int X, int Y)> SweepCells(Vector3 origin, Vector3 displacement, Vector3 extents)
     {
         var begin = 0f;
@@ -371,7 +273,6 @@ public sealed class ZoneManagedTerrainGeometry(
     }
 
     private static int GridIndex(float value) => (int)Math.Clamp(MathF.Floor(value * .5f), 0, 4095);
-    private static float Component(Vector3 vector, int axis) => axis == 0 ? vector.X : vector.Y;
     private static float NextBoundary(float origin, float displacement, int cell, int step) => step == 0
         ? float.PositiveInfinity : ((cell + (step > 0 ? 1 : 0)) * 2 - origin) / displacement;
 

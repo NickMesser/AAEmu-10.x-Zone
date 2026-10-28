@@ -10,7 +10,11 @@ namespace AAEmu.Zone.Native.Physics;
 /// border/area pointers never escape the query.
 /// </summary>
 public readonly record struct ZoneNativePrimitiveContact(double Distance, Vector3 Position, Vector3 Normal,
-    int PhysicalMaterialId, int EntityId, int PartId);
+    int PhysicalMaterialId, int EntityId, int PartId)
+{
+    /// <summary>Original geom_contact.dir(+32), copied for overlap unprojection only; distinct from normal.</summary>
+    public Vector3? UnprojectionDirection { get; init; }
+}
 
 public enum ZoneNativePrimitiveQueryOutcome { Miss, Hit, Indeterminate }
 
@@ -31,6 +35,13 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
     /// dynamic bodies are excluded. This diagnostic oracle does not replace the backend adapter.
     /// </summary>
     public ZoneNativePrimitiveQueryResult QueryStaticBox(Vector3 center, Vector3 halfExtents, Vector3 sweep)
+        => QueryBoxForTargets(center, halfExtents, sweep, 1);
+
+    /// <summary>Exact terrain-only(mask0x100) diagnostic query, retaining the native player geometry flags2/2.</summary>
+    public ZoneNativePrimitiveQueryResult QueryTerrainBox(Vector3 center, Vector3 halfExtents, Vector3 sweep)
+        => QueryBoxForTargets(center, halfExtents, sweep, 0x100);
+
+    private ZoneNativePrimitiveQueryResult QueryBoxForTargets(Vector3 center, Vector3 halfExtents, Vector3 sweep, uint objectTypes)
     {
         using var operation = Enter();
         RequireTerrainEntityGrid();
@@ -41,7 +52,7 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
         {
             M00 = 1, M11 = 1, M22 = 1, Center = center, HalfExtents = halfExtents
         };
-        return QueryStaticPrimitive(0, &primitive, sweep);
+        return QueryPrimitive(0, &primitive, sweep, objectTypes);
     }
 
     /// <summary>
@@ -51,6 +62,15 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
     /// </summary>
     public ZoneNativePrimitiveQueryResult QueryStaticCapsule(Vector3 center, float radius,
         float segmentHalfHeight, Vector3 sweep, Vector3? axis = null)
+        => QueryCapsuleForTargets(center, radius, segmentHalfHeight, sweep, axis, 1);
+
+    /// <summary>Exact terrain-only capsule query, with an explicit segment half-height and raw primitive center.</summary>
+    public ZoneNativePrimitiveQueryResult QueryTerrainCapsule(Vector3 center, float radius,
+        float segmentHalfHeight, Vector3 sweep, Vector3? axis = null)
+        => QueryCapsuleForTargets(center, radius, segmentHalfHeight, sweep, axis, 0x100);
+
+    private ZoneNativePrimitiveQueryResult QueryCapsuleForTargets(Vector3 center, float radius,
+        float segmentHalfHeight, Vector3 sweep, Vector3? axis, uint objectTypes)
     {
         using var operation = Enter();
         RequireTerrainEntityGrid();
@@ -65,7 +85,7 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
         {
             Center = center, Axis = direction, Radius = radius, HalfHeight = segmentHalfHeight
         };
-        return QueryStaticPrimitive(6, &primitive, sweep);
+        return QueryPrimitive(6, &primitive, sweep, objectTypes);
     }
 
     /// <summary>
@@ -74,6 +94,15 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
     /// </summary>
     public ZoneNativePrimitiveQueryResult QueryStaticCylinder(Vector3 center, float radius,
         float halfHeight, Vector3 sweep, Vector3? axis = null)
+        => QueryCylinderForTargets(center, radius, halfHeight, sweep, axis, 1);
+
+    /// <summary>Exact terrain-only flat-capped cylinder query using the original32-byte axial primitive.</summary>
+    public ZoneNativePrimitiveQueryResult QueryTerrainCylinder(Vector3 center, float radius,
+        float halfHeight, Vector3 sweep, Vector3? axis = null)
+        => QueryCylinderForTargets(center, radius, halfHeight, sweep, axis, 0x100);
+
+    private ZoneNativePrimitiveQueryResult QueryCylinderForTargets(Vector3 center, float radius,
+        float halfHeight, Vector3 sweep, Vector3? axis, uint objectTypes)
     {
         using var operation = Enter();
         RequireTerrainEntityGrid();
@@ -89,7 +118,7 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
         {
             Center = center, Axis = direction, Radius = radius, HalfHeight = halfHeight
         };
-        return QueryStaticPrimitive(5, &primitive, sweep);
+        return QueryPrimitive(5, &primitive, sweep, objectTypes);
     }
 
     private static Vector3 PrimitiveAxis(Vector3? axis)
@@ -101,7 +130,7 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
         return Vector3.Normalize(direction);
     }
 
-    private ZoneNativePrimitiveQueryResult QueryStaticPrimitive(int kind, void* primitive, Vector3 sweep)
+    private ZoneNativePrimitiveQueryResult QueryPrimitive(int kind, void* primitive, Vector3 sweep, uint objectTypes)
     {
         // ValidateFiles pins the complete binary identity. Also verify this newly exposed vtable
         // target before invocation; the public wrapper350964F0 and implementation35093100 agree
@@ -111,7 +140,7 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
         PrimitiveContact* contacts = null;
         var request = new PrimitiveRequest
         {
-            Kind = kind, Primitive = primitive, Sweep = sweep, ObjectTypes = 1,
+            Kind = kind, Primitive = primitive, Sweep = sweep, ObjectTypes = objectTypes,
             Contacts = &contacts, RequiredGeometryFlags = 2, AnyGeometryFlags = 2
         };
         var isSweep = sweep.LengthSquared() > 0;
@@ -130,13 +159,15 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
                 // CompleteCall or any subsequent native operation can reuse borrowed storage.
                 if (double.IsFinite(distance) && Math.Abs(distance) < 1e10)
                     copied = new(distance, contacts->Position, contacts->Normal,
-                        contacts->PhysicalMaterialId, contacts->EntityId, contacts->PartId);
+                        contacts->PhysicalMaterialId, contacts->EntityId, contacts->PartId)
+                    { UnprojectionDirection = isSweep ? null : contacts->UnprojectionDirection };
             }
         }
         catch (Exception error) { NativeInvocationFailed(error); throw; }
         CompleteCall();
         if (!float.IsFinite(returned) || copied is { } invalid &&
-            (!Finite(invalid.Position) || !Finite(invalid.Normal)))
+            (!Finite(invalid.Position) || !Finite(invalid.Normal) ||
+             invalid.UnprojectionDirection is { } direction && !Finite(direction)))
             throw new InvalidDataException("The original primitive query returned non-finite contact data.");
 
         if (!isSweep)
@@ -211,6 +242,7 @@ public sealed unsafe partial class ZoneNativeTerrainPhysicsWorld
         [FieldOffset(0)] internal double Distance;
         [FieldOffset(8)] internal Vector3 Position;
         [FieldOffset(20)] internal Vector3 Normal;
+        [FieldOffset(32)] internal Vector3 UnprojectionDirection;
         [FieldOffset(56)] internal int PhysicalMaterialId;
         [FieldOffset(60)] internal int EntityId;
         [FieldOffset(64)] internal int PartId;

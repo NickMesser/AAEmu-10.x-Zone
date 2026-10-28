@@ -1,0 +1,6382 @@
+{
+  "backend": "native-living",
+  "complete": true,
+  "requested": 10,
+  "bodyProfile": "unbound full PE_LIVING; authored-compatible dimensions; exact world Step and status",
+  "stepProfile": "original world TimeStep flags8 selects living class3 list; flags0 is not simulation acceptance",
+  "velocityProfile": "optional original24-byte action type1/mode3/dt0; no position action or forced correction",
+  "centerConvention": "input position is entity origin; collider center=origin\u002B(heightCollider-heightPivot)*up",
+  "results": [
+    {
+      "name": "free_idle",
+      "outcome": "completed",
+      "input": {
+        "name": "free_idle",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.24,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 2,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.01,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.02,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40000,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        }
+      ],
+      "diagnostic": null
+    },
+    {
+      "name": "wall_capsule_overlap_idle",
+      "outcome": "completed",
+      "input": {
+        "name": "wall_capsule_overlap_idle",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              768.86774,
+              942.63293,
+              230.09662
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.24,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              768.86774,
+              942.63293,
+              1000
+            ],
+            "collisionActive": true
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 5,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.02,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                768.86774,
+                942.63293,
+                1000
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3511875657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.02,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3511875657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.03,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3511875657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.04,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3511875657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.049999997,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3511875657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.06,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3511875657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "nativeSimulationTime": 0.07,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40001,
+              "position": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3511875657,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        }
+      ],
+      "diagnostic": null
+    },
+    {
+      "name": "wall_capsule_overlap_tiny_request",
+      "outcome": "completed",
+      "input": {
+        "name": "wall_capsule_overlap_tiny_request",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              768.86774,
+              942.63293,
+              230.09662
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.24,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": [
+              9.772313E-07,
+              2.1217723E-07,
+              0
+            ],
+            "mass": 80,
+            "setupPosition": [
+              768.86774,
+              942.63293,
+              1000
+            ],
+            "collisionActive": true
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 5,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": 0.03
+      },
+      "actionReturns": [
+        1
+      ],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.07,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                768.86774,
+                942.63293,
+                1000
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3957928009,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.07,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3957928009,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.08,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "rawPosition": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                9.772313E-07,
+                2.1217723E-07,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3957928011,
+              "partColliderFlags": 2,
+              "groundHeight": 229.87135,
+              "groundNormal": [
+                0.03132544,
+                0.062658496,
+                0.99754333
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.089999996,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "rawPosition": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                9.772313E-07,
+                2.1217723E-07,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3957928011,
+              "partColliderFlags": 2,
+              "groundHeight": 229.87135,
+              "groundNormal": [
+                0.03132544,
+                0.062658496,
+                0.99754333
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.099999994,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "rawPosition": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                9.772313E-07,
+                2.1217723E-07,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.03,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3957928011,
+              "partColliderFlags": 2,
+              "groundHeight": 229.87135,
+              "groundNormal": [
+                0.03132544,
+                0.062658496,
+                0.99754333
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.11,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "rawPosition": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                9.772313E-07,
+                2.1217723E-07,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.04,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3957928011,
+              "partColliderFlags": 2,
+              "groundHeight": 229.87135,
+              "groundNormal": [
+                0.03132544,
+                0.062658496,
+                0.99754333
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "nativeSimulationTime": 0.12,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40002,
+              "position": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "rawPosition": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                9.772313E-07,
+                2.1217723E-07,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.049999997,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3957928011,
+              "partColliderFlags": 2,
+              "groundHeight": 229.87135,
+              "groundNormal": [
+                0.03132544,
+                0.062658496,
+                0.99754333
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        }
+      ],
+      "diagnostic": null
+    },
+    {
+      "name": "wall_capsule_overlap_gravity_without_request",
+      "outcome": "completed",
+      "input": {
+        "name": "wall_capsule_overlap_gravity_without_request",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              768.86774,
+              942.63293,
+              230.09662
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.24,
+            "heightPivot": 0,
+            "gravity": 25,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              768.86774,
+              942.63293,
+              1000
+            ],
+            "collisionActive": true
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 5,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.12,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                768.86774,
+                942.63293,
+                1000
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.12,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.13,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "rawPosition": [
+                768.91656,
+                942.64355,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                -0.25
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                -0.25
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": 229.87135,
+              "groundNormal": [
+                0.03132544,
+                0.062658496,
+                0.99754333
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.14,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                768.91656,
+                942.64355,
+                230.09412
+              ],
+              "rawPosition": [
+                768.91656,
+                942.64355,
+                230.09412
+              ],
+              "velocity": [
+                0,
+                0,
+                -0.5
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                -0.5
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": 229.87135,
+              "groundNormal": [
+                0.03132544,
+                0.062658496,
+                0.99754333
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.14999999,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                768.91656,
+                942.64355,
+                230.08911
+              ],
+              "rawPosition": [
+                768.91656,
+                942.64355,
+                230.08911
+              ],
+              "velocity": [
+                0,
+                0,
+                -0.75
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                -0.75
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0.03,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": 229.87135,
+              "groundNormal": [
+                0.03132544,
+                0.062658496,
+                0.99754333
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.16,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                768.91656,
+                942.64355,
+                230.0816
+              ],
+              "rawPosition": [
+                768.91656,
+                942.64355,
+                230.0816
+              ],
+              "velocity": [
+                0,
+                0,
+                -1
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                -1
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0.04,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": 229.87135,
+              "groundNormal": [
+                0.03132544,
+                0.062658496,
+                0.99754333
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "nativeSimulationTime": 0.17,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40003,
+              "position": [
+                768.91656,
+                942.64355,
+                230.07161
+              ],
+              "rawPosition": [
+                768.91656,
+                942.64355,
+                230.07161
+              ],
+              "velocity": [
+                0,
+                0,
+                -1.25
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                -1.25
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0.049999997,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": 229.87135,
+              "groundNormal": [
+                0.03132544,
+                0.062658496,
+                0.99754333
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        }
+      ],
+      "diagnostic": null
+    },
+    {
+      "name": "free_gravity_without_request",
+      "outcome": "completed",
+      "input": {
+        "name": "free_gravity_without_request",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.24,
+            "heightPivot": 0,
+            "gravity": 25,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 3,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": 0.002
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.17,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.17,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.17999999,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                -0.25
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                -0.25
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.19,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                999.9975
+              ],
+              "rawPosition": [
+                512,
+                512,
+                999.9975
+              ],
+              "velocity": [
+                0,
+                0,
+                -0.5
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                -0.5
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.19999999,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40004,
+              "position": [
+                512,
+                512,
+                999.9925
+              ],
+              "rawPosition": [
+                512,
+                512,
+                999.9925
+              ],
+              "velocity": [
+                0,
+                0,
+                -0.75
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                -0.75
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0.03,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 73,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        }
+      ],
+      "diagnostic": null
+    },
+    {
+      "name": "wall_capsule_inactive_collision",
+      "outcome": "completed",
+      "input": {
+        "name": "wall_capsule_inactive_collision",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              768.86774,
+              942.63293,
+              230.09662
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.24,
+            "heightPivot": 0,
+            "gravity": 25,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": [
+              -0.4886156,
+              -0.106088616,
+              -0
+            ],
+            "mass": 80,
+            "setupPosition": [
+              768.86774,
+              942.63293,
+              1000
+            ],
+            "collisionActive": false
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 5,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null
+      },
+      "actionReturns": [
+        1
+      ],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.19999999,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                768.86774,
+                942.63293,
+                1000
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2673323081,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.19999999,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "rawPosition": [
+                768.86774,
+                942.63293,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": false,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2673323017,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.21,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                768.86285,
+                942.6319,
+                230.09662
+              ],
+              "rawPosition": [
+                768.86285,
+                942.6319,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                -0.4886156,
+                -0.106088616,
+                -0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": false,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2673323019,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.22,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                768.858,
+                942.63086,
+                230.09662
+              ],
+              "rawPosition": [
+                768.858,
+                942.63086,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                -0.4886156,
+                -0.106088616,
+                -0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": false,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2673323019,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.22999999,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                768.8531,
+                942.6298,
+                230.09662
+              ],
+              "rawPosition": [
+                768.8531,
+                942.6298,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                -0.4886156,
+                -0.106088616,
+                -0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": false,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2673323019,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.24,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                768.8482,
+                942.6288,
+                230.09662
+              ],
+              "rawPosition": [
+                768.8482,
+                942.6288,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                -0.4886156,
+                -0.106088616,
+                -0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": false,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2673323019,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "nativeSimulationTime": 0.25,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40005,
+              "position": [
+                768.8433,
+                942.62775,
+                230.09662
+              ],
+              "rawPosition": [
+                768.8433,
+                942.62775,
+                230.09662
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                -0.4886156,
+                -0.106088616,
+                -0
+              ],
+              "gravity": [
+                0,
+                0,
+                -25
+              ],
+              "isFlying": false,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2673323019,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        }
+      ],
+      "diagnostic": null
+    },
+    {
+      "name": "living_pair_overlap_idle",
+      "outcome": "completed",
+      "input": {
+        "name": "living_pair_overlap_idle",
+        "bodies": [
+          {
+            "name": "a",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true
+          },
+          {
+            "name": "b",
+            "shape": "capsule",
+            "position": [
+              512.3,
+              512,
+              1000
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              522.3,
+              512,
+              1000
+            ],
+            "collisionActive": true
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 10,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null
+      },
+      "actionReturns": [],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.25,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                522.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                522.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.25,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.26,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.26999998,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.28,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.29,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "nativeSimulationTime": 0.29999998,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "nativeSimulationTime": 0.31,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "nativeSimulationTime": 0.32,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "nativeSimulationTime": 0.32999998,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "nativeSimulationTime": 0.34,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "nativeSimulationTime": 0.35,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40006,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3518621769,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40007,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3697791049,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        }
+      ],
+      "diagnostic": null
+    },
+    {
+      "name": "living_pair_overlap_moving_inward",
+      "outcome": "completed",
+      "input": {
+        "name": "living_pair_overlap_moving_inward",
+        "bodies": [
+          {
+            "name": "a",
+            "shape": "capsule",
+            "position": [
+              512,
+              512,
+              1000
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": [
+              0.5,
+              0,
+              0
+            ],
+            "mass": 80,
+            "setupPosition": [
+              512,
+              512,
+              1000
+            ],
+            "collisionActive": true
+          },
+          {
+            "name": "b",
+            "shape": "capsule",
+            "position": [
+              512.3,
+              512,
+              1000
+            ],
+            "radius": 0.2,
+            "heightCollider": 0.4,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.2,
+            "halfHeight": null,
+            "velocity": null,
+            "mass": 80,
+            "setupPosition": [
+              522.3,
+              512,
+              1000
+            ],
+            "collisionActive": true
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 10,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null
+      },
+      "actionReturns": [
+        1
+      ],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.35,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674109513,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                522.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                522.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.35,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674109513,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.35999998,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0.5,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674110027,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 131072,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.37,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0.5,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674110027,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 131072,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.38,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0.5,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.03,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674110027,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 131072,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.39,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0.5,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.04,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674110027,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.03,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 131072,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "nativeSimulationTime": 0.39999998,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0.5,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.049999997,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674110027,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.04,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 131072,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "nativeSimulationTime": 0.41,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0.5,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.059999995,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674110027,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.049999997,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 131072,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "nativeSimulationTime": 0.42,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0.5,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.06999999,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674110027,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.059999995,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 131072,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "nativeSimulationTime": 0.42999998,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0.5,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.07999999,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674110027,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.06999999,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 131072,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "nativeSimulationTime": 0.44,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0.5,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.08999999,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674110027,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.07999999,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 131072,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "nativeSimulationTime": 0.45,
+          "bodies": [
+            {
+              "name": "a",
+              "physicalId": 40008,
+              "position": [
+                512,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512,
+                512,
+                1000
+              ],
+              "velocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0.2475,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0.5,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.09999999,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 2674110027,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            },
+            {
+              "name": "b",
+              "physicalId": 40009,
+              "position": [
+                512.3,
+                512,
+                1000
+              ],
+              "rawPosition": [
+                512.3,
+                512,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.08999999,
+              "radius": 0.2,
+              "axialHalfHeight": 0.2,
+              "heightCollider": 0.4,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3903778889,
+              "partColliderFlags": 2,
+              "groundHeight": -1E+10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 131072,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        }
+      ],
+      "diagnostic": null
+    },
+    {
+      "name": "sphere_scaled_living_overlap_center",
+      "outcome": "completed",
+      "input": {
+        "name": "sphere_scaled_living_overlap_center",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              466.78162,
+              851.50726,
+              238.7889
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.24,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": [
+              1E-06,
+              0,
+              0
+            ],
+            "mass": 80,
+            "setupPosition": [
+              466.78162,
+              851.50726,
+              1000
+            ],
+            "collisionActive": true
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 5,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null
+      },
+      "actionReturns": [
+        1
+      ],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.45,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40010,
+              "position": [
+                466.78162,
+                851.50726,
+                1000
+              ],
+              "rawPosition": [
+                466.78162,
+                851.50726,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3950105673,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.45,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40010,
+              "position": [
+                466.78162,
+                851.50726,
+                238.7889
+              ],
+              "rawPosition": [
+                466.78162,
+                851.50726,
+                238.7889
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3950105673,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.45999998,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40010,
+              "position": [
+                466.78162,
+                851.2715,
+                238.7889
+              ],
+              "rawPosition": [
+                466.78162,
+                851.2715,
+                238.7889
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                1E-06,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3950105675,
+              "partColliderFlags": 2,
+              "groundHeight": 237.58641,
+              "groundNormal": [
+                0,
+                -0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.47,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40010,
+              "position": [
+                466.78162,
+                851.2715,
+                238.7889
+              ],
+              "rawPosition": [
+                466.78162,
+                851.2715,
+                238.7889
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                1E-06,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3950105675,
+              "partColliderFlags": 2,
+              "groundHeight": 237.58641,
+              "groundNormal": [
+                0,
+                -0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.48,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40010,
+              "position": [
+                466.78162,
+                851.2715,
+                238.7889
+              ],
+              "rawPosition": [
+                466.78162,
+                851.2715,
+                238.7889
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                1E-06,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.03,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3950105675,
+              "partColliderFlags": 2,
+              "groundHeight": 237.58641,
+              "groundNormal": [
+                0,
+                -0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.48999998,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40010,
+              "position": [
+                466.78162,
+                851.2715,
+                238.7889
+              ],
+              "rawPosition": [
+                466.78162,
+                851.2715,
+                238.7889
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                1E-06,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.04,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3950105675,
+              "partColliderFlags": 2,
+              "groundHeight": 237.58641,
+              "groundNormal": [
+                0,
+                -0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "nativeSimulationTime": 0.5,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40010,
+              "position": [
+                466.78162,
+                851.2715,
+                238.7889
+              ],
+              "rawPosition": [
+                466.78162,
+                851.2715,
+                238.7889
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                1E-06,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.049999997,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3950105675,
+              "partColliderFlags": 2,
+              "groundHeight": 237.58641,
+              "groundNormal": [
+                0,
+                -0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        }
+      ],
+      "diagnostic": null
+    },
+    {
+      "name": "sphere_scaled_living_overlap_shallow",
+      "outcome": "completed",
+      "input": {
+        "name": "sphere_scaled_living_overlap_shallow",
+        "bodies": [
+          {
+            "name": "actor",
+            "shape": "capsule",
+            "position": [
+              467.0986,
+              851.50726,
+              238.7889
+            ],
+            "radius": 0.08,
+            "heightCollider": 0.24,
+            "heightPivot": 0,
+            "gravity": 0,
+            "segmentHalfHeight": 0.16,
+            "halfHeight": null,
+            "velocity": [
+              1E-06,
+              0,
+              0
+            ],
+            "mass": 80,
+            "setupPosition": [
+              467.0986,
+              851.50726,
+              1000
+            ],
+            "collisionActive": true
+          }
+        ],
+        "stepSeconds": 0.01,
+        "frames": 5,
+        "submitVelocityEachStep": false,
+        "minimumFirstBodyTravel": null
+      },
+      "actionReturns": [
+        1
+      ],
+      "frames": [
+        {
+          "number": -1,
+          "nativeSimulationTime": 0.5,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40011,
+              "position": [
+                467.0986,
+                851.50726,
+                1000
+              ],
+              "rawPosition": [
+                467.0986,
+                851.50726,
+                1000
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468827721,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 0,
+          "nativeSimulationTime": 0.5,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40011,
+              "position": [
+                467.0986,
+                851.50726,
+                238.7889
+              ],
+              "rawPosition": [
+                467.0986,
+                851.50726,
+                238.7889
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                0,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468827721,
+              "partColliderFlags": 2,
+              "groundHeight": -1E-10,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 65536,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0,
+              "stepElapsed": 0
+            }
+          ]
+        },
+        {
+          "number": 1,
+          "nativeSimulationTime": 0.51,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40011,
+              "position": [
+                467.14862,
+                851.50726,
+                238.7889
+              ],
+              "rawPosition": [
+                467.14862,
+                851.50726,
+                238.7889
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                1E-06,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468827723,
+              "partColliderFlags": 2,
+              "groundHeight": 238.5985,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "nativeSimulationTime": 0.52,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40011,
+              "position": [
+                467.14862,
+                851.50726,
+                238.94244
+              ],
+              "rawPosition": [
+                467.14862,
+                851.50726,
+                238.94244
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                1E-06,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": false,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468828618,
+              "partColliderFlags": 2,
+              "groundHeight": 238.94244,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "nativeSimulationTime": 0.53,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40011,
+              "position": [
+                467.14862,
+                851.50726,
+                238.95244
+              ],
+              "rawPosition": [
+                467.14862,
+                851.50726,
+                238.95244
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                1E-06,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468828235,
+              "partColliderFlags": 2,
+              "groundHeight": 238.94244,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "nativeSimulationTime": 0.53999996,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40011,
+              "position": [
+                467.14862,
+                851.50726,
+                238.95244
+              ],
+              "rawPosition": [
+                467.14862,
+                851.50726,
+                238.95244
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                1E-06,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.01,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468828235,
+              "partColliderFlags": 2,
+              "groundHeight": 238.94244,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "nativeSimulationTime": 0.55,
+          "bodies": [
+            {
+              "name": "actor",
+              "physicalId": 40011,
+              "position": [
+                467.14862,
+                851.50726,
+                238.95244
+              ],
+              "rawPosition": [
+                467.14862,
+                851.50726,
+                238.95244
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "rawVelocity": [
+                0,
+                0,
+                0
+              ],
+              "requestedVelocity": [
+                1E-06,
+                0,
+                0
+              ],
+              "gravity": [
+                0,
+                0,
+                -0
+              ],
+              "isFlying": true,
+              "flyingTime": 0.02,
+              "radius": 0.08,
+              "axialHalfHeight": 0.16,
+              "heightCollider": 0.24,
+              "heightPivot": 0,
+              "entityFlags": 184550979,
+              "livingFlags": 3468828235,
+              "partColliderFlags": 2,
+              "groundHeight": 238.94244,
+              "groundNormal": [
+                0,
+                0,
+                1
+              ],
+              "commandState": 0,
+              "contactClearance": 0.01,
+              "simulationClass": 3,
+              "inLivingStepList": true,
+              "stepPeriod": 0.01,
+              "stepElapsed": 0.01
+            }
+          ]
+        }
+      ],
+      "diagnostic": null
+    }
+  ]
+}

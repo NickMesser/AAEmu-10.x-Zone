@@ -7,7 +7,8 @@ namespace AAEmu.Zone.Physics;
 /// <summary>Character support over terrain and authored static meshes, without selecting roofs overhead.</summary>
 public sealed class ZoneManagedSceneGroundQuery(
     ZoneManagedTerrainGeometry terrain, ZoneManagedStaticGeometry? statics = null,
-    Func<ZoneActorHandle, float>? groundPivotHeight = null) : ZoneOwnedPlayerPhysics.IGroundQuery
+    Func<ZoneActorHandle, float>? groundPivotHeight = null,
+    Func<ZoneActorHandle, ZonePhysicsActorDescription?>? actorDescription = null) : ZoneOwnedPlayerPhysics.IGroundQuery
 {
     /// <summary>
     /// Current character-controller allowance for a rising walking surface. Authored stance step
@@ -16,6 +17,19 @@ public sealed class ZoneManagedSceneGroundQuery(
     public const float MaximumStaticGroundRise = .3f;
     public float ContactTolerance => .002f;
     public float GetGroundPivotHeight(ZoneActorHandle actor) => groundPivotHeight?.Invoke(actor) ?? 0;
+
+    /// <summary>
+    /// Copies support already touching a ground reference point. This narrow query cannot adopt
+    /// overhead terrain or a remote floor and does not reuse an actor's cached contact state.
+    /// </summary>
+    internal bool TrySupportContact(Vector3 point, out ZonePhysicsGroundHit ground, out bool fromStatic)
+    {
+        ZoneManagedTerrainGeometry.ValidateFinite(point, nameof(point));
+        var found = SupportRay(point + new Vector3(0, 0, ContactTolerance),
+            new(0, 0, -2 * ContactTolerance), out var hit, out fromStatic);
+        ground = found ? new(hit.Distance, hit.Position, hit.Normal, hit.PhysicalMaterialId) : default;
+        return found;
+    }
 
     public bool TryGround(Vector3 from, Vector3 to, out Vector3 position, out ushort physicalMaterialId)
     {
@@ -61,15 +75,47 @@ public sealed class ZoneManagedSceneGroundQuery(
         return true;
     }
 
+    public bool TryCharacterGround(ZoneActorHandle actor, Vector3 previousPosition, Vector3 nextPosition,
+        bool wasGrounded, out Vector3 position, out ushort physicalMaterialId)
+    {
+        if (TryCharacterGround(previousPosition, nextPosition, wasGrounded, out position, out physicalMaterialId))
+            return true;
+        var description = actorDescription?.Invoke(actor);
+        if (description is not { Profile: ZonePhysicsActorProfile.Living } ||
+            nextPosition.Z > previousPosition.Z + ContactTolerance) return false;
+
+        // The native ground helper (3502CA20) starts at origin + (hc-h-hp)*up and
+        // casts down 1.5*(hc-h)+2. Here the supplied point has already had hp removed.
+        // Final living support only raises a foot strictly less than hc-h below the
+        // floor (3502DED0). This repairs a misplaced pivot even when the collider is
+        // clear; it must not turn a distant roof or the terrain above a cave into support.
+        var rise = description.CenterOffsetZ + description.GroundPivotHeight -
+            description.Shape.SegmentHalfHeight;
+        var length = 1.5f * rise + 2;
+        if (!float.IsFinite(rise) || !float.IsFinite(length) || rise <= 0 || length <= 0) return false;
+        // Preserve the original subtraction order: floor-foot < rise admits a rounded exact
+        // boundary at large coordinates that foot > floor-rise correctly excludes.
+        if (!SupportRay(nextPosition + new Vector3(0, 0, rise), new(0, 0, -length), out var support) ||
+            nextPosition.Z >= support.Position.Z || nextPosition.Z <= support.Position.Z - rise) return false;
+        position = support.Position;
+        physicalMaterialId = support.PhysicalMaterialId;
+        return true;
+    }
+
     private bool SupportRay(Vector3 origin, Vector3 displacement, out ZonePhysicsHit hit)
+        => SupportRay(origin, displacement, out hit, out _);
+
+    private bool SupportRay(Vector3 origin, Vector3 displacement, out ZonePhysicsHit hit, out bool fromStatic)
     {
         var found = terrain.RaycastTerrain(origin, displacement, out hit) &&
             hit.Normal.Z >= ZoneManagedPhysicsBackend.MinimumWalkableNormalZ;
+        fromStatic = false;
         if (statics is not null && statics.Raycast(origin, displacement, out var other,
             ZoneManagedPhysicsBackend.MinimumWalkableNormalZ) && (!found || other.Distance < hit.Distance))
         {
             hit = other;
             found = true;
+            fromStatic = true;
         }
         return found;
     }

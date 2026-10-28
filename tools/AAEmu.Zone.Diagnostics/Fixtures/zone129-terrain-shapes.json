@@ -1,0 +1,974 @@
+[
+  {
+    "name": "terrain0_box_overlap_above",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      512,
+      512,
+      307.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain0_box_overlap_surface",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      512,
+      512,
+      305.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain0_box_overlap_near_below",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      512,
+      512,
+      305.40047000000004
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain0_box_overlap_vertical_nominal_touch",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      512,
+      512,
+      305.58047000000005
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain0_box_overlap_submerged_10m",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      512,
+      512,
+      295.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain0_box_sweep_approach_down",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      512,
+      512,
+      306.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      -2
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain0_box_sweep_away_up",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      512,
+      512,
+      306.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      1
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain0_box_sweep_submerged_horizontal",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      512,
+      512,
+      295.42047
+    ],
+    "sweep": [
+      0.5,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain0_box_sweep_from_below_up",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      512,
+      512,
+      304.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      2
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain0_capsule_overlap_above",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      512,
+      512,
+      307.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain0_capsule_overlap_surface",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      512,
+      512,
+      305.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain0_capsule_overlap_near_below",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      512,
+      512,
+      305.40047000000004
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain0_capsule_overlap_vertical_nominal_touch",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      512,
+      512,
+      305.66047000000003
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain0_capsule_overlap_submerged_10m",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      512,
+      512,
+      295.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain0_capsule_sweep_approach_down",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      512,
+      512,
+      306.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      -2
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain0_capsule_sweep_away_up",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      512,
+      512,
+      306.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      1
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain0_capsule_sweep_submerged_horizontal",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      512,
+      512,
+      295.42047
+    ],
+    "sweep": [
+      0.5,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain0_capsule_sweep_from_below_up",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      512,
+      512,
+      304.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      2
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain0_cylinder_overlap_above",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      512,
+      512,
+      307.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain0_cylinder_overlap_surface",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      512,
+      512,
+      305.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain0_cylinder_overlap_near_below",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      512,
+      512,
+      305.40047000000004
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain0_cylinder_overlap_vertical_nominal_touch",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      512,
+      512,
+      305.58047000000005
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain0_cylinder_overlap_submerged_10m",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      512,
+      512,
+      295.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain0_cylinder_sweep_approach_down",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      512,
+      512,
+      306.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      -2
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain0_cylinder_sweep_away_up",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      512,
+      512,
+      306.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      1
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain0_cylinder_sweep_submerged_horizontal",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      512,
+      512,
+      295.42047
+    ],
+    "sweep": [
+      0.5,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain0_cylinder_sweep_from_below_up",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      512,
+      512,
+      304.42047
+    ],
+    "sweep": [
+      0,
+      0,
+      2
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain1_box_overlap_above",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      2560,
+      512,
+      123.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain1_box_overlap_surface",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      2560,
+      512,
+      121.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain1_box_overlap_near_below",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      2560,
+      512,
+      121.783444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain1_box_overlap_vertical_nominal_touch",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      2560,
+      512,
+      121.963444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain1_box_overlap_submerged_10m",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      2560,
+      512,
+      111.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain1_box_sweep_approach_down",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      2560,
+      512,
+      122.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      -2
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain1_box_sweep_away_up",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      2560,
+      512,
+      122.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      1
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain1_box_sweep_submerged_horizontal",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      2560,
+      512,
+      111.803444
+    ],
+    "sweep": [
+      0.5,
+      0,
+      0
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain1_box_sweep_from_below_up",
+    "target": "terrain",
+    "shape": "box",
+    "center": [
+      2560,
+      512,
+      120.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      2
+    ],
+    "halfExtents": [
+      0.08,
+      0.08,
+      0.16
+    ]
+  },
+  {
+    "name": "terrain1_capsule_overlap_above",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      2560,
+      512,
+      123.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain1_capsule_overlap_surface",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      2560,
+      512,
+      121.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain1_capsule_overlap_near_below",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      2560,
+      512,
+      121.783444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain1_capsule_overlap_vertical_nominal_touch",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      2560,
+      512,
+      122.043444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain1_capsule_overlap_submerged_10m",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      2560,
+      512,
+      111.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain1_capsule_sweep_approach_down",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      2560,
+      512,
+      122.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      -2
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain1_capsule_sweep_away_up",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      2560,
+      512,
+      122.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      1
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain1_capsule_sweep_submerged_horizontal",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      2560,
+      512,
+      111.803444
+    ],
+    "sweep": [
+      0.5,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain1_capsule_sweep_from_below_up",
+    "target": "terrain",
+    "shape": "capsule",
+    "center": [
+      2560,
+      512,
+      120.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      2
+    ],
+    "radius": 0.08,
+    "segmentHalfHeight": 0.16
+  },
+  {
+    "name": "terrain1_cylinder_overlap_above",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      2560,
+      512,
+      123.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain1_cylinder_overlap_surface",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      2560,
+      512,
+      121.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain1_cylinder_overlap_near_below",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      2560,
+      512,
+      121.783444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain1_cylinder_overlap_vertical_nominal_touch",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      2560,
+      512,
+      121.963444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain1_cylinder_overlap_submerged_10m",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      2560,
+      512,
+      111.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain1_cylinder_sweep_approach_down",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      2560,
+      512,
+      122.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      -2
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain1_cylinder_sweep_away_up",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      2560,
+      512,
+      122.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      1
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain1_cylinder_sweep_submerged_horizontal",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      2560,
+      512,
+      111.803444
+    ],
+    "sweep": [
+      0.5,
+      0,
+      0
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  },
+  {
+    "name": "terrain1_cylinder_sweep_from_below_up",
+    "target": "terrain",
+    "shape": "cylinder",
+    "center": [
+      2560,
+      512,
+      120.803444
+    ],
+    "sweep": [
+      0,
+      0,
+      2
+    ],
+    "radius": 0.08,
+    "halfHeight": 0.16
+  }
+]

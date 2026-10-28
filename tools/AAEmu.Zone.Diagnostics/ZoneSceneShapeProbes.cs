@@ -11,16 +11,17 @@ internal static class ZoneSceneShapeProbes
 {
     private sealed record Input(string Name, string Shape, float[] Center, float[] Sweep,
         float[]? HalfExtents = null, float? Radius = null, float? SegmentHalfHeight = null,
-        float? HalfHeight = null, float[]? Axis = null);
+        float? HalfHeight = null, float[]? Axis = null, string? Target = null);
     private sealed record Probe(string Name, string Shape, Vector3 Center, Vector3 Sweep,
-        Vector3 HalfExtents, float Radius, float AxialHalfHeight, Vector3 Axis)
+        Vector3 HalfExtents, float Radius, float AxialHalfHeight, Vector3 Axis, string Target)
     {
         public bool IsSweep => Sweep.LengthSquared() > 0;
     }
     private sealed record Result(string Name, string Shape, string Operation, string Outcome, bool? Hit,
         float? Distance = null, float[]? Position = null, float[]? Normal = null, int? PhysicalMaterialId = null,
         float? NativeReturn = null, double? NativeContactDistance = null, int? NativeEntityId = null,
-        int? NativePartId = null, string? Diagnostic = null, float[]? NativeContactNormal = null);
+        int? NativePartId = null, string? Diagnostic = null, float[]? NativeContactNormal = null,
+        float[]? NativeUnprojectionDirection = null, string Target = "static");
     private static readonly JsonSerializerOptions Json = new()
     { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, PropertyNameCaseInsensitive = true,
         UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow, WriteIndented = true };
@@ -31,10 +32,13 @@ internal static class ZoneSceneShapeProbes
         ArgumentNullException.ThrowIfNull(world);
         Run(inputPath, outputPath, "native", probe =>
         {
-            var value = probe.Shape switch
+            var value = (probe.Shape, probe.Target) switch
             {
-                "box" => world.QueryStaticBox(probe.Center, probe.HalfExtents, probe.Sweep),
-                "capsule" => world.QueryStaticCapsule(probe.Center, probe.Radius, probe.AxialHalfHeight, probe.Sweep, probe.Axis),
+                ("box", "terrain") => world.QueryTerrainBox(probe.Center, probe.HalfExtents, probe.Sweep),
+                ("capsule", "terrain") => world.QueryTerrainCapsule(probe.Center, probe.Radius, probe.AxialHalfHeight, probe.Sweep, probe.Axis),
+                ("cylinder", "terrain") => world.QueryTerrainCylinder(probe.Center, probe.Radius, probe.AxialHalfHeight, probe.Sweep, probe.Axis),
+                ("box", _) => world.QueryStaticBox(probe.Center, probe.HalfExtents, probe.Sweep),
+                ("capsule", _) => world.QueryStaticCapsule(probe.Center, probe.Radius, probe.AxialHalfHeight, probe.Sweep, probe.Axis),
                 _ => world.QueryStaticCylinder(probe.Center, probe.Radius, probe.AxialHalfHeight, probe.Sweep, probe.Axis)
             };
             var hit = value.Outcome switch
@@ -51,11 +55,13 @@ internal static class ZoneSceneShapeProbes
                 probe.IsSweep && contact.HasValue ? Values(-contact.Value.Normal) : null,
                 contact?.PhysicalMaterialId, value.NativeReturn, contact?.Distance,
                 contact?.EntityId, contact?.PartId, value.Diagnostic,
-                contact.HasValue ? Values(contact.Value.Normal) : null);
+                contact.HasValue ? Values(contact.Value.Normal) : null,
+                contact?.UnprojectionDirection is { } direction ? Values(direction) : null, probe.Target);
         });
     }
 
-    public static void RunManaged(string? inputPath, string? outputPath, ZoneManagedStaticGeometry geometry)
+    public static void RunManaged(string? inputPath, string? outputPath, ZoneManagedStaticGeometry geometry,
+        ZoneManagedTerrainGeometry? terrain = null)
     {
         if (inputPath is null) return;
         ArgumentNullException.ThrowIfNull(geometry);
@@ -64,7 +70,10 @@ internal static class ZoneSceneShapeProbes
             if (probe.Shape != "box" &&
                 (probe.Axis.X != 0 || probe.Axis.Y != 0 || MathF.Abs(probe.Axis.Z) != 1))
                 return new(probe.Name, probe.Shape, probe.IsSweep ? "sweep" : "overlap", "unsupported", null,
-                    Diagnostic: $"Managed character shape queries currently support upright {probe.Shape}s only.");
+                    Diagnostic: $"Managed character shape queries currently support upright {probe.Shape}s only.", Target: probe.Target);
+            if (probe.Target == "terrain" && terrain is null)
+                return new(probe.Name, probe.Shape, probe.IsSweep ? "sweep" : "overlap", "unsupported", null,
+                    Diagnostic: "No managed terrain geometry was supplied for the explicit terrain target.", Target: probe.Target);
             var shape = probe.Shape switch
             {
                 "box" => ZonePhysicsShape.Box(probe.HalfExtents),
@@ -73,13 +82,15 @@ internal static class ZoneSceneShapeProbes
             };
             if (!probe.IsSweep)
             {
-                var overlap = geometry.TryCollide(shape, probe.Center);
-                return new(probe.Name, probe.Shape, "overlap", overlap ? "hit" : "miss", overlap);
+                var overlap = probe.Target == "terrain" ? terrain!.TryCollide(shape, probe.Center) : geometry.TryCollide(shape, probe.Center);
+                return new(probe.Name, probe.Shape, "overlap", overlap ? "hit" : "miss", overlap, Target: probe.Target);
             }
-            var found = geometry.TrySweep(shape, probe.Center, probe.Sweep, out var hit);
+            ZonePhysicsHit hit;
+            var found = probe.Target == "terrain" ? terrain!.TrySweep(shape, probe.Center, probe.Sweep, out hit)
+                : geometry.TrySweep(shape, probe.Center, probe.Sweep, out hit);
             return found ? new(probe.Name, probe.Shape, "sweep", "hit", true, hit.Distance,
-                Values(hit.Position), Values(hit.Normal), hit.PhysicalMaterialId)
-                : new(probe.Name, probe.Shape, "sweep", "miss", false);
+                Values(hit.Position), Values(hit.Normal), hit.PhysicalMaterialId, Target: probe.Target)
+                : new(probe.Name, probe.Shape, "sweep", "miss", false, Target: probe.Target);
         });
     }
 
@@ -103,7 +114,7 @@ internal static class ZoneSceneShapeProbes
                 catch (Exception error)
                 {
                     results.Add(new(probe.Name, probe.Shape, probe.IsSweep ? "sweep" : "overlap", "error", null,
-                        Diagnostic: error.Message));
+                        Diagnostic: error.Message, Target: probe.Target));
                     throw;
                 }
             }
@@ -115,7 +126,7 @@ internal static class ZoneSceneShapeProbes
         }
         Write(true);
         var unresolved = results.Count(result => result.Hit is null);
-        Console.WriteLine($"{backend} static scene shape probes: {results.Count(result => result.Hit == true)}/{results.Count} hits, {unresolved} unresolved.");
+        Console.WriteLine($"{backend} scene shape probes: {results.Count(result => result.Hit == true)}/{results.Count} hits, {unresolved} unresolved.");
         if (unresolved != 0)
             throw new InvalidOperationException($"{unresolved} shape probes have unsupported or indeterminate outcomes; inspect the shape report.");
 
@@ -124,7 +135,7 @@ internal static class ZoneSceneShapeProbes
             if (outputPath is null) return;
             File.WriteAllText(outputPath, JsonSerializer.Serialize(new
             {
-                backend, queryProfile = "static player-collidable geometry (native required/any flags2/2)",
+                backend, queryProfile = "explicit target per probe: static=mask1(default), terrain=mask0x100; native required/any geometry flags2/2",
                 centerConvention = "raw primitive center; no actor or stance offset", complete,
                 normalConvention = "normal is collider-outward for sweeps; original nativeContactNormal is retained and negated for that convention; overlap normal is not compared",
                 requested = probes.Length, results
@@ -149,6 +160,9 @@ internal static class ZoneSceneShapeProbes
             if (!float.IsFinite(squared) || !Finite(center + sweep) || squared == 0 && sweep != Vector3.Zero)
                 throw new InvalidDataException($"Shape probe {input.Name} has an unbounded sweep.");
             var shape = input.Shape?.ToLowerInvariant();
+            var target = input.Target?.ToLowerInvariant() ?? "static";
+            if (target is not ("static" or "terrain"))
+                throw new InvalidDataException($"Shape probe {input.Name} must target static(default) or terrain geometry explicitly.");
             if (shape == "box")
             {
                 if (input.Radius is not null || input.SegmentHalfHeight is not null || input.HalfHeight is not null || input.Axis is not null)
@@ -156,7 +170,7 @@ internal static class ZoneSceneShapeProbes
                 var extents = Vector(input.HalfExtents, input.Name, "halfExtents");
                 if (extents.X <= 0 || extents.Y <= 0 || extents.Z <= 0)
                     throw new InvalidDataException($"Shape probe {input.Name} requires positive box half extents.");
-                return new Probe(input.Name, shape, center, sweep, extents, 0, 0, Vector3.UnitZ);
+                return new Probe(input.Name, shape, center, sweep, extents, 0, 0, Vector3.UnitZ, target);
             }
             if (shape is not ("capsule" or "cylinder"))
                 throw new InvalidDataException($"Shape probe {input.Name} must select box, capsule or cylinder.");
@@ -172,7 +186,7 @@ internal static class ZoneSceneShapeProbes
             var squaredAxis = axis.LengthSquared();
             if (!float.IsFinite(squaredAxis) || squaredAxis <= 0)
                 throw new InvalidDataException($"Shape probe {input.Name} requires a finite nonzero primitive axis.");
-            return new Probe(input.Name, shape, center, sweep, default, radius, height, Vector3.Normalize(axis));
+            return new Probe(input.Name, shape, center, sweep, default, radius, height, Vector3.Normalize(axis), target);
         }).ToArray();
     }
 
