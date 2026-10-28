@@ -33,6 +33,7 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     public bool IsDisposed { get; private set; }
     public float FrameTimeSeconds { get; }
     public bool GlobalAiUpdateAlways { get; set; }
+    public Action<ZoneManagedNpcActor, string>? SmartObjectStateConsumer { get; set; }
     public ulong EventCount { get; private set; }
     public IReadOnlyList<ZoneManagedNpcActorEvent> RecentEvents => _events.ToArray();
     public int Count => _actors.Count;
@@ -277,7 +278,13 @@ public sealed class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcBehaviorS
     public void ActorEvent(int kind, string name) { _scene.Require(this); _scene.Record(this, "actor", kind, name); }
     public void RecordEvent(int kind, string name) { _scene.Require(this); _scene.Record(this, "recorder", kind, name); }
     public void ResetPipeUserAfterBehaviorExit() { _scene.Require(this); Services.SetAttentionTarget(null); }
-    public void ChangeSmartObjectState(string change) => throw ZoneManagedNpcActorScene.Missing($"smart-object state '{change}'");
+    public void ChangeSmartObjectState(string change)
+    {
+        _scene.Require(this);
+        var consume = _scene.SmartObjectStateConsumer ?? throw ZoneManagedNpcActorScene.Missing($"smart-object state '{change}'");
+        consume(this, change);
+        _scene.Require(this);
+    }
     public void NotifyAlert() => throw ZoneManagedNpcActorScene.Missing("gameplay alert notification");
     public void NotifyActionDone() => throw ZoneManagedNpcActorScene.Missing("gameplay action-done notification");
     public void ScriptError(string callback, ZoneLuaException error) => _scene.Warning($"NPC {Handle} {callback}: {error.Message}");

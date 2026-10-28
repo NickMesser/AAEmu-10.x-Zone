@@ -156,11 +156,14 @@ public sealed class ZonePhysicsLivingMovementSettings
     }
 
     /// <summary>Type4 inertia-only update; all dimensions, thresholds and other dynamics stay copied.</summary>
-    public ZonePhysicsLivingMovementSettings WithInertia(float inertia) => new(
+    public ZonePhysicsLivingMovementSettings WithInertia(float inertia) => WithInertia(inertia, InertiaAcceleration);
+
+    /// <summary>Original type4 independent inertia/ground-acceleration writes; other coefficients stay copied.</summary>
+    public ZonePhysicsLivingMovementSettings WithInertia(float inertia, float inertiaAcceleration) => new(
         new(new(Radius, Radius, SegmentHalfHeight), default, default, HeightCollider, HeightPivot,
             StanceMaximumSpeed, UseCapsule, false),
         MinimumSlideAngleDegrees, MaximumClimbAngleDegrees, MaximumJumpAngleDegrees,
-        MinimumFallAngleDegrees, MaximumSupportVelocity, inertia, InertiaAcceleration,
+        MinimumFallAngleDegrees, MaximumSupportVelocity, inertia, inertiaAcceleration,
         AirControl, AirResistance, ImpulseRecoveryTime, MaximumUnprojectionDistance, MinimumLandingAcceleration);
 
     private static float Dynamic(ZoneActorPhysicsParameterFields fields, int offset, float fallback, string name)

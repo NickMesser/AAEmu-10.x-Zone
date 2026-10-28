@@ -44,6 +44,8 @@ public static class ZoneManagedSceneHost
             ZoneManagedSceneActivation? activation = null;
             ZoneManagedAiProvider? ai = null;
             ZoneManagedNpcRuntime? scripts = null;
+            ZoneManagedNpcSceneScriptServices? npcComponents = null;
+            ZoneManagedNpcPhysics? npcPhysics = null;
             ZoneNavigationTiledGraph? navigation = null;
             ZoneManagedPhysicsBackend? backend = null;
             ZoneSceneResourceScope? scope = null;
@@ -62,14 +64,21 @@ public static class ZoneManagedSceneHost
                 scripts = resources.Own(new ZoneManagedNpcRuntime(registry, catalog, inputs.Models, inputs.Npcs,
                     source, Position, () => clock.GameMicroseconds,
                     () => (uint)random.NextInt64(1L << 32), () => DateTimeOffset.UtcNow, period, inputs.Trace,
-                    // The verified initial CPuppet shell is available, but its required character
-                    // slots/attachments and collider-event receivers have no production owners.
-                    // Refuse that profile before cloning/running OnInit for every incoming NPC.
-                    // Repeated known-failing Lua construction must not block ordinary player entry.
-                    createScriptServices: lua => new ZoneManagedNpcScriptEffects(lua,
-                        () => clock.GameMicroseconds, inputs.Trace)));
+                    // Components are real scene owners. Complete CActor/GameParams construction
+                    // and required behavior services still gate CreateProfile before Lua cloning.
+                    createScriptServices: lua => npcComponents = new ZoneManagedNpcSceneScriptServices(lua,
+                        inputs.Models, inputs.Assets, () => npcPhysics ?? throw new InvalidOperationException("NPC physics has not loaded."),
+                        _ => throw new NotSupportedException("The complete CActor/GameParams producer must install actual animated-character dynamics before NPC admission."),
+                        Position, () => clock.GameMicroseconds,
+                        () => inputs.Startup.EngineCVars.GetBool("g_spectatorcollisions", false),
+                        ZoneCharacterAttachmentPublicationProfile.BoneOnly,
+                        new ZoneManagedNpcGameScriptRequests(registry, catalog, value => registry.QueueNotification(value),
+                            _ => throw new NotSupportedException("NPC casting requests require the independent cast, current-skill and channel field owner.")),
+                        inputs.Trace, new ZoneManagedNpcCombatScriptServices(registry, catalog, value => registry.QueueNotification(value)))));
+                scripts.Actors.SmartObjectStateConsumer = npcComponents!.ModifySmartObjectStates;
                 notes.AddOnce("managed-npc-profile", "NPC script initialization profile remains unadmitted: " +
-                    "character slots/attachments, collider-event receivers and complete actor parameters/physics need owners. " +
+                    "initial character slots, collider receiver, ground body and smart-object state owners are available; " +
+                    "complete actor parameters and required behavior/gameplay services still need admission. " +
                     ZoneManagedNpcProfileFactory.CapabilitySummary);
                 ai = resources.Own(new ZoneManagedAiProvider(Kind, scripts.CreateActor));
                 var world = new ZoneSceneNpcWorld(registry, inputs.Startup, inputs.Npcs, Position,
@@ -99,6 +108,9 @@ public static class ZoneManagedSceneHost
                         var geometry = new ZoneManagedTerrainGeometry(activation!.Heights, activation.Surfaces);
                         var surfaces = activation.SurfaceContent is { } content ? new ZoneCollisionSurfaceTable(content) : null;
                         backend = new ZoneManagedPhysicsBackend(geometry, surfaces, activation.Collision!.Geometry);
+                        var materials = activation.SurfaceContent?.Catalog ?? ZonePhysicalSurfaceCatalog.DefaultOnly;
+                        npcPhysics = resources.Own(new ZoneManagedNpcPhysics(backend, inputs.Models,
+                            name => (ushort)materials.Resolve(name).Id));
                         var bootstrap = scripts!.Bootstrap();
                         inputs.Trace($"Managed original NPC script bootstrap ready={bootstrap.Ready}; files={scripts.Loader.LoadedScripts.Count}" +
                             (bootstrap.Refusal is { } refusal ? $"; {refusal}" : ""));
@@ -124,7 +136,10 @@ public static class ZoneManagedSceneHost
                     new ZoneMovementCorrectionServices(scene.Registry, players, motion, frameClock, diagnostics, origin),
                     new ZoneMovementOutgoing(scene.Registry, diagnostics, localOnWire: false),
                     frameClock, diagnostics, bindings, origin);
-                frame = new(phases, backend, players, ai, movement, scene.Simulation, inputs.Startup, period, inputs.Trace,
+                var npcPhases = scope!.Own(new ZoneManagedNpcMovementFramePhases(phases, scene.Registry, catalog,
+                    scripts!.Actors, npcPhysics ?? throw new InvalidOperationException("NPC physical owner has not loaded."),
+                    new ZoneMovementOutgoing(scene.Registry, diagnostics, localOnWire: false), diagnostics, origin));
+                frame = new(npcPhases, backend, players, ai, movement, scene.Simulation, inputs.Startup, period, inputs.Trace,
                     elapsed =>
                     {
                         foreach (var fault in scripts!.TickScripts(elapsed, ai!.RemoveNpc))

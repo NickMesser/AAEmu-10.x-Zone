@@ -149,7 +149,7 @@ public sealed class ManagedNpcScriptEffectsTests
         await Assert.That(values[1]).IsEqualTo(4L);
     }
 
-    private sealed class Fixture : IDisposable
+    internal sealed class Fixture : IDisposable
     {
         private static int _nextUnit = 900_000, _nextEntity = 12_000_000;
         private ulong _proxy = 0xC000;
@@ -159,7 +159,7 @@ public sealed class ManagedNpcScriptEffectsTests
         public ZoneManagedNpcActorScene Scene { get; }
         public ZoneManagedNpcScriptHost Host { get; }
         public ZoneManagedNpcScriptEffects Effects { get; }
-        public Fixture()
+        public Fixture(Func<Fixture, IZoneManagedNpcScriptServices>? configureServices = null)
         {
             var loader = new ZoneScriptLoader(Lua, new Source(), _ => { }, () => 0);
             Scene = new(Admission.Registry, Admission.Catalog, Lua, new(), _ => default,
@@ -167,12 +167,12 @@ public sealed class ManagedNpcScriptEffectsTests
             Admission.World.AttachAiRuntime(Scene.Actors.AiRuntime);
             Effects = new(Lua, () => Now);
             var content = new ZoneNpcContent([new() { Id = 11, AiFileId = 15 }], [], [], [], [], aiFiles: [new(15, "hold_position", "")]);
-            Host = new(Lua, loader, content, Scene, Effects, () => Now, () => DateTimeOffset.UnixEpoch);
+            Host = new(Lua, loader, content, Scene, configureServices?.Invoke(this) ?? Effects, () => Now, () => DateTimeOffset.UnixEpoch);
             if (!Host.Bootstrap().Ready) throw new InvalidOperationException(Host.BootstrapReport.Refusal);
         }
-        public Admitted Admit(uint entityId = 0)
+        public Admitted Admit(uint entityId = 0, ZoneModelDefinition? model = null, uint? unitModelId = null)
         {
-            var npc = Admission.Npc((uint)Interlocked.Increment(ref _nextUnit)); Admission.Publish(npc);
+            var npc = Admission.Npc((uint)Interlocked.Increment(ref _nextUnit), model: model, unitModelId: unitModelId); Admission.Publish(npc);
             var handle = Admission.Catalog.Register(npc);
             var actor = Scene.Prepare(handle, new() { EntityId = entityId == 0 ? (uint)Interlocked.Increment(ref _nextEntity) : entityId },
                 ZoneManagedNpcActorScene.CreatePipeUserControls(), true);
@@ -188,7 +188,7 @@ public sealed class ManagedNpcScriptEffectsTests
         { try { Effects.Dispose(); } finally { try { Host.Dispose(); } finally { try { Scene.Dispose(); } finally { Lua.Dispose(); Admission.Dispose(); } } } }
     }
 
-    private sealed record Admitted(ZoneManagedNpcActor Actor, ZoneNpcAuthoredEntity Prepared,
+    internal sealed record Admitted(ZoneManagedNpcActor Actor, ZoneNpcAuthoredEntity Prepared,
         ZoneManagedNpcScriptBinding Binding, ZoneManagedNpcScriptEffectsLease Effects) : IDisposable
     {
         public void Dispose() { Effects.Dispose(); Binding.Dispose(); Actor.Dispose(); Prepared.Dispose(); }

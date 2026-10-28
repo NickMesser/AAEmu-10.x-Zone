@@ -19,6 +19,7 @@ public sealed class ZoneManagedNpcProfileFactory : IDisposable
     private readonly ZoneUnitRegistry _units;
     private readonly ZoneSceneNpcCatalog _catalog;
     private readonly Func<ZoneUnit, Vector3> _position;
+    private readonly ZoneModelContent? _models;
     private readonly Dictionary<ZoneActorHandle, ZoneManagedNpcProxyOwner> _live = [];
     public bool IsDisposed { get; private set; }
     public int LiveCount => _live.Count;
@@ -27,11 +28,13 @@ public sealed class ZoneManagedNpcProfileFactory : IDisposable
         "Original initial CPuppet identity/control state and managed proxy activation lifetime; " +
         "physical entity, complete Puppet parameters, persistent stick, perception and gameplay admission remain separate.";
 
-    public ZoneManagedNpcProfileFactory(ZoneUnitRegistry units, ZoneSceneNpcCatalog catalog, Func<ZoneUnit, Vector3> position)
+    public ZoneManagedNpcProfileFactory(ZoneUnitRegistry units, ZoneSceneNpcCatalog catalog, Func<ZoneUnit, Vector3> position,
+        ZoneModelContent? models = null)
     {
         _units = units ?? throw new ArgumentNullException(nameof(units));
         _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
         _position = position ?? throw new ArgumentNullException(nameof(position));
+        _models = models;
     }
 
     public ZoneManagedNpcActorProfile Create(ZoneActorHandle actor, ZoneNpc npc, uint entityId)
@@ -44,8 +47,10 @@ public sealed class ZoneManagedNpcProfileFactory : IDisposable
             throw new InvalidOperationException("NPC proxy creation requires its exact live catalog and registered Unit owners.");
         if (!ZoneAiBackendBindings.IsBound(actor))
             throw new InvalidOperationException("Claim the NPC's AI backend before constructing its managed proxy.");
-        if (npc.Model.Kind != ZoneModelKind.Actor)
-            throw new NotSupportedException($"NPC model {npc.Model.Id} does not resolve an ActorModel construction profile.");
+        var modelId = npc.Unit.Snapshot.ModelId;
+        var model = _models is not null ? _models.Models.GetValueOrDefault(modelId) : npc.Model.Id == modelId ? npc.Model : null;
+        if (model?.Kind != ZoneModelKind.Actor)
+            throw new NotSupportedException($"World NPC model {modelId} does not resolve an ActorModel construction profile.");
         if (_live.ContainsKey(actor)) throw new InvalidOperationException("This NPC generation already owns a managed proxy.");
         var position = _position(npc.Unit);
         // Position callbacks may retire the generation or the enclosing scene.

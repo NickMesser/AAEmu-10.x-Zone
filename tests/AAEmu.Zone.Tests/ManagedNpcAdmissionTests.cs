@@ -227,7 +227,7 @@ public sealed class ManagedNpcAdmissionTests
         private static int _nextObjectId = 200_000;
         internal static uint FreshObjectId() => (uint)Interlocked.Increment(ref _nextObjectId);
         private readonly uint _objectId = FreshObjectId();
-        private readonly ZoneUnitRegistry _registry = new();
+        private readonly ZoneUnitRegistry _registry;
         private readonly ZoneStartupState _startup;
         private readonly ZoneNpcContent _content;
         private readonly ZoneNpcSimulation _simulation;
@@ -239,12 +239,14 @@ public sealed class ManagedNpcAdmissionTests
         public ZoneSceneNpcWorld World { get; }
 
         public Fixture(Func<ZoneActorHandle, IZoneManagedAiActor>? create = null, ZoneNpcContent? content = null,
-            ZoneStatContent? stats = null, Func<uint>? now = null)
+            ZoneStatContent? stats = null, Func<uint>? now = null, ZoneUnitSpatialIndex? spatialIndex = null,
+            Func<ZoneUnit, Vector3>? modelPosition = null)
         {
+            _registry = new(spatialIndex: spatialIndex, modelPosition: modelPosition);
             _startup = new(localGameMilliseconds: now ?? (() => 1000));
             _content = content ?? new([], [], [], [], []);
             Provider = new(Catalog.GetKind, create ?? (_ => new ZoneManagedAiActor()));
-            World = new(_registry, _startup, _content, _ => Vector3.Zero, () => null,
+            World = new(_registry, _startup, _content, modelPosition ?? (_ => Vector3.Zero), () => null,
                 Catalog, Provider, new(), TimeSpan.FromMilliseconds(20), new(), null);
             _simulation = new(_registry, stats ?? new([], [], [], [], [], [], [], [], []), World, _content);
         }
@@ -278,7 +280,8 @@ public sealed class ManagedNpcAdmissionTests
             return npc;
         }
 
-        public ZoneNpc Npc(uint objectId = 0, uint npcId = 0, ZoneModelDefinition? model = null)
+        public ZoneNpc Npc(uint objectId = 0, uint npcId = 0, ZoneModelDefinition? model = null, uint? unitModelId = null,
+            UnitHeading? heading = null)
         {
             if (objectId == 0) objectId = _objectId;
             if (npcId == 0) npcId = _objectId + 1_000_000;
@@ -289,12 +292,12 @@ public sealed class ManagedNpcAdmissionTests
                 WorldId = source.WorldId, RegionId = source.RegionId, GlobalWorld = source.GlobalWorld,
                 MasterName = source.MasterName, Position = source.Position, Scale = source.Scale, Level = source.Level,
                 HeirLevel = source.HeirLevel, SecondaryLevel = source.SecondaryLevel, SecondaryHeirLevel = source.SecondaryHeirLevel,
-                SlotSelectors = source.SlotSelectors, ModelId = source.ModelId, Equipment = source.Equipment, Appearance = source.Appearance,
+                SlotSelectors = source.SlotSelectors, ModelId = unitModelId ?? model?.Id ?? source.ModelId, Equipment = source.Equipment, Appearance = source.Appearance,
                 TargetId = source.TargetId, PreciseHealth = source.PreciseHealth, PreciseMana = source.PreciseMana,
                 Attachment = source.Attachment, Bonding = source.Bonding, Posture = source.Posture, ActiveWeapon = source.ActiveWeapon,
                 StateType = source.StateType, AppellationStamp = source.AppellationStamp, VehicleDyeing = source.VehicleDyeing,
                 TemporaryFaction = source.TemporaryFaction, Skills = source.Skills, PassiveBuffs = source.PassiveBuffs,
-                Heading = source.Heading, RaceGender = source.RaceGender, PackedState = source.PackedState, Flags = source.Flags,
+                Heading = heading ?? source.Heading, RaceGender = source.RaceGender, PackedState = source.PackedState, Flags = source.Flags,
                 AttackFactionFlags = source.AttackFactionFlags, FirstHitter = source.FirstHitter,
                 HighAbilities = source.HighAbilities, GmModes = source.GmModes, Character = null, Buffs = source.Buffs, Action = source.Action,
             };

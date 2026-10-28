@@ -37,6 +37,9 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
     public uint ExpeditionWarFactionId { get; private set; } = snapshot.PackedState.ExpeditionWarFactionId;
     public uint ExpeditionWarSide { get; private set; } = snapshot.Character?.ExpeditionWarSide ?? 0u;
     public bool IsInCombat => (Flags & 1) != 0;
+    //392587B0/39258800 ->39259530: entity event44 observes the changed combat state.
+    //The scene subscribes its actual model/script-proxy consumer for this exact generation.
+    internal event Action<ZoneUnit, bool>? CombatTransitioned;
     public bool ForceAttack => (Flags & 8) != 0;
     public uint TargetId { get; private set; } = snapshot.TargetId;
     public uint DuelObjectId { get; private set; } = snapshot.Character?.DuelObjectId ?? 0;
@@ -64,10 +67,21 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
 
     internal void SetCombat(bool engaged)
     {
-        Flags = engaged ? (ushort)(Flags | 1) : (ushort)(Flags & ~1);
+        SetCombatFlag(engaged);
         // WZCombatCleared 39364E70 clears the eight attack-faction booleans at 80BC.
         // The death path invokes only the combat setter, so it retains these flags.
         if (!engaged) AttackFactionFlags = 0;
+    }
+
+    //393534D0 invokes only the combat setter. WZ39364E70 clears attack-faction flags
+    //separately after that setter and its entity event; script requests preserve those flags.
+    internal void ClearCombatFromScript() => SetCombatFlag(false);
+
+    private void SetCombatFlag(bool engaged)
+    {
+        if (IsInCombat == engaged) return;
+        Flags = engaged ? (ushort)(Flags | 1) : (ushort)(Flags & ~1);
+        CombatTransitioned?.Invoke(this, engaged);
     }
 
     internal void SetForceAttack(bool enabled) => Flags = enabled ? (ushort)(Flags | 8) : (ushort)(Flags & ~8);
@@ -94,11 +108,13 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
 
     internal void Die(ZoneVitalStats? stats)
     {
-        // 3935D490: clear combat and flags 1/10, retain points, equipment and buffs.
-        Flags = (ushort)(Flags & ~(1 | (1 << 1) | (1 << 10)));
+        //3935D490 first marks dead through3925B2C0, then invokes the actual combat
+        //setter+184/39258800 (and entity44), preserving attack-faction flags.
+        IsDead = true;
+        SetCombatFlag(false);
+        Flags = (ushort)(Flags & ~((1 << 1) | (1 << 10)));
         if (Snapshot.Identity.Kind != ZoneUnitKind.Character) TargetId = 0;
         Stats = stats;
-        IsDead = true;
     }
 
     internal void Resurrect(UnitResurrection message, ZoneVitalStats? stats)

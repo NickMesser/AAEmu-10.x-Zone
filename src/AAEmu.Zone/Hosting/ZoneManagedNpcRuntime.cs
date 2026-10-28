@@ -102,19 +102,24 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
         ZoneNpcAuthoredEntity? prepared = null;
         ZoneManagedNpcScriptBinding? binding = null;
         ZoneManagedNpcActorProfile? profile = null;
-        ZoneManagedNpcScriptEffectsLease? effectsLease = null;
+        IDisposable? effectsLease = null;
         Exception? failure = null;
         try
         {
             if (!_bootstrapAttempted || !Scripts.BootstrapReport.Ready)
                 throw new NotSupportedException(Scripts.BootstrapReport.Refusal ?? "Original NPC scripts have not bootstrapped.");
-            var model = _models.ActorForModel(npc.Model.Id) ??
-                throw new NotSupportedException($"NPC model {npc.Model.Id} is not a resolved actor model.");
+            //3935D260 constructs the unit model from the World snapshot. npc.Model is the
+            //separate template model cached for NPC metadata such as its Big flag.
+            var modelId = npc.Unit.Snapshot.ModelId;
+            var modelDefinition = _models.Models.GetValueOrDefault(modelId) ??
+                throw new NotSupportedException($"World NPC model {modelId} is not present in the model catalog.");
+            var model = _models.ActorForModel(modelId) ??
+                throw new NotSupportedException($"World NPC model {modelId} is not a resolved actor model.");
             if (_createProfile is null)
-                throw new NotSupportedException("NPC initialization profile is not admitted: complete actor parameters, " +
-                    "physical/character components and required game services need owners.");
-            using var sourceClass = _modelScripts.RetainNpcClass(npc.Model, model);
-            _preparedClasses.Add(ZoneNpcActorModelScripts.NpcClassName(npc.Model));
+                throw new NotSupportedException("NPC initialization profile is not admitted: complete CActor/Puppet/GameParams " +
+                    "construction and required behavior/game services need admission.");
+            using var sourceClass = _modelScripts.RetainNpcClass(modelDefinition, model);
+            _preparedClasses.Add(ZoneNpcActorModelScripts.NpcClassName(modelDefinition));
             if (_nextEntity == uint.MaxValue) throw new InvalidOperationException("Managed NPC entity IDs are exhausted.");
             var entityId = ++_nextEntity;
             profile = _createProfile(handle, npc, entityId) ?? throw new InvalidOperationException("NPC construction returned no profile.");
@@ -129,8 +134,8 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
             var behavior = prepared.DetachBehavior();
             try { Actors.RegisterBehavior(actor, behavior); }
             catch { behavior.Dispose(); throw; }
-            if (ScriptServices is ZoneManagedNpcScriptEffects effects)
-                effectsLease = effects.BindEntity(binding, new ZoneManagedNpcActorHealth());
+            if (ScriptServices is IZoneManagedNpcScriptLifecycle components)
+                effectsLease = components.BindEntity(binding);
             var readiness = Scripts.Initialize(binding);
             if (!readiness.SignalReady) throw new NotSupportedException(readiness.Refusal ?? "Authored NPC initialization did not admit script signals.");
             var owner = new OwnedActor(this, actor, prepared, binding, profile, effectsLease);
@@ -165,7 +170,7 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
     {
         ObjectDisposedException.ThrowIf(IsDisposed, this);
         ArgumentNullException.ThrowIfNull(retireProviderActor);
-        var faults = ScriptServices is ZoneManagedNpcScriptEffects effects ? effects.Tick(elapsed) : [];
+        var faults = ScriptServices is IZoneManagedNpcScriptLifecycle components ? components.Tick(elapsed) : [];
         foreach (var fault in faults)
         {
             if (!_live.ContainsKey(fault.Actor)) continue;
@@ -204,13 +209,13 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
 
     private sealed class OwnedActor(ZoneManagedNpcRuntime runtime, ZoneManagedNpcActor actor,
         ZoneNpcAuthoredEntity prepared, ZoneManagedNpcScriptBinding binding, ZoneManagedNpcActorProfile profile,
-        ZoneManagedNpcScriptEffectsLease? effects) : IZoneManagedAiActor
+        IDisposable? effects) : IZoneManagedAiActor
     {
         internal ZoneManagedNpcActor Actor { get; } = actor;
         internal ZoneNpcAuthoredEntity Prepared { get; } = prepared;
         internal ZoneManagedNpcScriptBinding Binding { get; } = binding;
         internal ZoneManagedNpcActorProfile Profile { get; } = profile;
-        internal ZoneManagedNpcScriptEffectsLease? Effects { get; } = effects;
+        internal IDisposable? Effects { get; } = effects;
         public void SetActive(bool active) => Actor.SetActive(active);
         public void SetTarget(ZoneActorHandle? target) => Actor.SetTarget(target);
         public void SendSignal(ZoneAiSignal signal) => Actor.SendSignal(signal);

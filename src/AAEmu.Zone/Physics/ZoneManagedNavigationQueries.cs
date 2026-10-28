@@ -156,7 +156,7 @@ public sealed partial class ZoneManagedPhysicsBackend
         if (Geometry.GetPenetrations(shape, center).Any(contact => contact.Depth > ZoneManagedStaticGeometry.PenetrationTolerance) ||
             StaticGeometry?.GetPenetrations(shape, center).Any(contact => contact.Depth > ZoneManagedStaticGeometry.PenetrationTolerance) == true) return true;
         foreach (var (actor, description) in _actors)
-            if (actor != ignore && ZoneManagedShapeQueries.TryPenetration(shape, center, description.Shape, Center(actor, description), out var contact) &&
+            if (actor != ignore && ColliderBodyAdmitsQuery(actor) && ZoneManagedShapeQueries.TryPenetration(shape, center, description.Shape, Center(actor, description), out var contact) &&
                 contact.Depth > ZoneManagedStaticGeometry.PenetrationTolerance) return true;
         return false;
     }

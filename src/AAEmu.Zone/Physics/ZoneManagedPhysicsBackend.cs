@@ -104,6 +104,7 @@ public sealed partial class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZo
 
     public void RemoveActor(ZoneActorHandle actor)
     {
+        RetireAnimatedColliderBody(actor);
         RetireLivingStanceRequests(actor);
         RetireLivingControls(actor);
         _retired.Add(actor);
@@ -207,7 +208,7 @@ public sealed partial class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZo
         if (StaticGeometry?.TryCollide(shape, position) == true) return true;
         foreach (var (actor, description) in _actors)
         {
-            if (actor == ignoreActor) continue;
+            if (actor == ignoreActor || !ColliderBodyAdmitsQuery(actor)) continue;
             if (ZoneManagedShapeQueries.Overlaps(shape, position, description.Shape, Center(actor, description))) return true;
         }
         return false;
@@ -393,12 +394,12 @@ public sealed partial class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZo
         var best = float.PositiveInfinity;
         foreach (var (actor, description) in _actors)
         {
-            if (actor == ignoreActor) continue;
+            if (actor == ignoreActor || !ColliderBodyAdmitsQuery(actor)) continue;
             var center = Center(actor, description);
             if (!ZoneManagedShapeQueries.Sweep(shape, origin, displacement, description.Shape, center,
                 out var fraction, out var normal, out var point) || fraction >= best) continue;
             best = fraction;
-            hit = new(fraction * displacement.Length(), point, normal, 0);
+            hit = new(fraction * displacement.Length(), point, normal, description.PhysicalMaterialId);
         }
         return float.IsFinite(best);
     }

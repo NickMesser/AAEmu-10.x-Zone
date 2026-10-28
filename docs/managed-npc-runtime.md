@@ -70,12 +70,14 @@ missing attachment service, causing enough receive backlog to time out the repla
 player entry. A subsequent control proved model-class construction but exposed its cold compilation
 cost before an already-known refusal. The earliest admission check avoids both costs. Fully configured
 test/service compositions exercise the complete initialization and teardown path; the production
-gate stays closed until its required character/component owners exist.
+gate stays closed until complete actor parameters and each behavior's remaining dependencies
+are owned. Initial character, collider, ground-body and smart-object component owners now exist.
 
 Initial type-5 CPuppet identity/control state is explicit partial admission. The independent
 AI-object radius starts at zero, as in its constructor; model radius, collider radius and AI graph
 pass radius are distinct. Complete Puppet parameter blocks, its persistent stick operation,
-physical/animated-character components and perception remain unfinished.
+full animated-character state and perception remain unfinished. Ground bodies and the verified
+initial collider profiles have independent owners, described below.
 
 ## Real services and frame execution
 
@@ -89,8 +91,10 @@ script update intervals and independent CActor health fields. Initial health is 
 health is 10 from the CActor constructor; these are not substituted from World Unit statistics.
 Later actor-health producers must copy their actual fields into the owner.
 
-The two `SetScriptUpdateRate` floats are retained separately. Event 44 selects the current interval;
-its producer is not inferred from a combat flag. `OnUpdate` uses the original strict `>` comparison
+The two `SetScriptUpdateRate` floats are retained separately. Event44 selects the current interval
+from actual Unit combat transitions, including death. Generation leases subscribe after binding
+and unsubscribe before retirement; initial interval selection is not inferred by polling a flag.
+`OnUpdate` uses the original strict `>` comparison
 and one callback per frame. Entity timers replace matching IDs, preserve signed milliseconds and
 float callback arguments, and remove the entire `deadline <= now` batch before dispatch. Timers
 created by callbacks wait for the next frame.
@@ -106,7 +110,58 @@ The original dedicated `actor.SetMovementTarget` binding is an empty leaf after 
 three vectors and speed (`39310CA0` through actor table slot 192 to `3930BEC0`). It does not change
 AI movement controls. Attachment hiding and collider mode are different: the former requires a
 real slot/attachment inventory, and the latter sends entity event 43 to the collider arbiter.
-Absent implementation is not evidence of an absent component. Both remain named refusals.
+Absent implementation is not evidence of an absent component. The composed service now owns
+initial character lookup and the actual event43 receiver instead of replacing either with an empty call.
+
+### Character slots, collider effects and bodies
+
+`ZoneManagedCharacterSlots` loads the actual World model's CDF/CHR and compiled-bones0x801
+inventory before publishing slot0. The dedicated `zone` command starts a server context with
+client flag4 clear; the original attachment factories consequently publish only CA_BONE.
+That branch is explicitly selected by the host. All 32 zone-129 character model paths load from
+the original archive: 119 authored attachment declarations, 43 bone sockets, 42 supported unbound
+visibility updates and one retained particle-effect refusal. `Animated LAW` is actually absent
+from every initial inventory. Equipment changes, bound objects and animation remain separate.
+See [character resource contracts and source evidence](managed-character-slots.md).
+
+`ZoneAnimatedColliderController` preserves seven request layers, disabled priority, frame/reset
+gates and commit-before-physical-lookup ordering. Its arbitration and defined raw parameter bytes
+match 21 controls executed from the original `cryaction_dedicate.dll` code in an offline emulator.
+The embedded control fixture identifies the binary hash and declared external callbacks; this
+is not evidence that all physical consumers are implemented.
+
+The real event43 receiver delivers the signed script mode at layer3. The actual living-body sink
+admits uncontended modes1/4: action_move0 clears the requested wish while preserving actual motion,
+inertia/acceleration and active state are applied, and geometry bit2 changes target sweep/overlap,
+stance-clearance and navigation queries. Modes requiring auxiliary bodies, other collision masks,
+type26=true or interleaving with queued body commands refuse before body mutation. Merely storing
+the native flag blocks would not supply those effects.
+An unported body-effect refusal seals that collider component while retaining its committed
+selection for diagnosis. Repeating an identical request cannot report success through the native
+unchanged-request shortcut after a missing body consumer; a new admitted owner is required.
+
+`ZoneManagedNpcPhysics` creates living bodies on the scene's existing backend using the actual
+`Unit.Snapshot.ModelId`, authored base scale, initial stance, cubed mass, dynamics and signed10-bit
+physical material conversion. `Npc.Model` is separate cached template metadata and can differ.
+Motor leases accept velocity/stance requests and copy status; they never step physics or commit
+Unit poses. Tilted transforms, parent/seat ownership, extra boxes, flying/underwater profiles and
+live physical scale changes retain explicit admission gates.
+
+`IZoneManagedNpcScriptLifecycle` binds component leases after actor adoption and before OnInit.
+The composed service owns character visibility, collider receiver, smart-object registration,
+independent actor health and entity timers. Failure and retirement unwind all of them, including
+their physical body, before releasing the script binding and proxy. Behavior smart-object changes
+reach the same real state owner as Lua, with separate literal-add and expression-modify semantics.
+
+World buff-removal and casting request serializers and a bounded posture/action-cache owner are
+available independently. Casting requires the actual cast/current-skill/channel tuple; posture
+requires actual animation-driver presence, resolved actions and the NPC skill-condition inventory.
+Neither is inferred from missing components. Bounded ClearCombat owns the fresh AI-unit attribute
+restore record and empty-threat path, preserves attention/attack-faction flags, and sends the actual
+combat notification. Pending flying restoration or nonempty threat retains a refusal. Full combat,
+flying-state restoration, position checks
+and animation graph behavior remain separate admission dependencies. See
+[game-service source contracts](managed-npc-game-services.md).
 
 ## Navigation replacement
 
@@ -137,8 +192,10 @@ Native X2 walkability, stair acceptance, moving supports and complete visibility
 
 `ZoneNavigationPathFollower` only submits horizontal movement wishes through an exact-generation
 `IZoneNavigationLocomotion` owner. It never steps physics or writes a Unit pose. Production NPC
-physical admission and the consumer connecting these wishes to NPC movement publication are
-still required before the host can advertise physical NPC navigation.
+route admission, steering and outgoing CActor metadata are still required before the host can
+advertise physical NPC navigation. The host now composes the
+[single-step NPC body publication decorator](managed-npc-movement.md): real Unit/spatial/AI
+poses publish after the shared physics step, while missing replication metadata suppresses wire output.
 
 ## Evidence and next work
 
@@ -157,14 +214,32 @@ NPC burst; startup/receive throughput remains a performance acceptance task. Art
 `script-entry-{zone.log,replay.log,modules.json,verification.json}` and
 `captures/script-entry-output.bin` under the local runtime directory.
 
+The NPC component batch passes558 standalone tests, including the shared-body publication and
+refused-collider retry controls. Its fresh native-free entry controls keep the same grounded
+player pose and clean EOF retirement. Server-timestamp-normalized movement payloads match the
+earlier accepted replay byte-for-byte. The instant-input replay emitted two repeated heartbeat
+rows instead of three in earlier captures; decoded position, orientation, velocity and flags are
+identical. A fixed heartbeat count is not a stable acceptance criterion for this wall-clock harness.
+Observed end-to-end runs of about125–142seconds leave startup/receive throughput unproven.
+Artifacts are `npc-components-{entry,final-entry}-*`, `captures/npc-components-*-output.bin`,
+`npc-components-final-tests.log` and `research/entry-movement-comparison.jsonl` in the runtime directory.
+
 Local evidence is under `D:/aaemu-runtime/research`: `zone129-original-script-controls.json`,
 `zone129-original-script-comparison.json`, `zone129-production-script-host-bootstrap.json`,
 `zone129-navigation-runtime.json`, `npc-script-proxy-services-source.md` and
 `npc-oninit-gates-evidence.json`. These runtime artifacts and original assets are not repository inputs.
 
-Next: own character slots/attachments and entity event receivers/collider layers; finish original
-NPC constructor parameters and physical bodies; connect AI navigation wishes to the single scene
-movement authority; port smart-object state, posture, perception, acquisition, leash, and combat
-services; then admit each supported behavior based on its actual dependencies. Keep general
+Local component evidence additionally includes `character-zone129-managed-validation.json`,
+`npc-collider-native-controls.json` and `npc-components-original-control.json`. The last control
+uses recorded WZNpcState and original resources with an explicit partial CPuppet/constructor-zero
+animated dynamics profile. Templates562/5941 complete original initialization and the GO_TO_IDLE
+transition to hold_position/roaming. Templates7987/8173/8177 refuse the missing skill-pattern executor.
+All component owners retire and no engine/native-Lua module loads. Unstepped control bodies do not
+establish terrain, perception, combat or complete gameplay admission.
+
+Next: finish original NPC constructor/GameParams producers and collider command interleaving;
+connect AI navigation wishes to the single scene movement authority with actual CActor outgoing
+metadata; complete posture/casting/combat dependencies, perception, acquisition and leash; then
+admit each supported behavior based on its actual dependencies. Keep general
 entity components/FlowGraphs, dynamic bodies/vehicles and remaining Lua compatibility separately
 visible in [the module removal task file](tasks/cryengine-removal.md).

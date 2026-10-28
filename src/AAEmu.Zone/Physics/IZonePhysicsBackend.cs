@@ -50,6 +50,8 @@ public readonly record struct ZonePhysicsShape
 /// </summary>
 public sealed record ZonePhysicsActorDescription(ZonePhysicsShape Shape, float Mass)
 {
+    /// <summary>Copied target material. Original living type4 narrows surface_idx to a signed10-bit part field.</summary>
+    public ushort PhysicalMaterialId { get; init; }
     public ZonePhysicsActorProfile Profile { get; init; } = ZonePhysicsActorProfile.Kinematic;
     /// <summary>
     /// Collider center relative to the actor origin. Null preserves the legacy feet-origin
@@ -106,6 +108,9 @@ public sealed record ZonePhysicsActorDescription(ZonePhysicsShape Shape, float M
         return new(new(new(settings.Radius, request.Stance.Size.Y, settings.SegmentHalfHeight),
             settings.UseCapsule ? ZonePhysicsShapeKind.Capsule : ZonePhysicsShapeKind.Cylinder), mass)
         {
+            PhysicalMaterialId = request.Dynamics.ReadUInt32(0x2C) is { } material &&
+                material != ZoneActorPhysicalizationRequest.UnusedIntegerBits
+                ? unchecked((ushort)((int)(material << 22) >> 22)) : (ushort)0,
             Profile = ZonePhysicsActorProfile.Living,
             ColliderCenterOffsetZ = settings.HeightCollider - settings.HeightPivot,
             GroundPivotHeight = settings.HeightPivot,

@@ -33,7 +33,7 @@ public readonly record struct ZoneManagedNpcScriptEffectState(float CurrentHealt
 /// The scene supplies the game clock and invokes Tick at its documented frame boundary.
 /// This owns Lua references, never the runtime, actor, or entity binding.
 /// </summary>
-public sealed class ZoneManagedNpcScriptEffects : IZoneManagedNpcScriptServices, IDisposable
+public sealed class ZoneManagedNpcScriptEffects : IZoneManagedNpcScriptServices, IZoneManagedNpcScriptLifecycle, IDisposable
 {
     private readonly IZoneLuaRuntime _lua;
     private readonly Func<long> _gameMicroseconds;
@@ -50,6 +50,9 @@ public sealed class ZoneManagedNpcScriptEffects : IZoneManagedNpcScriptServices,
 
     public ZoneManagedNpcScriptEffects(IZoneLuaRuntime lua, Func<long> gameMicroseconds, Action<string>? trace = null)
     { _lua = lua ?? throw new ArgumentNullException(nameof(lua)); _gameMicroseconds = gameMicroseconds ?? throw new ArgumentNullException(nameof(gameMicroseconds)); _trace = trace; }
+
+    IDisposable IZoneManagedNpcScriptLifecycle.BindEntity(ZoneManagedNpcScriptBinding binding) => BindEntity(binding, new());
+    IReadOnlyList<ZoneManagedNpcScriptFault> IZoneManagedNpcScriptLifecycle.Tick(TimeSpan elapsed) => Tick(elapsed);
 
     /// <summary>
     /// Call after exact registry adoption and before original OnInit. Only default script state

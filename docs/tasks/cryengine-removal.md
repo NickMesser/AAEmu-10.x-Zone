@@ -21,11 +21,11 @@ queries. They do not remove CryEngine. Existing configurations retain their orig
 | `crysystem.dll` | Configured assets, content, clocks, scene owner, startup/frame/shutdown composition | Finish diagnostics, platform checks and capability policies across every scene type |
 | `cry3dengine_dedicate.dll` | World/cell selection, authored heightmaps/surfaces/seams, decoded placements, default/picking CGF proxies including referenced source streams and curved primitives | Vegetation, visibility/area behavior, water volumes and procedural objects |
 | `cryphysics_dedicate.dll` | True upright capsule/cylinder queries, authored dimensions/dynamics, queued stances, requested/actual velocity ownership, mapped slope/air/landing response, no-platform network corrections, terrain/static recovery, shared-mesh BVHs, affine instances and material IDs | Complete stair/suspension and retained support behavior, native recovery fallback/contact state, world speed caps, friction, rigid bodies, swimming, vehicles, ragdolls and exact tangent conformance |
-| `cryentitysystem_dedicate.dll` | Player/NPC generations, registry/spatial membership, model-class generation, original entity-script initialization, owned entity timers and script updates | Character slots/attachments, collider-event receivers, general components, areas and complete entity state |
+| `cryentitysystem_dedicate.dll` | Player/NPC generations, registry/spatial membership, model-class generation, original entity-script initialization, owned entity timers/updates, initial character slots and collider event43 receiver | Bound/dynamic attachments, remaining event receivers, general components, areas and complete entity state |
 | `cryaction_dedicate.dll` | Player movement/frame pipeline, real managed goal/control phases, authored behavior construction and signal bindings | Complete NPC service admission, game-object actions and FlowGraphs |
 | `cryaisystem_dedicate.dll` | Provider/actor/proxy ownership, signals, scheduled NPC AI timers, tiled authored graph import, bounded A*, physical query adapter and wish-only path follower | Full Puppet parameters, perception, physical NPC route admission, steering, leash and combat decisions |
 | `cryscriptsystem.dll` | Managed source VM, LNUM compatibility transforms, original 73-file NPC bootstrap and explicit game bindings; no native Lua DLL | Full Lua 5.1/bytecode/library compatibility and remaining actor/game APIs |
-| `cryanimation.dll` | Authored model/stance dimensions and movement parameters are consumed as data | Server-relevant skeleton collision, animation events and motion driven by animation |
+| `cryanimation.dll` | Authored model/stance dimensions, CDF/compiled-bone inventory, unbound bone visibility and bounded posture/action cache | Bound objects, skeleton collision, full animation graphs/events and motion driven by animation |
 | `cryrendernull.dll` | Managed host is headless and never constructs a renderer | No renderer is required; retain checks that no rendering service enters the server path |
 | `tbb*`, `xlcommon.dll`, `xldiag.dll`, engine CRT dependencies | Engine startup is bypassed entirely | Remove native comparison deployment dependencies after replacement coverage is sufficient |
 
@@ -389,17 +389,52 @@ intervals now have real owners. Timer callbacks use the original due-batch and a
 faults retire their exact provider generation. Native dedicated `SetMovementTarget` is verified empty
 after argument decoding and is implemented accordingly.
 
-- [ ] Own actual character-slot/attachment inventories. Implement present attachment effects;
-  only a real absent lookup may take `HideAttachment`'s native empty branch.
-- [ ] Dispatch entity event 43 through owned receivers. Implement animated collider request layers
-  and arbitration before physics writes; absent physics alone cannot justify ignoring the event.
-- [ ] Complete Puppet parameters, persistent stick, indexed reference/look objects, smart-object
-  state, actor-health update producers, script-state switching and event-44 interval selection.
+- [x] Own initial CDF/CHR slot0 and compiled-bones0x801 inventories. Validate the actual dedicated
+  bone-only publication branch and actual absent `Animated LAW` lookup on all32 zone-129 models.
+- [ ] Finish bound particle/file/entity attachments and dynamic equipment/character changes.
+  Present unsupported attachments refuse before visibility mutation; they are not treated as absent.
+- [x] Deliver entity event43 to an owned animated collider receiver. Seven-layer arbitration and
+  defined type4/6/15/26 parameters match21 original-code controls, with exact generation retirement.
+- [x] Consume cold modes1/4 through real living-body effects, including action_move0 wish state,
+  active state, inertia and actual target geometry-bit query filters.
+- [ ] Complete other collider modes, non-pushable auxiliary lifetime, type26 and collision-type
+  consumers, and a unified native command order when wishes/stances/corrections are already queued.
+- [ ] Connect actual animated-character frame, physicalization and reset producers to the
+  controller's frame/force fields. A loaded body alone does not establish those constructor events.
+- [x] Own actual smart-object class/state registration, literal set/add, expression modify,
+  first Busy-link propagation and native state-filter evaluation. This does not execute rules.
+- [x] Route actual Unit combat transitions, including death, into entity44 script-proxy interval
+  selection. Preserve script-versus-WZ attack-faction-flag order and retire the subscription.
+- [x] Own bounded fresh/no-target ClearCombat and its native AI-unit restore record. Preserve
+  attention and reject saved-flying/nonempty-threat effects until their actual consumers exist.
+- [ ] Complete Puppet/GameParams, persistent stick, indexed reference/look objects, actor-health
+  update producers, script-state switching and full combat/flying restoration.
+- [x] Implement source-backed RemoveBuff/StopCasting World request serialization and bounded
+  default-posture/action-cache semantics with explicit construction/dependency profiles.
 - [ ] Attach posture, casting, buff, combat and position-check services used by each admitted
-  behavior. Unsupported operations must remain per-owner refusals.
+  behavior. Supply actual cast/current-skill/channel fields, animation driver/actions and resolved
+  NPC idle-skill inventory. ClearCombat restores saved flight attributes before its other effects;
+  it must not be replaced with a guessed attention/movement reset. Unsupported operations refuse.
 
 Remove the `HasAiActor` gameplay gate only for admitted behaviors whose dependencies are present.
 Do not flip it globally: several reachable leaves still refuse.
+
+Next admission sequence from the original-resource control:
+
+1. Finish the actual CActor/Puppet/GameParams producers, including installed animated-character
+   dynamics and health update fields. The control's explicit constructor-zero dynamics and partial
+   proxy profile are not production construction evidence.
+2. Supply the real skill-pattern executor used by templates7987 (`flytrap`),8173 (`almighty_npc`)
+   and8177 (`big_monster_roaming`); their character constructors currently refuse `AI.SetSkillUsePattern`.
+3. Own independent cast/current-skill/channel fields, the position-check consumer and complete
+   posture driver/action/idle-skill inventory, then exercise scheduled callbacks and goal execution.
+4. Admit complete CActor movement metadata and native NPC replication cadence before enabling
+   NPC wire output. Continue physical query/route, perception, hostility, leash and combat controls.
+
+Templates562/5941 already execute original initialization and `GO_TO_IDLE` transitions into
+`hold_position`/`roaming` with the explicit partial control profile. All five real-recorded control
+generations release their character, body, smart-object, script and proxy owners; unsupported
+profiles remain refusals. This is a narrower result than complete NPC gameplay admission.
 
 Acceptance: an authored idle/talk NPC executes its initialization and a named signal; a hostile
 NPC runs its actual authored state transitions; missing behavior remains a named admission
@@ -419,8 +454,12 @@ with caller-certified coverage. The follower requests horizontal velocity throug
 movement owner and never steps physics or writes a pose. Its search cost, support/clearance and
 following policies remain explicit replacements, not recovered X2 walkability/steering parity.
 
-- [ ] Register actual NPC physical bodies and connect the generation-owned motor to the scene's
-  single movement publication authority. Production physical route admission remains gated.
+- [x] Register authored ground NPC bodies on the existing backend. A generation-owned motor
+  queues requests, and the composed frame publishes Unit/spatial/AI state after the shared Step.
+- [ ] Supply actual copied CActor replication fields and the NPC manager's original cadence/CVars.
+  Missing metadata suppresses encoding. Controls with declared copied fields cover real fall,
+  spatial crossing, wall stop, wire conversion and100frames/100sharedsteps; production route
+  admission, steering and full actor construction remain gated.
 - [ ] Supply truthful full-region terrain/brush/entity/vegetation coverage to route and visibility
   queries. Missing owners cannot be represented as clear space.
 - [ ] Recover/compare X2 walkability, native route costs, steering, stairs and moving support.

@@ -197,7 +197,7 @@ public sealed partial class ZoneManagedPhysicsBackend
         multiple = false;
         foreach (var (other, description) in _actors)
         {
-            if (other == actor || description.Profile != ZonePhysicsActorProfile.Living) continue;
+            if (other == actor || description.Profile != ZonePhysicsActorProfile.Living || !ColliderBodyAdmitsQuery(other)) continue;
             var otherCenter = Center(other, description);
             var otherBounds = new ZoneManagedBounds(otherCenter - description.Shape.BoundingHalfExtents,
                 otherCenter + description.Shape.BoundingHalfExtents);
@@ -218,7 +218,7 @@ public sealed partial class ZoneManagedPhysicsBackend
             contacts.AddRange(StaticGeometry.GetUpwardUnprojectionsForStancePreflight(shape, center, envelope));
         foreach (var (other, description) in _actors)
         {
-            if (other == actor || description.Profile == ZonePhysicsActorProfile.Living) continue;
+            if (other == actor || description.Profile == ZonePhysicsActorProfile.Living || !ColliderBodyAdmitsQuery(other)) continue;
             if (ZoneManagedShapeQueries.TryUpwardUnprojectionForStancePreflight(shape, center, description.Shape, Center(other, description),
                 out var contact, envelope)) contacts.Add(contact);
         }

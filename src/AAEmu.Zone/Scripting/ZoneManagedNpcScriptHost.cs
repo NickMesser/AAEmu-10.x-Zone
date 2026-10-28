@@ -26,7 +26,7 @@ public interface IZoneManagedNpcScriptServices
     void SetDefaultPosture(ZoneManagedNpcActor actor, bool enabled) => throw Missing("unit.SetDefaultPosture / authored posture owner");
     void ClearCombat(ZoneManagedNpcActor actor) => throw Missing("unit.ClearCombat / combat owner and notifications");
     void StopCasting(ZoneManagedNpcActor actor) => throw Missing("unit.StopCasting / casting owner");
-    void RemoveBuff(ZoneManagedNpcActor actor, uint buffType) => throw Missing("unit.RemoveBuff / buff-type removal");
+    bool RemoveBuff(ZoneManagedNpcActor actor, uint buffType) => throw Missing("unit.RemoveBuff / buff-type removal request");
     void SetPositionCheckContext(ZoneManagedNpcActor actor, int context) => throw Missing("unit.NpcSetCheckPosContext / position-check owner");
     void SetSkillUsePattern(ZoneManagedNpcActor actor, int pattern) => throw Missing("AI.SetSkillUsePattern / skill executor");
     void SetReferencePosition(ZoneManagedNpcActor actor, Vector3 value) => throw Missing("AI.SetRefPointPosition / indexed reference-point owner");
@@ -181,7 +181,8 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
             Entity(bound, "GetName", _ => [bound.EntityName]);
             EntityVector(bound, "GetPos", _ => bound.Actor.Services.GetPosition());
             EntityVector(bound, "GetWorldPos", _ => bound.Actor.Services.GetPosition());
-            EntityVector(bound, "GetDirectionVector", args => _services.GetDirectionVector(actor, args.Count > 1 ? Integer(args, 1, "entity.GetDirectionVector") : 1));
+            EntityVector(bound, "GetDirectionVector", args => _services.GetDirectionVector(actor,
+                ZoneManagedEntityOrientation.AxisFromScriptArgument(args.Count > 1 ? args[1] : null)));
             // 32031030 only validates its argument and returns: there is no native state write.
             Entity(bound, "NetPresent", _ => []);
             // 32033420's decompile omits its float arguments. The binary preserves XMM2/XMM3
@@ -228,7 +229,7 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
             Method(bound, unit, "SetDefaultPosture", worldId, args => { _services.SetDefaultPosture(actor, Boolean(args, 1, "unit.SetDefaultPosture")); return []; });
             Method(bound, unit, "ClearCombat", worldId, _ => { _services.ClearCombat(actor); return []; });
             Method(bound, unit, "StopCasting", worldId, _ => { _services.StopCasting(actor); return []; });
-            Method(bound, unit, "RemoveBuff", worldId, args => { _services.RemoveBuff(actor, unchecked((uint)Integer(args, 1, "unit.RemoveBuff"))); return []; });
+            Method(bound, unit, "RemoveBuff", worldId, args => [_services.RemoveBuff(actor, unchecked((uint)Integer(args, 1, "unit.RemoveBuff")))]);
             Method(bound, unit, "NpcSetCheckPosContext", worldId, args => { _services.SetPositionCheckContext(actor, Integer(args, 1, "unit.NpcSetCheckPosContext")); return []; });
             RefuseMissing(unit, "unit"); bound.Script.Set("unit", unit);
             return bound;

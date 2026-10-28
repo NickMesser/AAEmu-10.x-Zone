@@ -79,6 +79,7 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
     private readonly Dictionary<ZoneActorHandle, Body> _bodies = [];
     private readonly List<ZoneActorHandle> _order = [];
     private bool _stepping;
+    internal bool IsStepping => _stepping;
 
     /// <param name="terrain">
     /// The scene's real ground query, used only to resolve the ground height. Null keeps the
