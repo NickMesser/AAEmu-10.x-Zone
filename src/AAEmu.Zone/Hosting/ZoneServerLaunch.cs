@@ -49,6 +49,12 @@ public sealed class ZoneServerLaunch
     public uint? InstanceId => CVar("instance") is { } value ? ParseUInt32(value, "instance") : null;
     /// <summary>World's unique <c>+sv_port</c> for this host; reported in ZWJoin.</summary>
     public ushort? ServerPort => Port(CVar("sv_port"), "sv_port");
+
+    /// <summary>
+    /// The engine's sv_port default. The native zone joins with it when World passes no +sv_port
+    /// (captured ZWJoin from a hand-started native zone carries port 64100).
+    /// </summary>
+    public const ushort DefaultServerPort = 64100;
     /// <summary>World's <c>+db_location</c>, relative to the working directory World sets.</summary>
     public string? ContentDatabasePath => CVar("db_location") is { } path ? Path.GetFullPath(path) : null;
     public IEnumerable<string> IgnoredCVars => CVars.Keys.Where(name => !ConsumedCVars.Contains(name));

@@ -56,7 +56,7 @@ public static class ZoneServerStartup
             await client.ConnectAsync(configuration.WorldHost, configuration.WorldPort, connectDeadline.Token).ConfigureAwait(false);
         }
         var join = new ZoneJoin(ZoneJoin.NativeProtocolVersion, ZoneJoin.NativeProtocolVersion,
-            zone.Key, 0, launch.ServerPort ?? 0, 0, launch.InstanceId ?? 0, false);
+            zone.Key, 0, launch.ServerPort ?? ZoneServerLaunch.DefaultServerPort, 0, launch.InstanceId ?? 0, false);
         var startup = await ZoneWorldClient.SynchronizeAsync(client.GetStream(), join,
             TimeSpan.FromSeconds(30), shutdown, contentNameComparer).ConfigureAwait(false);
         Console.WriteLine($"Startup synchronized: {startup.Factions.Count} factions, {startup.Relations.Count} relations, {startup.Spawners.Count} saved spawners, {startup.ContentFilter!.Categories.Count} content filter categories.");
