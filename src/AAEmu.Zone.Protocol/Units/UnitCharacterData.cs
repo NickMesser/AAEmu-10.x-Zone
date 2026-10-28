@@ -19,8 +19,9 @@ public sealed record UnitCharacterData(IReadOnlyList<UnitExpertise> Expertise, I
         for (var i = 0; i < expertise.Length; i++)
             expertise[i] = new(reader.ReadUInt32(), reader.ReadSByte());
         var active = reader.ReadBytes(reader.ReadByte()).ToArray();
-        if (active.Any(id => id is < 1 or > 29))
-            throw new InvalidDataException("Active expertise ID is outside the native 1..29 table.");
+        // World pads unused active slots with 0 (live capture: count 3, ids 01 00 00).
+        if (active.Any(id => id > 29))
+            throw new InvalidDataException("Active expertise ID is outside the native 0..29 table (0 = empty slot).");
         // 39D1C900 maps member 0x9A6 to ServerUnit+0x7FE8, also written by WZUnitDuelState.
         var duelObject = reader.ReadBc();
         var duelTeam = reader.ReadSByte();
