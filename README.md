@@ -1,6 +1,6 @@
 # AAEmu 10.x Zone
 
-An experimental C# zone server for [AAEmu 10.x](https://github.com/AAEmu/AAEmu-10.x). World launches it in place of the native dedicated zone (dedicated host + `x2game-dev_dedicate.dll`). The managed host runs without CryEngine DLLs: it loads authored terrain, admits players and publishes authoritative movement through the World protocol. This source is **unfinished and not ready for gameplay**. Static mesh collision, authored NPC behavior, navigation, dynamic objects and other gameplay systems still need replacements. **[TASKS.md](TASKS.md)** tracks gameplay parity; the **[CryEngine removal plan](docs/tasks/cryengine-removal.md)** records module coverage and remaining work.
+An experimental C# zone server for [AAEmu 10.x](https://github.com/AAEmu/AAEmu-10.x). World launches it in place of the native dedicated zone (dedicated host + `x2game-dev_dedicate.dll`). The managed host runs without CryEngine DLLs: it loads authored terrain and supported static collision proxies, admits players and publishes authoritative movement through the World protocol. This source is **unfinished and not ready for gameplay**. Unsupported geometry formats, authored NPC behavior, navigation, dynamic objects and other gameplay systems still need replacements. **[TASKS.md](TASKS.md)** tracks gameplay parity; the **[CryEngine removal plan](docs/tasks/cryengine-removal.md)** records module coverage and remaining work.
 
 ```
 client ⇄ AAEmu-10.x World ⇄ (WZ/ZW, port 1240) ⇄ AAEmu.ZoneServer (managed scene)
@@ -50,7 +50,7 @@ Copy [zone.example.json](src/AAEmu.ZoneServer/zone.example.json) outside this re
 
 - A configured decrypted `game.compact` export, opened read-only. Its actual filename may be `game_decrypted.sqlite3`; the unrelated `compact.sqlite` substitute is refused.
 - Authorized local game assets, accessed through configured loose directories and/or `game_pak`.
-- Managed mode (`"engineBackend": "managed"`, as in the example) requires no engine directory or Lua library. Terrain and conservative actor bounds are supported; static mesh collision and authored NPC behavior remain incomplete.
+- Managed mode (`"engineBackend": "managed"`, as in the example) requires no engine directory or Lua library. Terrain, authored box/inline triangle proxies and conservative actor bounds are supported. Collision coverage reports identify unsupported geometry; authored NPC behavior remains incomplete.
 - The optional [native comparison mode](src/AAEmu.ZoneServer/zone.native.example.json) requires the exact compatible Windows AMD64 engine modules. `ZoneNativeEngine.Identities.cs` records the accepted hashes. It also requires a 64-bit Lua 5.1 library with the LNUM `double int64` patch, configured by `luaLibraryPath` or `AAEMU_ZONE_LUA_LIBRARY`. No engine binaries or game assets are supplied by this source.
 - A compatible World server for startup exchange or host experiments, with an explicitly configured endpoint. Use an isolated development World; startup joins affect that World's connection lifecycle.
 
@@ -60,7 +60,15 @@ For a read-only content check after building:
 dotnet (Join-Path $zoneArtifacts 'bin/AAEmu.Zone.Diagnostics/debug/AAEmu.Zone.Diagnostics.dll') --check-content --config 'C:/path/to/zone.json'
 ```
 
-The diagnostics tool's `--help` lists the other checks. Native checks need the external modules and assets, and incomplete runtime dependencies may refuse admission explicitly. No native runtime checks are claimed by this extraction.
+The diagnostics tool's `--help` lists the other checks. Native comparison checks need the external modules and assets. The managed static collision work includes an independent 21-ray comparison with the original engine; the [task file](docs/tasks/cryengine-removal.md) records its scope and remaining gaps.
+
+Inspect managed terrain and collision coverage without connecting to World:
+
+```powershell
+dotnet (Join-Path $zoneArtifacts 'bin/AAEmu.Zone.Diagnostics/debug/AAEmu.Zone.Diagnostics.dll') --check-managed-scene --config 'C:/path/to/zone.json' --collision-report 'C:/path/to/collision-coverage.json'
+```
+
+The managed and native scene checks accept the same `--scene-probes rays.json --scene-probe-output hits.json` inputs for independent comparisons. See [verified CGF physics formats](docs/cgf-physics-format.md) and the [replacement task file](docs/tasks/cryengine-removal.md) for supported profiles and measured limits.
 
 ## Running under AAEmu 10.x World
 

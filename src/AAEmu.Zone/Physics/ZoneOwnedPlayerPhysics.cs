@@ -51,6 +51,19 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
         /// instead of a constant.
         /// </summary>
         bool TryGround(Vector3 from, Vector3 to, out Vector3 position, out ushort physicalMaterialId);
+
+        /// <summary>
+        /// Resolves character support with the previous and proposed feet available. Terrain-only
+        /// providers retain their wide column probe. Scene providers can restrict static support
+        /// to reachable surfaces, so a roof overhead cannot become the character's floor.
+        /// </summary>
+        float ContactTolerance => 0;
+
+        bool TryCharacterGround(Vector3 previousPosition, Vector3 nextPosition, bool wasGrounded,
+            out Vector3 position, out ushort physicalMaterialId) =>
+            TryGround(new(nextPosition.X, nextPosition.Y, previousPosition.Z + 2000f),
+                new(nextPosition.X, nextPosition.Y, previousPosition.Z - 4000f),
+                out position, out physicalMaterialId);
     }
 
     /// <summary>World gravity in m/s² (downward), matching the content gravity used for jump impulses.</summary>
@@ -154,15 +167,12 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
             // caught by the first owned-physics test run, which is exactly what it is for.
             body.Velocity += new Vector3(0f, 0f, Gravity * seconds);
             var next = body.Position + body.Velocity * seconds;
-            // Ground: the engine's own terrain, sampled along the column under the actor.
-            var from = new Vector3(next.X, next.Y, body.Position.Z + 2000f);
-            var to = new Vector3(next.X, next.Y, body.Position.Z - 4000f);
-            if (_terrain.TryGround(from, to, out var ground, out var materialId))
+            if (_terrain.TryCharacterGround(body.Position, next, body.Grounded, out var ground, out var materialId))
             {
                 body.GroundZ = ground.Z;
                 body.GroundMaterialId = materialId;
                 body.HasGround = true;
-                if (next.Z <= ground.Z)
+                if (next.Z <= ground.Z + _terrain.ContactTolerance)
                 {
                     next.Z = ground.Z;
                     // Gravity runs on Z, so the LANDING velocity to cancel is Z as well. An earlier

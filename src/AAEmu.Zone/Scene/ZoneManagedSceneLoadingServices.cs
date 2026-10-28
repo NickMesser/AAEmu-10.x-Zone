@@ -34,7 +34,8 @@ public sealed class ZoneManagedSceneLoadingServices(
         terrainReady();
         _loaded = true;
         notes.AddOnce("managed-static-collision",
-            "Managed scene: terrain is loaded; static mesh, vegetation, rigid-body and vehicle collision are not implemented.");
+            $"Managed scene: terrain and supported default brush proxies are loaded; " +
+            $"{activation.Collision!.Report.UnsupportedBrushCount} brushes remain unsupported. Vegetation, entity, rigid-body and vehicle collision remain incomplete.");
         notes.AddOnce("managed-scripting",
             "Managed scene: authored Lua behavior and FlowGraph execution are not attached; no Lua or CryEngine DLL is loaded.");
         trace?.Invoke($"Managed level loaded: zone={layout.Zone.Id}, cells={layout.Cells.Count}, terrainReady={report.TerrainReady}");

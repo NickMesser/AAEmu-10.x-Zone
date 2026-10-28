@@ -1,0 +1,308 @@
+using System.Numerics;
+
+namespace AAEmu.Zone.Physics;
+
+/// <summary>An instance identity that is never reused within its collision scene.</summary>
+public readonly record struct ZoneManagedStaticInstanceHandle(ulong Value);
+
+public readonly record struct ZoneManagedStaticQueryStatistics(int InstanceBoundsTests, int CandidateInstances, int TriangleTests);
+
+/// <summary>
+/// A managed collision scene of immutable shared triangle meshes and affine instances. A spatial
+/// bucket index selects instances, each resource's local-space BVH selects triangles, and exact
+/// world-space triangle tests account for rotation, shear and nonuniform/mirrored scale.
+/// </summary>
+/// <remarks>
+/// General triangles are two-sided surfaces: space below a bridge or inside a building stays
+/// empty. Explicitly flagged closed convex proxies also contain their interior volume. Query
+/// boxes are axis aligned; capsule queries conservatively use their bounding boxes.
+/// This supplies static collision queries, not rigid-body, vehicle, animation or breakage dynamics.
+/// </remarks>
+public sealed class ZoneManagedStaticGeometry
+{
+    private const float BucketSize = 64;
+    private const int MaximumInstanceBuckets = 512;
+    private const int MaximumQueryBuckets = 4096;
+    private readonly object _gate = new();
+    private readonly Dictionary<ZoneManagedStaticInstanceHandle, Instance> _instances = [];
+    private readonly Dictionary<Bucket, HashSet<ZoneManagedStaticInstanceHandle>> _buckets = [];
+    private readonly HashSet<ZoneManagedStaticInstanceHandle> _oversized = [];
+    private readonly HashSet<ZoneManagedStaticInstanceHandle> _queryIds = [];
+    private readonly List<Instance> _queryInstances = [];
+    private readonly List<int> _queryTriangles = [];
+    private ulong _nextIdentity;
+    private ZoneManagedStaticQueryStatistics _lastQuery;
+
+    public bool CapsulesUseBoundingBoxes => true;
+    public int InstanceCount { get { lock (_gate) return _instances.Count; } }
+    public ZoneManagedStaticQueryStatistics LastQueryStatistics { get { lock (_gate) return _lastQuery; } }
+
+    public ZoneManagedStaticInstanceHandle AddInstance(ZoneManagedTriangleMesh mesh, Matrix4x4 localToWorld)
+    {
+        ArgumentNullException.ThrowIfNull(mesh);
+        ValidateTransform(localToWorld, out var worldToLocal);
+        var bounds = new ZoneManagedBounds(mesh.BoundsMinimum, mesh.BoundsMaximum).Transform(localToWorld);
+        ZoneManagedTerrainGeometry.ValidateFinite(bounds.Minimum, nameof(localToWorld));
+        ZoneManagedTerrainGeometry.ValidateFinite(bounds.Maximum, nameof(localToWorld));
+        var (minimum, maximum, bucketCount) = BucketRange(bounds);
+        var keys = bucketCount <= MaximumInstanceBuckets ? EnumerateBuckets(minimum, maximum).ToArray() : [];
+        lock (_gate)
+        {
+            if (_nextIdentity == ulong.MaxValue) throw new InvalidOperationException("Static instance identities are exhausted.");
+            var handle = new ZoneManagedStaticInstanceHandle(++_nextIdentity);
+            _instances.Add(handle, new(mesh, localToWorld, worldToLocal, bounds, keys));
+            if (keys.Length == 0) _oversized.Add(handle);
+            foreach (var key in keys)
+            {
+                if (!_buckets.TryGetValue(key, out var entries)) _buckets.Add(key, entries = []);
+                entries.Add(handle);
+            }
+            return handle;
+        }
+    }
+
+    /// <summary>Removes only this instance. Shared mesh resources remain usable by other instances.</summary>
+    public bool RemoveInstance(ZoneManagedStaticInstanceHandle handle)
+    {
+        lock (_gate)
+        {
+            if (!_instances.Remove(handle, out var instance)) return false;
+            _oversized.Remove(handle);
+            foreach (var key in instance.Buckets)
+            {
+                var entries = _buckets[key];
+                entries.Remove(handle);
+                if (entries.Count == 0) _buckets.Remove(key);
+            }
+            // Scratch candidates must not retain an unloaded instance's potentially large shared
+            // mesh until another query happens to replace the last query's references.
+            _queryInstances.Clear();
+            _queryIds.Clear();
+            _queryTriangles.Clear();
+            return true;
+        }
+    }
+
+    public bool Contains(ZoneManagedStaticInstanceHandle handle) { lock (_gate) return _instances.ContainsKey(handle); }
+
+    /// <summary>Unloads scene instances without reusing retired handles or mutating shared meshes.</summary>
+    public void Clear()
+    {
+        lock (_gate)
+        {
+            _instances.Clear();
+            _buckets.Clear();
+            _oversized.Clear();
+            _queryIds.Clear();
+            _queryInstances.Clear();
+            _queryTriangles.Clear();
+            _lastQuery = default;
+        }
+    }
+
+    /// <summary>
+    /// Finds the nearest bounded two-sided triangle hit. Normals preserve the transformed authored
+    /// winding on both sides, matching captured static scene rays. Optional normal filtering occurs
+    /// before nearest-hit selection; character support can exclude downward authored faces.
+    /// </summary>
+    public bool Raycast(Vector3 origin, Vector3 displacement, out ZonePhysicsHit hit,
+        float minimumNormalZ = -1, float maximumNormalZ = 1)
+    {
+        ZoneManagedTerrainGeometry.ValidateSegment(origin, displacement);
+        ValidateNormalRange(minimumNormalZ, maximumNormalZ);
+        lock (_gate)
+        {
+            hit = default;
+            if (displacement == Vector3.Zero) { _lastQuery = default; return false; }
+            var end = origin + displacement;
+            CollectCandidates(new(Vector3.Min(origin, end), Vector3.Max(origin, end)), out var boundsTests);
+            var best = float.PositiveInfinity;
+            var triangleTests = 0;
+            foreach (var instance in _queryInstances)
+            {
+                var localOrigin = Vector3.Transform(origin, instance.WorldToLocal);
+                var localDisplacement = Vector3.TransformNormal(displacement, instance.WorldToLocal);
+                instance.Mesh.QueryRay(localOrigin, localDisplacement, _queryTriangles);
+                foreach (var triangle in _queryTriangles)
+                {
+                    triangleTests++;
+                    WorldTriangle(instance, triangle, out var a, out var b, out var c, out var material);
+                    if (!ZoneManagedTriangleQueries.Raycast(origin, displacement, a, b, c, out var fraction, out var normal) ||
+                        fraction >= best || normal.Z < minimumNormalZ || normal.Z > maximumNormalZ) continue;
+                    best = fraction;
+                    hit = new(fraction * displacement.Length(), origin + displacement * fraction, normal, material);
+                }
+            }
+            _lastQuery = new(boundsTests, _queryInstances.Count, triangleTests);
+            return float.IsFinite(best);
+        }
+    }
+
+    public bool TryGround(Vector3 origin, float maxDistance, out ZonePhysicsGroundHit ground,
+        float minimumNormalZ = .0001f)
+    {
+        if (!float.IsFinite(maxDistance) || maxDistance <= 0)
+            throw new ArgumentOutOfRangeException(nameof(maxDistance), "Ground distance must be finite and positive.");
+        if (Raycast(origin, new(0, 0, -maxDistance), out var hit, minimumNormalZ))
+        {
+            ground = new(hit.Distance, hit.Position, hit.Normal, hit.PhysicalMaterialId);
+            return true;
+        }
+        ground = default;
+        return false;
+    }
+
+    /// <summary>
+    /// Continuously sweeps an axis-aligned box (or capsule bounds) against surface triangles.
+    /// Filtering contact normals before selecting the nearest hit lets callers skip walkable
+    /// floors while retaining a farther wall, or select downward ceiling normals.
+    /// Tangential/outward travel from an existing face contact is clear; inward travel from an
+    /// existing overlap reports distance zero. TryCollide reports overlap independent of motion.
+    /// </summary>
+    public bool TrySweep(ZonePhysicsShape shape, Vector3 origin, Vector3 displacement, out ZonePhysicsHit hit,
+        float minimumNormalZ = -1, float maximumNormalZ = 1)
+    {
+        ZoneManagedTerrainGeometry.ValidateShape(shape);
+        ZoneManagedTerrainGeometry.ValidateSegment(origin, displacement);
+        ValidateNormalRange(minimumNormalZ, maximumNormalZ);
+        var end = origin + displacement;
+        var worldBounds = new ZoneManagedBounds(Vector3.Min(origin, end) - shape.HalfExtents, Vector3.Max(origin, end) + shape.HalfExtents);
+        ZoneManagedTerrainGeometry.ValidateFinite(worldBounds.Minimum, nameof(shape));
+        ZoneManagedTerrainGeometry.ValidateFinite(worldBounds.Maximum, nameof(shape));
+        lock (_gate)
+        {
+            hit = default;
+            if (displacement == Vector3.Zero) { _lastQuery = default; return false; }
+            CollectCandidates(worldBounds, out var boundsTests);
+            var best = float.PositiveInfinity;
+            var triangleTests = 0;
+            foreach (var instance in _queryInstances)
+            {
+                instance.Mesh.QueryBounds(worldBounds.Transform(instance.WorldToLocal), _queryTriangles);
+                foreach (var triangle in _queryTriangles)
+                {
+                    triangleTests++;
+                    WorldTriangle(instance, triangle, out var a, out var b, out var c, out var material);
+                    if (!ZoneManagedTriangleQueries.Sweep(origin, shape.HalfExtents, displacement, a, b, c,
+                        out var fraction, out var normal, out var position) || fraction >= best ||
+                        normal.Z < minimumNormalZ || normal.Z > maximumNormalZ) continue;
+                    best = fraction;
+                    hit = new(fraction * displacement.Length(), position, normal, material);
+                }
+            }
+            _lastQuery = new(boundsTests, _queryInstances.Count, triangleTests);
+            return float.IsFinite(best);
+        }
+    }
+
+    public bool TryCollide(ZonePhysicsShape shape, Vector3 position)
+    {
+        ZoneManagedTerrainGeometry.ValidateShape(shape);
+        ZoneManagedTerrainGeometry.ValidateFinite(position, nameof(position));
+        var bounds = new ZoneManagedBounds(position - shape.HalfExtents, position + shape.HalfExtents);
+        ZoneManagedTerrainGeometry.ValidateFinite(bounds.Minimum, nameof(shape));
+        ZoneManagedTerrainGeometry.ValidateFinite(bounds.Maximum, nameof(shape));
+        lock (_gate)
+        {
+            CollectCandidates(bounds, out var boundsTests);
+            var triangleTests = 0;
+            var collided = false;
+            foreach (var instance in _queryInstances)
+            {
+                if (instance.Mesh.ContainsSolidPoint(Vector3.Transform(position, instance.WorldToLocal)))
+                {
+                    collided = true;
+                    break;
+                }
+                instance.Mesh.QueryBounds(bounds.Transform(instance.WorldToLocal), _queryTriangles);
+                foreach (var triangle in _queryTriangles)
+                {
+                    triangleTests++;
+                    WorldTriangle(instance, triangle, out var a, out var b, out var c, out _);
+                    if (!ZoneManagedTriangleQueries.Overlaps(position, shape.HalfExtents, a, b, c)) continue;
+                    collided = true;
+                    break;
+                }
+                if (collided) break;
+            }
+            _lastQuery = new(boundsTests, _queryInstances.Count, triangleTests);
+            return collided;
+        }
+    }
+
+    private void CollectCandidates(ZoneManagedBounds bounds, out int boundsTests)
+    {
+        _queryIds.Clear();
+        _queryInstances.Clear();
+        var (minimum, maximum, bucketCount) = BucketRange(bounds);
+        if (bucketCount > MaximumQueryBuckets)
+        {
+            // Unusually large queries fall back to instance bounds, never a full triangle scan.
+            foreach (var handle in _instances.Keys) _queryIds.Add(handle);
+        }
+        else
+        {
+            foreach (var key in EnumerateBuckets(minimum, maximum))
+                if (_buckets.TryGetValue(key, out var entries)) _queryIds.UnionWith(entries);
+            _queryIds.UnionWith(_oversized);
+        }
+        boundsTests = _queryIds.Count;
+        foreach (var handle in _queryIds)
+        {
+            var instance = _instances[handle];
+            if (instance.Bounds.Overlaps(bounds)) _queryInstances.Add(instance);
+        }
+    }
+
+    private static void WorldTriangle(Instance instance, int triangle, out Vector3 a, out Vector3 b, out Vector3 c, out ushort material)
+    {
+        instance.Mesh.GetTriangle(triangle, out a, out b, out c, out material);
+        a = Vector3.Transform(a, instance.LocalToWorld);
+        b = Vector3.Transform(b, instance.LocalToWorld);
+        c = Vector3.Transform(c, instance.LocalToWorld);
+    }
+
+    private static (Bucket Minimum, Bucket Maximum, double Count) BucketRange(ZoneManagedBounds bounds)
+    {
+        var minimum = BucketAt(bounds.Minimum);
+        var maximum = BucketAt(bounds.Maximum);
+        var count = ((double)maximum.X - minimum.X + 1) * ((double)maximum.Y - minimum.Y + 1) * ((double)maximum.Z - minimum.Z + 1);
+        return (minimum, maximum, count);
+    }
+
+    private static Bucket BucketAt(Vector3 position) => new(BucketCoordinate(position.X), BucketCoordinate(position.Y), BucketCoordinate(position.Z));
+    private static int BucketCoordinate(float coordinate) => (int)Math.Clamp(Math.Floor(coordinate / (double)BucketSize), int.MinValue, int.MaxValue);
+
+    private static IEnumerable<Bucket> EnumerateBuckets(Bucket minimum, Bucket maximum)
+    {
+        for (var x = (long)minimum.X; x <= maximum.X; x++)
+            for (var y = (long)minimum.Y; y <= maximum.Y; y++)
+                for (var z = (long)minimum.Z; z <= maximum.Z; z++)
+                    yield return new((int)x, (int)y, (int)z);
+    }
+
+    private static void ValidateNormalRange(float minimum, float maximum)
+    {
+        if (!float.IsFinite(minimum) || !float.IsFinite(maximum) || minimum < -1 || maximum > 1 || minimum > maximum)
+            throw new ArgumentOutOfRangeException(nameof(minimum), "Normal filters must be an ordered range within -1..1.");
+    }
+
+    private static void ValidateTransform(Matrix4x4 matrix, out Matrix4x4 inverse)
+    {
+        ReadOnlySpan<float> values = [matrix.M11, matrix.M12, matrix.M13, matrix.M14, matrix.M21, matrix.M22, matrix.M23, matrix.M24,
+            matrix.M31, matrix.M32, matrix.M33, matrix.M34, matrix.M41, matrix.M42, matrix.M43, matrix.M44];
+        foreach (var value in values)
+            if (!float.IsFinite(value)) throw new ArgumentOutOfRangeException(nameof(matrix), "Instance transforms must be finite.");
+        if (matrix.M14 != 0 || matrix.M24 != 0 || matrix.M34 != 0 || matrix.M44 != 1)
+            throw new ArgumentException("Collision instances require an affine transform.", nameof(matrix));
+        if (!Matrix4x4.Invert(matrix, out inverse)) throw new ArgumentException("Collision instances require an invertible transform.", nameof(matrix));
+        ReadOnlySpan<float> inverseValues = [inverse.M11, inverse.M12, inverse.M13, inverse.M21, inverse.M22, inverse.M23,
+            inverse.M31, inverse.M32, inverse.M33, inverse.M41, inverse.M42, inverse.M43];
+        foreach (var value in inverseValues)
+            if (!float.IsFinite(value)) throw new ArgumentException("The inverse collision transform must be finite.", nameof(matrix));
+    }
+
+    private sealed record Instance(ZoneManagedTriangleMesh Mesh, Matrix4x4 LocalToWorld,
+        Matrix4x4 WorldToLocal, ZoneManagedBounds Bounds, Bucket[] Buckets);
+    private readonly record struct Bucket(int X, int Y, int Z);
+}

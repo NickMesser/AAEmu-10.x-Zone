@@ -602,11 +602,11 @@ public sealed class ZoneCellDeferredBrushResources : IDisposable
     {
         var cellX = Placement.EngineCell.X;
         var cellY = Placement.EngineCell.Y;
-        var translation = new Vector3(cellX << 10, cellY << 10, 0);
         foreach (var region in content.Sectors)
         {
             if (!gate.IsRegionActive(cellX, cellY, region)) continue;
             ActiveRegionCount++;
+            var translation = region.GetEngineTranslation(Placement.EngineCell);
             foreach (var record in region.Instances)
             {
                 GatedRecordCount++;
@@ -624,7 +624,7 @@ public sealed class ZoneCellDeferredBrushResources : IDisposable
                 if (brush.HasPhysicalEntity)
                 {
                     PhysicalizedBrushCount++;
-                    _physicalizedBounds.Add((record.BoundsMin, record.BoundsMax, record.SourceOrder));
+                    _physicalizedBounds.Add((record.BoundsMin + translation, record.BoundsMax + translation, record.SourceOrder));
                 }
             }
         }
@@ -659,7 +659,6 @@ public sealed class ZoneCellDeferredBrushResources : IDisposable
             return "not-run(no physics world bound)";
         if (_physicalizedBounds.Count == 0)
             return $"miss(no physicalized brush among {CreatedBrushCount} created)";
-        var translation = new Vector3(Placement.EngineCell.X << 10, Placement.EngineCell.Y << 10, 0);
         var candidates = _physicalizedBounds
             .OrderByDescending(box => BoxVolume(box.Min, box.Max))
             .Take(MaximumProbeCandidates)
@@ -667,8 +666,8 @@ public sealed class ZoneCellDeferredBrushResources : IDisposable
         var probes = 0;
         foreach (var box in candidates)
         {
-            var min = box.Min + translation;
-            var max = box.Max + translation;
+            var min = box.Min;
+            var max = box.Max;
             if (max.X < min.X) (min.X, max.X) = (max.X, min.X);
             if (max.Y < min.Y) (min.Y, max.Y) = (max.Y, min.Y);
             if (max.Z < min.Z) (min.Z, max.Z) = (max.Z, min.Z);

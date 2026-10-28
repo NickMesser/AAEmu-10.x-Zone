@@ -76,7 +76,7 @@ public static class ZoneManagedSceneHost
                     {
                         var geometry = new ZoneManagedTerrainGeometry(activation!.Heights, activation.Surfaces);
                         var surfaces = activation.SurfaceContent is { } content ? new ZoneCollisionSurfaceTable(content) : null;
-                        backend = new ZoneManagedPhysicsBackend(geometry, surfaces);
+                        backend = new ZoneManagedPhysicsBackend(geometry, surfaces, activation.Collision!.Geometry);
                     }, inputs.Trace);
                 return new(loading, factory, simulation);
             }
@@ -102,7 +102,8 @@ public static class ZoneManagedSceneHost
                 scope!.Own(frame);
                 inputs.Trace($"Zone ready: phase={scene.Phase}, engine=managed, terrainReady={activation!.Report!.TerrainReady}, cells={inputs.Layout.Cells.Count}; full feature parity=false");
                 inputs.Trace($"Managed AI: {ai!.Count} live NPC generations; behavior, perception, navigation and combat remain gated.");
-                inputs.Trace("Managed physics supports authored terrain and actor bounds; capsules use conservative bounds. Static meshes, vegetation, vehicles and rigid-body dynamics remain unimplemented.");
+                inputs.Trace($"Managed physics supports authored terrain, {activation.Collision!.Geometry.InstanceCount} admitted static proxies and actor bounds; " +
+                    "capsules use conservative bounds. Unsupported mesh formats, vegetation, vehicles and rigid-body dynamics remain incomplete.");
                 foreach (var note in notes.Lines) inputs.Trace($"Partial leaf: {note}");
                 return scene;
             }

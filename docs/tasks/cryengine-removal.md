@@ -19,8 +19,8 @@ queries. They do not remove CryEngine. Existing configurations retain their orig
 | Module | Managed replacement in this change | Remaining capability gaps |
 | --- | --- | --- |
 | `crysystem.dll` | Configured assets, content, clocks, scene owner, startup/frame/shutdown composition | Finish diagnostics, platform checks and capability policies across every scene type |
-| `cry3dengine_dedicate.dll` | World/cell selection, authored heightmaps, terrain surfaces, seams, decoded object/vegetation/entity placements | Physicalized static meshes, visibility/area behavior, water volumes and procedural objects |
-| `cryphysics_dedicate.dll` | Character integration, bounded terrain rays, continuous terrain box sweeps, overlaps, actor bounds, material IDs | Exact capsules, oriented bodies, static mesh collision, friction, rigid bodies, swimming, vehicles and ragdolls |
+| `cry3dengine_dedicate.dll` | World/cell selection, authored heightmaps/surfaces/seams, decoded placements, instantiated default/picking CGF collision proxies | Referenced mesh streams, curved primitives, vegetation, visibility/area behavior, water volumes and procedural objects |
+| `cryphysics_dedicate.dll` | Character integration, terrain and static triangle queries, shared-mesh BVHs, affine instances, combined movement sweeps, reachable ground/ceiling support, actor bounds and material IDs | Exact capsules, complete stance/step behavior, friction, rigid bodies, swimming, vehicles and ragdolls |
 | `cryentitysystem_dedicate.dll` | Player/NPC identity generations, registry/spatial membership and managed player lifecycle | General entity proxies, components, areas, attachments and entity-script state |
 | `cryaction_dedicate.dll` | Player movement controller/frame pipeline and managed goal-pipe execution adapter | Authored behavior construction, game-object actions, signal bindings and FlowGraphs |
 | `cryaisystem_dedicate.dll` | Provider ownership, active/target state, signals, generation retirement and deterministic update scheduling | Perception, authored behavior admission, navigation, locomotion, leash and combat decisions |
@@ -57,7 +57,8 @@ comparison; managed scene startup never constructs them.
   inspecting loaded modules. A separate real-content zone-129 replay also reaches readiness,
   admits captured player 387 with `physicalId=0`, emits movement/location reports and retires.
 
-All 172 standalone tests pass, including 31 new configuration, physics, AI and scene/host cases.
+The first native-free milestone passed 172 standalone tests, including 31 new configuration,
+physics, AI and scene/host cases. The subsequent static-collision work passes all 219 tests.
 The solution builds successfully; existing analyzer warnings remain.
 
 Real-content replay evidence is kept outside the repository: `managed-entry-verified-zone.log`,
@@ -71,13 +72,63 @@ session remains an acceptance check; replay alone does not prove that interactio
 
 ## Remaining implementation tasks
 
-### CE-06 — Authored static mesh collision (P0)
+### CE-06 — Authored static mesh collision (P0, in progress)
 
-`ZoneManagedSceneActivation.Report.Cells[*].Objects` retains the authored object, vegetation,
-entity and big-object descriptions. Add managed geometry decoding for their referenced compiled
-mesh/physical proxy resources. Resolve nested geometry, material IDs, scales, rotations and local
-cell offsets. Cache immutable geometry by asset identity and place instances in a spatial index.
-Missing or unsupported resources must remain in a per-resource coverage report.
+Implemented: bounded CGF 0x744/0x745 container and authored physical-geometry readers for boxes
+and inline triangle meshes, including parent/node transforms, material mappings, signed material
+sentinels, default vs picking proxy profiles, helper/LOD/occlusion exclusion and the native `main`
+mesh rule. Static instances share immutable mesh resources and per-mesh BVHs; scene buckets prune
+instances. Rays, box sweeps and overlaps handle affine transforms. General triangle meshes
+preserve empty interiors; authored box primitives retain their solid convex overlap volume.
+The managed host loads these proxies automatically and clears them before terrain retirement.
+
+Validation: all 512 referenced zone-129 object/big-object CGFs parse, with 458 complete default
+collision resources and 516 admitted default parts containing 132,606 triangles. These are source
+resource counts; placed-instance and material-variant counts are reported separately. Missing and
+unsupported parts retain named diagnostics. Visual helper nodes are excluded even if they carry
+physical chunks. Synthetic tests cover spatial pruning, unloading, materials, picking profiles,
+wall sliding, diagonal ceiling collisions and reachable landing support.
+
+The final six-cell scene contains 5,462 character-collision instances and 5,691 picking instances
+across 5,012 brushes with admitted default collision. The report identifies 719 brushes with
+remaining collision gaps; this count includes partially supported brushes and is not disjoint from
+the admitted count. Another 932 brushes have no admitted default collider. Vegetation and other
+entity placements still need their own owners. All 219 standalone tests pass, including 47 new
+CGF, geometry, scene-loading and character/static integration cases.
+
+The production movement pipeline also rejects repeated client pose corrections through a wall,
+publishing the blocked authoritative pose back to World. Explicit scene teleports bypass that
+ordinary correction path. A final six-cell host replay admits player 387, confirms it grounded
+at local `(1172.5996,1646.5,366.33502)`, then retires player and terrain owners on clean World EOF.
+The host uses no engine/Lua paths; module-inventory tests and the real-scene inventory confirm
+no CryEngine modules. Runtime artifacts include `static-entry-final-zone.log`,
+`static-entry-verified-modules.json` and `captures/static-entry-output-final.bin`.
+
+Independent rays through authored wall, roof, stair and bridge placements agree with the original
+physics engine on all 21 hit/miss decisions and all 17 hit material IDs; the maximum distance
+difference is 0.0000398 m. The comparison exposed and corrected the native adapter's omitted
+64-meter deferred-sector offsets. Results are external runtime artifacts named
+`static-native-probe-corrected-results.json`, `static-managed-probe-final-results.json` and
+`static-parity-summary.json`. Backface normals retain authored winding; sweep normals oppose motion.
+The maximum copied-position difference is 0.0001 m and maximum normal-vector difference is
+0.0000276. These measurements cover the selected controls, not every decoded resource.
+
+Use `--check-managed-scene --config zone.json --collision-report coverage.json` to inspect actual
+coverage. Both scene checks accept `--scene-probes rays.json --scene-probe-output hits.json`.
+Each input ray has `name`, three-component `origin` and three-component `displacement` arrays in
+zone-local meters. The native comparison uses `--check-scene` and the native configuration.
+
+Remaining: external/referenced source triangles, analytic cylinders/spheres/capsules, vegetation
+and entity collision owners, visibility-imported geometry and complete scene-instance admission.
+One authored nonuniform brush is currently among the unsupported external meshes; its native
+physicalization gate must be retained when that format lands. Curved primitives must receive
+appropriate collision algorithms rather than an undisclosed tessellation. Full collision coverage
+remains false while any required source is unsupported. See [CGF format evidence](../cgf-physics-format.md).
+
+`ZoneManagedSceneActivation.Report.Cells[*].Objects` retains the remaining vegetation/entity
+descriptions. Extend the existing resource cache and instance index with their verified physical
+owners and the still-unsupported proxy formats. Retain exact material IDs and transforms, with
+missing or unsupported resources visible in the per-resource coverage report.
 
 Acceptance: rays, sweeps and overlaps hit a known zone-129 wall, roof, stair and bridge at the same
 positions/materials as recorded native queries. A terrain miss under a bridge must still hit its
@@ -86,9 +137,11 @@ Do not use render bounds as if they were authored collision geometry.
 
 ### CE-07 — Character collision and movement fidelity (P0)
 
-Replace conservative capsule bounds with true capsule queries. Add stance transitions, authored
-gravity and slope/step limits, ground snapping, ceilings, sliding, fall/landing state and collision
-surface response. Preserve the scene's single movement authority and World coordinate boundary.
+Replace conservative capsule bounds with true capsule queries. Complete stance transitions,
+authored gravity and slope/step limits, penetration recovery, fall/landing state and collision
+surface response. Preserve the added static ceiling/sliding/support behavior and ensure ordinary
+client pose corrections cannot bypass the physics scene. Explicit scene teleports retain their
+separate authoritative path. Preserve the single movement authority and World coordinate boundary.
 Extend movement for swimming, gliding, ladders, mounts and moving platforms as their owners land.
 
 Acceptance: recorded stance sizes and jump arcs, slope ascent/descent, stair climbing, a low

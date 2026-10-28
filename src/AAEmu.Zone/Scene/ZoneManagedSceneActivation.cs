@@ -39,7 +39,7 @@ public sealed class ZoneManagedSceneActivation : IDisposable
     private const int MaximumTerrainChunkBytes = 64 * 1024 * 1024;
     private static readonly IReadOnlyList<string> Limitations = Array.AsReadOnly(new[]
     {
-        "Static mesh and vegetation collision is not implemented; decoded placements are retained as content only.",
+        "Static brush collision uses supported authored default CGF proxies; unsupported resources and vegetation remain in the coverage report.",
         "Engine entity proxies, flow graphs, visibility areas and procedural object behavior are not implemented.",
         "Vehicle, boat, destructible mesh and dynamic water-volume physics is not implemented."
     });
@@ -54,6 +54,8 @@ public sealed class ZoneManagedSceneActivation : IDisposable
     public ZoneTerrainHeightField Heights { get; } = new();
     public ZoneTerrainSurfaceBindings? Surfaces { get; private set; }
     public ZonePhysicalSurfaceContent? SurfaceContent { get; private set; }
+    public ZoneTerrainMaterialResolver? Materials { get; private set; }
+    public ZoneManagedSceneCollision? Collision { get; private set; }
     public ZoneManagedSceneLoadReport? Report { get; private set; }
     public bool IsCreated { get { lock (_gate) return _created && !_disposed; } }
 
@@ -83,6 +85,7 @@ public sealed class ZoneManagedSceneActivation : IDisposable
             var nodes = Heights.InitializeNodeTree(_layout.World.Header.OceanLevel);
             nodes.BindSurfaces(surfaces);
             Surfaces = surfaces;
+            Materials = materials;
             SurfaceContent = materials.SurfaceContent;
             _created = true;
             _trace?.Invoke("CreateManagedSceneServices");
@@ -126,6 +129,7 @@ public sealed class ZoneManagedSceneActivation : IDisposable
                     $"local=({placement.EngineCell.X},{placement.EngineCell.Y}) status={terrain[index].Status}" +
                     (terrain[index].Error is { } error ? $" error={error}" : ""));
             }
+            Collision = new(_assets, Materials!, cells, _trace);
             return Report = new(cells.AsReadOnly(), terrain.All(result => result.Succeeded),
                 terrain.Count(result => result.Status == ZoneTerrainCellLoadStatus.Loaded),
                 terrain.Count(result => result.Status == ZoneTerrainCellLoadStatus.Empty), Limitations);
@@ -214,6 +218,7 @@ public sealed class ZoneManagedSceneActivation : IDisposable
         lock (_gate)
         {
             if (_disposed) return;
+            Collision?.Dispose();
             var retiredCells = _loadedCells.Count;
             for (var index = _loadedCells.Count - 1; index >= 0; index--)
             {

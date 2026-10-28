@@ -7,12 +7,12 @@ namespace AAEmu.Zone.Physics;
 
 /// <summary>
 /// Engine-independent character physics for one scene generation. Reuses the owned gravity and
-/// terrain landing integrator, with continuous terrain and registered-body bounds queries.
+/// ground landing integrator, with continuous terrain/static and registered-body bounds queries.
 /// Actor transforms are foot origins; public shape query positions are centers.
 /// </summary>
 /// <remarks>
-/// This is a terrain character controller, not a replacement rigid-body solver. Static meshes,
-/// vehicle dynamics, swimming, ragdolls, actor stacking and friction response are not implemented.
+/// This is a character controller, not a replacement rigid-body solver. Vehicle dynamics,
+/// swimming, ragdolls, actor stacking and friction response are not implemented.
 /// Capsules and rotated actor bodies use conservative upright axis-aligned bounds. The explicit
 /// capabilities prevent a successful terrain query from being mistaken for full scene parity.
 /// </remarks>
@@ -24,24 +24,29 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     private readonly Dictionary<uint, uint> _lastGeneration = [];
     private readonly HashSet<ZoneActorHandle> _retired = [];
     private readonly IZoneCollisionSurfaces? _surfaces;
+    private readonly ZoneManagedSceneGroundQuery _groundQuery;
 
-    public ZoneManagedPhysicsBackend(ZoneManagedTerrainGeometry geometry, IZoneCollisionSurfaces? surfaces = null)
+    public ZoneManagedPhysicsBackend(ZoneManagedTerrainGeometry geometry, IZoneCollisionSurfaces? surfaces = null,
+        ZoneManagedStaticGeometry? staticGeometry = null)
     {
         Geometry = geometry ?? throw new ArgumentNullException(nameof(geometry));
-        OwnedPhysics = new(geometry);
+        StaticGeometry = staticGeometry;
+        _groundQuery = new(geometry, staticGeometry);
+        OwnedPhysics = new(_groundQuery);
         _surfaces = surfaces;
     }
 
     public ZoneManagedTerrainGeometry Geometry { get; }
+    public ZoneManagedStaticGeometry? StaticGeometry { get; }
     public ZoneOwnedPlayerPhysics OwnedPhysics { get; }
-    public bool HasStaticMeshCollision => false;
+    public bool HasStaticMeshCollision => StaticGeometry is { InstanceCount: > 0 };
     public bool HasVehicleDynamics => false;
     public bool CapsulesUseBoundingBoxes => true;
     public ZonePhysicalSurfaceDefinition? LastFootfallSurface { get; private set; }
 
     public IReadOnlyList<string> Limitations { get; } = Array.AsReadOnly(new[]
     {
-        "Static object meshes, cave interiors, vegetation and water collision are not loaded.",
+        "Only decoded and admitted static collision proxies are present; scene coverage reports retain unsupported resources.",
         "Capsules and rotated bodies use conservative upright axis-aligned bounds.",
         "Vehicle, rigid-body, ragdoll, swimming and actor stacking dynamics are not implemented.",
         "Material ids are resolved, but friction and elasticity response are not implemented.",
@@ -86,11 +91,21 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         {
             var period = TimeSpan.FromTicks(ticks + (i < remainder ? 1 : 0));
             BlockHorizontalMotion((float)period.TotalSeconds);
+            var ceilings = BlockStaticMotion((float)period.TotalSeconds);
             OwnedPhysics.Step(period);
+            foreach (var actor in ceilings)
+            {
+                OwnedPhysics.TryReadVelocity(actor, out var velocity);
+                OwnedPhysics.ApplyVelocity(actor, new(velocity.X, velocity.Y, MathF.Min(velocity.Z, 0)));
+            }
         }
     }
 
-    public void Teleport(ZoneActorHandle actor, Vector3 position, Quaternion orientation) => ApplyPose(actor, position, orientation);
+    public void Teleport(ZoneActorHandle actor, Vector3 position, Quaternion orientation)
+    {
+        Require(actor);
+        OwnedPhysics.ApplyPose(actor, position, orientation);
+    }
 
     public void CopyStatus(ZoneActorHandle actor, out ZonePhysicsActorStatus status)
     {
@@ -110,6 +125,12 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         hit = default;
         if (displacement == Vector3.Zero) return false;
         var found = Geometry.TrySweep(shape, origin, displacement, out hit);
+        if (StaticGeometry is not null && StaticGeometry.TrySweep(shape, origin, displacement, out var staticHit) &&
+            (!found || staticHit.Distance < hit.Distance))
+        {
+            hit = staticHit;
+            found = true;
+        }
         if (TrySweepBodies(shape, origin, displacement, ignoreActor, out var bodyHit) && (!found || bodyHit.Distance < hit.Distance))
         {
             hit = bodyHit;
@@ -123,6 +144,7 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
         ZoneManagedTerrainGeometry.ValidateShape(shape);
         ZoneManagedTerrainGeometry.ValidateFinite(position, nameof(position));
         if (Geometry.TryCollide(shape, position)) return true;
+        if (StaticGeometry?.TryCollide(shape, position) == true) return true;
         foreach (var (actor, description) in _actors)
         {
             if (actor == ignoreActor) continue;
@@ -136,6 +158,12 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     public bool TryGround(Vector3 origin, float maxDistance, out ZonePhysicsGroundHit ground)
     {
         var found = Geometry.TryGround(origin, maxDistance, out ground);
+        if (StaticGeometry is not null && StaticGeometry.TryGround(origin, maxDistance, out var support) &&
+            (!found || support.Distance < ground.Distance))
+        {
+            ground = support;
+            found = true;
+        }
         LastFootfallSurface = found ? _surfaces?.Resolve(ground.PhysicalMaterialId) : null;
         return found;
     }
@@ -155,7 +183,35 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
     public void ApplyPose(ZoneActorHandle actor, Vector3 position, Quaternion orientation)
     {
         Require(actor);
-        OwnedPhysics.ApplyPose(actor, position, orientation);
+        OwnedPhysics.TryReadPosition(actor, out var previous);
+        var shape = _actors[actor].Shape;
+        var displacement = position - previous;
+        var center = Center(actor, shape);
+        // Ordinary client pose corrections arrive after the physics step. They must traverse
+        // the same collision scene or each new input could place the actor past a blocked wall.
+        // Explicit scene-authoritative repositioning uses Teleport and bypasses this correction.
+        for (var iteration = 0; iteration < 3 && displacement.LengthSquared() > 1e-12f; iteration++)
+        {
+            var found = Geometry.TrySweepSteepTerrain(shape, center, displacement, MinimumWalkableNormalZ, out var hit);
+            if (StaticGeometry is not null && StaticGeometry.TrySweep(shape, center, displacement,
+                out var staticHit, -1, displacement.Z < 0 ? 1 : MinimumWalkableNormalZ - .0001f) &&
+                (!found || staticHit.Distance < hit.Distance))
+            {
+                hit = staticHit;
+                found = true;
+            }
+            if (TrySweepBodies(shape, center, displacement, actor, out var bodyHit) && (!found || bodyHit.Distance < hit.Distance))
+            {
+                hit = bodyHit;
+                found = true;
+            }
+            if (!found) break;
+            var into = Vector3.Dot(displacement, hit.Normal);
+            if (into >= 0) break;
+            var fraction = Math.Clamp((hit.Distance - .001f) / displacement.Length(), 0, 1);
+            displacement -= hit.Normal * (into * (1 - fraction));
+        }
+        OwnedPhysics.ApplyPose(actor, previous + displacement, orientation);
     }
 
     public ushort? GroundMaterialFor(ZoneActorHandle actor)
@@ -205,6 +261,39 @@ public sealed class ZoneManagedPhysicsBackend : IZonePhysicsBackend, IZonePhysic
             }
             OwnedPhysics.ApplyVelocity(actor, new(horizontal.X, horizontal.Y, velocity.Z));
         }
+    }
+
+    private List<ZoneActorHandle> BlockStaticMotion(float seconds)
+    {
+        var blocked = new List<ZoneActorHandle>();
+        if (StaticGeometry is null) return blocked;
+        foreach (var (actor, description) in _actors)
+        {
+            OwnedPhysics.TryReadVelocity(actor, out var velocity);
+            OwnedPhysics.TryReadGrounded(actor, out var grounded);
+            if (!grounded && OwnedPhysics.TryReadPosition(actor, out var feet))
+                grounded = _groundQuery.TryCharacterGround(feet, feet, false, out var support, out _) &&
+                    MathF.Abs(feet.Z - support.Z) <= _groundQuery.ContactTolerance;
+            var displacement = (velocity + new Vector3(0, 0, ZoneOwnedPlayerPhysics.Gravity * seconds)) * seconds;
+            var changed = false;
+            // Sweep the actual combined trajectory. Separate horizontal and vertical casts can
+            // both miss a finite overhang crossed diagonally, or block a jump over a low wall.
+            for (var iteration = 0; iteration < 3 && displacement.LengthSquared() > 1e-12f; iteration++)
+            {
+                var maximumNormalZ = !grounded && displacement.Z <= 0 ? 1 : MinimumWalkableNormalZ - .0001f;
+                if (!StaticGeometry.TrySweep(description.Shape, Center(actor, description.Shape),
+                    displacement, out var hit, -1, maximumNormalZ)) break;
+                var into = Vector3.Dot(displacement, hit.Normal);
+                if (into >= 0) break;
+                var fraction = Math.Clamp((hit.Distance - .001f) / displacement.Length(), 0, 1);
+                displacement -= hit.Normal * (into * (1 - fraction));
+                changed = true;
+                if (hit.Normal.Z < -.01f && !blocked.Contains(actor)) blocked.Add(actor);
+            }
+            if (changed)
+                OwnedPhysics.ApplyVelocity(actor, displacement / seconds - new Vector3(0, 0, ZoneOwnedPlayerPhysics.Gravity * seconds));
+        }
+        return blocked;
     }
 
     private bool TrySweepBodies(ZonePhysicsShape shape, Vector3 origin, Vector3 displacement,

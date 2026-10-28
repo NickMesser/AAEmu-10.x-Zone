@@ -77,6 +77,9 @@ public sealed class ZoneCellDeferredSector
     public int SourceIndex { get; }
     public int LocalX => SourceIndex / 16;
     public int LocalY => SourceIndex % 16;
+    /// <summary>3017BA50 places sector-local brush records at sector*64 minus the world's cell origin.</summary>
+    public Vector3 GetEngineTranslation(ZoneMapCoordinate engineCell) =>
+        new(engineCell.X * 1024f + LocalX * 64f, engineCell.Y * 1024f + LocalY * 64f, 0);
     public int SourceOffset { get; }
     public int ByteLength { get; }
     public int ConsumedRecordBytes => Instances.Count * ZoneCellDeferredContent.BrushBytes;

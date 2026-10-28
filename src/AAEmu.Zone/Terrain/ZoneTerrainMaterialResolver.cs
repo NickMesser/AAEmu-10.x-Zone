@@ -11,6 +11,7 @@ public sealed class ZoneTerrainMaterial : IZoneTerrainMaterial
 {
     private ZoneTerrainMaterial?[] _submaterials = [];
     public string Name { get; }
+    public bool IsMultiMaterial { get; internal set; }
     public int PhysicalSurfaceId { get; internal set; }
     public bool CannotPlaceDoodad { get; internal set; }
     public ZoneTerrainMaterial? DualMaterial { get; internal set; }
@@ -142,7 +143,7 @@ public sealed class ZoneTerrainMaterialResolver : IZoneTerrainMaterialResolver
         CheckDepth(depth);
         var flags = unchecked((uint)ZoneWorldMapXmlValue.Int32(ZoneTerrainSurfaceXml.Attribute(root, "MtlFlags") ?? "0"));
         if (inline) flags |= 0x80;
-        var material = new ZoneTerrainMaterial(name);
+        var material = new ZoneTerrainMaterial(name) { IsMultiMaterial = (flags & 0x100) != 0 };
         // 301C9440 installs a shared root before traversing its children. Self-references therefore
         // receive this exact partial object, and later assignments complete the same graph.
         if ((flags & 0x80) == 0)
