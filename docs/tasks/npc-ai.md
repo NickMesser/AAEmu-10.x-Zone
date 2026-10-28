@@ -36,6 +36,7 @@ Repo coverage is strong for leaf pieces (aggro table, spawners/groups/events, si
   - Recover the ABI for the 39345000/39348440 chain and wire CreateNpc/RemoveNpc.
   - Wire signal dispatch, activation events 6/7, attention-target write and per-frame update via IZoneAiFramePump.
   - Flip each dependency IsResolved only when a real call is wired.
+- Status: **Partial** — CAISystem instance recovered: gEnv+0x80 (CSystem+0xD0), read and proven at runtime by `ZoneNativeEngine.TryReadAiSystem` (src/AAEmu.Zone/Native/Engine/ZoneNativeEngine.AiSystem.cs): its vtable lies in cryaisystem_dedicate.dll (0x31000000, size 0x220000) and vtable slot 3 is 0x31049268, the AI init PostInit runs; the provider's "CAISystem instance" dependency is now resolved. Construction is now blocked at "native NPC AI actor construction" (callable ABI of 39345000/39348440 and 39xxxxxx module attribution), the next open item above.
 - Depends on: framework startup (F1), scene host, AI-06
 - Confidence: medium
 

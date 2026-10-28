@@ -163,7 +163,7 @@ public static class ZoneSceneHost
                 catalog = new ZoneSceneNpcCatalog();
                 scriptClock = new ZoneSceneScriptClock();
                 if (inputs.Backends.Ai == ZoneAiBackendKind.Native)
-                    aiProvider = new ZoneNativeAiProvider(catalog); // one per scene, disposed by the frame coordinator
+                    aiProvider = new ZoneNativeAiProvider(catalog, engine); // one per scene, disposed by the frame coordinator
                 modelPosition = unit => ModelPosition(unit);
                 npcWorld = new ZoneSceneNpcWorld(registry, inputs.Startup, inputs.Npcs, modelPosition,
                     () => backend, catalog, aiProvider, scriptClock, framePeriod, notes, trace);
