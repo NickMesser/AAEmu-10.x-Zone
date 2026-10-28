@@ -194,7 +194,7 @@ public sealed class ManagedNpcActorMotionTests
                 [new(){Id=1,ActorModelId=8,StanceId=2,SizeX=.3f,SizeY=.7f,SizeZ=.3f,
                     HeightCollider=1.2f,HeightPivot=.1f,UseCapsule=true,ViewOffsetZ=1.5f}]));
             Models=models;
-            Npc=Admission.Npc(model:models.Models[19],unitModelId:17);Admission.Publish(Npc);
+            Npc=Admission.Npc(model:models.Models[19],unitModelId:17,cleanSkillState:true);Admission.Publish(Npc);
             var handle=Admission.Catalog.Register(Npc);
             Actors=new(Admission.Registry,Admission.Catalog,Lua,new(),unit=>ZoneMovementPoseMath.ToMeters(unit.Pose.Position),
                 ()=>0,()=>1,_=>{},TimeSpan.FromMilliseconds(20));

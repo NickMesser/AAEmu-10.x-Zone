@@ -8,12 +8,18 @@ namespace AAEmu.Zone.Combat;
 public static class ZoneBuffLifecycle
 {
     public static UnitBuffs? Create(UnitBuffs current, BuffCreated message, BuffStatTemplate template)
+        => Create(current, message, template, out _, out _);
+
+    public static UnitBuffs? Create(UnitBuffs current, BuffCreated message, BuffStatTemplate template,
+        out UnitBuff? changed, out bool refreshed)
     {
+        changed = null; refreshed = false;
         var source = Select(current, template.Kind);
         var index = template.StackRule == 6 ? -1 : Find(source, buff => buff.TemplateId == message.TemplateId &&
             (!template.PerUnitCreation || buff.CasterPersistentId == message.CasterPersistentId));
         if (index < 0 && source.Count == Capacity(template.Kind))
             return null; // 3944EDE0: a full category cannot allocate another buff
+        refreshed = index >= 0;
         var next = message.ToUnitBuff();
         if (index >= 0)
         {
@@ -39,6 +45,7 @@ public static class ZoneBuffLifecycle
             next = next with { Charge = SignedCap(next.Charge, template.MaximumCharge) };
         var result = source.ToList();
         if (index < 0) result.Add(next); else result[index] = next;
+        changed = next;
         return Replace(current, template.Kind, result.AsReadOnly());
     }
 
@@ -50,7 +57,7 @@ public static class ZoneBuffLifecycle
             var index = Find(list, buff => buff.Index == message.Index);
             if (index < 0) continue;
             var previous = list[index];
-            var template = content.Template(previous.TemplateId);
+            if (!content.Templates.TryGetValue(previous.TemplateId, out var template)) return null;
             var resetTicks = previous.Stack != message.Stack && template.StackRule == 7 && message.Reason == 3;
             var next = previous with
             {

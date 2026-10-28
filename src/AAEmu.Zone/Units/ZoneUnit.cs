@@ -7,11 +7,50 @@ using AAEmu.Zone.Protocol.Units;
 namespace AAEmu.Zone.Units;
 
 public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, ZoneProgressionState? progression = null,
-    ZoneSkillContent? skillContent = null)
+    ZoneSkillContent? skillContent = null, ZoneBuffContent? buffContent = null)
 {
     public UnitStateSnapshot Snapshot { get; } = snapshot;
     public ZoneVitalStats? Stats { get; private set; } = stats;
     public UnitBuffs Buffs { get; private set; } = snapshot.Buffs;
+    private readonly ZoneBuffContent? _buffContent = buffContent;
+    public ZoneUnitMovementStatus MovementStatus { get; } = new(snapshot.Buffs, buffContent);
+    /// <summary>3944FEB0/39450420 effect boundary, independently of the later status-cache publication.</summary>
+    public event Action<ZoneUnit, ZoneUnitBuffEffect>? BuffEffect;
+    //Replacement resource bound for deferred managed model admission; overflow refuses late
+    //replay explicitly instead of collapsing overlapping/reset effects into current presence.
+    internal const int BuffModelEffectJournalCapacity = 1024;
+    private readonly List<ZoneUnitBuffEffect> _buffModelEffects = [];
+    private ulong _buffModelEffectSequence;
+    private bool _buffModelEffectJournalOverflow;
+    /// <summary>
+    ///39450870's original restored Good/Bad/Hidden order. A new model owner replays this
+    ///once, before its final initialization, rather than deriving a latch from current presence.
+    /// </summary>
+    public IReadOnlyList<ZoneUnitBuffEffect> CopyInitialBuffEffects()
+    {
+        var original = Snapshot.Buffs.Good.Concat(Snapshot.Buffs.Bad).Concat(Snapshot.Buffs.Hidden).ToArray();
+        if (original.Length == 0) return [];
+        if (_buffContent is null) throw new NotSupportedException("Restored Unit buff effects require their actual descriptor catalog.");
+        return Array.AsReadOnly(original.Where(buff => _buffContent.Templates.ContainsKey(buff.TemplateId))
+            .Select(buff => new ZoneUnitBuffEffect(ZoneUnitBuffEffectKind.Apply, buff, _buffContent.Template(buff.TemplateId), IsInitialRestore: true)).ToArray());
+    }
+    /// <summary>Ordered post-enter model effects, separately from the initial restored inventory.</summary>
+    public IReadOnlyList<ZoneUnitBuffEffect> CopyBuffModelEffectJournal()
+    {
+        if (_buffModelEffectJournalOverflow)
+            throw new NotSupportedException($"Deferred Unit model buff-effect journal exceeded {BuffModelEffectJournalCapacity} psychokinesis events; exact late model replay is unavailable.");
+        return Array.AsReadOnly(_buffModelEffects.ToArray());
+    }
+    internal void ApplyBuffEffect(ZoneUnitBuffEffect effect)
+    {
+        if (effect.Template.Psychokinesis)
+        {
+            effect = effect with { Sequence = checked(++_buffModelEffectSequence) };
+            if (_buffModelEffects.Count < BuffModelEffectJournalCapacity) _buffModelEffects.Add(effect);
+            else _buffModelEffectJournalOverflow = true;
+        }
+        BuffEffect?.Invoke(this, effect);
+    }
     public bool BuffTimingEnabled { get; private set; }
     public UnitEquipment Equipment { get; private set; } = snapshot.Equipment;
     public ZoneAttributeOverrides AttributeOverrides { get; private set; } = ZoneAttributeOverrides.Empty;
@@ -121,6 +160,7 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
         Casting.ClearCastingFlag(); //3935D490 clears this byte before combat's entity event44.
         Flags = (ushort)(Flags & ~(1 << 10)); //The adjacent byte is cleared by the same native WORD write.
         SetCombatFlag(false);
+        MovementStatus.ClearFlags(); //3935D490 clears Unit32080..32093, retaining BuffMan's cache.
         Casting.ClearIdentifiers(); //The four identifiers clear after that callback, independently.
         Flags = (ushort)(Flags & ~((1 << 1) | (1 << 10)));
         if (Snapshot.Identity.Kind != ZoneUnitKind.Character) TargetId = 0;
@@ -136,6 +176,7 @@ public sealed class ZoneUnit(UnitStateSnapshot snapshot, ZoneVitalStats? stats, 
         var health = Math.Max(0, unchecked(stats.MaximumHealth * 100));
         var mana = Math.Max(0, unchecked(stats.MaximumMana * 100));
         var pose = ZoneUnitPose.FromResurrection(message);
+        MovementStatus.ClearFlags(); //3935D970 clears copied flags before3925E8E0; no cache rebuild.
         Casting.Reset(); //3925E8E0 clears all four identifiers and the casting byte before refilling.
         Flags = (ushort)(Flags & ~(1 << 10));
         Stats = stats;

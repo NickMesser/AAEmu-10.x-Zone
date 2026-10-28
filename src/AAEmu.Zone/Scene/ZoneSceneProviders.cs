@@ -291,6 +291,7 @@ public sealed class ZoneSceneNpcWorld : IZoneNpcWorld
     {
         if (_npcAdmissionStarted || _managedActors is not null)
             throw new InvalidOperationException("Managed NPC movement owners attach once, before NPC admission.");
+        actors.AttachMovementEligibility(motion);
         _managedActors = actors; _managedMotion = motion; _managedPositionChecks = positions;
         _managedReplication = replication; _managedFrame = frame;
         //Native ai_UpdateAllAlways defaults0. The immutable

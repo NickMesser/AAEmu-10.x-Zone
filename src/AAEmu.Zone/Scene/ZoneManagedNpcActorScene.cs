@@ -182,6 +182,17 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     }
     /// <summary>Borrowed proxy owner. Its frame publication owns eye position; entity queries retain their origin.</summary>
     public ZoneManagedNpcAiPose? ProxyPoses { get; set; }
+    public ZoneManagedNpcMovementEligibility? MovementEligibility { get; private set; }
+
+    internal void AttachMovementEligibility(ZoneManagedNpcActorMotion motion)
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        ArgumentNullException.ThrowIfNull(motion);
+        if (MovementEligibility is not null || _actors.Count != 0)
+            throw new InvalidOperationException("NPC movement eligibility attaches once before actor admission.");
+        MovementEligibility = new(this, motion);
+    }
+
     internal void RefreshPosition(ZoneManagedNpcActor actor)
     {
         Require(actor);
@@ -298,6 +309,10 @@ public sealed partial class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcB
         if (!AiObject.Enabled) return;
         _scene.RefreshPosition(this);
         Entry.Phase.Update();
+        //31172DEC runs the goals/output before CAIProxy.v64 (30518020).
+        //Its first owned handler phase is v240 ->30518D30. Only this scheduled
+        //generation drains; a signal operation itself only submits to the queue.
+        if (_scene.IsCurrent(this) && _scene.Actors.HasSignalHandler(Npc)) Npc.AiSignals.Update();
     }
     public void LoadScript(string filename) { _scene.Require(this); _scene.LoadScript(filename); }
     public void ActorEvent(int kind, string name) { _scene.Require(this); _scene.Record(this, "actor", kind, name); }

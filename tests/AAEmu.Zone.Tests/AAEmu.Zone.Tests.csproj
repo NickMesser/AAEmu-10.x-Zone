@@ -16,5 +16,8 @@
     <EmbeddedResource Include="Fixtures\npc-replication-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-movement-wire-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-posture-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-position-distance-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-can-move-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-buff-status-native-controls.json" />
   </ItemGroup>
 </Project>

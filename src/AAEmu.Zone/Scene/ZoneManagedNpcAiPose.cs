@@ -125,6 +125,16 @@ public sealed class ZoneManagedNpcAiPoseLease : IDisposable
     public void CopyActorViewRotation(Quaternion rotation)
     { Require(); ZoneManagedNpcAiPose.ValidateRotation(rotation); _actorViewRotation=rotation; }
 
+    //39280090 clears the cached actor request before changing psychokinesis state. The
+    //currently admitted model has no steering/cache producer beyond these copied fields.
+    //Inspect current fields, since Last may precede a newer copied controller output.
+    internal void RequireEmptyModelMovementResetProfile()
+    {
+        Require();
+        if (_actorMovementOutput!=Vector3.Zero || _controllerLookTarget!=Vector3.Zero)
+            throw new NotSupportedException("NPC model movement reset requires the actual nonempty actor/controller request-cache consumer.");
+    }
+
     public ZoneManagedNpcAiPoseSnapshot Refresh()
     {
         Require();

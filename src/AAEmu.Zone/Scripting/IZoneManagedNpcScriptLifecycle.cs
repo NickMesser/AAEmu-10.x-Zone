@@ -10,6 +10,12 @@ public interface IZoneManagedNpcScriptLifecycle
     IReadOnlyList<ZoneManagedNpcScriptFault> Tick(TimeSpan elapsed);
 }
 
+/// <summary>World callbacks queue unsupported model effects for exact retirement before subsequent scene work.</summary>
+public interface IZoneManagedNpcPendingFaults
+{
+    IReadOnlyList<ZoneManagedNpcScriptFault> DrainPendingFaults();
+}
+
 /// <summary>An actual owner of authored NPC child data installed after OnInit and before character construction.</summary>
 public interface IZoneManagedNpcAuthoredChildren
 {

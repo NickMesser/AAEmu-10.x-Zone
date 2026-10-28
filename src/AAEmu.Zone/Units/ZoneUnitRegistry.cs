@@ -170,7 +170,7 @@ public sealed partial class ZoneUnitRegistry
             throw new InvalidDataException("Zone unit registry reached its configured capacity.");
         var progression = ZoneProgressionState.FromSnapshot(snapshot, _content);
         var stats = _stats?.Calculate(snapshot, progression: progression);
-        var unit = new ZoneUnit(snapshot, stats, progression, _content?.Skills);
+        var unit = new ZoneUnit(snapshot, stats, progression, _content?.Skills, _buffContent);
         unit.SetBuffTimingEnabled(_buffContent is not null &&
             ZoneBuffTiming.RequiresUpdate(snapshot.Identity.Kind, snapshot.Buffs, _buffContent));
         // 39450870 applies initial effects in good/bad/hidden order after model creation.
@@ -500,13 +500,21 @@ public sealed partial class ZoneUnitRegistry
         var content = RequireBuffContent();
         // 39450740 reports an invalid template and returns without creating an instance.
         if (!content.Templates.TryGetValue(message.TemplateId, out var template)) return false;
-        var next = ZoneBuffLifecycle.Create(unit.Buffs, message, template);
+        var previous = unit.Buffs;
+        var next = ZoneBuffLifecycle.Create(previous, message, template, out var changed, out var refreshed);
         if (next is null) return false;
         var progression = unit.Progression with
         { Passives = unit.Progression.Passives.Grant(template, _content!, unit.Snapshot, unit.Progression.Level) };
         if (!CommitBuffs(unit, next, progression)) return false;
         // 39450740 invokes 3944FEB0 after successful creation or refresh, including at category capacity.
+        try { unit.ApplyBuffEffect(new(ZoneUnitBuffEffectKind.Apply, changed!, template, refreshed)); }
+        catch { if (IsCurrent(unit)) unit.MovementStatus.RefuseInterruptedMutation(); throw; }
+        //A scene callback can retire/replace an allocation. Do not publish the old continuation
+        //into that replacement, or continue after a reentrant collection mutation.
+        if (!IsCurrent(unit)) return true;
+        if (!ReferenceEquals(unit.Buffs, next)) { unit.MovementStatus.RefuseInterruptedMutation(); return true; }
         if (template.Scale != 1f) unit.Scale.SetTarget(template.Scale, template.ScaleDuration);
+        if (refreshed) unit.MovementStatus.Publish(); else unit.MovementStatus.Add(template);
         return true;
     }
 
@@ -515,7 +523,9 @@ public sealed partial class ZoneUnitRegistry
         var message = BuffUpdated.Read(body);
         if (!_units.TryGetValue(message.TargetId, out var unit)) return false;
         var next = ZoneBuffLifecycle.Update(unit.Buffs, message, RequireBuffContent());
-        return CommitBuffs(unit, next);
+        if (!CommitBuffs(unit, next)) return false;
+        unit.MovementStatus.Publish();
+        return true;
     }
 
     public bool RemoveBuff(ReadOnlySpan<byte> body)
@@ -525,12 +535,23 @@ public sealed partial class ZoneUnitRegistry
         var content = RequireBuffContent();
         var previous = unit.Buffs.Good.Concat(unit.Buffs.Bad).Concat(unit.Buffs.Hidden).FirstOrDefault(buff => buff.Index == message.Index);
         if (previous is null) return false;
+        if (!content.Templates.TryGetValue(previous.TemplateId, out var removedTemplate)) return false;
         var progression = unit.Progression with
-        { Passives = unit.Progression.Passives.RemoveGrant(content.Template(previous.TemplateId), content) };
-        if (!CommitBuffs(unit, ZoneBuffLifecycle.Remove(unit.Buffs, message.Index), progression)) return false;
-        var removedTemplate = content.Template(previous.TemplateId);
+        { Passives = unit.Progression.Passives.RemoveGrant(removedTemplate, content) };
+        var before = unit.Buffs;
+        var next = ZoneBuffLifecycle.Remove(before, message.Index);
+        if (next is null) return false;
+        var stats = _stats!.Calculate(unit.Snapshot, next, progression, unit.Equipment, unit.AttributeOverrides);
+        //39450420 removes model effects while the actual instance and old statuses still exist.
+        try { unit.ApplyBuffEffect(new(ZoneUnitBuffEffectKind.Remove, previous, removedTemplate)); }
+        catch { if (IsCurrent(unit)) unit.MovementStatus.RefuseInterruptedMutation(); throw; }
+        if (!IsCurrent(unit)) return true;
+        if (!ReferenceEquals(unit.Buffs, before)) { unit.MovementStatus.RefuseInterruptedMutation(); return true; }
         // 39450420 restores one when any scaling instance is removed, even if another scaling buff remains.
         if (removedTemplate.Scale != 1f) unit.Scale.SetTarget(1f, removedTemplate.ScaleDuration);
+        unit.CommitBuffs(next, progression, stats);
+        unit.SetBuffTimingEnabled(ZoneBuffTiming.RequiresUpdate(unit.Snapshot.Identity.Kind, next, content));
+        unit.MovementStatus.Remove(removedTemplate);
         return true;
     }
 

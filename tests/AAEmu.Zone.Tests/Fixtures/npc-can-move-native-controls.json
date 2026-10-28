@@ -1,0 +1,1398 @@
+{
+  "scope": "Original 39212E70 complete instructions under Unicorn. Unit lookup, model lookup, model.HasFlags, psychokinesis getter and log are declared callbacks; status bytes and callback order are observed. Native missing-Unit true is not permission to reuse retired managed generations. No full buff/gameplay execution claim.",
+  "binary": "D:\\aaemu-runtime\\engine-bin64\\x2game-dev_dedicate.dll",
+  "binarySha256": "50EDCD49D0537AA0F94DB55ECF22008D7FB9ED937EA02121919199B5BF8BB7ED",
+  "address": "39212E70",
+  "engineModulesLoaded": {
+    "x2game-dev_dedicate.dll": false,
+    "cryaisystem_dedicate.dll": false,
+    "cryphysics_dedicate.dll": false,
+    "lua51.dll": false
+  },
+  "controls": [
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 0,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        },
+        {
+          "call": "has-flags",
+          "mask": 1
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 0,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        },
+        {
+          "call": "has-flags",
+          "mask": 1
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": true,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        },
+        {
+          "call": "has-flags",
+          "mask": 1
+        },
+        {
+          "call": "psychokinesis"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        },
+        {
+          "call": "has-flags",
+          "mask": 1
+        },
+        {
+          "call": "psychokinesis"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 2,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        },
+        {
+          "call": "has-flags",
+          "mask": 1
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 2,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        },
+        {
+          "call": "has-flags",
+          "mask": 1
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 3,
+      "psychokinesis": false,
+      "result": true,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        },
+        {
+          "call": "has-flags",
+          "mask": 1
+        },
+        {
+          "call": "psychokinesis"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 3,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        },
+        {
+          "call": "has-flags",
+          "mask": 1
+        },
+        {
+          "call": "psychokinesis"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 0,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 0,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 1,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 2,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 2,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 3,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 3,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 0,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 0,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 2,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 2,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 3,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 3,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 0,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 0,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 1,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 2,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 2,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 3,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 0,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 3,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 0,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 0,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 2,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 2,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 3,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 3,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 0,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 0,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 1,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 2,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 2,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 3,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 0,
+      "root": 1,
+      "modelFlags": 3,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 0,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 0,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 2,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 2,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 3,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 0,
+      "modelFlags": 3,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 0,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 0,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 1,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 2,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 2,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 3,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": true,
+      "worldUnitId": 387,
+      "stun": 1,
+      "sleep": 1,
+      "root": 1,
+      "modelFlags": 3,
+      "psychokinesis": true,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 387
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    },
+    {
+      "unitPresent": false,
+      "modelPresent": false,
+      "worldUnitId": 4026532131,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": true,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 4026532131
+        },
+        {
+          "call": "missing-unit-log"
+        }
+      ]
+    },
+    {
+      "unitPresent": false,
+      "modelPresent": true,
+      "worldUnitId": 4026532131,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": true,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 4026532131
+        },
+        {
+          "call": "missing-unit-log"
+        }
+      ]
+    },
+    {
+      "unitPresent": true,
+      "modelPresent": false,
+      "worldUnitId": 4026532131,
+      "stun": 0,
+      "sleep": 0,
+      "root": 0,
+      "modelFlags": 1,
+      "psychokinesis": false,
+      "result": false,
+      "calls": [
+        {
+          "call": "lookup-unit",
+          "id": 4026532131
+        },
+        {
+          "call": "get-model"
+        }
+      ]
+    }
+  ]
+}

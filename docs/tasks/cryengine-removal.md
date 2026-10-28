@@ -23,7 +23,7 @@ queries. They do not remove CryEngine. Existing configurations retain their orig
 | `cryphysics_dedicate.dll` | True upright capsule/cylinder queries, authored dimensions/dynamics, queued stances, requested/actual velocity ownership, mapped slope/air/landing response, no-platform network corrections, terrain/static recovery, shared-mesh BVHs, affine instances and material IDs | Complete stair/suspension and retained support behavior, native recovery fallback/contact state, world speed caps, friction, rigid bodies, swimming, vehicles, ragdolls and exact tangent conformance |
 | `cryentitysystem_dedicate.dll` | Player/NPC generations, registry/spatial membership, model-class generation, original entity-script initialization, owned entity timers/updates, initial character slots and collider event43 receiver | Bound/dynamic attachments, remaining event receivers, general components, areas and complete entity state |
 | `cryaction_dedicate.dll` | Player movement/frame pipeline, descriptor-written NPC construction, dry static-support CActor statistics, dedicated posture, bounded position correction, native NPC replication, real managed goal/control phases and signal bindings | Complete animated-character/gameplay state, wet/dynamic motion, game-object actions and FlowGraphs |
-| `cryaisystem_dedicate.dll` | Provider/actor/proxy ownership, actual group membership, reference/look dummies, signals, scheduled NPC AI timers, bounded skill selection/request/ACK execution, tiled authored graph import, bounded A*, physical query adapter and wish-only path follower | Full Puppet parameters, CLeader/formation/perception services, physical NPC route admission, steering, leash and complete combat decisions |
+| `cryaisystem_dedicate.dll` | Provider/actor/proxy ownership, actual group membership, reference/look dummies, Unit/model movement predicates, scheduled signals and NPC AI timers, bounded skill selection/request/ACK execution, tiled authored graph import, bounded A*, physical query adapter and wish-only path follower | Full Puppet parameters, CLeader/formation/perception services, physical NPC route admission, steering, leash and complete combat decisions |
 | `cryscriptsystem.dll` | Managed source VM, LNUM compatibility transforms, original 73-file NPC bootstrap and explicit game bindings; no native Lua DLL | Full Lua 5.1/bytecode/library compatibility and remaining actor/game APIs |
 | `cryanimation.dll` | Authored model/stance dimensions, CDF/compiled-bone inventory, unbound bone visibility and bounded posture/action cache | Bound objects, skeleton collision, full animation graphs/events and motion driven by animation |
 | `cryrendernull.dll` | Managed host is headless and never constructs a renderer | No renderer is required; retain checks that no rendering service enters the server path |
@@ -439,6 +439,14 @@ after argument decoding and is implemented accordingly.
 - [x] Own independent cast/current-skill/channel fields from actual admission and World handlers,
   ordered skill callbacks, authored NPC child lists, the common skill-pattern picker/request/ACK
   path and original ordinary-actor aim-sphere range/height checks.
+- [x] Own IF_CAN_MOVE47 using actual Unit stun/sleep/root counters and copied flags, the shared
+  model flag1 and ordered CActor psychokinesis latch. Refresh, explicit death/resurrection,
+  overlapping removal and deferred admission preserve their separate source phases.
+  The model reset profile requires empty actual request/controller inputs; other profiles refuse.
+- [x] Own position predicates45/46 using the actual entity origin, scalar full3D distance and
+  ordered comparisons, with NOT applied once by the existing executor.
+- [x] Drain the same scheduled actor's existing signal proxy after its goal/output phase.
+  This connects original hold-position timeout signals without a global per-frame queue drain.
 - [ ] Complete posture, buff, combat and position-check dependencies used by every behavior,
   animation driver/actions, compound aim volumes, obstacle rays, controllers and locomotion.
   ClearCombat restores saved flight attributes before its other effects;
@@ -454,9 +462,10 @@ Next admission sequence from the original-resource control:
 2. Expand actual skill execution beyond the bounded self/in-range ordinary-actor profiles:
    persistent stick/approach, base attacks, special targeting, compound volumes, obstacles,
    equipment/modifier resolution, controllers and complete effect/plot handling.
-3. Implement IF_CAN_MOVE47 from actual Unit stun/sleep/root counters, current model flag1 and
-   psychokinesis latch. The original8173 hold-position pipe reaches this remaining boundary after
-   its verified correction. AI activation, body velocity or framehold are not substitutes.
+3. Extend the original8173 return branch beyond its3m idle threshold: AutoDisable/SetAutoDisable,
+   return-state construction, locate/reference-point/approach and their actual locomotion owners.
+   Its near-anchor IF_CAN_MOVE47/distance/timeout/signal loop now reaches the real idle skill
+   request. World ACK/effect/cooldown integration still needs sustained accepted-session controls.
 4. Extend the admitted dry static-support CActor metadata/NPC replication profile to wet/dynamic
    motion and optional fields. Continue physical routes, perception, hostility, leash and combat.
 
@@ -535,7 +544,7 @@ Detailed contracts and evidence scope are in [position/replication](../managed-n
 Entity scheduling and the corrected fall gate are documented in
 [entity activity](../managed-npc-entity-activity.md) and [fall entry](../managed-npc-fall-entry.md).
 
-Latest batch validation: **763/763 tests pass**, no skips; the full analyzer build has0 errors
+Previous published position batch: **763/763 tests pass**, no skips; the full analyzer build has0 errors
 and64 existing warnings. The final assembly SHA256 is
 `4484081A1F3716F5FBDB7F8D19C4B0A8EBC6A6C34C11B6803B8D56EDC21B7B37`.
 The fresh stationary player entry completes in119.657seconds with80 sampled modules and zero
@@ -549,7 +558,7 @@ ordered retirement, and the validated assembly remains identical after the repla
 Separate original-resource controls verify all5 sampled constructors/GO_TO_IDLE paths, first
 two physical/script frames and5 real position corrections with matching decoded NPC wire poses.
 Five protected source-script comparison errors retain their entities as the original does.
-The later8173 IF_CAN_MOVE47 boundary still refuses explicitly. All17 recorded ownership categories
+That earlier control stopped at8173 IF_CAN_MOVE47. All17 recorded ownership categories
 return to zero, with zero engine modules. The standalone7987 control also verifies its ordinary
 first landing before any diagnostic relocation. The independent coroutine recheck passes14
 controls with zero remaining scopes/continuations; no review finding remains open.
@@ -562,6 +571,41 @@ Runtime evidence: `npc-position-final2-{build,tests}.log`,
 `research/npc-fall-audit/fullscene-control.json` and
 `research/npc-error-policy-review/corrected-summary.json`.
 Full feature parity remains false; the unchecked tasks above and CE-09 onward still apply.
+
+The follow-up original-resource control now closes that IF47 boundary. All5 constructors,
+GO_TO_IDLE callbacks, first two physical/script frames and5 corrections succeed without a fatal
+refusal. NPC8173 runs150 additional33ms frames through `hold_position`, `idle_hold_position`,
+the real StartSkill40917 request and back to its hold loop. No World ACK is injected. The
+unchanged source health comparison produces18 protected invocations reported as5 bounded
+diagnostics; these retain their actors. All17 owner categories retire to zero and no engine
+module loads. This is a recorded-owner diagnostic with the actual partial manager schedule;
+the simulation population remains empty, so full spawner/perception/locomotion parity is open.
+Evidence: `research/npc-can-move-original-summary.json` under the runtime directory. That final
+control executes the exact application DLL used by the player-entry replay below.
+Contracts are in [movement eligibility](../managed-npc-movement-eligibility.md),
+[Unit statuses](../managed-unit-movement-status.md), [model effects](../managed-npc-model-effects.md)
+and [position predicates/signal proxy](../managed-npc-position-branches.md).
+
+Final IF47 batch validation: **811/811 tests pass**, no skips, analyzer build0 errors and no new
+warning diagnostics. The final incremental analyzer pass reports30 existing warnings. Independent
+original-instruction controls cover67 CanMove,52 position-predicate and105 status/cache cases
+(224 total); model-effect reset admission additionally has source audit and integration controls.
+An independent review found no defect in the admitted effect-journal/lifetime path.
+
+The final stationary entry completes in117.000seconds with80 sampled modules, zero forbidden
+engine/native-Lua modules and the same grounded player387 pose. Its17 movement batches contain26
+complete rows (2 player/24 NPC), one ZoneLoaded, no debug location row and no actor refusal. Both
+player payloads match the accepted capture after normalizing only Time; sample counts and elapsed
+time do not establish cadence or throughput equivalence. EOF retirement is ordered, listener/zone
+exit0/3, and no partial frame remains. Both the original-resource control and entry use assembly
+SHA256 `4B04CB0C1AC41E81545F2BD7DB197BDAA80B5AAEFEBDB5889113F63D92573B9A`, unchanged afterward.
+
+Final local evidence uses `npc-can-move-final3-{build,tests}.log`,
+`npc-can-move-ready-entry-{zone.log,replay.log,modules.json,verification.json}`,
+`captures/npc-can-move-ready-entry-output.bin`,
+`research/npc-can-move-ready-entry-wire-verification.json`,
+`research/npc-can-move-original-summary.json` and `research/npc-can-move-batch-evidence.json`.
+Full feature parity remains false; the unchecked tasks and the next admission sequence still apply.
 
 Acceptance: an authored idle/talk NPC executes its initialization and a named signal; a hostile
 NPC runs its actual authored state transitions; missing behavior remains a named admission

@@ -1,0 +1,1214 @@
+{
+  "scope": "Original3115AAA4 branches45/46,3103CA08 entity-preferred position and raw comparisons; no engine DLL loading.",
+  "imageSha256": "a740d58c6a3c851d84967e9513125c48b9326cbb70462ad1f57e6e60aadfe921",
+  "controls": [
+    {
+      "name": "entity_preferred_exact13",
+      "branch": 45,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761920,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "entity_preferred_exact13",
+      "branch": 46,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761920,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "entity_preferred_exact13",
+      "branch": 301,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761920,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "entity_preferred_exact13",
+      "branch": 302,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761920,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "threshold_nextbelow13",
+      "branch": 45,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761919,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "threshold_nextbelow13",
+      "branch": 46,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761919,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "threshold_nextbelow13",
+      "branch": 301,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761919,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "threshold_nextbelow13",
+      "branch": 302,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761919,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "threshold_nextabove13",
+      "branch": 45,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761921,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "threshold_nextabove13",
+      "branch": 46,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761921,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "threshold_nextabove13",
+      "branch": 301,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761921,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "threshold_nextabove13",
+      "branch": 302,
+      "entityBits": [
+        1174011904,
+        1171963904,
+        1092616192
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1174018048,
+        1171972096,
+        1102053376
+      ],
+      "thresholdBits": 1095761921,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "vertical_full3d",
+      "branch": 45,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1107296256
+      ],
+      "thresholdBits": 1069547520,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "vertical_full3d",
+      "branch": 46,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1107296256
+      ],
+      "thresholdBits": 1069547520,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "vertical_full3d",
+      "branch": 301,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1107296256
+      ],
+      "thresholdBits": 1069547520,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "vertical_full3d",
+      "branch": 302,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1107296256
+      ],
+      "thresholdBits": 1069547520,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "view_offset_is_not_entity",
+      "branch": 45,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1107138970
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "thresholdBits": 1050253722,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "view_offset_is_not_entity",
+      "branch": 46,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1107138970
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "thresholdBits": 1050253722,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "view_offset_is_not_entity",
+      "branch": 301,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1107138970
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "thresholdBits": 1050253722,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "view_offset_is_not_entity",
+      "branch": 302,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1107138970
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "thresholdBits": 1050253722,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "entity_absent_uses_ai",
+      "branch": 45,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1107138970
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "thresholdBits": 1050253722,
+      "entityPresent": false,
+      "result": false,
+      "entityReads": 0
+    },
+    {
+      "name": "entity_absent_uses_ai",
+      "branch": 46,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1107138970
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "thresholdBits": 1050253722,
+      "entityPresent": false,
+      "result": true,
+      "entityReads": 0
+    },
+    {
+      "name": "entity_absent_uses_ai",
+      "branch": 301,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1107138970
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "thresholdBits": 1050253722,
+      "entityPresent": false,
+      "result": false,
+      "entityReads": 0
+    },
+    {
+      "name": "entity_absent_uses_ai",
+      "branch": 302,
+      "entityBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "aiBits": [
+        1092616192,
+        1101004800,
+        1107138970
+      ],
+      "goalBits": [
+        1092616192,
+        1101004800,
+        1106247680
+      ],
+      "thresholdBits": 1050253722,
+      "entityPresent": false,
+      "result": true,
+      "entityReads": 0
+    },
+    {
+      "name": "negative_threshold",
+      "branch": 45,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 3212836864,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "negative_threshold",
+      "branch": 46,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 3212836864,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "negative_threshold",
+      "branch": 301,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 3212836864,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "negative_threshold",
+      "branch": 302,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 3212836864,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "negative_zero",
+      "branch": 45,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 2147483648,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "negative_zero",
+      "branch": 46,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 2147483648,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "negative_zero",
+      "branch": 301,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 2147483648,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "negative_zero",
+      "branch": 302,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 2147483648,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "nan_threshold",
+      "branch": 45,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 2143289344,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "nan_threshold",
+      "branch": 46,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 2143289344,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "nan_threshold",
+      "branch": 301,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 2143289344,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "nan_threshold",
+      "branch": 302,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        0,
+        0,
+        0
+      ],
+      "thresholdBits": 2143289344,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "nan_goal",
+      "branch": 45,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2143289344,
+        0,
+        0
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "nan_goal",
+      "branch": 46,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2143289344,
+        0,
+        0
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "nan_goal",
+      "branch": 301,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2143289344,
+        0,
+        0
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "nan_goal",
+      "branch": 302,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2143289344,
+        0,
+        0
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "infinite_distance",
+      "branch": 45,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2139095040,
+        0,
+        0
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "infinite_distance",
+      "branch": 46,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2139095040,
+        0,
+        0
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "infinite_distance",
+      "branch": 301,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2139095040,
+        0,
+        0
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "infinite_distance",
+      "branch": 302,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2139095040,
+        0,
+        0
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "infinite_threshold",
+      "branch": 45,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2139095040,
+        0,
+        0
+      ],
+      "thresholdBits": 2139095040,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "infinite_threshold",
+      "branch": 46,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2139095040,
+        0,
+        0
+      ],
+      "thresholdBits": 2139095040,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "infinite_threshold",
+      "branch": 301,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2139095040,
+        0,
+        0
+      ],
+      "thresholdBits": 2139095040,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "infinite_threshold",
+      "branch": 302,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        2139095040,
+        0,
+        0
+      ],
+      "thresholdBits": 2139095040,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "overflow_sum",
+      "branch": 45,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1621981420,
+        1621981420,
+        1621981420
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "overflow_sum",
+      "branch": 46,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1621981420,
+        1621981420,
+        1621981420
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    },
+    {
+      "name": "overflow_sum",
+      "branch": 301,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1621981420,
+        1621981420,
+        1621981420
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": false,
+      "entityReads": 1
+    },
+    {
+      "name": "overflow_sum",
+      "branch": 302,
+      "entityBits": [
+        0,
+        0,
+        0
+      ],
+      "aiBits": [
+        0,
+        0,
+        0
+      ],
+      "goalBits": [
+        1621981420,
+        1621981420,
+        1621981420
+      ],
+      "thresholdBits": 1065353216,
+      "entityPresent": true,
+      "result": true,
+      "entityReads": 1
+    }
+  ],
+  "abiCallbacks": [
+    "EntitySystem.v112 returns controlled present/absent actual Entity",
+    "Entity.v312 copies controlled world origin",
+    "CRT sqrtf executes SQRTSS XMM0,XMM0"
+  ],
+  "executed": [
+    "3115AAA4 branch consumer including mask~0x100",
+    "3103CA08 position helper",
+    "3103CC78 entity resolution",
+    "31009900 EntityId getter",
+    "310098A8 AI position fallback"
+  ]
+}

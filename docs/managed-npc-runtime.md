@@ -324,7 +324,27 @@ The differing heartbeat count is not a cadence/throughput comparison. Ordered EO
 completes and the replayed/final assembly hashes agree. Final logs use
 `npc-position-final2-{build,tests}.log` and `npc-position-ready-entry-*` under the runtime directory.
 Original five-resource corrections and protected-error/retirement controls are recorded separately;
-NPC8173's later IF_CAN_MOVE47 remains a concrete unsupported dependency.
+That batch still stopped at NPC8173's later IF_CAN_MOVE47 dependency.
+
+The follow-up [movement eligibility](managed-npc-movement-eligibility.md) and
+[Unit status](managed-unit-movement-status.md) owners now close that predicate with actual
+buff/model lifecycle inputs, together with original distance predicates45/46 and the scheduled
+signal-proxy drain. A fresh five-resource control completes all five constructors, idle callbacks,
+first two physical/script frames and actual corrections with no fatal refusal. NPC8173 continues
+150 additional33ms frames through its original hold/idle-hold pipes and emits StartSkill40917
+before returning to the hold loop. No World skill ACK is injected. The18 original protected
+comparison invocations produce5 bounded diagnostic reports and retain their actors. All17
+ownership categories retire to zero; no engine module loads. This direct recorded-owner control
+replays the actual partial manager schedule and does not populate the full simulation/spawners.
+
+Final validation passes811 tests with no failures/skips and an analyzer build with0 errors and
+no new warning diagnostics. The117.000second stationary entry samples80 modules with no forbidden
+engine/native-Lua DLLs. Player387 remains grounded at the accepted pose; both player movement
+payloads match after normalizing only Time. The stream has17 batches/26 complete movement rows
+(2 player/24 NPC), one ZoneLoaded, no debug location row, no actor refusal and ordered retirement.
+Changing sample counts do not prove cadence or throughput equivalence. The exact final application
+DLL also passes the five-resource control. Evidence uses the separate `npc-can-move-*` prefixes
+and `research/npc-can-move-batch-evidence.json` under `D:/aaemu-runtime`.
 
 Next: finish Puppet look/movement and animated/dynamic movement producers;
 connect AI navigation wishes to the single scene movement authority with actual CActor outgoing

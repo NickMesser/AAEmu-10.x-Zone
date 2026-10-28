@@ -19,7 +19,8 @@ public readonly record struct ZoneManagedNpcColliderDynamics(float Inertia, floa
 /// unowned posture, casting and position-check services retain named refusals.
 /// </summary>
 public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptServices, IZoneManagedNpcScriptLifecycle,
-    IZoneManagedNpcAuthoredChildren, IZoneManagedNpcInitializationLifecycle, IZoneManagedNpcFrameLifecycle, IDisposable
+    IZoneManagedNpcAuthoredChildren, IZoneManagedNpcInitializationLifecycle, IZoneManagedNpcFrameLifecycle,
+    IZoneManagedNpcPendingFaults, IDisposable
 {
     private readonly ZoneModelContent _models;
     private readonly Func<ZoneManagedNpcPhysics> _physics;
@@ -152,6 +153,8 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
 
     public IReadOnlyList<ZoneManagedNpcScriptFault> Tick(TimeSpan elapsed)
     { Check(); return Effects.Tick(elapsed).Concat(_skills?.DrainFaults() ?? []).ToArray(); }
+    public IReadOnlyList<ZoneManagedNpcScriptFault> DrainPendingFaults()
+    { Check(); return _motion?.Invoke().DrainFaults() ?? []; }
     public void InstallAuthoredChildren(ZoneManagedNpcScriptBinding binding)
     {
         Require(binding.Actor);

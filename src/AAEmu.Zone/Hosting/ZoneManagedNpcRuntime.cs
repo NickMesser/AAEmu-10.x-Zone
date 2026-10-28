@@ -179,7 +179,9 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
         //Signals also drain outside OwnedActor.Update, so observe every live owner before
         //either effects or physical preparation can reuse that partially initialized state.
         foreach (var owner in _live.Values) owner.ObserveScriptError();
-        var faults = _pendingFaults.ToArray(); _pendingFaults.Clear();
+        var faults = _pendingFaults.Concat(ScriptServices is IZoneManagedNpcPendingFaults pending
+            ? pending.DrainPendingFaults() : []).ToArray();
+        _pendingFaults.Clear();
         return ConsumeFaults(faults, retireProviderActor);
     }
 

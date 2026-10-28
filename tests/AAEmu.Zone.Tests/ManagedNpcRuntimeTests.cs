@@ -487,7 +487,7 @@ public sealed class ManagedNpcRuntimeTests
         public ZoneManagedNpcSceneScriptServices Components => (ZoneManagedNpcSceneScriptServices)Runtime.ScriptServices;
         public ZoneModelDefinition Model { get; } = new() { Id = 42, Name = "runtime_fixture", Subtype = "ActorModel", SubtypeId = 9 };
         public Fixture(bool withEffects = false, bool admitProfile = true, bool withComponents = false, bool withConstruction = false,
-            bool withMovement = false, ZoneEngineCVars? movementCVars = null)
+            bool withMovement = false, ZoneEngineCVars? movementCVars = null, ZoneBuffContent? movementBuffContent = null)
         {
             withConstruction |= withMovement;
             withComponents |= withConstruction;
@@ -509,7 +509,7 @@ public sealed class ManagedNpcRuntimeTests
             Admission = new(handle => runtime!.CreateActor(handle),content:withMovement?content:null,
                 stats:withMovement?new(new uint[]{14,15,22,23,24,25,26,27}.Select(kind=>
                     new UnitFormulaDefinition(kind,AAEmu.Zone.Protocol.Units.ZoneUnitKind.Npc,kind,new ContentFormula("100"))),
-                    [],[new(11,0,0,0,0)],[],[],[],[],[],[]):null,
+                    [],[new(11,0,0,0,0)],[],[],[],[],[],[], movementBuffContent):null,
                 modelPosition:withMovement?Position:null,sceneBounds:withMovement?new(0,0,3,3):null,
                 engineCVars:movementCVars);
             Spatial = Admission.Registry.Spatial;

@@ -6,7 +6,8 @@ namespace AAEmu.Zone.Content;
 
 public sealed record BuffStatTemplate(uint Id, byte Kind, byte StackRule, int MaximumStack, int MaximumCharge,
     uint MaximumLifetime, bool PerUnitCreation, bool OneTime, bool OffPassive = false, uint PassiveExceptionTagId = 0,
-    bool RemoveOnLand = false, bool Gliding = false, float Scale = 1f, float ScaleDuration = 1f);
+    bool RemoveOnLand = false, bool Gliding = false, float Scale = 1f, float ScaleDuration = 1f,
+    bool Stun = false, bool Sleep = false, bool Root = false, bool Psychokinesis = false, float PsychokinesisSpeed = 0f);
 public sealed record PassiveBuffTemplate(uint Id, uint BuffId, bool Active, uint AbilityId = 0, int RequiredLevel = 1);
 public sealed record ConditionalBuffModifier(uint Id, uint OwnerBuffId, uint RequiredBuffId, uint RequiredTagId);
 public sealed record TaggedBuffDefinition(uint Id, uint BuffId, uint TagId);
@@ -87,9 +88,11 @@ public sealed class ZoneBuffContent
     internal static ZoneBuffContent Load(SqliteConnection connection)
     {
         var templates = new List<BuffStatTemplate>();
-        Read("SELECT id, kind_id, stack_rule_id, max_stack, max_charge, max_life_time, per_unit_creation, one_time, off_passive, COALESCE(off_passive_exection_tag_id, 0), remove_on_land, gliding, scale, scaleDuration FROM buffs", r =>
+        //39AD3980 reads these exact columns:204 stun->1134&2,195 sleep->1133&8,
+        //184 root->1132&0x10,132 psychokinesis->1127&2,133 speed->float328.
+        Read("SELECT id, kind_id, stack_rule_id, max_stack, max_charge, max_life_time, per_unit_creation, one_time, off_passive, COALESCE(off_passive_exection_tag_id, 0), remove_on_land, gliding, scale, scaleDuration, stun, sleep, root, psychokinesis, psychokinesis_speed FROM buffs", r =>
             templates.Add(new(U(r, 0), checked((byte)U(r, 1)), checked((byte)U(r, 2)), r.GetInt32(3), r.GetInt32(4), U(r, 5), B(r, 6), B(r, 7), B(r, 8), U(r, 9), B(r, 10), B(r, 11),
-                NativeContentReader.Single(r, 12), NativeContentReader.Single(r, 13))));
+                NativeContentReader.Single(r, 12), NativeContentReader.Single(r, 13), B(r, 14), B(r, 15), B(r, 16), B(r, 17), NativeContentReader.Single(r, 18))));
         var passives = new List<PassiveBuffTemplate>();
         Read("SELECT id, buff_id, active, ability_id, level FROM passive_buffs", r => passives.Add(new(U(r, 0), U(r, 1), B(r, 2), U(r, 3), r.GetInt32(4))));
         var conditions = new List<ConditionalBuffModifier>();

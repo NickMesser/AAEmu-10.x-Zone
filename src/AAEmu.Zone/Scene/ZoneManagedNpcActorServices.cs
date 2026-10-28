@@ -43,8 +43,25 @@ internal sealed class ZoneManagedNpcActorServices : IZoneActorGoalPhaseServices,
             this, signals: this, controls: this, location: this, continuation: Continuation, looking: this).Create(definition);
     }
     public uint NextRandom() => _scene.NextRandom();
-    public bool EvaluateBranch(ZoneGoalParameters parameters) =>
-        throw ZoneManagedNpcActorScene.Missing($"actor/world branch predicate {parameters.Integer & ~0x100}");
+    public bool EvaluateBranch(ZoneGoalParameters parameters)
+    {
+        _scene.Require(_actor);
+        return (parameters.Integer & ~0x100) switch
+        {
+            45 => EvaluatePositionDistance(parameters, false),
+            46 => EvaluatePositionDistance(parameters, true),
+            47 => (_scene.MovementEligibility ?? throw ZoneManagedNpcActorScene.Missing("World Unit/model movement eligibility")).CanMove(_actor),
+            _ => throw ZoneManagedNpcActorScene.Missing($"actor/world branch predicate {parameters.Integer & ~0x100}")
+        };
+    }
+    private bool EvaluatePositionDistance(ZoneGoalParameters parameters, bool greater)
+    {
+        //3115AAA4 ->3103CA08 prefers actual Entity.v312 world origin. Every actor
+        //admitted here owns that entity; its AI proxy's view position is separate.
+        var position = _scene.Position(_actor);
+        _scene.Require(_actor); //The external position callback may retire the generation.
+        return ZoneManagedNpcPositionDistanceBranch.Evaluate(position, parameters.Vector, parameters.First, greater);
+    }
     public Vector3? GetAttentionTargetPosition() => _attention is null ? null : GetTargetPosition(_attention);
     public void SetArgument(object? argument) { _scene.Require(_actor); _targets.SetArgument(argument); }
     public void ClearAttentionTarget() => SetAttentionTarget(null);

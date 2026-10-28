@@ -20,7 +20,7 @@ public sealed record ZoneManagedNpcActorMotionState(ZoneManagedNpcActorMotionMod
 /// owners, never Steps or writes a body/Unit pose. The initial skeleton and complete water
 /// inventory certify the dry branch; unknown animated bounds are not replaced by collider bounds.
 /// </summary>
-public sealed class ZoneManagedNpcActorMotion : IDisposable
+public sealed partial class ZoneManagedNpcActorMotion : IDisposable
 {
     private readonly ZoneManagedNpcActorScene _actors;
     private readonly ZoneManagedNpcPhysics _physics;
@@ -75,11 +75,23 @@ public sealed class ZoneManagedNpcActorMotion : IDisposable
         var owner = new ZoneManagedNpcActorMotionLease(this, actor, body, construction);
         RequireDependencies(owner);
         _live.Add(actor.Handle, owner);
-        return owner;
+        try { BindModelEffects(owner); return owner; }
+        catch { owner.Dispose(); throw; }
     }
 
     /// <summary>39346960 sets model.flags bit1 after the original character constructor succeeds.</summary>
-    public void CompleteNpcInitialization(ZoneManagedNpcActor actor) => Require(actor).ModelFlags |= 1;
+    public void CompleteNpcInitialization(ZoneManagedNpcActor actor)
+    {
+        var owner = Require(actor);
+        if (owner.ModelInitializationCompleted)
+            throw new InvalidOperationException("This NPC model initialization has already completed.");
+        owner.ModelFlags |= 1;
+        owner.ModelInitializationCompleted = true;
+        //Deferred admission must not put a late flag1 write after real post-enter buffs.
+        //Initial restored effects precede39346960; later World mutations follow it.
+        DrainModelEffects(owner);
+        RefuseModelEffectFailure(owner);
+    }
 
     /// <summary>
     /// Copy actual status after the scene's one physical Step. Call exactly once per frame;
@@ -291,18 +303,23 @@ public sealed class ZoneManagedNpcActorMotion : IDisposable
             throw new NotSupportedException("CActor motion requires its unchanged upright unparented model and initial scale.");
     }
     private ZoneManagedNpcActorMotionLease Require(ZoneManagedNpcActor actor)
-    { Check(); ArgumentNullException.ThrowIfNull(actor); return Find(actor.Handle) is { } owner && ReferenceEquals(owner.Actor, actor)
-        ? owner : throw new ObjectDisposedException(nameof(ZoneManagedNpcActorMotionLease), "The exact CActor motion generation retired."); }
+    {
+        Check(); ArgumentNullException.ThrowIfNull(actor);
+        var owner = Find(actor.Handle) is { } current && ReferenceEquals(current.Actor, actor) ? current :
+            throw new ObjectDisposedException(nameof(ZoneManagedNpcActorMotionLease), "The exact CActor motion generation retired.");
+        RefuseModelEffectFailure(owner);
+        return owner;
+    }
     private void Check() => ObjectDisposedException.ThrowIf(IsDisposed, this);
     internal void Retire(ZoneManagedNpcActorMotionLease owner)
     { if (_live.TryGetValue(owner.Actor.Handle, out var current) && ReferenceEquals(current, owner)) _live.Remove(owner.Actor.Handle); }
     private static bool Finite(Vector3 value) => float.IsFinite(value.X) && float.IsFinite(value.Y) && float.IsFinite(value.Z);
     public void Dispose()
-    { if (IsDisposed) return; IsDisposed = true; foreach (var owner in _live.Values.ToArray()) owner.Dispose(); _thresholds.Clear(); }
+    { if (IsDisposed) return; IsDisposed = true; foreach (var owner in _live.Values.ToArray()) owner.Dispose(); _thresholds.Clear(); _modelEffectFaults.Clear(); }
 }
 
 /// <summary>One source-backed CActor/model generation. Does not own the borrowed actor, construction or physical body.</summary>
-public sealed class ZoneManagedNpcActorMotionLease : IDisposable
+public sealed partial class ZoneManagedNpcActorMotionLease : IDisposable
 {
     private readonly ZoneManagedNpcActorMotion _owner;
     internal ZoneManagedNpcBodyLease Body { get; }
@@ -320,5 +337,13 @@ public sealed class ZoneManagedNpcActorMotionLease : IDisposable
     internal ZoneManagedNpcActorMotionLease(ZoneManagedNpcActorMotion owner, ZoneManagedNpcActor actor,
         ZoneManagedNpcBodyLease body, ZoneManagedNpcActorConstructionLease construction)
     { _owner = owner; Actor = actor; Body = body; Construction = construction; }
-    public void Dispose() { if (IsDisposed) return; IsDisposed = true; _owner.Retire(this); }
+    public void Dispose()
+    {
+        if (IsDisposed) return;
+        IsDisposed = true;
+        if (BuffEffectHandler is { } handler) Actor.Npc.Unit.BuffEffect -= handler;
+        BuffEffectHandler = null;
+        PendingModelEffects.Clear();
+        _owner.Retire(this);
+    }
 }
