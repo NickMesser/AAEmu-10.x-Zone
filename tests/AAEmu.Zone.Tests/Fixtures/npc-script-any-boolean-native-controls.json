@@ -1,0 +1,413 @@
+{
+  "scope": "Original CScriptTable typed reads and CScriptSystem conversion; no module loads.",
+  "binary": "D:\\aaemu-runtime\\engine-bin64\\cryscriptsystem.dll",
+  "sha256": "9BCA4E3092810658B6E7F0F6A6C24204FAFDE9324E37E5A215758D64515A02B1",
+  "rttiTypeDescriptor": "0x35595780",
+  "rttiCompleteObjectLocator": "0x35587648",
+  "tableVtable": "0x3557AB58",
+  "getValueAny": "0x35512DC0",
+  "popAny": "0x3550D910",
+  "toAny": "0x3550D4E0",
+  "numericBooleanBranch": [
+    "0x3550D764",
+    "0x3550D774",
+    "0x3550D77C",
+    "0x3550D78B"
+  ],
+  "callbacks": "Only Lua stack/value observations and table-reference/key pushes are controlled; all requested-tag discrimination, conversion branch, float comparisons and stored output execute original instructions.",
+  "controls": [
+    {
+      "name": "nil",
+      "luaType": 0,
+      "value": "None",
+      "requestedTag": 2,
+      "accepted": false,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a5a",
+      "boolean": null,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "false",
+      "luaType": 1,
+      "value": "False",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a00",
+      "boolean": false,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_toboolean",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "true",
+      "luaType": 1,
+      "value": "True",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a01",
+      "boolean": true,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_toboolean",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "zero",
+      "luaType": 3,
+      "value": "0",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a00",
+      "boolean": false,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_tonumber",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "negativezero",
+      "luaType": 3,
+      "value": "-0.0",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a00",
+      "boolean": false,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_tonumber",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "one",
+      "luaType": 3,
+      "value": "1",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a01",
+      "boolean": true,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_tonumber",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "minusone",
+      "luaType": 3,
+      "value": "-1",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a01",
+      "boolean": true,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_tonumber",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "fraction",
+      "luaType": 3,
+      "value": "0.25",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a01",
+      "boolean": true,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_tonumber",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "nan",
+      "luaType": 3,
+      "value": "nan",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a00",
+      "boolean": false,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_tonumber",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "positiveinf",
+      "luaType": 3,
+      "value": "inf",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a01",
+      "boolean": true,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_tonumber",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "negativeinf",
+      "luaType": 3,
+      "value": "-inf",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a01",
+      "boolean": true,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_tonumber",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "largeinteger",
+      "luaType": 3,
+      "value": "9007199254740993",
+      "requestedTag": 2,
+      "accepted": true,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a01",
+      "boolean": true,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_tonumber",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "stringone",
+      "luaType": 4,
+      "value": "'1'",
+      "requestedTag": 2,
+      "accepted": false,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a5a",
+      "boolean": null,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "stringzero",
+      "luaType": 4,
+      "value": "'0'",
+      "requestedTag": 2,
+      "accepted": false,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a5a",
+      "boolean": null,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "stringfalse",
+      "luaType": 4,
+      "value": "'false'",
+      "requestedTag": 2,
+      "accepted": false,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a5a",
+      "boolean": null,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "emptystring",
+      "luaType": 4,
+      "value": "''",
+      "requestedTag": 2,
+      "accepted": false,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a5a",
+      "boolean": null,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "handle",
+      "luaType": 2,
+      "value": "1",
+      "requestedTag": 2,
+      "accepted": false,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a5a",
+      "boolean": null,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "table",
+      "luaType": 5,
+      "value": "{}",
+      "requestedTag": 2,
+      "accepted": false,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a5a",
+      "boolean": null,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_settop",
+        "lua_settop"
+      ]
+    },
+    {
+      "name": "function",
+      "luaType": 6,
+      "value": "'closure'",
+      "requestedTag": 2,
+      "accepted": false,
+      "outputTag": 2,
+      "outputBits": "0x5a5a5a5a5a5a5a5a",
+      "boolean": null,
+      "calls": [
+        "lua_gettop",
+        "CScriptTable.PushRef",
+        "lua_pushstring",
+        "lua_gettable",
+        "lua_gettop",
+        "lua_type",
+        "lua_settop",
+        "lua_settop"
+      ]
+    }
+  ],
+  "count": 19,
+  "disagreements": 0
+}

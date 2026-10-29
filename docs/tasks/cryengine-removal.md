@@ -23,7 +23,7 @@ queries. They do not remove CryEngine. Existing configurations retain their orig
 | `cryphysics_dedicate.dll` | True upright capsule/cylinder queries, authored dimensions/dynamics, queued stances, requested/actual velocity ownership, mapped slope/air/landing response, no-platform network corrections, terrain/static recovery, shared-mesh BVHs, affine instances and material IDs | Complete stair/suspension and retained support behavior, native recovery fallback/contact state, world speed caps, friction, rigid bodies, swimming, vehicles, ragdolls and exact tangent conformance |
 | `cryentitysystem_dedicate.dll` | Player/NPC generations, registry/spatial membership, model-class generation, original entity-script initialization, owned entity timers/updates, initial character slots and collider event43 receiver | Bound/dynamic attachments, remaining event receivers, general components, areas and complete entity state |
 | `cryaction_dedicate.dll` | Player movement/frame pipeline, descriptor-written NPC construction, dry static-support CActor statistics, dedicated posture, bounded position correction, native NPC replication, real managed goal/control phases and signal bindings | Complete animated-character/gameplay state, wet/dynamic motion, game-object actions and FlowGraphs |
-| `cryaisystem_dedicate.dll` | Provider/actor/proxy ownership, actual group membership, reference/look dummies, Unit/model movement predicates, scheduled signals and NPC AI timers, bounded skill selection/request/ACK execution, tiled authored graph import, bounded A*, physical query adapter and wish-only path follower | Full Puppet parameters, CLeader/formation/perception services, physical NPC route admission, steering, leash and complete combat decisions |
+| `cryaisystem_dedicate.dll` | Provider/actor/proxy ownership, groups and dummies, Unit/model predicates, scheduled signals/timers, bounded skill execution, installed movement tables, Puppet look/output, authored graph import, bounded A*, source path decisions and ordinary/predictive following, empty crowd avoidance and physical request composition | Remaining Puppet/status parameters, populated-cell route coverage, full walkability/costs, nearby avoidance, CLeader/formation/perception, leash and complete combat decisions |
 | `cryscriptsystem.dll` | Managed source VM, LNUM compatibility transforms, original 73-file NPC bootstrap and explicit game bindings; no native Lua DLL | Full Lua 5.1/bytecode/library compatibility and remaining actor/game APIs |
 | `cryanimation.dll` | Authored model/stance dimensions, CDF/compiled-bone inventory, unbound bone visibility and bounded posture/action cache | Bound objects, skeleton collision, full animation graphs/events and motion driven by animation |
 | `cryrendernull.dll` | Managed host is headless and never constructs a renderer | No renderer is required; retain checks that no rendering service enters the server path |
@@ -430,8 +430,18 @@ after argument decoding and is implemented accordingly.
 - [x] Own descriptor-written CActor/GameParams, derived class selection, actual health association,
   reference/look dummy inventory and live accepted-stance AI eye/body/move/view pose publication.
   The dummy inventory stays separate from the nearest-object type index.
-- [ ] Complete Puppet parameters, persistent stick, look/movement
-  request generation, script-state switching and full combat/flying restoration.
+- [x] Own bounded movement-table registration and native typed numeric booleans, source
+  speed selection/directional scaling, model-backed look parameters, per-actor elapsed time,
+  delayed stance and Puppet look/body output. Preserve real constructor speed1/distance-1,
+  retained look/body history and the signal phase's live scalar writes.
+- [x] Consume ordinary upright NPC proxy/controller requests through the existing stance
+  prephase and one physical step. Preserve previous/current walking-speed order, final effective
+  inertia, logical versus applied orientation, requested delta and actual physics caches.
+- [x] Own the actual `AI.GetAutoDisable`/`AI.AutoDisable` bindings and post-init parameter
+  timing, explicit multiplayer game-object policy, `NpcTeleportTo` publication and scoped
+  `CreateBuff` World request. Teleport does not invent a replication/posture reset.
+- [ ] Complete remaining Puppet/status parameters, persistent stick, general actor turning,
+  special look/formation/actor-target producers, script-state switching and full combat/flying restoration.
 - [x] Implement source-backed RemoveBuff/StopCasting World request serialization and bounded
   default-posture/action-cache semantics with explicit construction/dependency profiles.
 - [x] Own SaveUnitAttr's actual mode/original-flying record without inventing pending restoration.
@@ -457,17 +467,25 @@ Do not flip it globally: several reachable leaves still refuse.
 
 Next admission sequence from the original-resource control:
 
-1. Finish the remaining Puppet and physical look/movement producers. The
-   current descriptor construction and eye-position owners do not implement perception or turning.
+1. Expand the admitted Puppet/controller/physical movement profile to remaining derived
+   rotations, animated/wet movement and effect/status histories. Bounded look and upright yaw
+   now have actual producers; descriptor construction does not establish full perception.
 2. Expand actual skill execution beyond the bounded self/in-range ordinary-actor profiles:
    persistent stick/approach, base attacks, special targeting, compound volumes, obstacles,
    equipment/modifier resolution, controllers and complete effect/plot handling.
-3. Extend the original8173 return branch beyond its3m idle threshold: AutoDisable/SetAutoDisable,
-   return-state construction, locate/reference-point/approach and their actual locomotion owners.
-   Its near-anchor IF_CAN_MOVE47/distance/timeout/signal loop now reaches the real idle skill
-   request. World ACK/effect/cooldown integration still needs sustained accepted-session controls.
+3. Extend original8173 return admission beyond its3m idle threshold across the populated authored
+   scene. Return bindings and source approach/predictive following now connect to the single body;
+   route/water/obstacle publication still requires complete physical and cached-grid inventories.
+   Classify/physicalize vegetation, entities and roads before certifying those cells. Its near-anchor
+   loop reaches the real idle skill request; World ACK/effect/cooldown integration still needs
+   sustained accepted-session controls.
 4. Extend the admitted dry static-support CActor metadata/NPC replication profile to wet/dynamic
    motion and optional fields. Continue physical routes, perception, hostility, leash and combat.
+
+The next concrete collision work is split into38 detailed tasks in
+[managed populated-cell collision](managed-populated-cell-collision.md), including all18 default-bearing
+vegetation resources for original8173's cell009_014. It retains the native root/child character-versus-ray
+distinction and data-backed entity/particle/road certificates; render bounds do not certify clearance.
 
 Measure cold-construction cost and admission fairness under continuous World traffic. The
 current work-count/ingress policy is explicit replacement scheduling, not native throughput parity.
@@ -607,6 +625,29 @@ Final local evidence uses `npc-can-move-final3-{build,tests}.log`,
 `research/npc-can-move-original-summary.json` and `research/npc-can-move-batch-evidence.json`.
 Full feature parity remains false; the unchecked tasks and the next admission sequence still apply.
 
+The later return/movement batch passes **970/970 tests**, no skips, with a full analyzer build
+of0 errors and63 existing warnings (no new warning diagnostics). Original Approach/PathFind,
+predictive following, Puppet output, native cached grids and ordinary CActor/controller wishes
+now reach the existing single physical step. A composed authored test route completes its Lua
+signal with actual component-owned leases and no teleport/correction. Five original NPC
+constructors and corrections still pass;8173 retains150 hold/idle-hold frames and StartSkill40917.
+All22 owner categories retire and no engine module loads.
+
+The same final application also executes the unchanged original4m far-return stimulus.
+It now stops at the truthful vegetation/entity collision classification refusal in cell(0,0),
+authored009_014. This is the next physical coverage task, not an accepted original return route.
+Actual physical players also require their missing source AI/type100 owner before empty-crowd
+admission; current body distance cannot substitute for an independently cached grid position.
+
+Its fresh120.156second stationary entry samples80 modules, zero engine/native-Lua modules,
+one ZoneLoaded and4 complete movement batches/rows (2 player/2 NPC). Player387 is grounded at
+the accepted pose and both player payloads match after normalizing only Time. No actor refusal,
+debug location row or partial frame remains; ordered EOF exits listener/zone0/3. Counts are not
+cadence or throughput acceptance. Near/far original controls and entry share application SHA256
+`614B828DE99973C2F3F2ABCBA8E35D991BE0CB3F1834EA40C2B765025CE3B4EA`.
+Current evidence is `research/npc-return-batch-evidence.json` and the separate `npc-return-*`
+logs/captures under the runtime directory. Full feature parity remains false.
+
 Acceptance: an authored idle/talk NPC executes its initialization and a named signal; a hostile
 NPC runs its actual authored state transitions; missing behavior remains a named admission
 refusal; removal, failure and re-entry release every actor/listener/target generation.
@@ -628,11 +669,20 @@ following policies remain explicit replacements, not recovered X2 walkability/st
 - [x] Register authored ground NPC bodies on the existing backend. A generation-owned motor
   queues requests, and the composed frame publishes Unit/spatial/AI state after the shared Step.
 - [ ] Supply actual copied CActor replication fields and the NPC manager's original cadence/CVars.
-  Missing metadata suppresses encoding. Controls with declared copied fields cover real fall,
-  spatial crossing, wall stop, wire conversion and100frames/100sharedsteps; production route
-  admission, steering and complete Puppet/actor movement producers remain gated.
+  The dry ordinary profile now supplies real proxy/controller delta, stance, walking state,
+  turn and postphysical metadata through the existing manager. Wet/dynamic and optional fields
+  remain open. Composed controls cover a real owned Approach/predictive route, physical
+  publication and completion signal; the original populated-cell route still refuses missing
+  collision classification. Earlier declared-field controls cover fall, spatial crossing,
+  wall stop, wire conversion and100frames/100sharedsteps.
 - [ ] Supply truthful full-region terrain/brush/entity/vegetation coverage to route and visibility
   queries. Missing owners cannot be represented as clear space.
+- [ ] Compose the actual dedicated player AI type100 allocation and cached-grid lifecycle.
+  Native ServerUnit/model initialization produces it independently of the commented Lua call.
+  Until that owner exists, a registered physical actor without AI/grid classification refuses
+  empty-crowd admission and cached movement before another step. Then implement the populated
+  crowd solver for actual nearby actors; registering players alone does not supply avoidance.
+  The detailed producer/gate/lifetime work is in [managed player AI](managed-player-ai-grid.md).
 - [ ] Recover/compare X2 walkability, native route costs, steering, stairs and moving support.
 - [ ] Own perception/alertness, target acquisition, territory/leash, group routing and return policy.
 

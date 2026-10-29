@@ -40,7 +40,8 @@ internal sealed class ZoneManagedNpcActorServices : IZoneActorGoalPhaseServices,
         if (definition.Operation == ZoneGoalOperation.UseSkill)
             return (_scene.OperationFactory ?? throw ZoneManagedNpcActorScene.Missing("skill goal execution"))(_actor, definition);
         return new ZoneGoalOperationFactory(executor, _scene.FrameMicroseconds, _scene.NextRandom,
-            this, signals: this, controls: this, location: this, continuation: Continuation, looking: this).Create(definition);
+            this, signals: this, controls: this, location: this, continuation: Continuation, looking: this,
+            approach: _scene.Navigation?.Find(_actor.Handle)).Create(definition);
     }
     public uint NextRandom() => _scene.NextRandom();
     public bool EvaluateBranch(ZoneGoalParameters parameters)

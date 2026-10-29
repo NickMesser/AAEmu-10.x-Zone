@@ -33,6 +33,7 @@ public interface IZoneManagedNpcInitializationLifecycle
 public interface IZoneManagedNpcFrameLifecycle
 {
     IReadOnlyList<ZoneManagedNpcScriptFault> PrePhysics(AAEmu.Zone.Actors.ZoneMovementFrame frame);
+    IReadOnlyList<ZoneManagedNpcScriptFault> PrepareMovementRequests(AAEmu.Zone.Actors.ZoneMovementFrame frame) => [];
     IReadOnlyList<ZoneManagedNpcScriptFault> PublishPose(AAEmu.Zone.Actors.ZoneActorHandle actor);
     IReadOnlyList<ZoneManagedNpcScriptFault> PublishPhysicalPose(AAEmu.Zone.Actors.ZoneActorHandle actor,
         AAEmu.Zone.Physics.ZoneManagedNpcBodySnapshot body, AAEmu.Zone.Actors.ZoneMovementFrame frame) => PublishPose(actor);

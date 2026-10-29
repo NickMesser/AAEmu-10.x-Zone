@@ -26,6 +26,7 @@ public sealed partial class ZoneManagedTerrainGeometry(
 
     public bool CapsulesUseBoundingBoxes => false;
     public bool HasStaticMeshCollision => false;
+    internal ZoneTerrainHeightField HeightField => _terrain;
 
     /// <summary>Nearest intersection along a bounded displacement, with the authored upward normal.</summary>
     public bool RaycastTerrain(Vector3 origin, Vector3 displacement, out ZonePhysicsHit hit)

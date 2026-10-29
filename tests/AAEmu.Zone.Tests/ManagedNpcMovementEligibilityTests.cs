@@ -94,6 +94,8 @@ public sealed class ManagedNpcMovementEligibilityTests
         using var fixture = new ManagedNpcRuntimeTests.Fixture(withMovement: true, movementBuffContent: BuffContent());
         var npc = fixture.Admission.CreateFromWire(fixture.Model.Id, new Vector3(1100, 1100, 10.1f));
         var actor = fixture.Runtime.Actors.Find(fixture.Admission.Catalog.TryGet(npc)!.Value)!;
+        fixture.Runtime.Actors.GameObjectActivationProfile = ZoneManagedNpcGameObjectActivationProfile.MultiplayerWorldServer;
+        npc.Activation.SetActive(true, fixture.Admission.World.GetActivationServices(npc));
         if (stunned) fixture.Admission.Registry.CreateBuff(Created(npc.ObjectId, 601).ToFrame().Body.Span);
         var pipe = fixture.Runtime.Actors.GoalPipes.Create("can_move47_inversion")!;
         void Append(ZoneGoalOperation operation, ZoneGoalParameters parameters, bool blocking = false) =>

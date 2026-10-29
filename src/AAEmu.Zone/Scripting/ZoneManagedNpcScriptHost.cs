@@ -16,6 +16,7 @@ public interface IZoneManagedNpcScriptServices
 {
     long GetActorHealth(ZoneManagedNpcActor actor) => throw Missing("actor.GetHealth / actor Unit association");
     long GetActorMaximumHealth(ZoneManagedNpcActor actor) => throw Missing("actor.GetMaxHealth / actor Unit stat6");
+    int? GetAlertness(ZoneManagedNpcActor actor) => throw Missing("AI.GetAlertness / actual Puppet alertness");
     Vector3 GetDirectionVector(ZoneManagedNpcActor actor, int axis) => throw Missing("entity.GetDirectionVector / entity orientation");
     void SetEntityTimer(ZoneManagedNpcActor actor, int timerId, int milliseconds) => throw Missing("entity.SetTimer / entity script timer scheduler");
     void KillEntityTimer(ZoneManagedNpcActor actor, int timerId) => throw Missing("entity.KillTimer / entity script timer scheduler");
@@ -27,8 +28,10 @@ public interface IZoneManagedNpcScriptServices
     void ClearCombat(ZoneManagedNpcActor actor) => throw Missing("unit.ClearCombat / combat owner and notifications");
     void SaveUnitAttr(ZoneManagedNpcActor actor, int changeOption) => throw Missing("unit.SaveUnitAttr / independent AI-unit restoration record");
     void StopCasting(ZoneManagedNpcActor actor) => throw Missing("unit.StopCasting / casting owner");
+    bool CreateBuff(ZoneManagedNpcActor actor, uint buffType) => throw Missing("unit.CreateBuff / actual World buff-template request");
     bool RemoveBuff(ZoneManagedNpcActor actor, uint buffType) => throw Missing("unit.RemoveBuff / buff-type removal request");
     void SetPositionCheckContext(ZoneManagedNpcActor actor, int context) => throw Missing("unit.NpcSetCheckPosContext / position-check owner");
+    void TeleportNpc(ZoneManagedNpcActor actor, Vector3 destination) => throw Missing("unit.NpcTeleportTo / actual model relocation and publication");
     void SetSkillUsePattern(ZoneManagedNpcActor actor, int pattern) => throw Missing("AI.SetSkillUsePattern / skill executor");
     void SetSkillList(ZoneManagedNpcActor actor, ZoneLuaReference list) => throw Missing("unit.NpcSetSkillList / skill executor");
     void SetReferencePosition(ZoneManagedNpcActor actor, Vector3 value) => throw Missing("AI.SetRefPointPosition / indexed reference-point owner");
@@ -120,13 +123,27 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
         Bind(system, "GetEntity", args => args.Count > 0 && args[0] is ZoneLuaHandle id && Find(id) is { } bound ? [bound.Script] : []);
         Bind(system, "GetTerrainElevation", args => [_services.GetTerrainElevation(Vector(args, 0, "System.GetTerrainElevation"))]);
         Bind(ai, "Signal", Signal);
-        Bind(ai, "GetAlertness", args => [Actor(args, 0, "AI.GetAlertness").Actor.Behavior?.Alertness ?? 0]);
+        Bind(ai, "GetAlertness", args => _services.GetAlertness(Actor(args, 0, "AI.GetAlertness").Actor) is { } alertness ? [(float)alertness] : []);
         Bind(ai, "GetGroupOf", args => [_services.GetGroupId(Actor(args, 0, "AI.GetGroupOf").Actor)]);
         Bind(ai, "GetLeader", args =>
         {
             var leader = _services.GetGroupLeader(Integer(args, 0, "AI.GetLeader"));
             return leader is not null && _bindings.TryGetValue(leader.AiObject.EntityId, out var bound) &&
                 ReferenceEquals(bound.Actor, leader) && bound.IsCurrent ? [bound.Script] : [];
+        });
+        Bind(ai, "GetAutoDisable", args =>
+        {
+            if (args.Count != 1) { Log($"CScriptBind_AI::GetAutoDisable: {args.Count} arguments passed, 1 expected."); return []; }
+            //Native handle IDs narrow to32bits. Missing entity/AI/proxy returns booleanfalse.
+            var actor = args[0] is ZoneLuaHandle id && _bindings.TryGetValue(unchecked((uint)id.Value), out var bound) && bound.IsCurrent ? bound.Actor : null;
+            return [actor is not null && ZoneNpcAutoDisable.Get(actor)];
+        });
+        Bind(ai, "AutoDisable", args =>
+        {
+            if (args.Count != 2) { Log($"CScriptBind_AI::AutoDisable: {args.Count} arguments passed, 2 expected."); return []; }
+            if (args[0] is ZoneLuaHandle id && _bindings.TryGetValue(unchecked((uint)id.Value), out var bound) && bound.IsCurrent && args[1] is long or double)
+                ZoneNpcAutoDisable.Set(bound.Actor, Scalar(args[1]));
+            return [];
         });
         Bind(ai, "ClearAttentionTargetOf", args => { Actor(args, 0, "AI.ClearAttentionTargetOf").Actor.Services.SetAttentionTarget(null); return []; });
         Bind(ai, "SetAttentionTargetOf", args =>
@@ -238,8 +255,16 @@ public sealed class ZoneManagedNpcScriptHost : IDisposable
             Method(bound, unit, "SetDefaultPosture", worldId, args => { _services.SetDefaultPosture(actor, Boolean(args, 1, "unit.SetDefaultPosture")); return []; });
             Method(bound, unit, "ClearCombat", worldId, _ => { _services.ClearCombat(actor); return []; });
             Method(bound, unit, "StopCasting", worldId, _ => { _services.StopCasting(actor); return []; });
+            Method(bound, unit, "CreateBuff", worldId, args => [_services.CreateBuff(actor, unchecked((uint)Integer(args, 1, "unit.CreateBuff")))]);
             Method(bound, unit, "RemoveBuff", worldId, args => [_services.RemoveBuff(actor, unchecked((uint)Integer(args, 1, "unit.RemoveBuff")))]);
             Method(bound, unit, "NpcSetCheckPosContext", worldId, args => { _services.SetPositionCheckContext(actor, Integer(args, 1, "unit.NpcSetCheckPosContext")); return []; });
+            Method(bound, unit, "NpcTeleportTo", worldId, args =>
+            {
+                //393579B0 requests ScriptAny10; failed/missing vector conversion returns no values.
+                if (args.Count > 1 && args[1] is ZoneLuaReference { IsTable: true } table && _lua.GetVector(table) is { } destination)
+                    _services.TeleportNpc(actor, destination);
+                return [];
+            });
             Method(bound, unit, "NpcSetSkillList", worldId, args =>
             {
                 if (args.Count <= 1 || args[1] is not ZoneLuaReference { IsTable: true } list)
@@ -429,6 +454,7 @@ public sealed class ZoneManagedNpcScriptBinding : IDisposable
     public uint EntityId { get; }
     public int LastAttentionReason { get; internal set; }
     internal string? InitializationError { get; set; }
+    internal bool AutoDisableParametersApplied { get; set; }
     public bool IsDisposed { get; private set; }
     public bool IsCurrent => !IsDisposed && !_host.IsDisposed && !Script.IsDisposed && Actor.HasActor;
     internal ZoneManagedNpcScriptBinding(ZoneManagedNpcScriptHost host, ZoneManagedNpcActor actor,

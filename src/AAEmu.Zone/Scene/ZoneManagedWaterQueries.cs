@@ -33,6 +33,7 @@ public sealed class ZoneManagedWaterQueries : IDisposable
     private int _unsupported;
     public float OceanLevel { get; }
     public bool IsDisposed { get; private set; }
+    public ulong PublicationRevision { get; private set; } = 1;
     public ZoneManagedWaterInventoryReport Report => new(_rows.Count, _volumes.Count, _unsupported,
         _rows.AsReadOnly(), _coverageErrors.AsReadOnly());
 
@@ -160,10 +161,13 @@ public sealed class ZoneManagedWaterQueries : IDisposable
     public void RetireCell(ZoneMapCoordinate engineCell)
     {
         ObjectDisposedException.ThrowIf(IsDisposed, this);
-        if (!_liveCells.Remove(engineCell)) return;
+        if (!_liveCells.Contains(engineCell)) return;
+        var revision = checked(PublicationRevision + 1);
+        _liveCells.Remove(engineCell); PublicationRevision = revision;
         _volumes.RemoveAll(volume => volume.Cell == engineCell);
     }
-    public void Dispose() { if (IsDisposed) return; IsDisposed = true; _liveCells.Clear(); _volumes.Clear(); }
+    public void Dispose()
+    { if (IsDisposed) return; PublicationRevision = checked(PublicationRevision + 1); IsDisposed = true; _liveCells.Clear(); _volumes.Clear(); }
     private void RequireComplete()
     {
         ObjectDisposedException.ThrowIf(IsDisposed, this);

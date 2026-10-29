@@ -38,6 +38,10 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
     private readonly Func<ZoneManagedNpcPositionChecks>? _positionChecks;
     private readonly ZoneManagedNpcPostureState? _postures;
     private readonly ZoneNpcSkillContent? _npcSkills;
+    private readonly Func<ZoneManagedNpcMovementAbility>? _movementAbility;
+    private readonly Func<ZoneManagedNpcMovementRequests>? _movementRequests;
+    private readonly Func<ZoneManagedNpcNavigation>? _navigation;
+    private readonly Func<ZoneManagedNpcPuppetOutput>? _puppetOutput;
     private int _frame;
     private readonly Dictionary<ZoneActorHandle, Components> _actors = [];
     public ZoneManagedNpcScriptEffects Effects { get; }
@@ -59,7 +63,10 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
         ZoneManagedNpcSkillPatterns? skills = null, ZoneManagedNpcGroups? groups = null,
         Func<ZoneManagedNpcActorMotion>? motion = null, Func<ZoneManagedNpcReplication>? replication = null,
         Func<ZoneManagedNpcPositionChecks>? positionChecks = null, ZoneManagedNpcPostureState? postures = null,
-        ZoneNpcSkillContent? npcSkills = null)
+        ZoneNpcSkillContent? npcSkills = null,
+        Func<ZoneManagedNpcMovementAbility>? movementAbility = null,
+        Func<ZoneManagedNpcMovementRequests>? movementRequests = null, Func<ZoneManagedNpcNavigation>? navigation = null,
+        Func<ZoneManagedNpcPuppetOutput>? puppetOutput = null)
     {
         ArgumentNullException.ThrowIfNull(lua);
         _models = models ?? throw new ArgumentNullException(nameof(models));
@@ -71,6 +78,13 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
         _combat = combat;
         _construction = construction; _poses = poses; _skills = skills; _groups = groups;
         _motion = motion; _replication = replication; _positionChecks = positionChecks; _postures = postures; _npcSkills = npcSkills;
+        _movementAbility = movementAbility; _movementRequests = movementRequests;
+        _navigation = navigation;
+        _puppetOutput = puppetOutput;
+        if (puppetOutput is not null && movementAbility is null)
+            throw new ArgumentException("Puppet output requires the actual installed movement ability owner.");
+        if ((movementAbility is not null || movementRequests is not null) && motion is null)
+            throw new ArgumentException("NPC locomotion requires the actual construction, motion and proxy pose owners.");
         if (new object?[] { motion, replication, positionChecks, postures, npcSkills }.Any(value => value is not null) &&
             new object?[] { construction, motion, replication, positionChecks, postures, npcSkills, groups }.Any(value => value is null))
             throw new ArgumentException("Managed NPC position, motion, replication and posture consumers must be composed with all actual owners.");
@@ -128,6 +142,10 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
             if (_motion is not null)
             {
                 owner.Motion = _motion().Bind(binding.Actor); binding.RequireCurrent();
+                if (_movementRequests is not null)
+                { owner.MovementRequests = _movementRequests().Bind(binding.Actor); binding.RequireCurrent(); }
+                if (_navigation is not null)
+                { owner.Navigation = _navigation().Bind(binding.Actor); binding.RequireCurrent(); }
                 owner.Replication = _replication!().Bind(binding.Actor); binding.RequireCurrent();
                 owner.Posture = _postures!.BindDedicatedConstruction(binding.Actor, construction!, _models, _npcSkills!); binding.RequireCurrent();
                 owner.PositionCheck = _positionChecks!().BindEntity(binding); binding.RequireCurrent();
@@ -171,6 +189,12 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
         }
         //The actual registration parameters and39346960 spawn group precede390B35F0
         //authored child installation and the character constructor.
+        ZoneNpcAutoDisable.ApplyInitialParameters(binding); binding.RequireCurrent();
+        if (_movementAbility is not null)
+        { Require(binding.Actor).MovementAbility = _movementAbility().BindInitialParameters(binding); binding.RequireCurrent(); }
+        Require(binding.Actor).ActorGrid = binding.Actor.BindActorGrid(); binding.RequireCurrent();
+        if (_puppetOutput is not null)
+        { Require(binding.Actor).PuppetOutput = _puppetOutput().Bind(binding.Actor); binding.RequireCurrent(); }
         _groups?.ApplyInitialParameters(binding.Actor); binding.RequireCurrent();
         _groups?.InstallAuthoredGroup(binding.Actor); binding.RequireCurrent();
         _skills?.InstallAuthoredSkillLists(binding.Actor);
@@ -190,6 +214,17 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
     {
         Require(actor);
         (_positionChecks?.Invoke() ?? throw new NotSupportedException("NpcSetCheckPosContext requires its actual correction and replication consumers.")).SetContext(actor, context);
+    }
+    public void TeleportNpc(ZoneManagedNpcActor actor, Vector3 destination)
+    {
+        Require(actor);
+        (_positionChecks?.Invoke() ?? throw new NotSupportedException("NpcTeleportTo requires its actual living model and publication consumers.")).Teleport(actor, destination);
+    }
+    public int? GetAlertness(ZoneManagedNpcActor actor)
+    {
+        Require(actor);
+        //3052AE10 queries IPuppet128/31177A88, not the CAIHandler behavior field.
+        return (_motion?.Invoke() ?? throw new NotSupportedException("AI.GetAlertness requires its actual Puppet alertness owner.")).CopyPuppetAlertness(actor);
     }
     public void SetDefaultPosture(ZoneManagedNpcActor actor, bool enabled)
     { Require(actor); (_postures ?? throw new NotSupportedException("Default posture requires its actual dedicated model driver and content inventory.")).SetDefaultPosture(actor, enabled); }
@@ -224,6 +259,25 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
         catch (Exception error) when (error is NotSupportedException or ZoneLuaException or InvalidDataException)
         { return [new(actor, "AI proxy pose publication", error.Message)]; }
     }
+    /// <summary>CActor prephysical requests run after the existing body accepts its stance, before the sole Step.</summary>
+    public IReadOnlyList<ZoneManagedNpcScriptFault> PrepareMovementRequests(ZoneMovementFrame frame)
+    {
+        Check();
+        if (_movementRequests is null) return [];
+        List<ZoneManagedNpcScriptFault> faults = [];
+        foreach (var owner in _actors.Values.ToArray())
+        {
+            if (owner.IsDisposed || !owner.Binding.IsCurrent || owner.MovementRequests is null) continue;
+            try
+            {
+                owner.Navigation?.ValidatePublication();
+                _movementRequests().PrepareFrame(owner.Binding.Actor, frame);
+            }
+            catch (Exception error) when (error is NotSupportedException or ZoneLuaException or InvalidDataException)
+            { faults.Add(new(owner.Binding.Actor.Handle, "CActor prephysical movement request", error.Message)); }
+        }
+        return faults;
+    }
     public IReadOnlyList<ZoneManagedNpcScriptFault> PublishPhysicalPose(ZoneActorHandle actor, ZoneManagedNpcBodySnapshot body, ZoneMovementFrame frame)
     {
         var faults = PublishPose(actor);
@@ -243,6 +297,23 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
             unit.Snapshot.Attachment.Point != -1 || unit.Snapshot.Bonding.Point != -1)
             throw new NotSupportedException("Skill aim geometry requires the applied pose, scale and parent-transition model producer.");
         return owner.ModelTransform;
+    }
+    /// <summary>
+    /// Publish the CActor-produced logical entity rotation and queue that same absolute
+    /// rotation for the scene's existing living-body step. Physical status remains the
+    /// last applied status until that step; no Unit pose is published here.
+    /// </summary>
+    public void SetEntityOrientation(ZoneManagedNpcActor actor, Quaternion orientation)
+    {
+        var owner = Require(actor);
+        var transform = CopyModelTransform(actor.Npc.Unit);
+        Require(actor);
+        var body = owner.Body ?? throw new NotSupportedException("Entity rotation requires its exact living-body owner.");
+        //The body validates the complete finite/upright/unit-rotation profile before
+        //queuing anything. Failed requests cannot alter the logical entity transform.
+        body.RequestOrientation(orientation);
+        Require(actor);
+        owner.ModelTransform = transform with { Orientation = orientation };
     }
     private static void CopyPublishedModelTransform(Components owner)
     {
@@ -278,7 +349,8 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
             throw new NotSupportedException("Entity direction after a scale transition requires its applied model-transform owner.");
         // Parentless admitted entities use the scene-published rotation and applied initial scale.
         //3203CB90 copies the world matrix column without normalizing it.
-        return ZoneManagedEntityOrientation.GetDirectionVector(unit.Pose.Rotation, body.Admission.Request.EntityScale, axis);
+        var transform = CopyModelTransform(unit);
+        return ZoneManagedEntityOrientation.GetDirectionVector(transform.Orientation, transform.UniformScale, axis);
     }
     public void SetSmartObjectState(ZoneManagedNpcActor actor, string state, bool modify)
     { Require(actor); if (modify) SmartObjects.AddState(actor, state); else SmartObjects.SetState(actor, state); }
@@ -296,6 +368,8 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
     { Require(actor); return actor.Scene.Points.GetReferencePoint(actor).MoveDirection; }
     public void SetReferenceRadius(ZoneManagedNpcActor actor, float radius)
     { Require(actor); actor.Scene.Points.SetReferenceRadius(actor, radius); }
+    public bool CreateBuff(ZoneManagedNpcActor actor, uint buffType)
+    { Require(actor); return Requests().CreateBuff(actor, buffType); }
     public bool RemoveBuff(ZoneManagedNpcActor actor, uint buffType)
     { Require(actor); return Requests().RemoveBuff(actor, buffType); }
     public void StopCasting(ZoneManagedNpcActor actor) { Require(actor); Requests().StopCasting(actor); }
@@ -350,6 +424,11 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
         public ZoneManagedNpcSkillPatternLease? Skills;
         public ZoneManagedNpcGroupLease? Group;
         public ZoneManagedNpcActorMotionLease? Motion;
+        public ZoneManagedNpcMovementAbilityLease? MovementAbility;
+        public ZoneManagedNpcMovementRequestLease? MovementRequests;
+        public ZoneManagedNpcNavigationLease? Navigation;
+        public ZoneManagedNpcPuppetOutputLease? PuppetOutput;
+        public ZoneManagedActorGridLease? ActorGrid;
         public ZoneManagedNpcReplicationLease? Replication;
         public ZoneManagedNpcPositionCheckLease? PositionCheck;
         public ZoneManagedNpcPostureLease? Posture;
@@ -365,7 +444,9 @@ public sealed class ZoneManagedNpcSceneScriptServices : IZoneManagedNpcScriptSer
             CombatTransitioned = null;
             if (scene._actors.TryGetValue(Binding.Actor.Handle, out var current) && ReferenceEquals(current, this)) scene._actors.Remove(Binding.Actor.Handle);
             List<Exception>? errors = null;
-            Release(() => PositionCheck?.Dispose()); Release(() => Posture?.Dispose()); Release(() => Replication?.Dispose()); Release(() => Motion?.Dispose());
+            Release(() => PositionCheck?.Dispose()); Release(() => Posture?.Dispose()); Release(() => Replication?.Dispose());
+            Release(() => PuppetOutput?.Dispose()); Release(() => Navigation?.Dispose()); Release(() => ActorGrid?.Dispose());
+            Release(() => MovementAbility?.Dispose()); Release(() => MovementRequests?.Dispose()); Release(() => Motion?.Dispose());
             Release(() => Group?.Dispose()); Release(() => Skills?.Dispose()); Release(() => Pose?.Dispose()); Release(() => Combat?.Dispose()); Release(() => Effects?.Dispose()); Release(() => SmartObject?.Dispose()); Release(() => Events?.Dispose());
             Release(() => Animated?.Dispose()); Release(() => Body?.Dispose()); Release(() => Character?.Dispose());
             if (errors is not null) throw new AggregateException("NPC generation components failed to retire.", errors);

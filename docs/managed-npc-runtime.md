@@ -346,9 +346,57 @@ Changing sample counts do not prove cadence or throughput equivalence. The exact
 DLL also passes the five-resource control. Evidence uses the separate `npc-can-move-*` prefixes
 and `research/npc-can-move-batch-evidence.json` under `D:/aaemu-runtime`.
 
-Next: finish Puppet look/movement and animated/dynamic movement producers;
-connect AI navigation wishes to the single scene movement authority with actual CActor outgoing
-metadata; complete posture/casting/combat dependencies, perception, acquisition and leash; then
-admit each supported behavior based on its actual dependencies. Keep general
-entity components/FlowGraphs, dynamic bodies/vehicles and remaining Lua compatibility separately
-visible in [the module removal task file](tasks/cryengine-removal.md).
+The return/movement batch now connects original Approach/PathFind and ordinary/predictive trace
+operations to the single scene movement authority. Installed movement tables, numeric ScriptAny
+booleans, model-backed radii/look parameters, proxy auto-disable, source game-object activation,
+Puppet output, cached actor grids and ordinary upright CActor/controller requests have concrete
+owners. The composed control uses actual component-owned leases, an authored test graph, terrain,
+water and the living backend to complete a route and its Lua signal without a teleport or
+position correction. Search/walkability remain explicitly bounded replacement policies.
+See [navigation](managed-npc-navigation.md), [movement requests](managed-npc-movement-requests.md),
+[return bindings](managed-npc-return-state.md) and [actor grids](managed-actor-grids.md).
+
+Actual restored buffs are supported through five source-owned status counters and their separate
+copied flags. Stun/sleep/root suppress translation; stun/sleep/psychokinesis/impossible-rotate
+suppress turning. The complete attribute10 calculator retains original3590's+300 and1965's-1000
+speed modifiers. Buff presence or collection identity is not a status predicate. The wider physical
+effects of6613, including no_collide_rigid, remain outside this dry static-support producer.
+The extended fixture executes417 original counter/copy controls and34 complete actor pipelines.
+
+The final application's original near-anchor control completes all five constructors and
+corrections. NPC8173 retains150 additional33ms hold/idle-hold frames and its real StartSkill40917
+request without an injected World ACK. All22 owner categories retire to zero, no engine module
+loads, and the18 original protected comparison invocations retain their actors with5 bounded
+diagnostic reports. This remains a direct recorded-owner control with the actual partial manager
+schedule, rather than a populated spawner/perception acceptance.
+
+The unchanged four-metre original far-return control reaches the real return/path branch and
+refuses the missing vegetation/entity collision classification in cell(0,0), authored009_014.
+It does not pass original far-return locomotion. Its five constructors/corrections still succeed
+and all22 owner categories retire. A separate admission guard refuses physical actors without
+their actual AI/grid classification, including the currently unowned dedicated player type100
+owner; a missing public registration cannot certify an empty crowd. New unclassified bodies
+also stop cached route requests before another physical step.
+
+Final validation passes970 tests with no failures or skips. The full analyzer build has0 errors,
+63 existing warnings and no new warning diagnostics. Its120.156second stationary world-entry
+replay samples80 modules with no forbidden engine/native-Lua DLLs, reaches the accepted grounded
+player387 pose and produces one ZoneLoaded plus4 complete movement batches/rows (2 player/2 NPC).
+Both player payloads match the earlier accepted capture after normalizing only Time. There is
+no debug location row, actor refusal or partial frame, and EOF retires the host in order with
+listener/zone exits0/3. Different row counts are not cadence or throughput acceptance.
+The original near/far controls and entry use identical application SHA256
+`614B828DE99973C2F3F2ABCBA8E35D991BE0CB3F1834EA40C2B765025CE3B4EA`.
+
+Evidence under `D:/aaemu-runtime` is `npc-return-final-{build2,tests1}.log`,
+`npc-return-final-{near,far}-control.log`, `research/npc-return-state-{near,far}-control.json`,
+`research/npc-return-{original,far}-summary.json`, `npc-return-ready-entry-*`,
+`captures/npc-return-ready-entry-output.bin`,
+`research/npc-return-ready-entry-wire-verification.json` and `research/npc-return-batch-evidence.json`.
+
+Next: publish actual player AI/cache ownership and populated-cell vegetation/entity/road collision,
+then run the original far-return route in that complete scene. Continue populated avoidance,
+wet/animated/dynamic movement, posture/casting/combat dependencies, perception, acquisition and
+leash. General entity components/FlowGraphs, dynamic bodies/vehicles and remaining Lua compatibility
+stay separately visible in [the module removal task file](tasks/cryengine-removal.md) and the
+[38 collision tasks](tasks/managed-populated-cell-collision.md). Full feature parity remains false.

@@ -1,0 +1,1465 @@
+{
+  "scope": "Original COPApproach310E4F88 and explicit COPPathFind310DBA08 state machine; controlled scene/request/trace ABIs, no DLL loading.",
+  "imageSha256": "a740d58c6a3c851d84967e9513125c48b9326cbb70462ad1f57e6e60aadfe921",
+  "callbacks": [
+    "System frame clock",
+    "Actor attention/AI position/proxy/Entity identity",
+    "Target enabled/type/direction",
+    "Entity-origin helper3103CA08 copies controlled actual entity origins",
+    "Game context contains no path-area restriction",
+    "CPipeUser.v688 receives request and publishes controlled pending/found/no-path scene decision",
+    "COPTrace.Execute returns controlled running/success/failure; its algorithm is independently checked by ground trace corpus",
+    "Actor queue captures signals and copied data without synchronous Lua",
+    "Operator new/release controlled child leases"
+  ],
+  "controls": [
+    {
+      "name": "sync_found_finish",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 3,
+        "finish": true
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 1,
+            "pathFound": true,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 1,
+            "signalCount": 1,
+            "requestCount": 1
+          },
+          {
+            "result": 2,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 2,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 2.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnPathFound",
+            "senderIsActor": false,
+            "floatValue": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "async_found",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 0,
+        "frames": 2,
+        "asyncFound": true
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 1,
+            "pathFound": true,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 1,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 2.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnPathFound",
+            "senderIsActor": false,
+            "floatValue": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "pending",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 0,
+        "frames": 2
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 2.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": []
+      }
+    },
+    {
+      "name": "no_path",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 4,
+        "frames": 1
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 3,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 0,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 2.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnNoPathFound",
+            "senderIsActor": false,
+            "floatValue": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "missing_target",
+      "request": {
+        "hasTarget": false,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 1
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 3,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 0
+          }
+        ],
+        "requests": [],
+        "signals": []
+      }
+    },
+    {
+      "name": "disabled_target",
+      "request": {
+        "hasTarget": true,
+        "enabled": false,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 1
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 3,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 0
+          }
+        ],
+        "requests": [],
+        "signals": []
+      }
+    },
+    {
+      "name": "argument_target",
+      "request": {
+        "hasTarget": false,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 2,
+        "useArgument": true
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 1,
+            "pathFound": true,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 1,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 2.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnPathFound",
+            "senderIsActor": false,
+            "floatValue": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "object_type1",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 1,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 2
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 1,
+            "pathFound": true,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 1,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": false,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 2.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnPathFound",
+            "senderIsActor": false,
+            "floatValue": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "endpoint_offset",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 2,
+        "endpointOffset": 5
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 1,
+            "pathFound": true,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 1,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 2.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnEndPathOffset",
+            "senderIsActor": true,
+            "floatValue": 3.0
+          }
+        ]
+      }
+    },
+    {
+      "name": "animation_target",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 13,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 2
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 1,
+            "pathFound": true,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 1,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 2.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnPathFound",
+            "senderIsActor": false,
+            "floatValue": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "duration",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 3,
+        "requestDecision": 3,
+        "frames": 2,
+        "movementSpeed": 4
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 1,
+            "pathFound": true,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 1,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": -12.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnEndPathOffset",
+            "senderIsActor": true,
+            "floatValue": 14.0
+          }
+        ]
+      }
+    },
+    {
+      "name": "percent",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          3,
+          4,
+          12
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 0.5,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 2,
+        "percent": true
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 6.5,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 1,
+            "pathFound": true,
+            "initialDistance": 6.5,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 1,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              3.0,
+              4.0,
+              12.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 6.5,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnPathFound",
+            "senderIsActor": false,
+            "floatValue": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "direct_boundary",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          1,
+          0,
+          0
+        ],
+        "targetPosition": [
+          2,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": false,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 1
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 2.0,
+            "direction": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "context": 4,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 0
+          }
+        ],
+        "requests": [],
+        "signals": []
+      }
+    },
+    {
+      "name": "direct_inside",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          1,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": false,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 1
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 2,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 0
+          }
+        ],
+        "requests": [],
+        "signals": []
+      }
+    },
+    {
+      "name": "direct_2d",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          1,
+          0,
+          10
+        ],
+        "use3D": false,
+        "usePathfinder": false,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 1
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 2,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 0
+          }
+        ],
+        "requests": [],
+        "signals": []
+      }
+    },
+    {
+      "name": "direct_3d",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          1,
+          0,
+          10
+        ],
+        "use3D": true,
+        "usePathfinder": false,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 1
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 10.049875259399414,
+            "direction": [
+              0.09950372576713562,
+              0.0,
+              0.9950372576713562
+            ],
+            "context": 4,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 0
+          }
+        ],
+        "requests": [],
+        "signals": []
+      }
+    },
+    {
+      "name": "force_partial",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": 0.3,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 2,
+        "forcePartial": true
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 1,
+            "pathFound": true,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 1,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 2.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnPathFound",
+            "senderIsActor": false,
+            "floatValue": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "trace_failure",
+      "request": {
+        "hasTarget": true,
+        "enabled": true,
+        "targetType": 2,
+        "aiPosition": [
+          0,
+          0,
+          0
+        ],
+        "entityPosition": [
+          0,
+          0,
+          0
+        ],
+        "targetPosition": [
+          20,
+          0,
+          0
+        ],
+        "use3D": false,
+        "usePathfinder": true,
+        "endDistance": 2,
+        "endAccuracy": -1,
+        "duration": 0,
+        "requestDecision": 3,
+        "frames": 2,
+        "traceResult": 3
+      },
+      "result": {
+        "frames": [
+          {
+            "result": 1,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 2,
+            "originalCount": 2,
+            "traceCalls": 0,
+            "signalCount": 0,
+            "requestCount": 1
+          },
+          {
+            "result": 3,
+            "pathFound": false,
+            "initialDistance": 0.0,
+            "lastDistance": 0.0,
+            "direction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "context": 0,
+            "currentCount": 0,
+            "originalCount": 0,
+            "traceCalls": 1,
+            "signalCount": 1,
+            "requestCount": 1
+          }
+        ],
+        "requests": [
+          {
+            "position": [
+              20.0,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "allowDangerous": true,
+            "buildingId": -1,
+            "endTolerance": 3.4028234663852886e+38,
+            "endDistance": 2.0,
+            "targetIsActual": true
+          }
+        ],
+        "signals": [
+          {
+            "name": "OnPathFound",
+            "senderIsActor": false,
+            "floatValue": null
+          }
+        ]
+      }
+    }
+  ]
+}

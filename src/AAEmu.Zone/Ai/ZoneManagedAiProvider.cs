@@ -35,6 +35,8 @@ public sealed class ZoneManagedAiProvider : IZoneAiProvider, IZoneAiFramePump, I
     private bool _disposed, _pumping;
 
     public int Count => _bindings.Count;
+    /// <summary>Optional actual AI-system frame prefix, called once before actor scheduling.</summary>
+    public Func<uint, bool>? BeginFrame { get; set; }
     public bool IsReady(ZoneActorHandle actor)
     {
         var binding = RequireBinding(actor);
@@ -173,6 +175,7 @@ public sealed class ZoneManagedAiProvider : IZoneAiProvider, IZoneAiFramePump, I
         _pumping = true;
         try
         {
+            if (BeginFrame is { } begin && !begin(timeMilliseconds)) return;
             foreach (var (handle, binding) in _bindings.ToArray())
             {
                 if (_disposed) return;

@@ -81,4 +81,6 @@ public sealed class ZoneEngineCVars
     public float GetFloat(string name, float engineDefault) =>
         _values.TryGetValue(name, out var value) && float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var number)
             ? number : engineDefault;
+
+    public string GetString(string name, string engineDefault) => _values.GetValueOrDefault(name, engineDefault);
 }

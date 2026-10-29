@@ -1,0 +1,2353 @@
+{
+  "source": "original392AEA32..392AEC3D, including actual392ADBC0 source-order stance selection",
+  "imageSha256": "50edcd49d0537aa0f94db55ecf22008d7fb9ed937ea02121919199b5bf8bb7ed",
+  "scope": "resolved ActorModel + actual entity; copied actual transform scale; Model697 from392655C0 Big producer",
+  "controls": [
+    {
+      "name": "negative_scale1_set0_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1075838976
+      }
+    },
+    {
+      "name": "negative_scale1_set0_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1075838976
+      }
+    },
+    {
+      "name": "negative_scale1_set0_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1075838976
+      }
+    },
+    {
+      "name": "negative_scale1_set0_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1076887552
+      }
+    },
+    {
+      "name": "negative_scale1_set1_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1075838976
+      }
+    },
+    {
+      "name": "negative_scale1_set1_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1075838976
+      }
+    },
+    {
+      "name": "negative_scale1_set1_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1075838976
+      }
+    },
+    {
+      "name": "negative_scale1_set1_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1076887552
+      }
+    },
+    {
+      "name": "negative_scale1_set2_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050253722,
+        "pathRadiusBits": 1050253722
+      }
+    },
+    {
+      "name": "negative_scale1_set2_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050253722,
+        "pathRadiusBits": 1050253722
+      }
+    },
+    {
+      "name": "negative_scale1_set2_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050253722,
+        "pathRadiusBits": 1050253722
+      }
+    },
+    {
+      "name": "negative_scale1_set2_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050253722,
+        "pathRadiusBits": 1051260355
+      }
+    },
+    {
+      "name": "negative_scale1_set3_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050253722,
+        "pathRadiusBits": 1050253722
+      }
+    },
+    {
+      "name": "negative_scale1_set3_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050253722,
+        "pathRadiusBits": 1050253722
+      }
+    },
+    {
+      "name": "negative_scale1_set3_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050253722,
+        "pathRadiusBits": 1050253722
+      }
+    },
+    {
+      "name": "negative_scale1_set3_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050253722,
+        "pathRadiusBits": 1051260355
+      }
+    },
+    {
+      "name": "negative_scale1_set4_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1056964608,
+        "pathRadiusBits": 1056964608
+      }
+    },
+    {
+      "name": "negative_scale1_set4_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1056964608,
+        "pathRadiusBits": 1056964608
+      }
+    },
+    {
+      "name": "negative_scale1_set4_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1056964608,
+        "pathRadiusBits": 1056964608
+      }
+    },
+    {
+      "name": "negative_scale1_set4_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1056964608,
+        "pathRadiusBits": 1057803469
+      }
+    },
+    {
+      "name": "negative_scale1_set5_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1075838976
+      }
+    },
+    {
+      "name": "negative_scale1_set5_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1075838976
+      }
+    },
+    {
+      "name": "negative_scale1_set5_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1075838976
+      }
+    },
+    {
+      "name": "negative_scale1_set5_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1075838976,
+        "pathRadiusBits": 1076887552
+      }
+    },
+    {
+      "name": "negative_scale1.05_set0_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1076363264
+      }
+    },
+    {
+      "name": "negative_scale1.05_set0_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1076363264
+      }
+    },
+    {
+      "name": "negative_scale1.05_set0_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1076363264
+      }
+    },
+    {
+      "name": "negative_scale1.05_set0_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1077464269
+      }
+    },
+    {
+      "name": "negative_scale1.05_set1_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1076363264
+      }
+    },
+    {
+      "name": "negative_scale1.05_set1_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1076363264
+      }
+    },
+    {
+      "name": "negative_scale1.05_set1_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1076363264
+      }
+    },
+    {
+      "name": "negative_scale1.05_set1_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1077464269
+      }
+    },
+    {
+      "name": "negative_scale1.05_set2_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050757038,
+        "pathRadiusBits": 1050757038
+      }
+    },
+    {
+      "name": "negative_scale1.05_set2_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050757038,
+        "pathRadiusBits": 1050757038
+      }
+    },
+    {
+      "name": "negative_scale1.05_set2_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050757038,
+        "pathRadiusBits": 1050757038
+      }
+    },
+    {
+      "name": "negative_scale1.05_set2_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050757038,
+        "pathRadiusBits": 1051814003
+      }
+    },
+    {
+      "name": "negative_scale1.05_set3_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050757038,
+        "pathRadiusBits": 1050757038
+      }
+    },
+    {
+      "name": "negative_scale1.05_set3_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050757038,
+        "pathRadiusBits": 1050757038
+      }
+    },
+    {
+      "name": "negative_scale1.05_set3_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050757038,
+        "pathRadiusBits": 1050757038
+      }
+    },
+    {
+      "name": "negative_scale1.05_set3_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050757038,
+        "pathRadiusBits": 1051814003
+      }
+    },
+    {
+      "name": "negative_scale1.05_set4_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1057384038,
+        "pathRadiusBits": 1057384038
+      }
+    },
+    {
+      "name": "negative_scale1.05_set4_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1057384038,
+        "pathRadiusBits": 1057384038
+      }
+    },
+    {
+      "name": "negative_scale1.05_set4_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1057384038,
+        "pathRadiusBits": 1057384038
+      }
+    },
+    {
+      "name": "negative_scale1.05_set4_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1057384038,
+        "pathRadiusBits": 1058264842
+      }
+    },
+    {
+      "name": "negative_scale1.05_set5_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1076363264
+      }
+    },
+    {
+      "name": "negative_scale1.05_set5_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1076363264
+      }
+    },
+    {
+      "name": "negative_scale1.05_set5_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1076363264
+      }
+    },
+    {
+      "name": "negative_scale1.05_set5_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1076363264,
+        "pathRadiusBits": 1077464269
+      }
+    },
+    {
+      "name": "negative_scale2_set0_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1084227584
+      }
+    },
+    {
+      "name": "negative_scale2_set0_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1084227584
+      }
+    },
+    {
+      "name": "negative_scale2_set0_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1084227584
+      }
+    },
+    {
+      "name": "negative_scale2_set0_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1085276160
+      }
+    },
+    {
+      "name": "negative_scale2_set1_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1084227584
+      }
+    },
+    {
+      "name": "negative_scale2_set1_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1084227584
+      }
+    },
+    {
+      "name": "negative_scale2_set1_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1084227584
+      }
+    },
+    {
+      "name": "negative_scale2_set1_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": false
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1085276160
+      }
+    },
+    {
+      "name": "negative_scale2_set2_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1058642330,
+        "pathRadiusBits": 1058642330
+      }
+    },
+    {
+      "name": "negative_scale2_set2_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1058642330,
+        "pathRadiusBits": 1058642330
+      }
+    },
+    {
+      "name": "negative_scale2_set2_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1058642330,
+        "pathRadiusBits": 1058642330
+      }
+    },
+    {
+      "name": "negative_scale2_set2_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1058642330,
+        "pathRadiusBits": 1059648963
+      }
+    },
+    {
+      "name": "negative_scale2_set3_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1058642330,
+        "pathRadiusBits": 1058642330
+      }
+    },
+    {
+      "name": "negative_scale2_set3_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1058642330,
+        "pathRadiusBits": 1058642330
+      }
+    },
+    {
+      "name": "negative_scale2_set3_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1058642330,
+        "pathRadiusBits": 1058642330
+      }
+    },
+    {
+      "name": "negative_scale2_set3_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.25,
+          "y": 0.3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1058642330,
+        "pathRadiusBits": 1059648963
+      }
+    },
+    {
+      "name": "negative_scale2_set4_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1065353216,
+        "pathRadiusBits": 1065353216
+      }
+    },
+    {
+      "name": "negative_scale2_set4_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1065353216,
+        "pathRadiusBits": 1065353216
+      }
+    },
+    {
+      "name": "negative_scale2_set4_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1065353216,
+        "pathRadiusBits": 1065353216
+      }
+    },
+    {
+      "name": "negative_scale2_set4_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 3,
+          "x": 0.4,
+          "y": 0.5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1065353216,
+        "pathRadiusBits": 1066192077
+      }
+    },
+    {
+      "name": "negative_scale2_set5_flagsFalse_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1084227584
+      }
+    },
+    {
+      "name": "negative_scale2_set5_flagsTrue_False",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1084227584
+      }
+    },
+    {
+      "name": "negative_scale2_set5_flagsFalse_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1084227584
+      }
+    },
+    {
+      "name": "negative_scale2_set5_flagsTrue_True",
+      "passRadius": -1,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "capsule": true
+        },
+        {
+          "id": 2,
+          "x": 0.75,
+          "y": 0.1,
+          "capsule": false
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 5,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1084227584,
+        "pathRadiusBits": 1085276160
+      }
+    },
+    {
+      "name": "explicit_0_0.8_scale1_flagsFalse",
+      "passRadius": 0,
+      "pathRadius": 0.8,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 0,
+        "pathRadiusBits": 1061997773
+      }
+    },
+    {
+      "name": "explicit_0_0.8_scale1_flagsTrue",
+      "passRadius": 0,
+      "pathRadius": 0.8,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 0,
+        "pathRadiusBits": 1063339951
+      }
+    },
+    {
+      "name": "explicit_0_0.8_scale1.05_flagsFalse",
+      "passRadius": 0,
+      "pathRadius": 0.8,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 0,
+        "pathRadiusBits": 1061997773
+      }
+    },
+    {
+      "name": "explicit_0_0.8_scale1.05_flagsTrue",
+      "passRadius": 0,
+      "pathRadius": 0.8,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 0,
+        "pathRadiusBits": 1063339951
+      }
+    },
+    {
+      "name": "explicit_0_0.8_scale2_flagsFalse",
+      "passRadius": 0,
+      "pathRadius": 0.8,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 0,
+        "pathRadiusBits": 1061997773
+      }
+    },
+    {
+      "name": "explicit_0_0.8_scale2_flagsTrue",
+      "passRadius": 0,
+      "pathRadius": 0.8,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 0,
+        "pathRadiusBits": 1063339951
+      }
+    },
+    {
+      "name": "explicit_0.4_-1_scale1_flagsFalse",
+      "passRadius": 0.4,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1053609165,
+        "pathRadiusBits": 1053609165
+      }
+    },
+    {
+      "name": "explicit_0.4_-1_scale1_flagsTrue",
+      "passRadius": 0.4,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1053609165,
+        "pathRadiusBits": 1054951343
+      }
+    },
+    {
+      "name": "explicit_0.4_-1_scale1.05_flagsFalse",
+      "passRadius": 0.4,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1054280253,
+        "pathRadiusBits": 1054280253
+      }
+    },
+    {
+      "name": "explicit_0.4_-1_scale1.05_flagsTrue",
+      "passRadius": 0.4,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1054280253,
+        "pathRadiusBits": 1055689539
+      }
+    },
+    {
+      "name": "explicit_0.4_-1_scale2_flagsFalse",
+      "passRadius": 0.4,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1061997773,
+        "pathRadiusBits": 1061997773
+      }
+    },
+    {
+      "name": "explicit_0.4_-1_scale2_flagsTrue",
+      "passRadius": 0.4,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1061997773,
+        "pathRadiusBits": 1063339951
+      }
+    },
+    {
+      "name": "explicit_0.4_0.7_scale1_flagsFalse",
+      "passRadius": 0.4,
+      "pathRadius": 0.7,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1053609165,
+        "pathRadiusBits": 1060320051
+      }
+    },
+    {
+      "name": "explicit_0.4_0.7_scale1_flagsTrue",
+      "passRadius": 0.4,
+      "pathRadius": 0.7,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1053609165,
+        "pathRadiusBits": 1061494456
+      }
+    },
+    {
+      "name": "explicit_0.4_0.7_scale1.05_flagsFalse",
+      "passRadius": 0.4,
+      "pathRadius": 0.7,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1054280253,
+        "pathRadiusBits": 1060320051
+      }
+    },
+    {
+      "name": "explicit_0.4_0.7_scale1.05_flagsTrue",
+      "passRadius": 0.4,
+      "pathRadius": 0.7,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1054280253,
+        "pathRadiusBits": 1061494456
+      }
+    },
+    {
+      "name": "explicit_0.4_0.7_scale2_flagsFalse",
+      "passRadius": 0.4,
+      "pathRadius": 0.7,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1061997773,
+        "pathRadiusBits": 1060320051
+      }
+    },
+    {
+      "name": "explicit_0.4_0.7_scale2_flagsTrue",
+      "passRadius": 0.4,
+      "pathRadius": 0.7,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1061997773,
+        "pathRadiusBits": 1061494456
+      }
+    },
+    {
+      "name": "explicit_-0.0_-1_scale1_flagsFalse",
+      "passRadius": -0.0,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 2147483648,
+        "pathRadiusBits": 2147483648
+      }
+    },
+    {
+      "name": "explicit_-0.0_-1_scale1_flagsTrue",
+      "passRadius": -0.0,
+      "pathRadius": -1,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 2147483648,
+        "pathRadiusBits": 2147483648
+      }
+    },
+    {
+      "name": "explicit_-0.0_-1_scale1.05_flagsFalse",
+      "passRadius": -0.0,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 2147483648,
+        "pathRadiusBits": 2147483648
+      }
+    },
+    {
+      "name": "explicit_-0.0_-1_scale1.05_flagsTrue",
+      "passRadius": -0.0,
+      "pathRadius": -1,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 2147483648,
+        "pathRadiusBits": 2147483648
+      }
+    },
+    {
+      "name": "explicit_-0.0_-1_scale2_flagsFalse",
+      "passRadius": -0.0,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 2147483648,
+        "pathRadiusBits": 2147483648
+      }
+    },
+    {
+      "name": "explicit_-0.0_-1_scale2_flagsTrue",
+      "passRadius": -0.0,
+      "pathRadius": -1,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 2147483648,
+        "pathRadiusBits": 2147483648
+      }
+    },
+    {
+      "name": "explicit_-1_0.7_scale1_flagsFalse",
+      "passRadius": -1,
+      "pathRadius": 0.7,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050253722,
+        "pathRadiusBits": 1060320051
+      }
+    },
+    {
+      "name": "explicit_-1_0.7_scale1_flagsTrue",
+      "passRadius": -1,
+      "pathRadius": 0.7,
+      "scale": 1,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050253722,
+        "pathRadiusBits": 1061494456
+      }
+    },
+    {
+      "name": "explicit_-1_0.7_scale1.05_flagsFalse",
+      "passRadius": -1,
+      "pathRadius": 0.7,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050757038,
+        "pathRadiusBits": 1060320051
+      }
+    },
+    {
+      "name": "explicit_-1_0.7_scale1.05_flagsTrue",
+      "passRadius": -1,
+      "pathRadius": 0.7,
+      "scale": 1.05,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1050757038,
+        "pathRadiusBits": 1061494456
+      }
+    },
+    {
+      "name": "explicit_-1_0.7_scale2_flagsFalse",
+      "passRadius": -1,
+      "pathRadius": 0.7,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": false,
+      "forceNavigateAroundObject": false,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1058642330,
+        "pathRadiusBits": 1060320051
+      }
+    },
+    {
+      "name": "explicit_-1_0.7_scale2_flagsTrue",
+      "passRadius": -1,
+      "pathRadius": 0.7,
+      "scale": 2,
+      "modelRadius": 2.5,
+      "big": true,
+      "forceNavigateAroundObject": true,
+      "stances": [
+        {
+          "id": 2,
+          "x": 0.2,
+          "y": 0.3,
+          "capsule": true
+        }
+      ],
+      "expected": {
+        "passRadiusBits": 1058642330,
+        "pathRadiusBits": 1061494456
+      }
+    }
+  ]
+}

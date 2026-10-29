@@ -1,0 +1,371 @@
+{
+  "scope": "Complete original ActorMovementController392EAFC0 and Player prephysics rotation/movement pipeline392F5240/62A0/54E0/15E0/4DB0/0E60 under Unicorn. Declared upright dry NPC/absentclientcontroller/attribut10zero/turnslowdisabled interface observations. Actual request sent to Animated192 is copied, no physicsStep or DLLload.",
+  "rows": [
+    {
+      "name": "0",
+      "entityRotation": [
+        0,
+        0,
+        0.0,
+        1.0
+      ],
+      "localDelta": [
+        0,
+        0.5,
+        0
+      ],
+      "air": false,
+      "input": {
+        "delta": [
+          0.0,
+          0.5,
+          0.0
+        ],
+        "rotationAngles": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "bodyRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actorViewRotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "controllerLook": [
+        10.0,
+        30.0,
+        11.5
+      ],
+      "request": [
+        {
+          "type": 1,
+          "velocity": [
+            0.0,
+            3.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "allowStrafing": false
+        }
+      ]
+    },
+    {
+      "name": "1",
+      "entityRotation": [
+        0,
+        0,
+        0.0,
+        1.0
+      ],
+      "localDelta": [
+        0.5,
+        0,
+        0
+      ],
+      "air": false,
+      "input": {
+        "delta": [
+          0.5,
+          0.0,
+          0.0
+        ],
+        "rotationAngles": [
+          0.0,
+          0.0,
+          -1.5707963705062866
+        ]
+      },
+      "bodyRotation": [
+        0.0,
+        0.0,
+        -0.7071068286895752,
+        0.7071068286895752
+      ],
+      "actorViewRotation": [
+        0.0,
+        0.0,
+        -0.7071068286895752,
+        0.7071068286895752
+      ],
+      "controllerLook": [
+        10.0,
+        30.0,
+        11.5
+      ],
+      "request": [
+        {
+          "type": 1,
+          "velocity": [
+            3.5762786865234375e-07,
+            -3.000000476837158,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            -0.7071068286895752,
+            0.7071068286895752
+          ],
+          "allowStrafing": false
+        }
+      ]
+    },
+    {
+      "name": "2",
+      "entityRotation": [
+        0,
+        0,
+        0.0,
+        1.0
+      ],
+      "localDelta": [
+        -0.5,
+        0,
+        0
+      ],
+      "air": false,
+      "input": {
+        "delta": [
+          -0.5,
+          0.0,
+          0.0
+        ],
+        "rotationAngles": [
+          0.0,
+          0.0,
+          1.5707963705062866
+        ]
+      },
+      "bodyRotation": [
+        0.0,
+        0.0,
+        0.7071068286895752,
+        0.7071068286895752
+      ],
+      "actorViewRotation": [
+        0.0,
+        0.0,
+        0.7071068286895752,
+        0.7071068286895752
+      ],
+      "controllerLook": [
+        10.0,
+        30.0,
+        11.5
+      ],
+      "request": [
+        {
+          "type": 1,
+          "velocity": [
+            -3.5762786865234375e-07,
+            -3.000000476837158,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.7071068286895752,
+            0.7071068286895752
+          ],
+          "allowStrafing": false
+        }
+      ]
+    },
+    {
+      "name": "3",
+      "entityRotation": [
+        0,
+        0,
+        0.0,
+        1.0
+      ],
+      "localDelta": [
+        0,
+        -0.5,
+        0
+      ],
+      "air": false,
+      "input": {
+        "delta": [
+          0.0,
+          -0.5,
+          0.0
+        ],
+        "rotationAngles": [
+          0.0,
+          0.0,
+          -3.1415927410125732
+        ]
+      },
+      "bodyRotation": [
+        0.0,
+        0.0,
+        -1.0,
+        -4.371138828673793e-08
+      ],
+      "actorViewRotation": [
+        0.0,
+        0.0,
+        -1.0,
+        -4.371138828673793e-08
+      ],
+      "controllerLook": [
+        10.0,
+        30.0,
+        11.5
+      ],
+      "request": [
+        {
+          "type": 1,
+          "velocity": [
+            2.6226831550957286e-07,
+            3.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            -1.0,
+            -4.371138828673793e-08
+          ],
+          "allowStrafing": false
+        }
+      ]
+    },
+    {
+      "name": "4",
+      "entityRotation": [
+        0,
+        0,
+        0.5646424889564514,
+        0.8253356218338013
+      ],
+      "localDelta": [
+        0.2,
+        0.3,
+        0
+      ],
+      "air": false,
+      "input": {
+        "delta": [
+          0.20000000298023224,
+          0.30000001192092896,
+          0.0
+        ],
+        "rotationAngles": [
+          0.0,
+          0.0,
+          -0.5880021452903748
+        ]
+      },
+      "bodyRotation": [
+        0.0,
+        0.0,
+        0.30124586820602417,
+        0.9535465240478516
+      ],
+      "actorViewRotation": [
+        0.0,
+        0.0,
+        0.30124586820602417,
+        0.9535465240478516
+      ],
+      "controllerLook": [
+        0.6796083450317383,
+        23.623577117919922,
+        11.5
+      ],
+      "request": [
+        {
+          "type": 1,
+          "velocity": [
+            -0.051904767751693726,
+            2.162708282470703,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            -0.28978392481803894,
+            0.9570921063423157
+          ],
+          "allowStrafing": false
+        }
+      ]
+    },
+    {
+      "name": "5",
+      "entityRotation": [
+        0,
+        0,
+        0.0,
+        1.0
+      ],
+      "localDelta": [
+        0.5,
+        0.3,
+        0
+      ],
+      "air": true,
+      "input": {
+        "delta": [
+          0.5,
+          0.30000001192092896,
+          0.0
+        ],
+        "rotationAngles": [
+          0.0,
+          0.0,
+          -1.030377984046936
+        ]
+      },
+      "bodyRotation": [
+        0.0,
+        0.0,
+        -0.4926993250846863,
+        0.8701996207237244
+      ],
+      "actorViewRotation": [
+        0.0,
+        0.0,
+        -0.4926993250846863,
+        0.8701996207237244
+      ],
+      "controllerLook": [
+        10.0,
+        30.0,
+        11.5
+      ],
+      "request": [
+        {
+          "type": 1,
+          "velocity": [
+            3.086972713470459,
+            -1.6463898420333862,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            -0.4926993250846863,
+            0.8701996207237244
+          ],
+          "allowStrafing": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4212 @@
+{
+  "source": "cryaisystem3116CCBC with original3116B94C/3116BD2C and path helpers",
+  "imageSha256": "a740d58c6a3c851d84967e9513125c48b9326cbb70462ad1f57e6e60aadfe921",
+  "crt": "scalar CRT trigonometry replaced with libm rounded f32; sqrt instructions original",
+  "controls": [
+    {
+      "name": "fresh_idle",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          0,
+          0,
+          0
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "idle_retains_body",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        1,
+        2,
+        3
+      ],
+      "previousBody": [
+        7,
+        8,
+        9
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "body": [
+          7.0,
+          8.0,
+          9.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          0,
+          0,
+          0
+        ],
+        "bodyBits": [
+          1088421888,
+          1090519040,
+          1091567616
+        ]
+      }
+    },
+    {
+      "name": "moving_0_turn_0",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          0,
+          0,
+          0
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_0_turn_0.5",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.5,
+      "combatTurnSpeed": 0.5,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          0,
+          0,
+          0
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_0_turn_6.2831855",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 6.2831855,
+      "combatTurnSpeed": 6.2831855,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          0,
+          0,
+          0
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_0.005_turn_0",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 0.005,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          38.284271240234375,
+          48.284271240234375,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1108943640,
+          1111565080,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_0.005_turn_0.5",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 0.005,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.5,
+      "combatTurnSpeed": 0.5,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          11.999166488647461,
+          59.950008392333984,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1094712470,
+          1114623183,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_0.005_turn_6.2831855",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 0.005,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 6.2831855,
+      "combatTurnSpeed": 6.2831855,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          33.51141357421875,
+          52.360679626464844,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1107692464,
+          1112633686,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_1_turn_0",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 1,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          38.284271240234375,
+          48.284271240234375,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1108943640,
+          1111565080,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_1_turn_0.5",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 1,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.5,
+      "combatTurnSpeed": 0.5,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          11.999166488647461,
+          59.950008392333984,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1094712470,
+          1114623183,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_1_turn_6.2831855",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 1,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 6.2831855,
+      "combatTurnSpeed": 6.2831855,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          33.51141357421875,
+          52.360679626464844,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1107692464,
+          1112633686,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_3_turn_0",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 3,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          38.284271240234375,
+          48.284271240234375,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1108943640,
+          1111565080,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_3_turn_0.5",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 3,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.5,
+      "combatTurnSpeed": 0.5,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          11.999166488647461,
+          59.950008392333984,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1094712470,
+          1114623183,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "moving_3_turn_6.2831855",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "originalPath": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          15,
+          25,
+          0
+        ]
+      ],
+      "fraction": 0,
+      "desiredSpeed": 3,
+      "movementDirection": [
+        1,
+        1,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 6.2831855,
+      "combatTurnSpeed": 6.2831855,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          33.51141357421875,
+          52.360679626464844,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1107692464,
+          1112633686,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_5_[10, 20, 2.5]_0",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          10,
+          20,
+          2.5
+        ],
+        "entityPosition": [
+          10,
+          20,
+          0.5
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.0,
+          20.0,
+          2.1294095516204834
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1092616192,
+          1101004800,
+          1074284607
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_5_[10, 20, 2.5]_0.6",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          10,
+          20,
+          2.5
+        ],
+        "entityPosition": [
+          10,
+          20,
+          0.5
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 0.6,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.0,
+          20.1273193359375,
+          2.0231680870056152
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1092616192,
+          1101071552,
+          1073838998
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_5_[10, 20, 2.5]_6.2831855",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          10,
+          20,
+          2.5
+        ],
+        "entityPosition": [
+          10,
+          20,
+          0.5
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 6.2831855,
+      "combatTurnSpeed": 6.2831855,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.0,
+          20.0,
+          2.1294095516204834
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1092616192,
+          1101004800,
+          1074284607
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_2_[11, 21, 5]_0",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          11,
+          21,
+          5
+        ],
+        "entityPosition": [
+          11,
+          21,
+          3
+        ],
+        "type": 2
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          11.0,
+          21.0,
+          5.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1093664768,
+          1101529088,
+          1084227584
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_2_[11, 21, 5]_0.6",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          11,
+          21,
+          5
+        ],
+        "entityPosition": [
+          11,
+          21,
+          3
+        ],
+        "type": 2
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 0.6,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.234450340270996,
+          23.286670684814453,
+          2.377924680709839
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1092862031,
+          1102727962,
+          1075326955
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_2_[11, 21, 5]_6.2831855",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          11,
+          21,
+          5
+        ],
+        "entityPosition": [
+          11,
+          21,
+          3
+        ],
+        "type": 2
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 6.2831855,
+      "combatTurnSpeed": 6.2831855,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          11.0,
+          21.0,
+          5.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1093664768,
+          1101529088,
+          1084227584
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_101_[11, 21, 5]_0",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          11,
+          21,
+          5
+        ],
+        "entityPosition": [
+          11,
+          21,
+          3
+        ],
+        "type": 101
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          11.0,
+          21.0,
+          2.858405590057373
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1093664768,
+          1101529088,
+          1077342238
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_101_[11, 21, 5]_0.6",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          11,
+          21,
+          5
+        ],
+        "entityPosition": [
+          11,
+          21,
+          3
+        ],
+        "type": 101
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 0.6,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.110209465026855,
+          21.648921966552734,
+          2.0759477615356445
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1092731755,
+          1101869310,
+          1074060372
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_101_[11, 21, 5]_6.2831855",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          11,
+          21,
+          5
+        ],
+        "entityPosition": [
+          11,
+          21,
+          3
+        ],
+        "type": 101
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 6.2831855,
+      "combatTurnSpeed": 6.2831855,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.948922157287598,
+          21.09593963623047,
+          2.7970712184906006
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1093611209,
+          1101579388,
+          1077084983
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_5_[-20, -10, 5]_0",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          -20,
+          -10,
+          5
+        ],
+        "entityPosition": [
+          -20,
+          -10,
+          3
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          -20.0,
+          -10.0,
+          5.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          3248488448,
+          3240099840,
+          1084227584
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_5_[-20, -10, 5]_0.6",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          -20,
+          -10,
+          5
+        ],
+        "entityPosition": [
+          -20,
+          -10,
+          3
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 0.6,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          2.381758213043213,
+          61.84428405761719,
+          2.13572359085083
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1075343034,
+          1115119756,
+          1074311090
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "attention_5_[-20, -10, 5]_6.2831855",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          -20,
+          -10,
+          5
+        ],
+        "entityPosition": [
+          -20,
+          -10,
+          3
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 6.2831855,
+      "combatTurnSpeed": 6.2831855,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          -30.360671997070312,
+          6.828960418701172,
+          4.557287693023682
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          3253920424,
+          1088063192,
+          1083299149
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "strafe_2_False_False",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          15,
+          20,
+          2
+        ],
+        "entityPosition": [
+          15,
+          20,
+          0
+        ],
+        "type": 2
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 20,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": true,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 1.2,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.895148277282715,
+          24.919218063354492,
+          2.0
+        ],
+        "body": [
+          10.948023796081543,
+          25.297306060791016,
+          -0.19949278235435486
+        ],
+        "allowStrafing": true,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1093554823,
+          1103583887,
+          1073741824
+        ],
+        "bodyBits": [
+          1093610267,
+          1103782114,
+          3192670166
+        ]
+      }
+    },
+    {
+      "name": "strafe_2_False_True",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          15,
+          20,
+          2
+        ],
+        "entityPosition": [
+          15,
+          20,
+          0
+        ],
+        "type": 2
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 20,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": true,
+      "direct": true,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 1.2,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          15.0,
+          20.0,
+          2.0
+        ],
+        "body": [
+          15.0,
+          20.0,
+          0.0
+        ],
+        "allowStrafing": true,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1097859072,
+          1101004800,
+          1073741824
+        ],
+        "bodyBits": [
+          1097859072,
+          1101004800,
+          0
+        ]
+      }
+    },
+    {
+      "name": "strafe_2_True_False",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          15,
+          20,
+          2
+        ],
+        "entityPosition": [
+          15,
+          20,
+          0
+        ],
+        "type": 2
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 20,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": true,
+      "instantStrafe": false,
+      "direct": true,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        10,
+        30,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 1.2,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.895148277282715,
+          24.919218063354492,
+          2.0
+        ],
+        "body": [
+          10.948023796081543,
+          25.297306060791016,
+          -0.19949278235435486
+        ],
+        "allowStrafing": true,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1093554823,
+          1103583887,
+          1073741824
+        ],
+        "bodyBits": [
+          1093610267,
+          1103782114,
+          3192670166
+        ]
+      }
+    },
+    {
+      "name": "strafe_2_True_True",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          15,
+          20,
+          2
+        ],
+        "entityPosition": [
+          15,
+          20,
+          0
+        ],
+        "type": 2
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 20,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": true,
+      "instantStrafe": true,
+      "direct": true,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        10,
+        30,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 1.2,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          15.0,
+          20.0,
+          2.0
+        ],
+        "body": [
+          15.0,
+          20.0,
+          0.0
+        ],
+        "allowStrafing": true,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1097859072,
+          1101004800,
+          1073741824
+        ],
+        "bodyBits": [
+          1097859072,
+          1101004800,
+          0
+        ]
+      }
+    },
+    {
+      "name": "strafe_5_False_False",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          10,
+          21,
+          4
+        ],
+        "entityPosition": [
+          10,
+          21,
+          2
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 20,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": true,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 1.2,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.0,
+          22.222759246826172,
+          2.2436044216156006
+        ],
+        "body": [
+          10.0,
+          21.0,
+          2.0
+        ],
+        "allowStrafing": true,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1092616192,
+          1102170166,
+          1074763575
+        ],
+        "bodyBits": [
+          1092616192,
+          1101529088,
+          1073741824
+        ]
+      }
+    },
+    {
+      "name": "strafe_5_False_True",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          10,
+          21,
+          4
+        ],
+        "entityPosition": [
+          10,
+          21,
+          2
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 20,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": true,
+      "direct": true,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 1.2,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.0,
+          21.0,
+          4.0
+        ],
+        "body": [
+          10.0,
+          21.0,
+          2.0
+        ],
+        "allowStrafing": true,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1092616192,
+          1101529088,
+          1082130432
+        ],
+        "bodyBits": [
+          1092616192,
+          1101529088,
+          1073741824
+        ]
+      }
+    },
+    {
+      "name": "strafe_5_True_False",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          10,
+          21,
+          4
+        ],
+        "entityPosition": [
+          10,
+          21,
+          2
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 20,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": true,
+      "instantStrafe": false,
+      "direct": true,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        10,
+        30,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 1.2,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.0,
+          22.222759246826172,
+          2.2436044216156006
+        ],
+        "body": [
+          10.0,
+          21.0,
+          2.0
+        ],
+        "allowStrafing": true,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1092616192,
+          1102170166,
+          1074763575
+        ],
+        "bodyBits": [
+          1092616192,
+          1101529088,
+          1073741824
+        ]
+      }
+    },
+    {
+      "name": "strafe_5_True_True",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          10,
+          21,
+          4
+        ],
+        "entityPosition": [
+          10,
+          21,
+          2
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 20,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": true,
+      "instantStrafe": true,
+      "direct": true,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        10,
+        30,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 1.2,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.0,
+          21.0,
+          4.0
+        ],
+        "body": [
+          10.0,
+          21.0,
+          2.0
+        ],
+        "allowStrafing": true,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1092616192,
+          1101529088,
+          1082130432
+        ],
+        "bodyBits": [
+          1092616192,
+          1101529088,
+          1073741824
+        ]
+      }
+    },
+    {
+      "name": "loose_point",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          15,
+          20,
+          8
+        ],
+        "entityPosition": [
+          15,
+          20,
+          8
+        ],
+        "type": 2
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": true,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          11.274348258972168,
+          27.677343368530273,
+          2.659123182296753
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1093952443,
+          1105029939,
+          1076506387
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "no_path_blends_body",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 2,
+      "movementDirection": [
+        1,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          10.0,
+          60.0,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1092616192,
+          1114636288,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "short_path_blends",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          10.2,
+          20.1,
+          0
+        ]
+      ],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 2,
+      "movementDirection": [
+        1,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          12.236052513122559,
+          59.93745422363281,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1094960863,
+          1114619892,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "modifier72_positive",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          20,
+          20,
+          2
+        ],
+        "entityPosition": [
+          20,
+          20,
+          0
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 100,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          13.52274227142334,
+          29.35896873474121,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1096310055,
+          1105911595,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "modifier72_zero_turn",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          20,
+          20,
+          2
+        ],
+        "entityPosition": [
+          20,
+          20,
+          0
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.6,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": -100,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          20.0,
+          20.0,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1101004800,
+          1101004800,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "combat_speed",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          20,
+          20,
+          2
+        ],
+        "entityPosition": [
+          20,
+          20,
+          0
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0.2,
+      "combatTurnSpeed": 1.2,
+      "alertness": 2,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          13.52274227142334,
+          29.35896873474121,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1096310055,
+          1105911595,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "can_turn_false",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": {
+        "viewPosition": [
+          20,
+          20,
+          2
+        ],
+        "entityPosition": [
+          20,
+          20,
+          0
+        ],
+        "type": 5
+      },
+      "path": [],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 0,
+      "movementDirection": [
+        0,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 20,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": true,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": false,
+      "loose": false,
+      "actorTargetPhase": 0,
+      "expected": {
+        "look": [
+          20.0,
+          20.0,
+          2.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          1101004800,
+          1101004800,
+          1073741824
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "special_phase_suppresses_move",
+      "viewPosition": [
+        10,
+        20,
+        2
+      ],
+      "entityPosition": [
+        10,
+        20,
+        0
+      ],
+      "bodyDirection": [
+        0,
+        1,
+        0
+      ],
+      "attention": null,
+      "path": [
+        [
+          10,
+          20,
+          0
+        ],
+        [
+          20,
+          20,
+          0
+        ]
+      ],
+      "originalPath": [],
+      "fraction": 0,
+      "desiredSpeed": 2,
+      "movementDirection": [
+        1,
+        0,
+        0
+      ],
+      "remaining": 0,
+      "strafeStart": 0,
+      "strafeEnd": 0,
+      "strafeProgress": 0,
+      "pathStart": [
+        10,
+        20,
+        2
+      ],
+      "movementOutput": [],
+      "wasStrafing": false,
+      "instantStrafe": false,
+      "direct": false,
+      "previousLook": [
+        0,
+        0,
+        0
+      ],
+      "previousBody": [
+        0,
+        0,
+        0
+      ],
+      "idleTurnSpeed": 0,
+      "combatTurnSpeed": 0,
+      "alertness": 0,
+      "attribute72": 0,
+      "elapsed": 0.1,
+      "canTurn": true,
+      "loose": false,
+      "actorTargetPhase": 3,
+      "expected": {
+        "look": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "body": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "allowStrafing": false,
+        "strafeProgress": 0.0,
+        "lookBits": [
+          0,
+          0,
+          0
+        ],
+        "bodyBits": [
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "constructor": {
+    "source": "original31009BBC and its31009ABC reset tail, fully executed",
+    "bodyState": 0,
+    "desiredSpeedBits": 1065353216,
+    "urgencyBits": 1053609165,
+    "goalUrgencyBits": 1053609165,
+    "distanceBits": 3212836864,
+    "look": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "body": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "move": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "lookEnabled": false,
+    "allowStrafing": false
+  },
+  "intervalSource": "original31173842..311738bf instructions, including signed64 CVTSI2SS and publication",
+  "intervalControls": [
+    {
+      "previous": 0,
+      "now": 0,
+      "timePassed": 0.0,
+      "timePassedBits": 0,
+      "publishedClock": 0
+    },
+    {
+      "previous": 0,
+      "now": 5000000,
+      "timePassed": 0.0,
+      "timePassedBits": 0,
+      "publishedClock": 5000000
+    },
+    {
+      "previous": 1,
+      "now": 20001,
+      "timePassed": 0.019999999552965164,
+      "timePassedBits": 1017370378,
+      "publishedClock": 20001
+    },
+    {
+      "previous": 5000000,
+      "now": 5020000,
+      "timePassed": 0.019999999552965164,
+      "timePassedBits": 1017370378,
+      "publishedClock": 5020000
+    },
+    {
+      "previous": 5000000,
+      "now": 5150000,
+      "timePassed": 0.15000000596046448,
+      "timePassedBits": 1041865114,
+      "publishedClock": 5150000
+    },
+    {
+      "previous": 5000000,
+      "now": 5499999,
+      "timePassed": 0.4999989867210388,
+      "timePassedBits": 1056964574,
+      "publishedClock": 5499999
+    },
+    {
+      "previous": 5000000,
+      "now": 5500000,
+      "timePassed": 0.5,
+      "timePassedBits": 1056964608,
+      "publishedClock": 5500000
+    },
+    {
+      "previous": 5000000,
+      "now": 5500001,
+      "timePassed": 0.5,
+      "timePassedBits": 1056964608,
+      "publishedClock": 5500001
+    },
+    {
+      "previous": 5000000,
+      "now": 7000000,
+      "timePassed": 0.5,
+      "timePassedBits": 1056964608,
+      "publishedClock": 7000000
+    },
+    {
+      "previous": 5000000,
+      "now": 4900000,
+      "timePassed": -0.10000000149011612,
+      "timePassedBits": 3184315597,
+      "publishedClock": 4900000
+    },
+    {
+      "previous": 5000000000,
+      "now": 5000020000,
+      "timePassed": 0.019999999552965164,
+      "timePassedBits": 1017370378,
+      "publishedClock": 5000020000
+    },
+    {
+      "previous": 4294967296,
+      "now": 4295117296,
+      "timePassed": 0.15000000596046448,
+      "timePassedBits": 1041865114,
+      "publishedClock": 4295117296
+    },
+    {
+      "previous": -1,
+      "now": 20000,
+      "timePassed": 0.0,
+      "timePassedBits": 0,
+      "publishedClock": 20000
+    },
+    {
+      "previous": -5000000,
+      "now": 5000000,
+      "timePassed": 0.0,
+      "timePassedBits": 0,
+      "publishedClock": 5000000
+    },
+    {
+      "previous": 9223372036850000000,
+      "now": 9223372036850020000,
+      "timePassed": 0.019999999552965164,
+      "timePassedBits": 1017370378,
+      "publishedClock": 9223372036850020000
+    }
+  ]
+}

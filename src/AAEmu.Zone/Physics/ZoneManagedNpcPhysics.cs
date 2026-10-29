@@ -214,6 +214,12 @@ public sealed class ZoneManagedNpcBodyLease : IZoneNavigationLocomotion, IZoneAn
     /// <summary>World-local meters/second, not an actual velocity or pose. Native modes0/3 remain distinct.</summary>
     public void RequestVelocity(Vector3 velocity, ZonePhysicsLivingVelocityMode mode = ZonePhysicsLivingVelocityMode.Normal)
     { Require(); _owner.Backend.ApplyLivingVelocityRequest(Actor, velocity, mode); }
+    /// <summary>Queue the source-produced absolute upright orientation without a pose correction or motion reset.</summary>
+    public void RequestOrientation(Quaternion absoluteOrientation)
+    { Require(); _owner.Backend.SetLivingOrientation(Actor, absoluteOrientation); }
+    /// <summary>Copied latest queued rotation, independent of the currently applied physical orientation.</summary>
+    public bool TryReadPendingOrientation(out Quaternion orientation)
+    { Require(); return _owner.Backend.TryReadPendingLivingOrientation(Actor, out orientation); }
     public bool TryRequestVelocity(Vector3 velocity)
     { if (!IsCurrent) return false; _owner.Backend.ApplyLivingVelocityRequest(Actor, velocity); return true; }
     public bool TryReadPosition(out Vector3 position)

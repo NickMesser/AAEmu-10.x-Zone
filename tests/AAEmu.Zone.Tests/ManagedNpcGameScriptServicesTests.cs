@@ -91,6 +91,24 @@ public sealed class ManagedNpcGameScriptServicesTests
     }
 
     [Test]
+    public async Task CreateBuffReturnsTheOriginalBooleanAndRequestsWorldWithoutOptimisticLocalEffects()
+    {
+        var service = new Requests();
+        using var fixture = new ManagedNpcScriptEffectsTests.Fixture(_ => service); using var actor = fixture.Admit();
+        var frames = new List<ZoneFrame>();
+        service.Owner = new(fixture.Admission.Registry, fixture.Admission.Catalog, frames.Add, _ => default);
+        var buffs = actor.Actor.Npc.Unit.Buffs;
+        var initialCount = buffs.Good.Count + buffs.Bad.Count + buffs.Hidden.Count;
+        using var result = fixture.Lua.Execute("return entity.unit:CreateBuff(815)");
+        await Assert.That(result[0] is true).IsTrue();
+        var frame = frames.Single();
+        await Assert.That(frame.Opcode).IsEqualTo(ZwOpcodes.CreateBuff);
+        await Assert.That(BuffCreationRequest.Read(frame.Body.Span)).IsEqualTo(new BuffCreationRequest(actor.Actor.Npc.ObjectId, 815));
+        await Assert.That(ReferenceEquals(actor.Actor.Npc.Unit.Buffs, buffs)).IsTrue();
+        await Assert.That(actor.Actor.Npc.Unit.Buffs.Good.Count + actor.Actor.Npc.Unit.Buffs.Bad.Count + actor.Actor.Npc.Unit.Buffs.Hidden.Count).IsEqualTo(initialCount);
+    }
+
+    [Test]
     public async Task RemoveBuffReturnsTheOriginalBooleanAndOnlySendsATemplateRequest()
     {
         var service = new Requests();
@@ -151,7 +169,7 @@ public sealed class ManagedNpcGameScriptServicesTests
         var requests = new ZoneManagedNpcGameScriptRequests(registry, fixture.Admission.Catalog,
             _ => throw new InvalidOperationException("Scoped requests must use the registry's exact owner queue."),
             _ => new(17, 900, 23), queueWithActorScope: true);
-        requests.StopCasting(actor.Actor); requests.RemoveBuff(actor.Actor, 815);
+        requests.StopCasting(actor.Actor); requests.CreateBuff(actor.Actor, 815); requests.RemoveBuff(actor.Actor, 815);
         fixture.Scene.Remove(actor.Actor.Handle);
         requests.Retire(actor.Actor);
         await Assert.That(registry.TryDequeueNotification(out var retained)).IsTrue();
@@ -168,6 +186,7 @@ public sealed class ManagedNpcGameScriptServicesTests
     private sealed class Requests : IZoneManagedNpcScriptServices
     {
         public ZoneManagedNpcGameScriptRequests Owner { get; set; } = null!;
+        public bool CreateBuff(ZoneManagedNpcActor actor, uint buffType) => Owner.CreateBuff(actor, buffType);
         public bool RemoveBuff(ZoneManagedNpcActor actor, uint buffType) => Owner.RemoveBuff(actor, buffType);
     }
 }

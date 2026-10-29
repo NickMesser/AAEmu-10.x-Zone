@@ -24,8 +24,8 @@ public sealed class UnitMovementStatusTests
         using var command = db.CreateCommand();
         command.CommandText = """
             CREATE TABLE buffs(id,kind_id,stack_rule_id,max_stack,max_charge,max_life_time,per_unit_creation,one_time,
-              off_passive,off_passive_exection_tag_id,remove_on_land,gliding,scale,scaleDuration,stun,sleep,root,psychokinesis,psychokinesis_speed);
-            INSERT INTO buffs VALUES(100,1,1,1,1,0,'f','f','f',0,'f','f',1,1,'T','t','1','t',2.75);
+              off_passive,off_passive_exection_tag_id,remove_on_land,gliding,scale,scaleDuration,stun,sleep,root,psychokinesis,psychokinesis_speed,impossible_rotate);
+            INSERT INTO buffs VALUES(100,1,1,1,1,0,'f','f','f',0,'f','f',1,1,'T','t','1','t',2.75,'t');
             CREATE TABLE passive_buffs(id,buff_id,active,ability_id,level);
             CREATE TABLE buff_unit_modifiers(id,owner_id,buff_id,tag_id,owner_type,enable);
             CREATE TABLE tagged_buffs(id,buff_id,tag_id);
@@ -38,7 +38,7 @@ public sealed class UnitMovementStatusTests
             """;
         command.ExecuteNonQuery();
         var template = ZoneBuffContent.Load(db).Template(100);
-        await Assert.That(template.Stun && template.Sleep && template.Root && template.Psychokinesis).IsTrue();
+        await Assert.That(template.Stun && template.Sleep && template.Root && template.Psychokinesis && template.ImpossibleRotate).IsTrue();
         await Assert.That(template.PsychokinesisSpeed).IsEqualTo(2.75f);
     }
 
@@ -221,9 +221,99 @@ public sealed class UnitMovementStatusTests
     [Test]
     public async Task CounterByteBoundsRetainTheirPreviousValueInsteadOfWrapping()
     {
-        var all = Stun() with { Sleep = true, Root = true };
-        await Assert.That(ZoneBuffMovementStatus.Add(new(255, 255, 255), all)).IsEqualTo(new ZoneBuffMovementStatusCounters(255, 255, 255));
+        var all = Stun() with { Sleep = true, Root = true, Psychokinesis = true, ImpossibleRotate = true };
+        await Assert.That(ZoneBuffMovementStatus.Add(new(255, 255, 255, 255, 255), all)).IsEqualTo(new ZoneBuffMovementStatusCounters(255, 255, 255, 255, 255));
         await Assert.That(ZoneBuffMovementStatus.Remove(default, all)).IsEqualTo(default(ZoneBuffMovementStatusCounters));
+    }
+
+    [Test]
+    public async Task TurnFlagsRestoreBeforeAdmissionAndRetainTheirCounterHistoryAcrossDeathAndResurrection()
+    {
+        var template = new BuffStatTemplate(400, 3, 4, 255, 255, 0, false, false, Psychokinesis: true, ImpossibleRotate: true);
+        var (registry, unit) = Owner(Content([template]), new([], [], [Buff(400, 1)]));
+        var restored = unit.MovementStatus.CopySnapshot();
+        await Assert.That(restored.Psychokinesis && restored.ImpossibleRotate).IsTrue();
+        await Assert.That(restored.PsychokinesisCounter).IsEqualTo((byte)1);
+        await Assert.That(restored.ImpossibleRotateCounter).IsEqualTo((byte)1);
+        registry.CreateBuff(Created(400, 2).ToFrame().Body.Span); //Refresh changes the instance index, not either count.
+        await Assert.That(unit.MovementStatus.CopySnapshot()).IsEqualTo(restored);
+        registry.Kill(new UnitDeath(ObjectId).ToFrame().Body.Span);
+        var cleared = unit.MovementStatus.CopySnapshot();
+        await Assert.That(cleared.Psychokinesis || cleared.ImpossibleRotate).IsFalse();
+        await Assert.That(cleared.PsychokinesisCounter).IsEqualTo((byte)1);
+        await Assert.That(cleared.ImpossibleRotateCounter).IsEqualTo((byte)1);
+        registry.UpdateBuff(new BuffUpdated(ObjectId, 2, 0, 0, 200, 3).ToFrame().Body.Span);
+        await Assert.That(unit.MovementStatus.CopySnapshot()).IsEqualTo(restored);
+        registry.Resurrect(new UnitResurrection(ObjectId, new(0, 0, 10), 0).ToFrame().Body.Span);
+        await Assert.That(unit.MovementStatus.CopySnapshot()).IsEqualTo(cleared);
+        registry.RemoveBuff(new BuffRemoved(ObjectId, 2).ToFrame().Body.Span);
+        await Assert.That(unit.MovementStatus.CopySnapshot()).IsEqualTo(default(ZoneUnitMovementStatusSnapshot));
+    }
+
+    [Test]
+    public async Task RemovingOneOfTwoPsychokinesisInstancesDoesNotClearTheIndependentCopiedUnitFlag()
+    {
+        var template = new BuffStatTemplate(400, 1, 6, 255, 255, 0, false, false, Psychokinesis: true);
+        var (registry, unit) = Owner(Content([template]));
+        registry.CreateBuff(Created(400, 1).ToFrame().Body.Span);
+        registry.CreateBuff(Created(400, 2).ToFrame().Body.Span);
+        await Assert.That(unit.MovementStatus.CopySnapshot().PsychokinesisCounter).IsEqualTo((byte)2);
+        registry.RemoveBuff(new BuffRemoved(ObjectId, 1).ToFrame().Body.Span);
+        //The separate native model-effect latch clears on either removal; Unit status comes from this retained cache.
+        await Assert.That(unit.MovementStatus.CopySnapshot().PsychokinesisCounter).IsEqualTo((byte)1);
+        await Assert.That(unit.MovementStatus.CopySnapshot().Psychokinesis).IsTrue();
+        registry.RemoveBuff(new BuffRemoved(ObjectId, 2).ToFrame().Body.Span);
+        await Assert.That(unit.MovementStatus.CopySnapshot().Psychokinesis).IsFalse();
+    }
+
+    [Test]
+    public async Task OriginalRecordedHarmlessRestoredBuffsAndTimingCopiesDoNotInventTurningStatuses()
+    {
+        //Original8173/8177 restore6613+3590;7987 restores1965. All five queried descriptor flags are false.
+        var templates = new uint[] { 6613, 3590, 1965 }.Select(id => new BuffStatTemplate(id, id == 1965 ? (byte)1 : (byte)3,
+            1, 1, 1, 0, false, false)).ToArray();
+        var (registry, unit) = Owner(Content(templates), new([Buff(1965, 1)], [], [Buff(6613, 2), Buff(3590, 3)]));
+        var before = unit.Buffs;
+        await Assert.That(unit.MovementStatus.CopySnapshot()).IsEqualTo(default(ZoneUnitMovementStatusSnapshot));
+        //Exercise the timing publication itself without claiming these original rows enable its manager gate.
+        unit.CommitBuffTiming(ZoneBuffTiming.Advance(unit.Buffs, Content(templates), 33).Buffs, unit.Stats);
+        await Assert.That(ReferenceEquals(before, unit.Buffs)).IsFalse();
+        await Assert.That(unit.Buffs.Hidden[0].Elapsed).IsEqualTo(33u);
+        await Assert.That(unit.MovementStatus.CopySnapshot()).IsEqualTo(default(ZoneUnitMovementStatusSnapshot));
+    }
+
+    [Test]
+    public async Task AllFiveCountersMatchTheOriginalVisitorAndCopiedFlagMachineCode()
+    {
+        using var stream = typeof(UnitMovementStatusTests).Assembly.GetManifestResourceStream("AAEmu.Zone.Tests.Fixtures.npc-buff-turn-status-native-controls.json")!;
+        using var fixture = JsonDocument.Parse(stream);
+        var count = 0;
+        foreach (var row in fixture.RootElement.GetProperty("rows").EnumerateArray())
+        {
+            var flags = row.GetProperty("flags").EnumerateArray().Select(v => v.GetBoolean()).ToArray();
+            var before = row.GetProperty("before").EnumerateArray().Select(v => v.GetByte()).ToArray();
+            var after = row.GetProperty("after").EnumerateArray().Select(v => v.GetByte()).ToArray();
+            var template = Stun() with { Stun = flags[0], Sleep = flags[1], Root = flags[2], Psychokinesis = flags[3], ImpossibleRotate = flags[4] };
+            var current = new ZoneBuffMovementStatusCounters(before[0], before[1], before[2], before[3], before[4]);
+            var actual = row.GetProperty("nativeMode").GetInt32() switch
+            { 1 => ZoneBuffMovementStatus.Add(current, template), 3 => ZoneBuffMovementStatus.Remove(current, template), _ => current };
+            await Assert.That(actual).IsEqualTo(new ZoneBuffMovementStatusCounters(after[0], after[1], after[2], after[3], after[4]));
+            count++;
+        }
+        foreach (var row in fixture.RootElement.GetProperty("copies").EnumerateArray())
+        {
+            var counters = row.GetProperty("counters").EnumerateArray().Select(v => v.GetByte()).ToArray();
+            var templates = new[] { Stun(), Sleep(), Root(), new BuffStatTemplate(400, 1, 1, 1, 1, 0, false, false, Psychokinesis: true),
+                new BuffStatTemplate(500, 1, 1, 1, 1, 0, false, false, ImpossibleRotate: true) };
+            var instances = counters.SelectMany((counter, index) => Enumerable.Range(0, counter).Select(_ => Buff(templates[index].Id, (uint)index))).ToArray();
+            var (_, unit) = Owner(Content(templates), new(instances, [], []));
+            var status = unit.MovementStatus.CopySnapshot();
+            await Assert.That(new[] { status.Stunned, status.Sleeping, status.Rooted, status.Psychokinesis, status.ImpossibleRotate }
+                .SequenceEqual(row.GetProperty("after").EnumerateArray().Select(v => v.GetByte() != 0))).IsTrue();
+            await Assert.That(row.GetProperty("statusCallbacks").EnumerateArray().Select(v => v.GetInt32()).SequenceEqual(new[] { 0, 1, 2, 11, 12 })).IsTrue();
+            count++;
+        }
+        await Assert.That(count).IsEqualTo(416);
     }
 
     [Test]

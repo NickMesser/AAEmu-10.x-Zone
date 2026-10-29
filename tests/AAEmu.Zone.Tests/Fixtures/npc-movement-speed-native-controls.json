@@ -1,0 +1,4367 @@
+{
+  "scope": "Original31169B4C speed triplet with declared proxy-state and atan2f ABI boundaries; no engine DLL loads.",
+  "imageSha256": "A740D58C6A3C851D84967E9513125C48B9326CBB70462AD1F57E6E60AADFE921",
+  "tableBits": [
+    [
+      1065353216,
+      1056964608,
+      1067030938
+    ],
+    [
+      1072064102,
+      1063675494,
+      1074412912
+    ],
+    [
+      1076258406,
+      1067869798,
+      1078439444
+    ],
+    [
+      1079613850,
+      1071225242,
+      1082298204
+    ],
+    [
+      1071225242,
+      1062836634,
+      1073909596
+    ],
+    [
+      1075838976,
+      1067450368,
+      1077936128
+    ],
+    [
+      1079194419,
+      1070805811,
+      1081962660
+    ],
+    [
+      1082340147,
+      1073951539,
+      1084059812
+    ],
+    [
+      1075419546,
+      1067030938,
+      1077432812
+    ],
+    [
+      1078774989,
+      1070386381,
+      1081459344
+    ],
+    [
+      1082130432,
+      1073741824,
+      1083808154
+    ],
+    [
+      1083808154,
+      1075419546,
+      1085821420
+    ],
+    [
+      1078355558,
+      1069966950,
+      1080956026
+    ],
+    [
+      1081711002,
+      1073322394,
+      1083556496
+    ],
+    [
+      1083598438,
+      1075209830,
+      1085569761
+    ],
+    [
+      1085276160,
+      1076887552,
+      1087583027
+    ],
+    [
+      1081291571,
+      1072902963,
+      1083304837
+    ],
+    [
+      1083388723,
+      1075000115,
+      1085318103
+    ],
+    [
+      1085066445,
+      1076677837,
+      1087331369
+    ],
+    [
+      1086744166,
+      1078355558,
+      1089344634
+    ],
+    [
+      1083179008,
+      1074790400,
+      1085066445
+    ],
+    [
+      1084856730,
+      1076468122,
+      1087079711
+    ],
+    [
+      1086534451,
+      1078145843,
+      1089092976
+    ],
+    [
+      1088212173,
+      1079823565,
+      1090812641
+    ],
+    [
+      1084647014,
+      1076258406,
+      1086828052
+    ],
+    [
+      1086324736,
+      1077936128,
+      1088841318
+    ],
+    [
+      1088002458,
+      1079613850,
+      1090686812
+    ],
+    [
+      1089680179,
+      1081291571,
+      1091693445
+    ]
+  ],
+  "controls": [
+    {
+      "urgencyBits": 3204448256,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 2147483648,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1045220557,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 1050421493,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 1050421494,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1053609165,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1060320050,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1060320051,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1067030937,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1067030938,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 1073741824,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": -1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 3204448256,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 2147483648,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1045220557,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 1050421493,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 1050421494,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1053609165,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1060320050,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1060320051,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1067030937,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1067030938,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 1073741824,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": 0,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 3204448256,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1065353216,
+        1056964608,
+        1067030938
+      ]
+    },
+    {
+      "urgencyBits": 2147483648,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1045220557,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1065353216,
+        1056964608,
+        1067030938
+      ]
+    },
+    {
+      "urgencyBits": 1050421493,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1065353216,
+        1056964608,
+        1067030938
+      ]
+    },
+    {
+      "urgencyBits": 1050421494,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1072064102,
+        1063675494,
+        1074412912
+      ]
+    },
+    {
+      "urgencyBits": 1053609165,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1072064102,
+        1063675494,
+        1074412912
+      ]
+    },
+    {
+      "urgencyBits": 1060320050,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1072064102,
+        1063675494,
+        1074412912
+      ]
+    },
+    {
+      "urgencyBits": 1060320051,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1076258406,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1076258406,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1067030937,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1076258406,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1067030938,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079613850,
+        1071225242,
+        1082298204
+      ]
+    },
+    {
+      "urgencyBits": 1073741824,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079613850,
+        1071225242,
+        1082298204
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": 1,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079613850,
+        1071225242,
+        1082298204
+      ]
+    },
+    {
+      "urgencyBits": 3204448256,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083179008,
+        1074790400,
+        1085066445
+      ]
+    },
+    {
+      "urgencyBits": 2147483648,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1045220557,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083179008,
+        1074790400,
+        1085066445
+      ]
+    },
+    {
+      "urgencyBits": 1050421493,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083179008,
+        1074790400,
+        1085066445
+      ]
+    },
+    {
+      "urgencyBits": 1050421494,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1084856730,
+        1076468122,
+        1087079711
+      ]
+    },
+    {
+      "urgencyBits": 1053609165,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1084856730,
+        1076468122,
+        1087079711
+      ]
+    },
+    {
+      "urgencyBits": 1060320050,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1084856730,
+        1076468122,
+        1087079711
+      ]
+    },
+    {
+      "urgencyBits": 1060320051,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1086534451,
+        1078145843,
+        1089092976
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1086534451,
+        1078145843,
+        1089092976
+      ]
+    },
+    {
+      "urgencyBits": 1067030937,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1086534451,
+        1078145843,
+        1089092976
+      ]
+    },
+    {
+      "urgencyBits": 1067030938,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1088212173,
+        1079823565,
+        1090812641
+      ]
+    },
+    {
+      "urgencyBits": 1073741824,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1088212173,
+        1079823565,
+        1090812641
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": 2,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1088212173,
+        1079823565,
+        1090812641
+      ]
+    },
+    {
+      "urgencyBits": 3204448256,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 2147483648,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1045220557,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 1050421493,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 1050421494,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1053609165,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1060320050,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1060320051,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1067030937,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1067030938,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 1073741824,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": 3,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 3204448256,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075419546,
+        1067030938,
+        1077432812
+      ]
+    },
+    {
+      "urgencyBits": 2147483648,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1045220557,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075419546,
+        1067030938,
+        1077432812
+      ]
+    },
+    {
+      "urgencyBits": 1050421493,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075419546,
+        1067030938,
+        1077432812
+      ]
+    },
+    {
+      "urgencyBits": 1050421494,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1078774989,
+        1070386381,
+        1081459344
+      ]
+    },
+    {
+      "urgencyBits": 1053609165,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1078774989,
+        1070386381,
+        1081459344
+      ]
+    },
+    {
+      "urgencyBits": 1060320050,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1078774989,
+        1070386381,
+        1081459344
+      ]
+    },
+    {
+      "urgencyBits": 1060320051,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082130432,
+        1073741824,
+        1083808154
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082130432,
+        1073741824,
+        1083808154
+      ]
+    },
+    {
+      "urgencyBits": 1067030937,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082130432,
+        1073741824,
+        1083808154
+      ]
+    },
+    {
+      "urgencyBits": 1067030938,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083808154,
+        1075419546,
+        1085821420
+      ]
+    },
+    {
+      "urgencyBits": 1073741824,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083808154,
+        1075419546,
+        1085821420
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": 5,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083808154,
+        1075419546,
+        1085821420
+      ]
+    },
+    {
+      "urgencyBits": 3204448256,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1078355558,
+        1069966950,
+        1080956026
+      ]
+    },
+    {
+      "urgencyBits": 2147483648,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1045220557,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1078355558,
+        1069966950,
+        1080956026
+      ]
+    },
+    {
+      "urgencyBits": 1050421493,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1078355558,
+        1069966950,
+        1080956026
+      ]
+    },
+    {
+      "urgencyBits": 1050421494,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1081711002,
+        1073322394,
+        1083556496
+      ]
+    },
+    {
+      "urgencyBits": 1053609165,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1081711002,
+        1073322394,
+        1083556496
+      ]
+    },
+    {
+      "urgencyBits": 1060320050,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1081711002,
+        1073322394,
+        1083556496
+      ]
+    },
+    {
+      "urgencyBits": 1060320051,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083598438,
+        1075209830,
+        1085569761
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083598438,
+        1075209830,
+        1085569761
+      ]
+    },
+    {
+      "urgencyBits": 1067030937,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083598438,
+        1075209830,
+        1085569761
+      ]
+    },
+    {
+      "urgencyBits": 1067030938,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1085276160,
+        1076887552,
+        1087583027
+      ]
+    },
+    {
+      "urgencyBits": 1073741824,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1085276160,
+        1076887552,
+        1087583027
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": 6,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1085276160,
+        1076887552,
+        1087583027
+      ]
+    },
+    {
+      "urgencyBits": 3204448256,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1081291571,
+        1072902963,
+        1083304837
+      ]
+    },
+    {
+      "urgencyBits": 2147483648,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1045220557,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1081291571,
+        1072902963,
+        1083304837
+      ]
+    },
+    {
+      "urgencyBits": 1050421493,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1081291571,
+        1072902963,
+        1083304837
+      ]
+    },
+    {
+      "urgencyBits": 1050421494,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083388723,
+        1075000115,
+        1085318103
+      ]
+    },
+    {
+      "urgencyBits": 1053609165,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083388723,
+        1075000115,
+        1085318103
+      ]
+    },
+    {
+      "urgencyBits": 1060320050,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1083388723,
+        1075000115,
+        1085318103
+      ]
+    },
+    {
+      "urgencyBits": 1060320051,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1085066445,
+        1076677837,
+        1087331369
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1085066445,
+        1076677837,
+        1087331369
+      ]
+    },
+    {
+      "urgencyBits": 1067030937,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1085066445,
+        1076677837,
+        1087331369
+      ]
+    },
+    {
+      "urgencyBits": 1067030938,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1086744166,
+        1078355558,
+        1089344634
+      ]
+    },
+    {
+      "urgencyBits": 1073741824,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1086744166,
+        1078355558,
+        1089344634
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": 7,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1086744166,
+        1078355558,
+        1089344634
+      ]
+    },
+    {
+      "urgencyBits": 3204448256,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1084647014,
+        1076258406,
+        1086828052
+      ]
+    },
+    {
+      "urgencyBits": 2147483648,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1045220557,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1084647014,
+        1076258406,
+        1086828052
+      ]
+    },
+    {
+      "urgencyBits": 1050421493,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1084647014,
+        1076258406,
+        1086828052
+      ]
+    },
+    {
+      "urgencyBits": 1050421494,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1086324736,
+        1077936128,
+        1088841318
+      ]
+    },
+    {
+      "urgencyBits": 1053609165,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1086324736,
+        1077936128,
+        1088841318
+      ]
+    },
+    {
+      "urgencyBits": 1060320050,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1086324736,
+        1077936128,
+        1088841318
+      ]
+    },
+    {
+      "urgencyBits": 1060320051,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1088002458,
+        1079613850,
+        1090686812
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1088002458,
+        1079613850,
+        1090686812
+      ]
+    },
+    {
+      "urgencyBits": 1067030937,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1088002458,
+        1079613850,
+        1090686812
+      ]
+    },
+    {
+      "urgencyBits": 1067030938,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1089680179,
+        1081291571,
+        1091693445
+      ]
+    },
+    {
+      "urgencyBits": 1073741824,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1089680179,
+        1081291571,
+        1091693445
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": 8,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1089680179,
+        1081291571,
+        1091693445
+      ]
+    },
+    {
+      "urgencyBits": 3204448256,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 2147483648,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1045220557,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 1050421493,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1071225242,
+        1062836634,
+        1073909596
+      ]
+    },
+    {
+      "urgencyBits": 1050421494,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1053609165,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1060320050,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075838976,
+        1067450368,
+        1077936128
+      ]
+    },
+    {
+      "urgencyBits": 1060320051,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1067030937,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079194419,
+        1070805811,
+        1081962660
+      ]
+    },
+    {
+      "urgencyBits": 1067030938,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 1073741824,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": 9,
+      "referenceMinimumBits": 0,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1082340147,
+        1073951539,
+        1084059812
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1076258406,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1076106946,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1075652562,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075623811,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1075623811,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1075623811,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075564159,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1075564159,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1075564159,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1075564159,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1075564159,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1056964608,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1075564159,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 1082130432,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1065353216,
+        0,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        3212836864,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 1106247680,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 3235905536,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        1050253722,
+        1064580444,
+        0
+      ],
+      "controllerAngleBits": 3270508544,
+      "expectedBits": [
+        1073615275,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 0,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1065353216,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        2143289344,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 2143289344,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1076258406,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 1065353216,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 2143289344,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        2143289344,
+        1067869798,
+        1078439444
+      ]
+    },
+    {
+      "urgencyBits": 2143289344,
+      "stance": 1,
+      "referenceMinimumBits": 1065353216,
+      "referenceMaximumBits": 1090519040,
+      "turnRateBits": 0,
+      "bodyBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "moveBits": [
+        0,
+        1065353216,
+        0
+      ],
+      "controllerAngleBits": 0,
+      "expectedBits": [
+        1079613850,
+        1071225242,
+        1082298204
+      ]
+    }
+  ],
+  "executed": [
+    "31169B4C complete leaf",
+    "310098BC BodyDirection getter",
+    "310098C4 MoveDirection getter"
+  ],
+  "declaredCallbacks": [
+    "actor.v256 returns this controlled proxy",
+    "proxy.v24 supplies actual stance and copied controller angle inputs",
+    "CRT atan2f uses independent libm at binary32 argument/result boundary; managed comparison allows two ULP at this transcendental boundary"
+  ]
+}

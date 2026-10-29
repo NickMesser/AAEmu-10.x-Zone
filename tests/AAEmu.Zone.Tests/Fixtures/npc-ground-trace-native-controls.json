@@ -1,0 +1,1805 @@
+{
+  "scope": "Original310EC518 ordinary ground trace math, with copied physical status/speed-triplet ABI inputs; no DLL loading.",
+  "imageSha256": "a740d58c6a3c851d84967e9513125c48b9326cbb70462ad1f57e6e60aadfe921",
+  "callbacks": [
+    "Actual Entity origin controlled at3103CA08",
+    "Actor.v144 body direction",
+    "Actor.v576 actual physical entity",
+    "Physical.v72 status8 velocity/status2 flying+groundnormal",
+    "Actor.v664 controlled normal/min/max triplet",
+    "Actual velocity helper3103D308",
+    "310E6078 marker lifecycle excluded",
+    "310E13D8 no-turn branch certified separately",
+    "310EBE18 post-tail excluded; end flag captured",
+    "memset/memcpy/free CRT boundaries"
+  ],
+  "controls": [
+    {
+      "name": "straight",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "start_rest",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 0,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 1.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "limited_accel",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.01,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 2.0999999046325684,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "high_speed_decel",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 10,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 9.199999809265137,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "backwards",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": -1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          -1.0,
+          -0.0,
+          -0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "stop_fast",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          0,
+          0,
+          0
+        ],
+        "urgency": 0,
+        "priorSpeed": 4,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 2.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "stop_slow",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          0,
+          0,
+          0
+        ],
+        "urgency": 0,
+        "priorSpeed": 0.3,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 0.20000001788139343,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "stop_negative",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          0,
+          0,
+          0
+        ],
+        "urgency": 0,
+        "priorSpeed": -0.3,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": -0.20000001788139343,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "accuracy_brake",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          8,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": 0,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.800000011920929,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "near_end",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          9.95,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.9950000047683716,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "overshoot",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          10.1,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": true,
+        "direction": [
+          0.6000000238418579,
+          0.800000011920929,
+          0.0
+        ],
+        "desiredSpeed": 2.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.0,
+          "stuck": 0.0,
+          "version": 1
+        }
+      }
+    },
+    {
+      "name": "corner",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "position": [
+          3.5,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          0.9486833810806274,
+          0.3162277936935425,
+          0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              5.0,
+              0.0,
+              0.0
+            ],
+            [
+              5.0,
+              5.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.699999988079071,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "corner_closest_next",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "position": [
+          4.8,
+          0.1,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          0.12403464317321777,
+          0.9922779202461243,
+          0.0
+        ],
+        "desiredSpeed": 1.3000004291534424,
+        "distanceToPathEnd": 10.100000381469727,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              5.0,
+              0.0,
+              0.0
+            ],
+            [
+              5.0,
+              5.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.9599999785423279,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "slope_up",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          -0.6,
+          0,
+          0.8
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0.8,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 2.5,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "slope_down",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0.6,
+          0,
+          0.8
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0.8,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "downward_waypoint",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            5
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          4
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 4,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0.8,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 2.5,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              5.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "flying_status",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": true,
+        "groundNormal": [
+          -0.6,
+          0,
+          0.8
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0.8,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "actual_speed_lookahead",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": 1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "no_speed_lookahead",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": 0,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "positive_discarded",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        },
+        "discarded": 2
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "negative_discarded",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        },
+        "discarded": -12
+      },
+      "result": {
+        "endReached": true,
+        "direction": [
+          0.6000000238418579,
+          0.800000011920929,
+          0.0
+        ],
+        "desiredSpeed": 2.0,
+        "distanceToPathEnd": 10.0,
+        "path": {
+          "points": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "fraction": 0.20000000298023224,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    },
+    {
+      "name": "eight_kilometers",
+      "request": {
+        "points": [
+          [
+            8000,
+            7000,
+            100
+          ],
+          [
+            8005,
+            7000,
+            102
+          ],
+          [
+            8005,
+            7005,
+            104
+          ]
+        ],
+        "position": [
+          8003,
+          7001,
+          101
+        ],
+        "velocity": [
+          2,
+          0,
+          0
+        ],
+        "speeds": [
+          4,
+          1,
+          6
+        ],
+        "urgency": 1,
+        "priorSpeed": 2,
+        "seconds": 0.1,
+        "endAccuracy": -1,
+        "navigationType": 2,
+        "flying": false,
+        "groundNormal": [
+          0,
+          0,
+          1
+        ],
+        "ability": {
+          "lookAhead": 2,
+          "pathRadius": 0.5,
+          "speedLookAhead": -1,
+          "cornerSlowDown": 0.5,
+          "slopeSlowDown": 0,
+          "maximumAcceleration": 10,
+          "maximumDeceleration": 8,
+          "adaptiveLookAhead": true
+        }
+      },
+      "result": {
+        "endReached": false,
+        "direction": [
+          0.7071067690849304,
+          -0.7071067690849304,
+          0.0
+        ],
+        "desiredSpeed": 3.0,
+        "distanceToPathEnd": 11.0,
+        "path": {
+          "points": [
+            [
+              8000.0,
+              7000.0,
+              100.0
+            ],
+            [
+              8005.0,
+              7000.0,
+              102.0
+            ],
+            [
+              8005.0,
+              7005.0,
+              104.0
+            ]
+          ],
+          "fraction": 0.6000000238418579,
+          "stuck": 0.0,
+          "version": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1958 @@
+{
+  "scope": "Original10x machine instructions executed under Unicorn; no module loads. Full binding getter/setter, proxy word setter/update/getter and bounded CGameObject activation path execute from the matching PE. Owned FunctionHandler, entity/AI lookup, entity flags/activity and explicit global-override/CVar callbacks are intercepted. GameObject visibility is the explicit multiplayer server/default-timeout profile from306F0470. Nonempty uninterpreted extension vector is bypassed by actual true AI result; hidden/false-AI extension slots are not claimed. No physics suspension/custom visibility/general GameObject profile claim.",
+  "binary": "D:\\aaemu-runtime\\engine-bin64\\cryaction_dedicate.dll",
+  "binarySha256": "A676FB8C6355F8225CDE0590501AD169FC275C62170B15E29B0DFFCE2B27C05B",
+  "entries": {
+    "getter": "0x30534f70",
+    "setter": "0x30535170",
+    "wordSetter": "0x30514d60",
+    "wordUpdate": "0x30514da0",
+    "wordGetter": "0x305198d0",
+    "gamePolicy": "0x305e0c80",
+    "gameEvaluate": "0x305e0ad0",
+    "gameShouldUpdateAI": "0x305deec0",
+    "gameVisible": "0x305df1d0"
+  },
+  "wordControls": [
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": 0,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": 0,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": 1,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": 1,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": 2,
+      "globalOverride": false,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": 2,
+      "globalOverride": true,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": 32767,
+      "globalOverride": false,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": 32767,
+      "globalOverride": true,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": -32768,
+      "globalOverride": false,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": -32768,
+      "globalOverride": true,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": -1,
+      "globalOverride": false,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 0,
+      "requested": -1,
+      "globalOverride": true,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": 0,
+      "globalOverride": false,
+      "after": 1,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": 0,
+      "globalOverride": true,
+      "after": 1,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": 1,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": 1,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": 2,
+      "globalOverride": false,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": 2,
+      "globalOverride": true,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": 32767,
+      "globalOverride": false,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": 32767,
+      "globalOverride": true,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": -32768,
+      "globalOverride": false,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": -32768,
+      "globalOverride": true,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": -1,
+      "globalOverride": false,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1,
+      "requested": -1,
+      "globalOverride": true,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": 0,
+      "globalOverride": false,
+      "after": 2,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": 0,
+      "globalOverride": true,
+      "after": 2,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": 1,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": 1,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": 2,
+      "globalOverride": false,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": 2,
+      "globalOverride": true,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": 32767,
+      "globalOverride": false,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": 32767,
+      "globalOverride": true,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": -32768,
+      "globalOverride": false,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": -32768,
+      "globalOverride": true,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": -1,
+      "globalOverride": false,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 2,
+      "requested": -1,
+      "globalOverride": true,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": 0,
+      "globalOverride": false,
+      "after": 1024,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": 0,
+      "globalOverride": true,
+      "after": 1024,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": 1,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": 1,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": 2,
+      "globalOverride": false,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": 2,
+      "globalOverride": true,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": 32767,
+      "globalOverride": false,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": 32767,
+      "globalOverride": true,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": -32768,
+      "globalOverride": false,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": -32768,
+      "globalOverride": true,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": -1,
+      "globalOverride": false,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 1024,
+      "requested": -1,
+      "globalOverride": true,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": 0,
+      "globalOverride": false,
+      "after": 32767,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": 0,
+      "globalOverride": true,
+      "after": 32767,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": 1,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": 1,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": 2,
+      "globalOverride": false,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": 2,
+      "globalOverride": true,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": 32767,
+      "globalOverride": false,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": 32767,
+      "globalOverride": true,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": -32768,
+      "globalOverride": false,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": -32768,
+      "globalOverride": true,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": -1,
+      "globalOverride": false,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": 32767,
+      "requested": -1,
+      "globalOverride": true,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": 0,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": 0,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": 1,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": 1,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": 2,
+      "globalOverride": false,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": 2,
+      "globalOverride": true,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": 32767,
+      "globalOverride": false,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": 32767,
+      "globalOverride": true,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": -32768,
+      "globalOverride": false,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": -32768,
+      "globalOverride": true,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": -1,
+      "globalOverride": false,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -32768,
+      "requested": -1,
+      "globalOverride": true,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": 0,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": 0,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": 1,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": 1,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": 2,
+      "globalOverride": false,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": 2,
+      "globalOverride": true,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": 32767,
+      "globalOverride": false,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": 32767,
+      "globalOverride": true,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": -32768,
+      "globalOverride": false,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": -32768,
+      "globalOverride": true,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": -1,
+      "globalOverride": false,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "set",
+      "before": -1,
+      "requested": -1,
+      "globalOverride": true,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": 0,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": 0,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": 1,
+      "globalOverride": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": 1,
+      "globalOverride": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": 2,
+      "globalOverride": false,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": 2,
+      "globalOverride": true,
+      "after": 1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": 1024,
+      "globalOverride": false,
+      "after": 1023,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": 1024,
+      "globalOverride": true,
+      "after": 1023,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": 32767,
+      "globalOverride": false,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": 32767,
+      "globalOverride": true,
+      "after": 32766,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": -32768,
+      "globalOverride": false,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": -32768,
+      "globalOverride": true,
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": -1,
+      "globalOverride": false,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "operation": "update",
+      "before": -1,
+      "globalOverride": true,
+      "after": -1,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    }
+  ],
+  "bindingControls": [
+    {
+      "method": "AutoDisable",
+      "status": "0",
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "status": "0.999",
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "status": "-0.999",
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "status": "1",
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "status": "-1",
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "status": "2147483647",
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "status": "2147483648",
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "status": "nan",
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "status": "inf",
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "status": "-inf",
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "method": "GetAutoDisable",
+      "before": 0,
+      "after": 0,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": [
+        true
+      ]
+    },
+    {
+      "method": "GetAutoDisable",
+      "before": 1,
+      "after": 1,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": [
+        false
+      ]
+    },
+    {
+      "method": "GetAutoDisable",
+      "before": 1024,
+      "after": 1024,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": [
+        false
+      ]
+    },
+    {
+      "method": "GetAutoDisable",
+      "before": -32768,
+      "after": -32768,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": [
+        false
+      ]
+    },
+    {
+      "method": "GetAutoDisable",
+      "before": -1,
+      "after": -1,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": [
+        false
+      ]
+    },
+    {
+      "method": "GetAutoDisable",
+      "profile": "noEntity",
+      "after": 0,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": [
+        false
+      ]
+    },
+    {
+      "method": "GetAutoDisable",
+      "profile": "noAI",
+      "after": 0,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": [
+        false
+      ]
+    },
+    {
+      "method": "GetAutoDisable",
+      "profile": "noProxy",
+      "after": 0,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": [
+        false
+      ]
+    },
+    {
+      "method": "GetAutoDisable",
+      "profile": "numericID",
+      "after": 0,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": [
+        false
+      ]
+    },
+    {
+      "method": "GetAutoDisable",
+      "profile": "wideHandle",
+      "after": 0,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": [
+        true
+      ]
+    },
+    {
+      "method": "GetAutoDisable",
+      "profile": "wrongArgCount0",
+      "after": 0,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "method": "GetAutoDisable",
+      "profile": "wrongArgCount2",
+      "after": 0,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "profile": "wrongStatusType",
+      "after": 1024,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "profile": "numericID",
+      "after": 1024,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "profile": "wideHandle",
+      "after": -32768,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "profile": "wrongArgCount1",
+      "after": 1024,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "method": "AutoDisable",
+      "profile": "wrongArgCount3",
+      "after": 1024,
+      "policyCalls": [],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    }
+  ],
+  "policyControls": [
+    {
+      "priorPolicy": 1,
+      "requestedPolicy": 1,
+      "initiallyActive": false,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "priorPolicy": 1,
+      "requestedPolicy": 1,
+      "initiallyActive": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "priorPolicy": 1,
+      "requestedPolicy": 2,
+      "initiallyActive": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "priorPolicy": 1,
+      "requestedPolicy": 2,
+      "initiallyActive": true,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": true,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "priorPolicy": 2,
+      "requestedPolicy": 1,
+      "initiallyActive": false,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [
+        true
+      ],
+      "returns": []
+    },
+    {
+      "priorPolicy": 2,
+      "requestedPolicy": 1,
+      "initiallyActive": true,
+      "after": 0,
+      "policyCalls": [
+        1
+      ],
+      "policy": 1,
+      "entityActive": true,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "priorPolicy": 2,
+      "requestedPolicy": 2,
+      "initiallyActive": false,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": false,
+      "activationCalls": [],
+      "returns": []
+    },
+    {
+      "priorPolicy": 2,
+      "requestedPolicy": 2,
+      "initiallyActive": true,
+      "after": 0,
+      "policyCalls": [
+        2
+      ],
+      "policy": 2,
+      "entityActive": true,
+      "activationCalls": [],
+      "returns": []
+    }
+  ],
+  "controls": 133,
+  "disagreements": 0
+}

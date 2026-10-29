@@ -1,0 +1,1907 @@
+{
+  "scope": "Original CPuppet3116E80C empty actor census, including its persistent solver/basis/timers; offline PE instructions, no DLL loading.",
+  "imageSha256": "a740d58c6a3c851d84967e9513125c48b9326cbb70462ad1f57e6e60aadfe921",
+  "defaults": {
+    "entityPosition": [
+      3,
+      4,
+      5
+    ],
+    "viewDirection": [
+      1,
+      0,
+      0
+    ],
+    "movementDirection": [
+      0,
+      1,
+      0
+    ],
+    "desiredSpeed": 2,
+    "avoidanceRadius": 0.5,
+    "alertness": 0,
+    "priority": 3,
+    "uses3D": false,
+    "fullUpdate": true,
+    "microseconds": 1000000,
+    "seconds": 0.1,
+    "actor1593": false,
+    "actor1594": false
+  },
+  "initialState": {
+    "lastCensusMicroseconds": 0,
+    "wasMoving": false,
+    "steeringSide": 0,
+    "obstructionTimer": 0,
+    "solverOrigin": [
+      0,
+      0,
+      0
+    ],
+    "solverForward": [
+      1,
+      0,
+      0
+    ],
+    "solverSide": [
+      0,
+      1,
+      0
+    ],
+    "solverRadius": 1
+  },
+  "callbacks": [
+    "Actual entity position and view direction getters controlled",
+    "Actual uses3D helper output controlled",
+    "Actual two grid queries supply empty vectors, not fabricated obstacle filtering",
+    "Entity world bounds supplied; empty candidate loop output is independent of bounds",
+    "Frame microseconds supplied through actual System.v80 ABI",
+    "Debug collision-avoidance CVar0; no debug draw",
+    "Only CRT memory/sqrtf/atan2f supplied; original solver and timer instructions executed"
+  ],
+  "controls": [
+    {
+      "name": "start_and_exact_refresh_boundary",
+      "request": {
+        "frames": [
+          {},
+          {
+            "microseconds": 1500000
+          },
+          {
+            "microseconds": 1500001
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        },
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        },
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1500001,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "stop_then_restart_same_clock",
+      "request": {
+        "frames": [
+          {},
+          {
+            "movementDirection": [
+              0,
+              0,
+              0
+            ]
+          },
+          {}
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        },
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": false,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        },
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "direction_exact_threshold",
+      "request": {
+        "frames": [
+          {
+            "movementDirection": [
+              0.01,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.009999999776482582,
+            0.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1
+          },
+          "lastCensusMicroseconds": 0,
+          "wasMoving": false,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "direction_above_threshold",
+      "request": {
+        "frames": [
+          {
+            "movementDirection": [
+              0.010000000707805157,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.010000000707805157,
+            0.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "speed_exact_threshold",
+      "request": {
+        "frames": [
+          {
+            "desiredSpeed": 0.01
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 0.009999999776482582,
+          "events": {
+            "clock": 1
+          },
+          "lastCensusMicroseconds": 0,
+          "wasMoving": false,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "speed_above_threshold",
+      "request": {
+        "frames": [
+          {
+            "desiredSpeed": 0.010000000707805157
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 0.010000000707805157,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "entry_radius_exact15",
+      "request": {
+        "frames": [
+          {
+            "avoidanceRadius": 15
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 30.0
+        }
+      ]
+    },
+    {
+      "name": "entry_radius_above15",
+      "request": {
+        "frames": [
+          {
+            "avoidanceRadius": 15.000000953674316
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {},
+          "lastCensusMicroseconds": 0,
+          "wasMoving": false,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "alertness_entry_skip",
+      "request": {
+        "frames": [
+          {
+            "alertness": 2,
+            "actor1593": true,
+            "actor1594": false
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {},
+          "lastCensusMicroseconds": 0,
+          "wasMoving": false,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "alertness_override",
+      "request": {
+        "frames": [
+          {
+            "alertness": 2,
+            "actor1593": true,
+            "actor1594": true
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "alertness_low_ignores_flags",
+      "request": {
+        "frames": [
+          {
+            "alertness": 1,
+            "actor1593": true,
+            "actor1594": false
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "priority3_partial",
+      "request": {
+        "frames": [
+          {
+            "fullUpdate": false
+          },
+          {
+            "fullUpdate": false,
+            "microseconds": 1600000
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        },
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1
+          },
+          "lastCensusMicroseconds": 1600000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "priority1_forces_full",
+      "request": {
+        "frames": [
+          {
+            "fullUpdate": false
+          },
+          {
+            "fullUpdate": false,
+            "priority": 1,
+            "microseconds": 1600000
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        },
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1600000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "three_dimensional_empty",
+      "request": {
+        "frames": [
+          {
+            "uses3D": true
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "nonpuppet_empty",
+      "request": {
+        "objectType": 7,
+        "frames": [
+          {}
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "zero_view",
+      "request": {
+        "frames": [
+          {
+            "viewDirection": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "vertical_view",
+      "request": {
+        "frames": [
+          {
+            "viewDirection": [
+              0,
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "nonnormalized_view_and_move",
+      "request": {
+        "frames": [
+          {
+            "viewDirection": [
+              3,
+              4,
+              7
+            ],
+            "movementDirection": [
+              3,
+              -4,
+              5
+            ]
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            3.0,
+            -4.0,
+            5.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            0.6000000238418579,
+            0.800000011920929,
+            0.0
+          ],
+          "solverSide": [
+            0.800000011920929,
+            -0.6000000238418579,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "eight_kilometers",
+      "request": {
+        "frames": [
+          {
+            "entityPosition": [
+              8000,
+              7000,
+              100
+            ],
+            "viewDirection": [
+              0.3,
+              -0.7,
+              0.2
+            ]
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            8000.0,
+            7000.0,
+            100.0
+          ],
+          "solverForward": [
+            0.39391931891441345,
+            -0.9191450476646423,
+            0.0
+          ],
+          "solverSide": [
+            -0.9191450476646423,
+            -0.39391931891441345,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "bounds_independent_small",
+      "request": {
+        "frames": [
+          {
+            "entityBounds": [
+              3,
+              4,
+              4.9,
+              3,
+              4,
+              5.1
+            ]
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "bounds_independent_large",
+      "request": {
+        "frames": [
+          {
+            "entityBounds": [
+              -100,
+              -100,
+              -100,
+              100,
+              100,
+              100
+            ]
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "microseconds_past32bits",
+      "request": {
+        "frames": [
+          {
+            "microseconds": 4294967296
+          },
+          {
+            "microseconds": 4295467296
+          },
+          {
+            "microseconds": 4295467297
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 4294967296,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        },
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 4294967296,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        },
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 4295467297,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "clock_negative_delta",
+      "request": {
+        "initialState": {
+          "lastCensusMicroseconds": 2000000,
+          "wasMoving": true
+        },
+        "frames": [
+          {}
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 2000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "timer_decay",
+      "request": {
+        "initialState": {
+          "obstructionTimer": 2.5
+        },
+        "frames": [
+          {},
+          {
+            "microseconds": 1100000,
+            "seconds": 0.25
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 2.4000000953674316,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        },
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 2.1500000953674316,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "timer_reaches_zero",
+      "request": {
+        "initialState": {
+          "obstructionTimer": 0.1
+        },
+        "frames": [
+          {}
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "timer_upper_clamp",
+      "request": {
+        "initialState": {
+          "obstructionTimer": 4
+        },
+        "frames": [
+          {}
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 3.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "partial_keeps_basis_but_applies_solver",
+      "request": {
+        "initialState": {
+          "wasMoving": true,
+          "obstructionTimer": 2,
+          "steeringSide": 0.75
+        },
+        "frames": [
+          {
+            "fullUpdate": false,
+            "microseconds": 100000
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1
+          },
+          "lastCensusMicroseconds": 0,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 1.899999976158142,
+          "solverOrigin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "stop_preserves_timer_and_side",
+      "request": {
+        "initialState": {
+          "wasMoving": true,
+          "obstructionTimer": 2,
+          "steeringSide": 0.75
+        },
+        "frames": [
+          {
+            "movementDirection": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1
+          },
+          "lastCensusMicroseconds": 0,
+          "wasMoving": false,
+          "steeringSide": 0.75,
+          "obstructionTimer": 2.0,
+          "solverOrigin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "entry_skip_preserves_moving",
+      "request": {
+        "initialState": {
+          "wasMoving": true,
+          "obstructionTimer": 2,
+          "steeringSide": 0.75
+        },
+        "frames": [
+          {
+            "avoidanceRadius": 16
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {},
+          "lastCensusMicroseconds": 0,
+          "wasMoving": true,
+          "steeringSide": 0.75,
+          "obstructionTimer": 2.0,
+          "solverOrigin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "zero_frame_duration",
+      "request": {
+        "initialState": {
+          "obstructionTimer": 2
+        },
+        "frames": [
+          {
+            "seconds": 0
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "grid0": 1,
+            "grid1": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 1000000,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 2.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    },
+    {
+      "name": "full64_clock_wrap",
+      "request": {
+        "initialState": {
+          "lastCensusMicroseconds": 9223372036854775707,
+          "wasMoving": true
+        },
+        "frames": [
+          {
+            "microseconds": -9223372036854775708
+          }
+        ]
+      },
+      "results": [
+        {
+          "modified": false,
+          "movementDirection": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "desiredSpeed": 2.0,
+          "events": {
+            "clock": 1,
+            "entityBounds": 1
+          },
+          "lastCensusMicroseconds": 9223372036854775707,
+          "wasMoving": true,
+          "steeringSide": 0.0,
+          "obstructionTimer": 0.0,
+          "solverOrigin": [
+            3.0,
+            4.0,
+            5.0
+          ],
+          "solverForward": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "solverSide": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "solverRadius": 1.0
+        }
+      ]
+    }
+  ]
+}

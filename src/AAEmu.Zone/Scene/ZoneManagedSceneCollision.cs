@@ -34,6 +34,7 @@ public sealed class ZoneManagedSceneCollision : IDisposable
     /// <summary>Native picking rays use slot1 when present, otherwise slot0; living bodies use slot0.</summary>
     public ZoneManagedStaticGeometry RayGeometry { get; } = new();
     public ZoneManagedSceneCollisionReport Report { get; }
+    public bool IsDisposed => _disposed;
     private bool _disposed;
 
     public ZoneManagedSceneCollision(IZoneAssetSource assets, ZoneTerrainMaterialResolver materials,

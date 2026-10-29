@@ -24,6 +24,7 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
     private readonly ZoneActorMovementWorldOrigin _origin;
     private readonly Func<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame, ZoneActorMovementState?>? _movementState;
     private readonly Action<ZoneMovementFrame>? _prePhysics;
+    private readonly Action<ZoneMovementFrame>? _prepareRequests;
     private readonly Action<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame>? _publishPose;
     private readonly bool _managerOwnsReplication;
     private readonly Dictionary<ZoneActorHandle, Staged> _staged = [];
@@ -52,7 +53,7 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
         Func<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame, ZoneActorMovementState?>? movementState = null,
         Action<ZoneMovementFrame>? prePhysics = null,
         Action<ZoneManagedNpcActor, ZoneManagedNpcBodySnapshot, ZoneMovementFrame>? publishPose = null,
-        bool managerOwnsReplication = false)
+        bool managerOwnsReplication = false, Action<ZoneMovementFrame>? prepareRequests = null)
     {
         _inner = inner ?? throw new ArgumentNullException(nameof(inner));
         _units = registry ?? throw new ArgumentNullException(nameof(registry));
@@ -63,6 +64,7 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
         _diagnostics = diagnostics ?? throw new ArgumentNullException(nameof(diagnostics));
         _origin = worldOrigin; _movementState = movementState; _prePhysics = prePhysics; _publishPose = publishPose;
         _managerOwnsReplication = managerOwnsReplication;
+        _prepareRequests = prepareRequests;
     }
 
     public int PrePhase(in ZoneMovementFrame frame)
@@ -80,6 +82,8 @@ public sealed class ZoneManagedNpcMovementFramePhases : IZoneMovementFramePhases
             _prePhysics?.Invoke(frame);
             ObjectDisposedException.ThrowIf(IsDisposed, this);
             _physics.PrepareFrame();
+            ObjectDisposedException.ThrowIf(IsDisposed, this);
+            _prepareRequests?.Invoke(frame);
             ObjectDisposedException.ThrowIf(IsDisposed, this);
             PruneRetired();
             //No admitted NPC body means there is nothing to stage. In particular, a large

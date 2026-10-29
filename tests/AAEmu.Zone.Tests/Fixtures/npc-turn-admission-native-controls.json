@@ -1,0 +1,271 @@
+{
+  "scope": "Original310E13D8 stateless no-turn/active-turn entry boundary, stopping before unowned camera/entity effects; no DLL load.",
+  "imageSha256": "a740d58c6a3c851d84967e9513125c48b9326cbb70462ad1f57e6e60aadfe921",
+  "callbacks": [
+    "Actor.v144 body direction",
+    "Actual velocity/entity origin controlled but not used by this predicate",
+    "Stops at310E159C before the active-turn branch first effect"
+  ],
+  "controls": [
+    {
+      "name": "zero_speed",
+      "request": {
+        "priorSpeed": 0,
+        "urgency": 1,
+        "threshold": 0.8,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      "needsTurn": false
+    },
+    {
+      "name": "below_speed_threshold",
+      "request": {
+        "priorSpeed": 0.0009999,
+        "urgency": 1,
+        "threshold": 0.8,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      "needsTurn": false
+    },
+    {
+      "name": "exact_speed_threshold",
+      "request": {
+        "priorSpeed": 0.001,
+        "urgency": 1,
+        "threshold": 0.8,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      "needsTurn": true
+    },
+    {
+      "name": "threshold_one",
+      "request": {
+        "priorSpeed": 2,
+        "urgency": 1,
+        "threshold": 1,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      "needsTurn": false
+    },
+    {
+      "name": "aligned",
+      "request": {
+        "priorSpeed": 2,
+        "urgency": 1,
+        "threshold": 0.8,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          0,
+          1,
+          0
+        ]
+      },
+      "needsTurn": false
+    },
+    {
+      "name": "boundary_equal",
+      "request": {
+        "priorSpeed": 2,
+        "urgency": 1,
+        "threshold": 0.8,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          0.6,
+          0.8,
+          0
+        ]
+      },
+      "needsTurn": true
+    },
+    {
+      "name": "boundary_above",
+      "request": {
+        "priorSpeed": 2,
+        "urgency": 1,
+        "threshold": 0.7999999,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          0.6,
+          0.8,
+          0
+        ]
+      },
+      "needsTurn": false
+    },
+    {
+      "name": "obstructed",
+      "request": {
+        "priorSpeed": 2,
+        "urgency": 1,
+        "threshold": 0.8,
+        "obstructed": true,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      "needsTurn": false
+    },
+    {
+      "name": "reverse_aligned",
+      "request": {
+        "priorSpeed": 2,
+        "urgency": -1,
+        "threshold": 0.8,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          0,
+          -1,
+          0
+        ]
+      },
+      "needsTurn": false
+    },
+    {
+      "name": "reverse_turn",
+      "request": {
+        "priorSpeed": 2,
+        "urgency": -1,
+        "threshold": 0.8,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          0,
+          1,
+          0
+        ]
+      },
+      "needsTurn": true
+    },
+    {
+      "name": "zero_body",
+      "request": {
+        "priorSpeed": 2,
+        "urgency": 1,
+        "threshold": 0.8,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          0,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      "needsTurn": true
+    },
+    {
+      "name": "vertical_direction",
+      "request": {
+        "priorSpeed": 2,
+        "urgency": 1,
+        "threshold": 0.8,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          0,
+          0,
+          3
+        ]
+      },
+      "needsTurn": true
+    },
+    {
+      "name": "negative_speed",
+      "request": {
+        "priorSpeed": -2,
+        "urgency": 1,
+        "threshold": 0.8,
+        "obstructed": false,
+        "bodyDirection": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      "needsTurn": true
+    }
+  ]
+}

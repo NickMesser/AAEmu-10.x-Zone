@@ -1,9 +1,11 @@
 using System.Numerics;
 using AAEmu.Zone.Actors;
+using AAEmu.Zone.Content;
 using AAEmu.Zone.Hosting;
 using AAEmu.Zone.Physics;
 using AAEmu.Zone.Protocol;
 using AAEmu.Zone.Protocol.Messages;
+using AAEmu.Zone.Protocol.Units;
 using AAEmu.Zone.Scene;
 using AAEmu.Zone.Scripting;
 
@@ -225,7 +227,7 @@ public sealed class ManagedNpcPositionChecksTests
     private static async Task Near(Vector3 actual,Vector3 expected,float tolerance=.0001f)=>
         await Assert.That(Vector3.Distance(actual,expected)).IsLessThan(tolerance);
 
-    private sealed class World:IDisposable
+    internal sealed class World:IDisposable
     {
         public ManagedNpcRuntimeTests.Fixture Fixture{get;}
         public ZoneManagedNpcActor Actor{get;}
@@ -236,11 +238,18 @@ public sealed class ManagedNpcPositionChecksTests
         public ZoneManagedNpcReplication Replication=>Fixture.Replication!;
         public ZoneManagedNpcActorMotion Motion=>Fixture.Motion!;
         public Vector3 Position=>Fixture.Components.CopyModelTransform(Actor.Npc.Unit).Position;
-        public World(int group=0,bool fastest=false)
+        public World(int group=0,bool fastest=false,bool gameRequests=false,bool movementRequests=false,float movementNormalSpeed=0,
+            ZoneEngineCVars? movementCVars=null,bool withMovementAbility=false,ZoneManagedStaticGeometry? movementStaticGeometry=null,
+            bool stepInitial=true,float movementWalkMultiplier=1,ZoneBuffContent? movementBuffContent=null,
+            UnitBuffs? initialBuffs=null,IReadOnlyList<StatModifier>? movementStatModifiers=null)
         {
-            Fixture=new(withMovement:true,movementCVars:fastest?ZoneEngineCVars.Parse("npc_enable_fastest_sync=1"):null);
+            Fixture=new(withMovement:true,movementCVars:movementCVars??(fastest?ZoneEngineCVars.Parse("npc_enable_fastest_sync=1"):null),
+                withGameRequests:gameRequests,withMovementRequests:movementRequests,movementNormalSpeed:movementNormalSpeed,
+                withMovementAbility:withMovementAbility,movementStaticGeometry:movementStaticGeometry,
+                movementWalkMultiplier:movementWalkMultiplier,movementBuffContent:movementBuffContent,
+                movementStatModifiers:movementStatModifiers);
             if(group!=0)Fixture.Runtime.Lua.SetGlobal("testGroup",group);
-            var npc=Fixture.Admission.CreateFromWire(Fixture.Model.Id,new(1100,1100,10.1f));
+            var npc=Fixture.Admission.CreateFromWire(Fixture.Model.Id,new(1100,1100,10.1f),initialBuffs);
             var handle=Fixture.Admission.Catalog.TryGet(npc)!.Value;
             Actor=Fixture.Runtime.Actors.Find(handle)??throw new InvalidOperationException(Fixture.Admission.Catalog.GetAdmission(handle)?.Refusal);
             _body=Fixture.Bodies!.Find(handle)!;
@@ -253,11 +262,18 @@ public sealed class ManagedNpcPositionChecksTests
                     RequireNoFault(Fixture.Runtime.PrePhysics(frame,Fixture.Admission.Provider.RemoveNpc));
                 },
                 publishPose:(actor,body,frame)=>RequireNoFault(Fixture.Runtime.PublishPhysicalPose(actor.Handle,body,frame,Fixture.Admission.Provider.RemoveNpc)),
-                managerOwnsReplication:true);
+                managerOwnsReplication:true,
+                prepareRequests:frame=>RequireNoFault(Fixture.Runtime.PrepareMovementRequests(frame,Fixture.Admission.Provider.RemoveNpc)));
             var frame=new ZoneMovementFrame(1,TimeSpan.FromMilliseconds(20),400020,.02f)
                 {LocalGameMilliseconds=2020,UnpausedMilliseconds=7020};
-            _phases.PrePhase(frame);_phases.StepPhysics(frame.Elapsed);_phases.PostPhase(frame);
+            if(stepInitial){_phases.PrePhase(frame);_phases.StepPhysics(frame.Elapsed);_phases.PostPhase(frame);}
             Drain();
+        }
+        public void StepFrame(uint number=2)
+        {
+            var frame=new ZoneMovementFrame(number,TimeSpan.FromMilliseconds(20),400000+number*20,number*.02f)
+                {LocalGameMilliseconds=2000+number*20,UnpausedMilliseconds=7000+number*20};
+            _phases.PrePhase(frame);_phases.StepPhysics(frame.Elapsed);_phases.PostPhase(frame);
         }
         public void SetContext(int context)
         {

@@ -114,8 +114,10 @@ public sealed partial class ZoneManagedNpcActorMotion : IDisposable
         RequireDependencies(owner);
         CertifyDry(owner, actual.Status.Position);
         Require(actor);
+        var speedState = StageMovementSpeedState(owner, actual, elapsed);
 
         var prior = owner.State;
+        var aiPhysics = owner.AiPhysics;
         ZoneManagedNpcActorMotionState next;
         if (!actual.AppliedDescription.CollisionActive)
         {
@@ -135,6 +137,10 @@ public sealed partial class ZoneManagedNpcActorMotion : IDisposable
                 throw new NotSupportedException("CActor movement requires the actual living ground cache.");
             if (!float.IsFinite(floor) || !Finite(physical.Velocity))
                 throw new InvalidDataException("CActor copied physical statistics must be finite.");
+            //392E0C80 copies status2+24 (velocity including retained ground) to AI16,
+            //and status2+72 (body496 gravity) to AI28. The current profile owns no
+            //retained ground, so its copied status velocity is already the first vector.
+            aiPhysics = new(physical.Velocity, new(0, 0, actual.AppliedDescription.Gravity));
             var blockedSeconds = blocked ? .3f : MathF.Max(0, prior.BlockedSeconds - elapsed);
             //392E0C80 first copies status.flying to actor369. Its redundant !369 test
             //therefore supplies no extra grounded condition. The near-floor override uses
@@ -179,7 +185,9 @@ public sealed partial class ZoneManagedNpcActorMotion : IDisposable
         if (owner.Body.CopyState() != actual)
             throw new InvalidOperationException("The NPC physical state changed during CActor statistics sampling.");
         Require(actor);
+        owner.SurfaceSlope = speedState;
         owner.State = next;
+        owner.AiPhysics = aiPhysics;
         if (next.LandingTransition && actual.AppliedDescription.CollisionActive) owner.LandingCount++;
         //Dedicated39277D00 never calls client-only3945F1E0 to install controller+24.
         //3945B0D0's actual missing-driver branch has no landing mutation in this profile.
@@ -220,9 +228,10 @@ public sealed partial class ZoneManagedNpcActorMotion : IDisposable
         Require(actor); RequireDependencies(owner);
         if (CopyPuppetAlertness(actor) is not { } alertness)
             throw new NotSupportedException("Non-Puppet replica alertness requires its copied native model-data fallback producer.");
-        var flags = (ushort)((state.GroundedSeconds > 0 ? 4 : 0) |
+        var flags = (ushort)((owner.SourceWalking ? 1 : 0) | (state.GroundedSeconds > 0 ? 4 : 0) |
             (state.LandingTransition ? 0x10 : 0) | (state.BlockedSeconds > .001f ? 0x1000 : 0));
-        return new(body, state.ActorVelocity, Vector3.Zero, flags, checked((sbyte)body.CurrentStanceSlot),
+        var delta = owner.ControllerRequest is { } request && (request.Flags & 0x20) != 0 ? request.Delta : Vector3.Zero;
+        return new(body, state.ActorVelocity, delta, flags, checked((sbyte)body.CurrentStanceSlot),
             checked((sbyte)alertness), ControllerId: owner.ControllerId,
             KeepSyncing: false, GuardedAllowStrafing: GuardedAllowStrafing(actor),
             ModelCanReplicate: (owner.ModelFlags & 1) != 0, Timestamp: timestamp);
@@ -233,11 +242,11 @@ public sealed partial class ZoneManagedNpcActorMotion : IDisposable
 
     /// <summary>
     /// CPuppet ctor31171F8C owns m_Alertness4160=0. Its later311680BC copy occurs only
-    /// after the full proxy update in31172DEC, which is not run by this constructor profile.
-    /// This getter deliberately does not substitute CAIHandler/Behavior.Alertness.
+    /// after the full proxy update in31172DEC. The concrete request owner performs the
+    /// admitted zero-alertness copy at that boundary, independently of this getter.
     /// </summary>
     public int? CopyPuppetAlertness(ZoneManagedNpcActor actor)
-    { Require(actor); return actor.IsPuppet ? 0 : null; }
+    { var owner = Require(actor); return actor.IsPuppet ? owner.PuppetAlertness : null; }
 
     private bool? GuardedAllowStrafing(ZoneManagedNpcActor actor)
     {

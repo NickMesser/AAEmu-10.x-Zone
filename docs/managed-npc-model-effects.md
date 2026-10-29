@@ -76,7 +76,7 @@ healthy generations continue their normal phases.
 
 Physical velocity and pose remain independent, including real falling velocity with empty
 requests. The ported dry statistics consumers392E0C80/392E0B50/392E0A70 do not read548/552.
-The separate AI movement-request generator39219740 does: request byte64&1 selects movement
+The separate movement-request path39219740 does: request byte64&1 selects movement
 type4 and, when548 is set, takes speed552/1000. That producer and future psychokinesis locomotion
 remain unported. Owning the latch and CanMove predicate does not admit that movement path.
 

@@ -1,6 +1,7 @@
 using System.Numerics;
 using AAEmu.Zone.Actors;
 using AAEmu.Zone.Ai;
+using AAEmu.Zone.Combat;
 using AAEmu.Zone.Content;
 using AAEmu.Zone.Navigation;
 using AAEmu.Zone.Npcs;
@@ -53,6 +54,12 @@ public static class ZoneManagedSceneHost
             ZoneManagedNpcActorMotion? npcMotion = null;
             ZoneManagedNpcReplication? npcReplication = null;
             ZoneManagedNpcPositionChecks? npcPositions = null;
+            ZoneManagedNpcMovementAbility? npcMovementAbility = null;
+            ZoneManagedNpcMovementRequests? npcMovementRequests = null;
+            ZoneManagedNpcNavigation? npcNavigation = null;
+            ZoneManagedNpcPuppetOutput? npcPuppetOutput = null;
+            ZoneManagedActorGrids? npcActorGrids = null;
+            var aiInitialized = false;
             ZoneManagedWaterQueries? water = null;
             ZoneSceneNpcWorld? world = null;
             ZoneMovementFrame? npcFrame = null;
@@ -107,7 +114,11 @@ public static class ZoneManagedSceneHost
                             construction, () => npcPoses ?? throw new InvalidOperationException("NPC proxy pose owner has not loaded."), skills, groups,
                             () => npcMotion ?? throw new InvalidOperationException("NPC CActor motion owner has not loaded."),
                             () => npcReplication ?? throw new InvalidOperationException("NPC replication owner has not loaded."),
-                            () => npcPositions ?? throw new InvalidOperationException("NPC position-check owner has not loaded."), npcPostures, inputs.NpcSkills);
+                            () => npcPositions ?? throw new InvalidOperationException("NPC position-check owner has not loaded."), npcPostures, inputs.NpcSkills,
+                            () => npcMovementAbility ?? throw new InvalidOperationException("NPC movement parameter owner has not loaded."),
+                            () => npcMovementRequests ?? throw new InvalidOperationException("NPC movement request owner has not loaded."),
+                            () => npcNavigation ?? throw new InvalidOperationException("NPC navigation owner has not loaded."),
+                            () => npcPuppetOutput ?? throw new InvalidOperationException("NPC Puppet output owner has not loaded."));
                     }
                     catch { npcPostures?.Dispose(); groups?.Dispose(); skills.Dispose(); throw; }
                 }
@@ -116,6 +127,7 @@ public static class ZoneManagedSceneHost
                     NextRandom, () => DateTimeOffset.UtcNow, period, inputs.Trace,
                     createProfile: (handle, npc, entityId) => profiles.CreateWithConstruction(handle, npc, entityId, construction),
                     createScriptServices: ScriptServices));
+                scripts.Actors.GameObjectActivationProfile = ZoneManagedNpcGameObjectActivationProfile.MultiplayerWorldServer;
                 scripts.Actors.SmartObjectStateConsumer = npcComponents!.ModifySmartObjectStates;
                 scripts.Actors.OperationFactory = npcComponents.CreateUseSkillGoal;
                 notes.AddOnce("managed-npc-profile", "Original NPC construction and supported script services are admitted per generation, at most one initialization per frame. " +
@@ -133,6 +145,7 @@ public static class ZoneManagedSceneHost
                             inputs.Trace($"Managed NPC admitted unit={npc.ObjectId} template={npc.TemplateId} gen={handle.Generation}; script/constructor ready, gameplay parity=false.");
                     }));
                 ai = resources.Own(new ZoneManagedAiProvider(Kind, admissions.Enqueue));
+                ai.BeginFrame = _ => scripts.Actors.BeginAiFrame(aiInitialized, inputs.Startup.EngineCVars);
                 world = new ZoneSceneNpcWorld(registry, inputs.Startup, inputs.Npcs, Position,
                     () => backend, catalog, ai, clock, period, notes, inputs.Trace);
                 world.AttachAiRuntime(scripts.Actors.Actors.AiRuntime);
@@ -174,6 +187,10 @@ public static class ZoneManagedSceneHost
                             activation.Report!.Cells, ZoneManagedWaterQueryProfile.StaticServerWithoutOceanVortex));
                         npcMotion = resources.Own(new ZoneManagedNpcActorMotion(scripts.Actors, npcPhysics, construction!,
                             water, npcComponents!.Characters, inputs.Assets, inputs.Models, activation.Heights, inputs.Startup.EngineCVars));
+                        npcMovementAbility = resources.Own(new ZoneManagedNpcMovementAbility(scripts.Actors, npcMotion, inputs.Models));
+                        npcMovementRequests = resources.Own(new ZoneManagedNpcMovementRequests(scripts.Actors, npcPhysics,
+                            construction!, npcMotion, npcPoses, npcComponents, inputs.Stats, inputs.Startup.EngineCVars));
+                        scripts.Actors.MovementAbility = npcMovementAbility;
                         npcReplication = resources.Own(new ZoneManagedNpcReplication(registry, scripts.Actors, npcMotion,
                             inputs.Startup.EngineCVars, NextRandom, localOnWire: false, inputs.Trace));
                         npcPositions = resources.Own(new ZoneManagedNpcPositionChecks(scripts.Lua, registry, npcGroups!,
@@ -187,6 +204,22 @@ public static class ZoneManagedSceneHost
                             (bootstrap.Refusal is { } refusal ? $"; {refusal}" : ""));
                         navigation = resources.Own(new ZoneNavigationTiledGraph(inputs.Layout.Zone.Origin,
                             ZoneNavigationTileContent.LoadZone(inputs.Assets, inputs.Layout.World.RequestedWorldName, inputs.Layout.Zone)));
+                        npcActorGrids = resources.Own(new ZoneManagedActorGrids(scripts.Actors.Objects,
+                            ZoneManagedActorGridConfiguration.FromLayout(inputs.Layout)));
+                        scripts.Actors.ActorGrids = npcActorGrids;
+                        //Explicit bounded route/physical admission. These are replacement query
+                        //work bounds, not recovered native walkability/search constants.
+                        var pathQueries = new ZoneManagedNpcNavigationQueries(backend, activation.Heights, activation.Report!,
+                            activation.Collision!, water, new(new(128, .25f, 1024, .75f, 2, .7f), 2, 65536));
+                        npcNavigation = resources.Own(new ZoneManagedNpcNavigation(scripts.Actors, npcMovementAbility!,
+                            npcMotion!, npcPhysics!, navigation, pathQueries, inputs.Startup.EngineCVars, new ZoneStatCalculator(inputs.Stats), npcComponents));
+                        scripts.Actors.Navigation = npcNavigation;
+                        npcPuppetOutput = resources.Own(new ZoneManagedNpcPuppetOutput(scripts.Actors, npcPoses!,
+                            npcMovementAbility!, npcMotion!, new ZoneStatCalculator(inputs.Stats), actor => npcNavigation.Find(actor.Handle),
+                            inputs.Startup.EngineCVars));
+                        scripts.Actors.PuppetOutput = npcPuppetOutput;
+                        scripts.Actors.MovementRequests = npcMovementRequests;
+                        aiInitialized = bootstrap.Ready;
                     }, inputs.Trace, () => scripts!.ScriptingStatus, NavigationStatus);
                 return new(loading, factory, simulation);
             }
@@ -219,7 +252,8 @@ public static class ZoneManagedSceneHost
                         if (frame is { WorldPacketProcessed: false }) admissions!.Pump(1);
                     },
                     publishPose: (actor, body, sample) => TraceFaults(scripts!.PublishPhysicalPose(actor.Handle, body, sample, ai!.RemoveNpc)),
-                    managerOwnsReplication: true));
+                    managerOwnsReplication: true,
+                    prepareRequests: sample => TraceFaults(scripts!.PrepareMovementRequests(sample, ai!.RemoveNpc))));
                 frame = new(npcPhases, backend, players, ai, movement, scene.Simulation, inputs.Startup, period, inputs.Trace,
                     elapsed =>
                     {

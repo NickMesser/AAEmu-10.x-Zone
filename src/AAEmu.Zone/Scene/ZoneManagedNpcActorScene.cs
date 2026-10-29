@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Diagnostics.CodeAnalysis;
 using AAEmu.Zone.Actors;
 using AAEmu.Zone.Ai;
+using AAEmu.Zone.Hosting;
 using AAEmu.Zone.Npcs;
 using AAEmu.Zone.Scripting;
 using AAEmu.Zone.Units;
@@ -25,6 +26,8 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     private readonly Action<string> _loadScript;
     private readonly Action<string>? _trace;
     private readonly Dictionary<ZoneActorHandle, ZoneManagedNpcActor> _actors = [];
+    private ulong _nextActorAllocationOrderKey;
+    private long _lastAiFrameMicroseconds;
     private readonly Queue<ZoneManagedNpcActorEvent> _events = [];
     private readonly ZoneGoalPipeEventDispatcher _pipeEvents = new();
     public ZoneNpcActorRegistry Actors { get; }
@@ -34,6 +37,7 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     public bool IsDisposed { get; private set; }
     public float FrameTimeSeconds { get; }
     public bool GlobalAiUpdateAlways { get; set; }
+    public ZoneManagedNpcGameObjectActivationProfile GameObjectActivationProfile { get; set; }
     public Action<ZoneManagedNpcActor, string>? SmartObjectStateConsumer { get; set; }
     public Func<ZoneManagedNpcActor, ZoneGoalDefinition, IZoneGoalOperation>? OperationFactory { get; set; }
     public ulong EventCount { get; private set; }
@@ -63,6 +67,7 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     public static ZoneActorControlState CreatePipeUserControls() => new()
     {
         SignalsEnabled = true, MovementUrgency = .4f, GoalMovementUrgency = .4f,
+        DesiredSpeed = 1, DistanceToPathEnd = -1, //31007EAC→31009BBC→31009ABC's actual SOBJECTSTATE constructor.
     };
 
     /// <summary>
@@ -78,7 +83,8 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
         if (!_units.Units.TryGetValue(npc.ObjectId, out var unit) || !ReferenceEquals(unit, npc.Unit))
             throw new InvalidOperationException("NPC actor admission requires its exact registered Unit.");
         if (_actors.ContainsKey(actor)) throw new InvalidOperationException("This NPC generation already has a managed actor.");
-        return new ZoneManagedNpcActor(this, actor, npc, aiObject, controls, isPuppet);
+        var allocationOrderKey = checked(++_nextActorAllocationOrderKey);
+        return new ZoneManagedNpcActor(this, actor, npc, aiObject, controls, isPuppet, allocationOrderKey);
     }
 
     /// <summary>
@@ -158,6 +164,7 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     public bool Remove(ZoneActorHandle actor)
     {
         if (!_actors.Remove(actor, out var managed)) return false;
+        managed.ActorGrid?.Dispose();
         managed.MarkRetired();
         managed.Points?.Dispose();
         foreach (var other in _actors.Values.ToArray()) other.Services.RemoveTarget(managed.AiObject);
@@ -182,6 +189,22 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     }
     /// <summary>Borrowed proxy owner. Its frame publication owns eye position; entity queries retain their origin.</summary>
     public ZoneManagedNpcAiPose? ProxyPoses { get; set; }
+    public ZoneManagedNpcMovementAbility? MovementAbility { get; set; }
+    public ZoneManagedNpcNavigation? Navigation { get; set; }
+    public ZoneManagedNpcPuppetOutput? PuppetOutput { get; set; }
+    public ZoneManagedNpcMovementRequests? MovementRequests { get; set; }
+    public ZoneManagedActorGrids? ActorGrids { get; set; }
+    /// <summary>3109B198's accepted frame prefix under the managed enabled-server profile.</summary>
+    public bool BeginAiFrame(bool initialized, ZoneEngineCVars cvars)
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this); ArgumentNullException.ThrowIfNull(cvars);
+        var now = _frameMicroseconds(); ObjectDisposedException.ThrowIf(IsDisposed, this);
+        if (_lastAiFrameMicroseconds == now) return false;
+        _lastAiFrameMicroseconds = now; //Native consumes the timestamp before initialization/CVar guards.
+        if (!initialized || cvars.GetInt("ai_SystemUpdate", 1) == 0) return false;
+        ActorGrids?.AdvanceCacheSlice(); //Source prepass before scheduled Puppet updates.
+        return true;
+    }
     public ZoneManagedNpcMovementEligibility? MovementEligibility { get; private set; }
 
     internal void AttachMovementEligibility(ZoneManagedNpcActorMotion motion)
@@ -200,6 +223,7 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     }
     internal ZoneManagedNpcActor? ObjectOwner(object target) =>
         _actors.Values.FirstOrDefault(actor => ReferenceEquals(actor.AiObject, target) && IsCurrent(actor));
+    internal IReadOnlyList<ZoneManagedNpcActor> CopyActors() => _actors.Values.Where(IsCurrent).ToArray();
     internal ZoneManagedNpcActor? EntryOwner(ZoneNpcActorEntry entry) =>
         _actors.Values.FirstOrDefault(actor => ReferenceEquals(actor.Entry, entry) && IsCurrent(actor));
 
@@ -221,7 +245,7 @@ public sealed class ZoneManagedNpcActorScene : IZoneNpcActorScene, IDisposable
     { if (EntryOwner(actor) is { } owner) Record(owner, "recorder", 2, name); }
     public int GetActorAlertness(ZoneNpcActorEntry actor) => EntryOwner(actor)?.Behavior?.Alertness ?? 0;
     public void SetEntityUpdatePolicy(ZoneNpcActorEntry actor, int policy)
-    { if (EntryOwner(actor) is { } owner) owner.EntityUpdatePolicy = policy; }
+    { if (EntryOwner(actor) is { } owner) owner.ApplyGameObjectAiActivationPolicy(policy); }
     public void ActorActivationEvent(ZoneNpcActorEntry actor, int eventId)
     {
         if (EntryOwner(actor) is not { } owner) return;
@@ -261,6 +285,9 @@ public sealed partial class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcB
     internal ZoneManagedNpcActorScene Scene => _scene;
     internal bool IsPending => !_retired && Entry is null;
     public ZoneActorHandle Handle { get; }
+    /// <summary>Managed actor allocation order, independently of entity IDs, proxy keys and native heap addresses.</summary>
+    public ulong AiAllocationOrderKey { get; }
+    internal ZoneManagedActorGridLease? ActorGrid { get; private set; }
     public ZoneNpc Npc { get; }
     public ZoneAiObjectState AiObject { get; }
     public ZoneActorLookState LookState { get; }
@@ -274,14 +301,15 @@ public sealed partial class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcB
     public IReadOnlyList<ZoneManagedNpcDevaluation> Devaluations => Services.Devaluations;
     public ZoneNpcBehavior? Behavior { get; private set; }
     public bool IsPuppet { get; }
-    public int EntityUpdatePolicy { get; internal set; }
+    public int EntityUpdatePolicy { get; internal set; } = 2; //CGameObject305E1D80 flags100=0x23.
     public bool GameplayReady => false;
     public bool HasActor => !_retired && _scene.IsCurrent(this);
 
     internal ZoneManagedNpcActor(ZoneManagedNpcActorScene scene, ZoneActorHandle handle, ZoneNpc npc,
-        ZoneAiObjectState aiObject, ZoneActorControlState controls, bool isPuppet)
+        ZoneAiObjectState aiObject, ZoneActorControlState controls, bool isPuppet, ulong allocationOrderKey)
     {
         _scene = scene; Handle = handle; Npc = npc; AiObject = aiObject; IsPuppet = isPuppet;
+        AiAllocationOrderKey = allocationOrderKey;
         LookState = new(controls);
         Services = new(scene, this, controls);
     }
@@ -289,7 +317,22 @@ public sealed partial class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcB
     internal void AttachPoints(ZoneManagedNpcPointLease points) => Points = points;
     internal void AttachBehavior(ZoneNpcBehavior behavior) => Behavior = behavior;
     internal void MarkRetired() { _retired = true; Behavior = null; }
-    public void SetActive(bool active) { _scene.Require(this); AiObject.Enabled = active; }
+    public void SetActive(bool active)
+    {
+        _scene.Require(this); AiObject.Enabled = active;
+        ActorGrid?.SetEnabled(active);
+    }
+    internal ZoneManagedActorGridLease? BindActorGrid()
+    {
+        _scene.Require(this);
+        if (_scene.ActorGrids is not { } grids) return null;
+        if (ActorGrid is not null) throw new InvalidOperationException("This exact actor already has a grid registration.");
+        if (!IsPuppet || Entry.Registration?.ObjectType != 5)
+            throw ZoneManagedNpcActorScene.Missing("this actor's actual grid classification and insertion profile");
+        //32012370 enables the new Puppet before Entity.v1048 publishes transform.
+        //3105A7E8 therefore inserts its constructor-zero actor108.
+        return ActorGrid = grids.BindPuppet(Entry.Registration, AiObject, AiAllocationOrderKey, Vector3.Zero, AiObject.Enabled);
+    }
     public void SetTarget(ZoneActorHandle? target)
     {
         _scene.Require(this);
@@ -308,11 +351,19 @@ public sealed partial class ZoneManagedNpcActor : IZoneManagedAiActor, IZoneNpcB
         if (!float.IsFinite(elapsedSeconds) || elapsedSeconds < 0) throw new ArgumentOutOfRangeException(nameof(elapsedSeconds));
         if (!AiObject.Enabled) return;
         _scene.RefreshPosition(this);
+        _scene.MovementAbility?.UpdateBodyTurn(this);
+        _scene.PuppetOutput?.BeforeGoals(this);
         Entry.Phase.Update();
+        if (!_scene.IsCurrent(this)) return;
+        _scene.PuppetOutput?.BuildBeforeProxy(this);
+        if (!_scene.IsCurrent(this) || _scene.PuppetOutput is { ProxyUpdatesEnabled: false } || !UpdateProxyActivationPolicy()) return;
         //31172DEC runs the goals/output before CAIProxy.v64 (30518020).
         //Its first owned handler phase is v240 ->30518D30. Only this scheduled
         //generation drains; a signal operation itself only submits to the queue.
         if (_scene.IsCurrent(this) && _scene.Actors.HasSignalHandler(Npc)) Npc.AiSignals.Update();
+        if (_scene.IsCurrent(this) && _scene.PuppetOutput is { } output)
+            (_scene.MovementRequests ?? throw ZoneManagedNpcActorScene.Missing("the actual CAIProxy movement request consumer"))
+                .SubmitProxyOutput(this, output.CopyStateForProxy(this));
     }
     public void LoadScript(string filename) { _scene.Require(this); _scene.LoadScript(filename); }
     public void ActorEvent(int kind, string name) { _scene.Require(this); _scene.Record(this, "actor", kind, name); }

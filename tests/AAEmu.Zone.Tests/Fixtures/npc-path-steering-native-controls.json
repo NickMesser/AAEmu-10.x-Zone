@@ -1,0 +1,8311 @@
+{
+  "scope": "Offline execution of original CNavPath advancement/look-ahead/steering; no engine DLL load.",
+  "imageSha256": "a740d58c6a3c851d84967e9513125c48b9326cbb70462ad1f57e6e60aadfe921",
+  "callbacks": [
+    "CRT sqrtf executes SQRTSS",
+    "free retires only controlled list nodes",
+    "311407F0/311408F0 debug drawing omitted"
+  ],
+  "controls": [
+    {
+      "name": "straight_start_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "straight_start_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "straight_project_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.30000001192092896,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "straight_project_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.30000001192092896,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "straight_offpath_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          4,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.30000001192092896,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "straight_offpath_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          4,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.30000001192092896,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "straight_end_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          10.1,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 1,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "straight_end_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          10.1,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 1,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "corner_before_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.6000000238418579,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "corner_before_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.6000000238418579,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "corner_bisector_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 1.0,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "corner_bisector_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 1.0,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "corner_past_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0.1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.019999999552965164,
+        "stuck": 0.0,
+        "version": 1,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "corner_past_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0.1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.019999999552965164,
+        "stuck": 0.0,
+        "version": 1,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "corner_across_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          -1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 1.0,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "corner_across_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          -1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 1.0,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "backtrack_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          4,
+          0.2,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.800000011920929,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "backtrack_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          4,
+          0.2,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.800000011920929,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "short_start_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.05,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.05000000074505806,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 1,
+        "remaining": 5.0
+      }
+    },
+    {
+      "name": "short_start_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.05,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.05000000074505806,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 1,
+        "remaining": 5.0
+      }
+    },
+    {
+      "name": "vertical_segment_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            4
+          ],
+          [
+            5,
+            0,
+            4
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            4.0
+          ],
+          [
+            5.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 1,
+        "remaining": 5.0
+      }
+    },
+    {
+      "name": "vertical_segment_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            4
+          ],
+          [
+            5,
+            0,
+            4
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ],
+          [
+            5.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 9.0
+      }
+    },
+    {
+      "name": "slope_2d",
+      "request": {
+        "points": [
+          [
+            8000,
+            7000,
+            100
+          ],
+          [
+            8005,
+            7000,
+            102
+          ],
+          [
+            8005,
+            7005,
+            104
+          ]
+        ],
+        "pos": [
+          8003,
+          7001,
+          101
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            8000.0,
+            7000.0,
+            100.0
+          ],
+          [
+            8005.0,
+            7000.0,
+            102.0
+          ],
+          [
+            8005.0,
+            7005.0,
+            104.0
+          ]
+        ],
+        "fraction": 0.6000000238418579,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.0
+      }
+    },
+    {
+      "name": "slope_3d",
+      "request": {
+        "points": [
+          [
+            8000,
+            7000,
+            100
+          ],
+          [
+            8005,
+            7000,
+            102
+          ],
+          [
+            8005,
+            7005,
+            104
+          ]
+        ],
+        "pos": [
+          8003,
+          7001,
+          101
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            8000.0,
+            7000.0,
+            100.0
+          ],
+          [
+            8005.0,
+            7000.0,
+            102.0
+          ],
+          [
+            8005.0,
+            7005.0,
+            104.0
+          ]
+        ],
+        "fraction": 0.5862069129943848,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 10.770329475402832
+      }
+    },
+    {
+      "name": "overshoot_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0.1,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ]
+        ],
+        "pos": [
+          0.7,
+          0.05,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            2.0,
+            0.10000000149011612,
+            0.0
+          ],
+          [
+            3.0,
+            4.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.699999988079071,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 6.031152248382568
+      }
+    },
+    {
+      "name": "overshoot_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0.1,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ]
+        ],
+        "pos": [
+          0.7,
+          0.05,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            2.0,
+            0.10000000149011612,
+            0.0
+          ],
+          [
+            3.0,
+            4.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.699999988079071,
+        "stuck": 0.0,
+        "version": 0,
+        "remaining": 6.031152248382568
+      }
+    },
+    {
+      "name": "stuck_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          2,
+          3,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0.2,
+        "stuck": 0.4,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.20000000298023224,
+        "stuck": 0.4000000059604645,
+        "version": 0,
+        "remaining": 8.0
+      }
+    },
+    {
+      "name": "stuck_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          2,
+          3,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0.2,
+        "stuck": 0.4,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.20000000298023224,
+        "stuck": 0.4000000059604645,
+        "version": 0,
+        "remaining": 8.0
+      }
+    },
+    {
+      "name": "short_tail_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.0001,
+            0.0001,
+            0
+          ],
+          [
+            0.0002,
+            0.0002,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.00019999999494757503,
+            0.00019999999494757503,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 2,
+        "remaining": 0.0002828426950145513
+      }
+    },
+    {
+      "name": "short_tail_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.0001,
+            0.0001,
+            0
+          ],
+          [
+            0.0002,
+            0.0002,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "advance"
+      },
+      "result": {
+        "points": [
+          [
+            0.00019999999494757503,
+            0.00019999999494757503,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 2,
+        "remaining": 0.0002828426950145513
+      }
+    },
+    {
+      "name": "straight_start_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          2.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_start_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          2.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_project_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_project_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_offpath_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          4,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_offpath_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          4,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_end_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          10.1,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_end_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          10.1,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_before_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_before_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_bisector_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_bisector_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_past_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0.1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_past_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0.1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_across_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          -1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_across_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          -1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "backtrack_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          4,
+          0.2,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "backtrack_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          4,
+          0.2,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.20000000298023224,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "short_start_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.05,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.05000000074505806,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          2.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "short_start_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.05,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.05000000074505806,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          2.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "vertical_segment_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            4
+          ],
+          [
+            5,
+            0,
+            4
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ],
+          [
+            5.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          2.0,
+          0.0,
+          4.0
+        ]
+      }
+    },
+    {
+      "name": "vertical_segment_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            4
+          ],
+          [
+            5,
+            0,
+            4
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ],
+          [
+            5.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.0,
+          0.0,
+          2.0
+        ]
+      }
+    },
+    {
+      "name": "slope_2d",
+      "request": {
+        "points": [
+          [
+            8000,
+            7000,
+            100
+          ],
+          [
+            8005,
+            7000,
+            102
+          ],
+          [
+            8005,
+            7005,
+            104
+          ]
+        ],
+        "pos": [
+          8003,
+          7001,
+          101
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            8000.0,
+            7000.0,
+            100.0
+          ],
+          [
+            8005.0,
+            7000.0,
+            102.0
+          ],
+          [
+            8005.0,
+            7005.0,
+            104.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          8000.2001953125,
+          7000.0,
+          100.08000183105469
+        ]
+      }
+    },
+    {
+      "name": "slope_3d",
+      "request": {
+        "points": [
+          [
+            8000,
+            7000,
+            100
+          ],
+          [
+            8005,
+            7000,
+            102
+          ],
+          [
+            8005,
+            7005,
+            104
+          ]
+        ],
+        "pos": [
+          8003,
+          7001,
+          101
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            8000.0,
+            7000.0,
+            100.0
+          ],
+          [
+            8005.0,
+            7000.0,
+            102.0
+          ],
+          [
+            8005.0,
+            7005.0,
+            104.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          8000.185546875,
+          7000.0,
+          100.07427978515625
+        ]
+      }
+    },
+    {
+      "name": "overshoot_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0.1,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ]
+        ],
+        "pos": [
+          0.7,
+          0.05,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            2.0,
+            0.10000000149011612,
+            0.0
+          ],
+          [
+            3.0,
+            4.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          1.296736478805542,
+          0.029673656448721886,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "overshoot_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0.1,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ]
+        ],
+        "pos": [
+          0.7,
+          0.05,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            2.0,
+            0.10000000149011612,
+            0.0
+          ],
+          [
+            3.0,
+            4.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          1.296736478805542,
+          0.029673656448721886,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "stuck_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          2,
+          3,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0.2,
+        "stuck": 0.4,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.20000000298023224,
+        "stuck": 0.4000000059604645,
+        "version": 0,
+        "steering": [
+          2.200000047683716,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "stuck_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          2,
+          3,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0.2,
+        "stuck": 0.4,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.20000000298023224,
+        "stuck": 0.4000000059604645,
+        "version": 0,
+        "steering": [
+          2.200000047683716,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "short_tail_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.0001,
+            0.0001,
+            0
+          ],
+          [
+            0.0002,
+            0.0002,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            9.999999747378752e-05,
+            9.999999747378752e-05,
+            0.0
+          ],
+          [
+            0.00019999999494757503,
+            0.00019999999494757503,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.00019999999494757503,
+          0.00019999999494757503,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "short_tail_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.0001,
+            0.0001,
+            0
+          ],
+          [
+            0.0002,
+            0.0002,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "steer"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            9.999999747378752e-05,
+            9.999999747378752e-05,
+            0.0
+          ],
+          [
+            0.00019999999494757503,
+            0.00019999999494757503,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "steering": [
+          0.00019999999494757503,
+          0.00019999999494757503,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_start_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "remaining": 10.0,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          2.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_start_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "remaining": 10.0,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          2.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_project_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.30000001192092896,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.7071067690849304,
+          -0.7071067690849304,
+          0.0
+        ],
+        "remaining": 11.0,
+        "distanceToPath": 1.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          4.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_project_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.30000001192092896,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.7071067690849304,
+          -0.7071067690849304,
+          0.0
+        ],
+        "remaining": 11.0,
+        "distanceToPath": 1.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          4.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_offpath_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          4,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.30000001192092896,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.04993762820959091,
+          -0.9987523555755615,
+          0.0
+        ],
+        "remaining": 14.0,
+        "distanceToPath": 4.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          3.200000047683716,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_offpath_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          4,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.30000001192092896,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.04993762820959091,
+          -0.9987523555755615,
+          0.0
+        ],
+        "remaining": 14.0,
+        "distanceToPath": 4.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          3.200000047683716,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_end_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          10.1,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 1,
+        "hasPath": false,
+        "direction": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remaining": 10.0,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_end_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          10.1,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 1,
+        "hasPath": false,
+        "direction": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remaining": 10.0,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_before_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.6000000238418579,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "remaining": 10.0,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          5.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_before_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.6000000238418579,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "remaining": 10.0,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          5.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_bisector_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 1.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "remaining": 10.0,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          5.0,
+          2.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_bisector_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 1.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "remaining": 10.0,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          5.0,
+          2.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_past_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0.1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.019999999552965164,
+        "stuck": 0.0,
+        "version": 1,
+        "hasPath": true,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "remaining": 10.0,
+        "distanceToPath": 7.450580596923828e-09,
+        "isStuck": false,
+        "segment": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "inflection": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "steering": [
+          5.0,
+          2.0999999046325684,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_past_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0.1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.019999999552965164,
+        "stuck": 0.0,
+        "version": 1,
+        "hasPath": true,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "remaining": 10.0,
+        "distanceToPath": 7.450580596923828e-09,
+        "isStuck": false,
+        "segment": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "inflection": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "steering": [
+          5.0,
+          2.0999999046325684,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_across_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          -1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 1.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "remaining": 11.0,
+        "distanceToPath": 1.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          5.0,
+          0.5015625357627869,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "corner_across_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          -1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 1.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "remaining": 11.0,
+        "distanceToPath": 1.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          5.0,
+          0.5015625357627869,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "backtrack_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          4,
+          0.2,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.800000011920929,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.7071072459220886,
+          -0.7071062326431274,
+          0.0
+        ],
+        "remaining": 10.199999809265137,
+        "distanceToPath": 0.20000000298023224,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          4.200000286102295,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "backtrack_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          4,
+          0.2,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.800000011920929,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.7071072459220886,
+          -0.7071062326431274,
+          0.0
+        ],
+        "remaining": 10.199999809265137,
+        "distanceToPath": 0.20000000298023224,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          4.200000286102295,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "short_start_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.05,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.05000000074505806,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 1,
+        "hasPath": true,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "remaining": 5.050000190734863,
+        "distanceToPath": 0.05000000074505806,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          2.000000238418579,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "short_start_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.05,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.05000000074505806,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 1,
+        "hasPath": true,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "remaining": 5.050000190734863,
+        "distanceToPath": 0.05000000074505806,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          2.000000238418579,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "vertical_segment_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            4
+          ],
+          [
+            5,
+            0,
+            4
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            4.0
+          ],
+          [
+            5.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 1,
+        "hasPath": true,
+        "direction": [
+          0.4472135901451111,
+          0.0,
+          0.8944271802902222
+        ],
+        "remaining": 5.0,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          2.0,
+          0.0,
+          4.0
+        ]
+      }
+    },
+    {
+      "name": "vertical_segment_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            4
+          ],
+          [
+            5,
+            0,
+            4
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ],
+          [
+            5.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "remaining": 9.0,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "inflection": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "steering": [
+          0.0,
+          0.0,
+          2.0
+        ]
+      }
+    },
+    {
+      "name": "slope_2d",
+      "request": {
+        "points": [
+          [
+            8000,
+            7000,
+            100
+          ],
+          [
+            8005,
+            7000,
+            102
+          ],
+          [
+            8005,
+            7005,
+            104
+          ]
+        ],
+        "pos": [
+          8003,
+          7001,
+          101
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            8000.0,
+            7000.0,
+            100.0
+          ],
+          [
+            8005.0,
+            7000.0,
+            102.0
+          ],
+          [
+            8005.0,
+            7005.0,
+            104.0
+          ]
+        ],
+        "fraction": 0.6000000238418579,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.6509448289871216,
+          -0.6509448289871216,
+          0.3905659019947052
+        ],
+        "remaining": 11.0,
+        "distanceToPath": 1.0,
+        "isStuck": false,
+        "segment": [
+          0.9284766912460327,
+          0.0,
+          0.3713906705379486
+        ],
+        "inflection": [
+          0.9284766912460327,
+          0.0,
+          0.3713906705379486
+        ],
+        "steering": [
+          8004.0,
+          7000.0,
+          101.5999984741211
+        ]
+      }
+    },
+    {
+      "name": "slope_3d",
+      "request": {
+        "points": [
+          [
+            8000,
+            7000,
+            100
+          ],
+          [
+            8005,
+            7000,
+            102
+          ],
+          [
+            8005,
+            7005,
+            104
+          ]
+        ],
+        "pos": [
+          8003,
+          7001,
+          101
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            8000.0,
+            7000.0,
+            100.0
+          ],
+          [
+            8005.0,
+            7000.0,
+            102.0
+          ],
+          [
+            8005.0,
+            7005.0,
+            104.0
+          ]
+        ],
+        "fraction": 0.5862069129943848,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.596502959728241,
+          -0.7069664597511292,
+          0.3799772262573242
+        ],
+        "remaining": 11.7874174118042,
+        "distanceToPath": 1.017087697982788,
+        "isStuck": false,
+        "segment": [
+          0.9284766912460327,
+          0.0,
+          0.3713906705379486
+        ],
+        "inflection": [
+          0.9284766912460327,
+          0.0,
+          0.3713906705379486
+        ],
+        "steering": [
+          8003.84375,
+          7000.0,
+          101.5374755859375
+        ]
+      }
+    },
+    {
+      "name": "overshoot_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0.1,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ]
+        ],
+        "pos": [
+          0.7,
+          0.05,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            2.0,
+            0.10000000149011612,
+            0.0
+          ],
+          [
+            3.0,
+            4.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.699999988079071,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.9297137260437012,
+          0.36828309297561646,
+          0.0
+        ],
+        "remaining": 6.081152439117432,
+        "distanceToPath": 0.05000000074505806,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          2.132699489593506,
+          0.6175284385681152,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "overshoot_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0.1,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ]
+        ],
+        "pos": [
+          0.7,
+          0.05,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            2.0,
+            0.10000000149011612,
+            0.0
+          ],
+          [
+            3.0,
+            4.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.699999988079071,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.9297137260437012,
+          0.36828309297561646,
+          0.0
+        ],
+        "remaining": 6.081152439117432,
+        "distanceToPath": 0.05000000074505806,
+        "isStuck": false,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          2.132699489593506,
+          0.6175284385681152,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "stuck_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          2,
+          3,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0.2,
+        "stuck": 0.4,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.20000000298023224,
+        "stuck": 0.5,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.06651902943849564,
+          -0.9977851510047913,
+          0.0
+        ],
+        "remaining": 11.0,
+        "distanceToPath": 3.0,
+        "isStuck": true,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          2.200000047683716,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "stuck_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          2,
+          3,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0.2,
+        "stuck": 0.4,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.20000000298023224,
+        "stuck": 0.5,
+        "version": 0,
+        "hasPath": true,
+        "direction": [
+          0.06651902943849564,
+          -0.9977851510047913,
+          0.0
+        ],
+        "remaining": 11.0,
+        "distanceToPath": 3.0,
+        "isStuck": true,
+        "segment": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          2.200000047683716,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "short_tail_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.0001,
+            0.0001,
+            0
+          ],
+          [
+            0.0002,
+            0.0002,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.00019999999494757503,
+            0.00019999999494757503,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 2,
+        "hasPath": false,
+        "direction": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remaining": 0.0002828426950145513,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "short_tail_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.0001,
+            0.0001,
+            0
+          ],
+          [
+            0.0002,
+            0.0002,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "update"
+      },
+      "result": {
+        "points": [
+          [
+            0.00019999999494757503,
+            0.00019999999494757503,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 2,
+        "hasPath": false,
+        "direction": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remaining": 0.0002828426950145513,
+        "distanceToPath": 0.0,
+        "isStuck": false,
+        "segment": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "inflection": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "steering": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "straight_start_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "straight_start_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "straight_project_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "straight_project_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "straight_offpath_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          4,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "straight_offpath_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          4,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "straight_end_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          10.1,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "straight_end_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          10.1,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "corner_before_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "corner_before_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          3,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "corner_bisector_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "corner_bisector_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "corner_past_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0.1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "corner_past_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          0.1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "corner_across_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          -1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "corner_across_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            5,
+            5,
+            0
+          ]
+        ],
+        "pos": [
+          5,
+          -1,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            5.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "backtrack_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          4,
+          0.2,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "backtrack_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          4,
+          0.2,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "short_start_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.05,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.05000000074505806,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "short_start_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.05,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.05000000074505806,
+            0.0,
+            0.0
+          ],
+          [
+            5.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "vertical_segment_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            4
+          ],
+          [
+            5,
+            0,
+            4
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ],
+          [
+            5.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          2.0,
+          0.0,
+          1.600000023841858
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 0.0
+      }
+    },
+    {
+      "name": "vertical_segment_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            4
+          ],
+          [
+            5,
+            0,
+            4
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ],
+          [
+            5.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          0.0,
+          0.0,
+          2.0
+        ],
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "slope_2d",
+      "request": {
+        "points": [
+          [
+            8000,
+            7000,
+            100
+          ],
+          [
+            8005,
+            7000,
+            102
+          ],
+          [
+            8005,
+            7005,
+            104
+          ]
+        ],
+        "pos": [
+          8003,
+          7001,
+          101
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            8000.0,
+            7000.0,
+            100.0
+          ],
+          [
+            8005.0,
+            7000.0,
+            102.0
+          ],
+          [
+            8005.0,
+            7005.0,
+            104.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          8002.0,
+          7000.0,
+          100.80000305175781
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "slope_3d",
+      "request": {
+        "points": [
+          [
+            8000,
+            7000,
+            100
+          ],
+          [
+            8005,
+            7000,
+            102
+          ],
+          [
+            8005,
+            7005,
+            104
+          ]
+        ],
+        "pos": [
+          8003,
+          7001,
+          101
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            8000.0,
+            7000.0,
+            100.0
+          ],
+          [
+            8005.0,
+            7000.0,
+            102.0
+          ],
+          [
+            8005.0,
+            7005.0,
+            104.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          8001.85693359375,
+          7000.0,
+          100.74278259277344
+        ],
+        "direction": [
+          0.9284766912460327,
+          0.0,
+          0.3713906705379486
+        ],
+        "curvature": 0.004228696692734957,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "overshoot_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0.1,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ]
+        ],
+        "pos": [
+          0.7,
+          0.05,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            2.0,
+            0.10000000149011612,
+            0.0
+          ],
+          [
+            3.0,
+            4.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          1.9950370788574219,
+          0.09950371831655502,
+          0.0
+        ],
+        "direction": [
+          0.9950371384620667,
+          0.09950371831655502,
+          0.0
+        ],
+        "curvature": 0.0499071404337883,
+        "minimumDot": 0.9975185394287109
+      }
+    },
+    {
+      "name": "overshoot_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0.1,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ]
+        ],
+        "pos": [
+          0.7,
+          0.05,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            2.0,
+            0.10000000149011612,
+            0.0
+          ],
+          [
+            3.0,
+            4.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          1.9950370788574219,
+          0.09950371831655502,
+          0.0
+        ],
+        "direction": [
+          0.9950371384620667,
+          0.09950371831655502,
+          0.0
+        ],
+        "curvature": 0.0499071404337883,
+        "minimumDot": 0.9975185394287109
+      }
+    },
+    {
+      "name": "stuck_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          2,
+          3,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0.2,
+        "stuck": 0.4,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.20000000298023224,
+        "stuck": 0.4000000059604645,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "stuck_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ]
+        ],
+        "pos": [
+          2,
+          3,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0.2,
+        "stuck": 0.4,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            10.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "fraction": 0.20000000298023224,
+        "stuck": 0.4000000059604645,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "curvature": 0.0,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "short_tail_2d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.0001,
+            0.0001,
+            0
+          ],
+          [
+            0.0002,
+            0.0002,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": true,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            9.999999747378752e-05,
+            9.999999747378752e-05,
+            0.0
+          ],
+          [
+            0.00019999999494757503,
+            0.00019999999494757503,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          0.00019999999494757503,
+          0.00019999999494757503,
+          0.0
+        ],
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "curvature": 3.999999523162842,
+        "minimumDot": 1.0
+      }
+    },
+    {
+      "name": "short_tail_3d",
+      "request": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.0001,
+            0.0001,
+            0
+          ],
+          [
+            0.0002,
+            0.0002,
+            0
+          ]
+        ],
+        "pos": [
+          0,
+          0,
+          0
+        ],
+        "vel": [
+          2,
+          0,
+          0
+        ],
+        "look": 2,
+        "radius": 0.5,
+        "seconds": 0.1,
+        "adaptive": true,
+        "flat": false,
+        "fraction": 0,
+        "stuck": 0,
+        "kind": "curve"
+      },
+      "result": {
+        "points": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            9.999999747378752e-05,
+            9.999999747378752e-05,
+            0.0
+          ],
+          [
+            0.00019999999494757503,
+            0.00019999999494757503,
+            0.0
+          ]
+        ],
+        "fraction": 0.0,
+        "stuck": 0.0,
+        "version": 0,
+        "hasPath": true,
+        "position": [
+          0.00019999999494757503,
+          0.00019999999494757503,
+          0.0
+        ],
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "curvature": 3.999999523162842,
+        "minimumDot": 1.0
+      }
+    }
+  ]
+}

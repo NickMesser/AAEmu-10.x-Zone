@@ -175,6 +175,16 @@ public sealed class ZoneOwnedPlayerPhysics : IZonePhysicsMotion
         ClearGroundContact(OwnedBody(actor));
     }
 
+    /// <summary>Commit an admitted orientation without creating pose velocity or resetting any motion/contact field.</summary>
+    internal void SetOrientationPreservingMotion(ZoneActorHandle actor, Quaternion orientation)
+    {
+        RefuseStepWrite();
+        RequireFinite(orientation, nameof(orientation));
+        if (!float.IsFinite(orientation.LengthSquared()) || orientation.LengthSquared() <= 0)
+            throw new ArgumentException("Owned orientation must be a finite nonzero rotation.", nameof(orientation));
+        OwnedBody(actor).Orientation = orientation;
+    }
+
     /// <summary>
     /// Commits one scene-validated contact correction. Orientation and authored gravity remain
     /// unchanged; the caller supplies the resolved velocity instead of fabricating pose velocity.

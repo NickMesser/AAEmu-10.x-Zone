@@ -16,6 +16,10 @@ public interface IZoneAiObjectSearchCandidate
 /// </summary>
 public sealed class ZoneAiObjectRegistry
 {
+    //This is the nearest-object type index, not the native actor grid. Callers may use
+    //its complete inventory to reject unknown registrations; current positions alone
+    //must not be substituted for a separate grid's cached positions.
+    internal IReadOnlyList<Registration> CopyRegistrations() => _types.Values.SelectMany(entries => entries).ToArray();
     private readonly Dictionary<short, LinkedList<Registration>> _types = [];
 
     public int Count { get; private set; }

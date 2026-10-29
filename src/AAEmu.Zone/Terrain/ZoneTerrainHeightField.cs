@@ -15,6 +15,12 @@ public sealed partial class ZoneTerrainHeightField
     private readonly object _gate = new();
     private readonly Cell?[] _cells = new Cell?[64];
     public ZoneTerrainNodeTree? Nodes { get; private set; }
+    /// <summary>Actual installed sample ownership, independently of a height query's zero fallback.</summary>
+    public bool HasLoadedCell(int cellX, int cellY)
+    {
+        if ((uint)cellX >= 8 || (uint)cellY >= 8) return false;
+        lock (_gate) return _cells[cellX * 8 + cellY] is not null;
+    }
 
     /// <summary>300CFEC0/300D7910: initialize the exact heightfield's persistent tree between registrations.</summary>
     public ZoneTerrainNodeTree InitializeNodeTree(float oceanWaterLevel)
@@ -23,8 +29,10 @@ public sealed partial class ZoneTerrainHeightField
         {
             if (Nodes is not null || _cells.Any(cell => cell is not null))
                 throw new InvalidOperationException("Terrain tree initialization requires an uninitialized, empty heightfield.");
+            var nodes = new ZoneTerrainNodeTree(_gate, oceanWaterLevel);
+            AdvancePublicationCore();
             ResetPhysicsCacheCore();
-            return Nodes = new(_gate, oceanWaterLevel);
+            return Nodes = nodes;
         }
     }
 
@@ -41,6 +49,7 @@ public sealed partial class ZoneTerrainHeightField
         var cell = new Cell(content);
         lock (_gate)
         {
+            AdvancePublicationCore();
             ResetPhysicsCacheCore();
             Nodes?.InstallCellCore(cellX, cellY, cell.Nodes);
             _cells[cellX * 8 + cellY] = cell;
@@ -59,6 +68,7 @@ public sealed partial class ZoneTerrainHeightField
         var cell = new Cell(content);
         lock (_gate)
         {
+            AdvancePublicationCore();
             Nodes?.InstallCellCore(cellX, cellY, cell.Nodes);
             _cells[cellX * 8 + cellY] = cell;
         }
@@ -67,7 +77,16 @@ public sealed partial class ZoneTerrainHeightField
     internal void CopyCellSeams(int cellX, int cellY)
     {
         ValidateCell(cellX, cellY);
-        lock (_gate) CopyCellSeamsCore(cellX, cellY, _cells[cellX * 8 + cellY]);
+        lock (_gate)
+        {
+            var cell = _cells[cellX * 8 + cellY];
+            if (!HasWritableSeamsCore(cellX, cellY, cell)) return;
+            //The staged engine loader has already published samples before callbacks.
+            //This later write pass is a distinct publication even if quantization keeps
+            //some/all copied values equal. A pass with no writable edge is a true no-op.
+            AdvancePublicationCore();
+            CopyCellSeamsCore(cellX, cellY, cell);
+        }
     }
 
     private void CopyCellSeamsCore(int cellX, int cellY, Cell? cell)
@@ -86,6 +105,7 @@ public sealed partial class ZoneTerrainHeightField
         {
             var index = cellX * 8 + cellY;
             var present = _cells[index] is not null;
+            if (present) AdvancePublicationCore();
             Nodes?.UnloadCellCore(cellX, cellY);
             _cells[index] = null;
             return present;

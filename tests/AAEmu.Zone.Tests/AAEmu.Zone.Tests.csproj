@@ -4,6 +4,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Fixtures\npc-movement-speed-native-controls.json" />
     <ProjectReference Include="..\..\src\AAEmu.Zone\AAEmu.Zone.csproj" />
     <PackageReference Include="TUnit" />
     <PackageReference Include="Microsoft.Testing.Platform.MSBuild" />
@@ -18,6 +19,28 @@
     <EmbeddedResource Include="Fixtures\npc-posture-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-position-distance-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-can-move-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-path-steering-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-ground-trace-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-approach-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-turn-admission-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-predictive-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-predictive-trace-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-empty-crowd-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-actor-grid-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-buff-status-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-buff-turn-status-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-auto-disable-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-script-any-boolean-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-path-decision-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-adaptive-urgency-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-puppet-look-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-movement-radius-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-return-state.lua" />
+    <EmbeddedResource Include="Fixtures\npc-original-math.lua" />
+    <EmbeddedResource Include="Fixtures\npc-controller-angle-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-proxy-movement-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-actor-ordinary-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-actor-dynamics-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-actor-buff-turn-native-controls.json" />
   </ItemGroup>
 </Project>

@@ -263,7 +263,7 @@ public sealed class ManagedNpcAdmissionTests
             else _simulation = new(_registry, stats ?? new([], [], [], [], [], [], [], [], []), World, _content);
         }
 
-        public ZoneNpc CreateFromWire(uint modelId, Vector3? position = null)
+        public ZoneNpc CreateFromWire(uint modelId, Vector3? position = null, UnitBuffs? initialBuffs = null)
         {
             var writer = new ZoneWriter();
             writer.WriteBc(_objectId); writer.WriteString("timer-control");
@@ -289,7 +289,21 @@ public sealed class ManagedNpcAdmissionTests
             writer.WriteSByte(0); writer.WriteSByte(0); writer.WriteSByte(0); writer.WriteByte(0);
             writer.WritePisc(0, 0, 0, 0); writer.WritePisc(0, 0, 0); writer.WritePisc(0, 0, 0, 0);
             writer.WriteUInt16(0); writer.WriteByte(0);
-            writer.WriteByte(0); writer.WriteByte(0); writer.WriteByte(0); // Empty buff lists, no action tail.
+            WriteBuffs(initialBuffs?.Good ?? []); WriteBuffs(initialBuffs?.Bad ?? []); WriteBuffs(initialBuffs?.Hidden ?? []);
+            void WriteBuffs(IReadOnlyList<UnitBuff> buffs)
+            {
+                writer.WriteByte(checked((byte)buffs.Count));
+                foreach (var buff in buffs)
+                {
+                    if (buff.Caster.Kind != ZoneCasterKind.Unit)
+                        throw new NotSupportedException("The restored NPC wire fixture owns Unit buff casters only.");
+                    writer.WriteUInt32(buff.Index); writer.WriteByte((byte)buff.Caster.Kind); writer.WriteBc(buff.Caster.ObjectId);
+                    writer.WriteInt64(buff.CasterPersistentId);
+                    writer.WriteByte(buff.CasterLevel); writer.WriteUInt16(buff.CasterAbilityLevel);
+                    writer.WritePisc(buff.Duration, buff.Elapsed, buff.Tick, buff.TickIndex);
+                    writer.WritePisc(buff.TemplateId, buff.Stack, buff.Charge, buff.SourceSkill);
+                }
+            }
             var metadata = new NpcStateMetadata(0, 0, 0, 0, new(ZoneUnitKind.Character), false, false, 0, new(), 0, new());
             var frame = NpcStateSnapshot.CreateFrame(metadata, writer.ToArray());
             if (_simulation.Create(frame.Body.Span) != NpcCreationResult.Created)

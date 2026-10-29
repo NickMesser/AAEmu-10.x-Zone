@@ -1,0 +1,250 @@
+{
+  "method": "Complete original392DC900 with declared ordinary gravity/model/physics-parameter callbacks; virtual264 executes original392E97A0. Complete original392E0C80 consumes distinct copied status vectors. Raw PE Unicorn, no engine modules loaded.",
+  "inertia": [
+    {
+      "authored": -4,
+      "walking": false,
+      "actual": -4.0
+    },
+    {
+      "authored": -4,
+      "walking": true,
+      "actual": -4.0
+    },
+    {
+      "authored": -0.0,
+      "walking": false,
+      "actual": -0.0
+    },
+    {
+      "authored": -0.0,
+      "walking": true,
+      "actual": -0.0
+    },
+    {
+      "authored": 0.0,
+      "walking": false,
+      "actual": 0.0
+    },
+    {
+      "authored": 0.0,
+      "walking": true,
+      "actual": 0.0
+    },
+    {
+      "authored": 0.1,
+      "walking": false,
+      "actual": 0.10000000149011612
+    },
+    {
+      "authored": 0.1,
+      "walking": true,
+      "actual": 0.0
+    },
+    {
+      "authored": 4,
+      "walking": false,
+      "actual": 4.0
+    },
+    {
+      "authored": 4,
+      "walking": true,
+      "actual": 0.0
+    },
+    {
+      "authored": 20,
+      "walking": false,
+      "actual": 20.0
+    },
+    {
+      "authored": 20,
+      "walking": true,
+      "actual": 0.0
+    }
+  ],
+  "cache": [
+    {
+      "name": "ground",
+      "status24": [
+        1,
+        2,
+        3
+      ],
+      "status36": [
+        4,
+        5,
+        6
+      ],
+      "status72": [
+        0,
+        0,
+        -25
+      ],
+      "ai16": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "ai28": [
+        0.0,
+        0.0,
+        -25.0
+      ],
+      "actor228": [
+        4.0,
+        5.0,
+        6.0
+      ]
+    },
+    {
+      "name": "zeroGravity",
+      "status24": [
+        2,
+        -3,
+        4
+      ],
+      "status36": [
+        7,
+        8,
+        9
+      ],
+      "status72": [
+        0,
+        0,
+        0
+      ],
+      "ai16": [
+        2.0,
+        -3.0,
+        4.0
+      ],
+      "ai28": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actor228": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "distinctVectors",
+      "status24": [
+        -2,
+        0.5,
+        -1
+      ],
+      "status36": [
+        3,
+        4,
+        -5
+      ],
+      "status72": [
+        6,
+        7,
+        8
+      ],
+      "ai16": [
+        -2.0,
+        0.5,
+        -1.0
+      ],
+      "ai28": [
+        6.0,
+        7.0,
+        8.0
+      ],
+      "actor228": [
+        3.0,
+        4.0,
+        -5.0
+      ]
+    }
+  ],
+  "livingStatus72Method": "Matching dedicated PE351EE1D8+72=35029A30 complete GetStatus2; declared base physical status getter350724C0 returns0 so derived living type2 runs. No ground entity; raw actual velocity/body496 inputs.",
+  "livingStatus72": [
+    {
+      "body448": [
+        1,
+        2,
+        3
+      ],
+      "body496": [
+        0,
+        0,
+        -25
+      ],
+      "status24": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "status36": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "status72": [
+        0.0,
+        0.0,
+        -25.0
+      ]
+    },
+    {
+      "body448": [
+        2,
+        -3,
+        4
+      ],
+      "body496": [
+        0,
+        0,
+        0
+      ],
+      "status24": [
+        2.0,
+        -3.0,
+        4.0
+      ],
+      "status36": [
+        2.0,
+        -3.0,
+        4.0
+      ],
+      "status72": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "body448": [
+        -2,
+        0.5,
+        -1
+      ],
+      "body496": [
+        6,
+        7,
+        8
+      ],
+      "status24": [
+        -2.0,
+        0.5,
+        -1.0
+      ],
+      "status36": [
+        -2.0,
+        0.5,
+        -1.0
+      ],
+      "status72": [
+        6.0,
+        7.0,
+        8.0
+      ]
+    }
+  ]
+}

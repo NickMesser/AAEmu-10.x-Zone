@@ -54,6 +54,19 @@ public sealed class ZoneManagedNpcPositionChecks(IZoneLuaRuntime lua, ZoneUnitRe
     public Vector3 GetSpawnPosition(ZoneManagedNpcActor actor) => ReadAnchor(Require(actor), "spawnPos") ??
         throw new NotSupportedException("NPC recovery requires its actual current AI.spawnPos vector; native uninitialized stack is not an anchor.");
 
+    /// <summary>
+    ///39353B80/3933B460 invokes the actual Unit168 model transform route. This performs
+    ///no CheckPos region/distance test, replication-cache reset or posture restoration.
+    /// </summary>
+    public void Teleport(ZoneManagedNpcActor actor, Vector3 destination)
+    {
+        var owner = Require(actor);
+        if (_checking) throw new InvalidOperationException("NPC model relocation cannot reenter its publication boundary.");
+        _checking = true;
+        try { Relocate(owner, destination); }
+        finally { _checking = false; }
+    }
+
     public ZoneManagedNpcPositionCheckResult Check(ZoneManagedNpcActor actor)
     {
         var owner = Require(actor);
@@ -102,6 +115,17 @@ public sealed class ZoneManagedNpcPositionChecks(IZoneLuaRuntime lua, ZoneUnitRe
 
     private void Correct(ZoneManagedNpcPositionCheckLease owner, Vector3 target, bool restorePosture)
     {
+        var actor = owner.Binding.Actor;
+        if (restorePosture && _postures.Find(actor) is null)
+            throw new ObjectDisposedException(nameof(ZoneManagedNpcPositionCheckLease), "NPC correction lost its posture consumer.");
+        Relocate(owner, target);
+        Require(actor); _replication.Reset(actor);
+        if (restorePosture) { Require(actor); _postures.SetDefaultPosture(actor, false); }
+        Require(actor); CorrectionCount++;
+    }
+
+    private void Relocate(ZoneManagedNpcPositionCheckLease owner, Vector3 target)
+    {
         var actor = owner.Binding.Actor; Require(actor);
         if (!float.IsFinite(target.X) || !float.IsFinite(target.Y) || !float.IsFinite(target.Z))
             throw new InvalidDataException("NPC relocation requires a finite actual Lua anchor.");
@@ -109,15 +133,19 @@ public sealed class ZoneManagedNpcPositionChecks(IZoneLuaRuntime lua, ZoneUnitRe
         var model = _components.CopyModelTransform(unit);
         var body = _bodies.Find(actor.Handle) ?? throw new NotSupportedException("NPC correction requires its exact actual living body.");
         var before = body.CopyState(); Require(actor);
-        if (model.Position != before.Status.Position || model.Orientation != before.Status.Orientation || model.UniformScale != before.EntityScale)
-            throw new InvalidOperationException("NPC relocation preflight requires coherent published model and physical transforms.");
-        if (!_replication.IsBound(actor) || _motion.Find(actor.Handle) is null || restorePosture && _postures.Find(actor) is null)
+        var orderedOrientation = body.TryReadPendingOrientation(out var pendingOrientation) ? pendingOrientation : before.Status.Orientation;
+        Require(actor);
+        if (model.Position != before.Status.Position || model.Orientation != orderedOrientation || model.UniformScale != before.EntityScale)
+            throw new InvalidOperationException("NPC relocation preflight requires coherent model and applied or queued physical transforms.");
+        if (!_replication.IsBound(actor) || _motion.Find(actor.Handle) is null)
             throw new ObjectDisposedException(nameof(ZoneManagedNpcPositionCheckLease), "NPC correction lost a required generation-owned consumer.");
         var spatial = _units.Spatial ?? throw new NotSupportedException("NPC relocation requires its actual spatial index.");
         spatial.ValidateUpdate(unit, target); Require(actor);
         _relocation.Relocate(actor, target, result =>
         {
             Require(actor);
+            if (result.Current.Status.Orientation != orderedOrientation)
+                throw new InvalidDataException("NPC relocation's ordered flush no longer matches its preflight logical entity orientation.");
             unit.CommitPose(new(ZoneMovementPoseMath.ToWorldPosition(result.Current.Status.Position, origin), result.Current.Status.Orientation));
             if (!_units.UpdateSpatialMembership(unit)) throw new InvalidOperationException("The relocated NPC lost its exact spatial membership.");
             Require(actor);
@@ -125,9 +153,7 @@ public sealed class ZoneManagedNpcPositionChecks(IZoneLuaRuntime lua, ZoneUnitRe
             if (faults.Count != 0) throw new NotSupportedException(string.Join("; ", faults.Select(fault => fault.Message)));
             Require(actor);
         });
-        Require(actor); _replication.Reset(actor);
-        if (restorePosture) { Require(actor); _postures.SetDefaultPosture(actor, false); }
-        Require(actor); CorrectionCount++;
+        Require(actor);
     }
 
     private Vector3? ReadAnchor(ZoneManagedNpcPositionCheckLease owner, string field)

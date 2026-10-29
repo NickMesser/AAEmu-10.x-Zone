@@ -211,6 +211,15 @@ public sealed class ZoneManagedNpcRuntime : IDisposable
         return ConsumeFaults(ScriptServices is IZoneManagedNpcFrameLifecycle components ? components.PublishPose(actor) : [], retireProviderActor);
     }
 
+    public IReadOnlyList<ZoneManagedNpcScriptFault> PrepareMovementRequests(ZoneMovementFrame frame,
+        Action<ZoneActorHandle> retireProviderActor)
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        var pending = RetirePendingFaults(retireProviderActor);
+        return pending.Concat(ConsumeFaults(ScriptServices is IZoneManagedNpcFrameLifecycle components
+            ? components.PrepareMovementRequests(frame) : [], retireProviderActor)).ToArray();
+    }
+
     public IReadOnlyList<ZoneManagedNpcScriptFault> PublishPhysicalPose(ZoneActorHandle actor,
         AAEmu.Zone.Physics.ZoneManagedNpcBodySnapshot body, ZoneMovementFrame frame, Action<ZoneActorHandle> retireProviderActor)
     {

@@ -5,8 +5,8 @@ namespace AAEmu.Zone.Actors;
 /// <summary>Read-only engine and path services used by the puppet's strafe update.</summary>
 public interface IZoneActorStrafeServices
 {
-    // 3116B94C: resolve the character system through the engine, then query proxy character-key capability.
-    // A missing character system returns false. The enclosing actor update must already have a valid proxy.
+    //3116B94C resolves AIUnitSystem and invokes v192/39212F30 CanTurn using the proxy's
+    //World Unit ID. A missing AIUnitSystem returnsfalse; the enclosing actor has a valid proxy.
     bool CanStrafe();
     // Native original-path emptiness (3113CA60) means fewer than two points.
     bool HasPath();
@@ -74,6 +74,7 @@ public static class ZoneActorMovementControl
         if (magnitude < 0.305f) return sign;
         if (magnitude < 0.7f) return sign * 2;
         if (magnitude < 1.2f) return sign * 3;
+        //310C10DC's reversed COMISS/JBE chain reaches positive4 for unordered NaN.
         return sign * 4;
     }
 

@@ -7,3 +7,7 @@ tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-movement*.json -text whites
 tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-stance-*.json -text whitespace=cr-at-eol
 tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-corrections*.json -text whitespace=cr-at-eol
 tools/AAEmu.Zone.Diagnostics/Fixtures/zone129-living-controller.managed-summary.json -text whitespace=cr-at-eol
+
+# Unmodified original Lua fixtures retain their bytes and authored whitespace.
+tests/AAEmu.Zone.Tests/Fixtures/npc-return-state.lua -text -whitespace
+tests/AAEmu.Zone.Tests/Fixtures/npc-original-math.lua -text -whitespace

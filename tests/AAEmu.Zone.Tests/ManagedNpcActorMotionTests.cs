@@ -178,6 +178,7 @@ public sealed class ManagedNpcActorMotionTests
         public ZoneManagedNpcActor Actor{get;}public Npcs.ZoneNpc Npc{get;}public ZoneManagedNpcBodyLease Body{get;}
         public ZoneManagedCharacterSlots Characters{get;}public ZoneManagedWaterQueries Water{get;}
         public ZoneManagedNpcActorMotion Motion{get;}public ZoneManagedNpcActorMotionLease Lease{get;}
+        public ZoneManagedNpcAiPose Poses{get;}
         public ZoneModelContent Models{get;}
         private uint _frame;
         public World(float gravity=25,float z=10.1f,float ocean=0,bool templateSlope=false,bool wireSlope=false,
@@ -203,6 +204,7 @@ public sealed class ManagedNpcActorMotionTests
             Backend=new(new(heights));Bodies=new(Backend,models,_=>143);
             Body=Bodies.Create(handle,Npc,new(1100,1100,z),Quaternion.Identity,()=>ReferenceEquals(Actors.Find(handle),Actor));
             Construction=new(Admission.Registry,Admission.Catalog,models);Construction.Create(handle,Npc).Physicalized(Body,0);
+            Actors.ProxyPoses=Poses=new(Actors,Bodies);Poses.Bind(Actor,Construction.Find(handle)!).Refresh();
             Characters=new(Assets,h=>ReferenceEquals(Actors.Find(h),Actor));Characters.BindInitial(handle,models.ActorForModel(17)!);
             var layout=new ManagedSceneActivationTests.Fixture((9,14),(10,15)).Layout;
             var waterCells=layout.Cells.Select(placement=>new ZoneManagedSceneCellLoadReport(placement,
@@ -215,6 +217,6 @@ public sealed class ManagedNpcActorMotionTests
         public ZoneMovementFrame Frame(uint number)=>new(number,TimeSpan.FromMilliseconds(20),100000+number,number*.02f)
             {LocalGameMilliseconds=number*20,UnpausedMilliseconds=7000+number};
         public void Step(){Backend.Step(TimeSpan.FromMilliseconds(20));Motion.Update(Actor,Body.CopyState(),Frame(++_frame));}
-        public void Dispose(){Motion.Dispose();Water.Dispose();Characters.Dispose();Construction.Dispose();Bodies.Dispose();Actors.Dispose();Admission.Dispose();Lua.Dispose();}
+        public void Dispose(){Motion.Dispose();Water.Dispose();Characters.Dispose();Poses.Dispose();Construction.Dispose();Bodies.Dispose();Actors.Dispose();Admission.Dispose();Lua.Dispose();}
     }
 }

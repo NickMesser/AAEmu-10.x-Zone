@@ -32,6 +32,14 @@ public sealed class ZoneManagedNpcGameScriptRequests
         _queueWithActorScope = queueWithActorScope;
     }
 
+    /// <summary>39352F20/39362830: request the actual buff template from World and return Lua true.</summary>
+    public bool CreateBuff(ZoneManagedNpcActor actor, uint buffType)
+    {
+        Require(actor);
+        Send(actor, new BuffCreationRequest(actor.Npc.ObjectId, buffType).ToFrame());
+        return true;
+    }
+
     /// <summary>39353020: request template removal with invalid instance0/reason10 and return Lua true.</summary>
     public bool RemoveBuff(ZoneManagedNpcActor actor, uint buffType)
     {

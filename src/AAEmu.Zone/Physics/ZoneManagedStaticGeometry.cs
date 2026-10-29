@@ -78,6 +78,7 @@ public sealed partial class ZoneManagedStaticGeometry
         lock (_gate)
         {
             if (_nextIdentity == ulong.MaxValue) throw new InvalidOperationException("Static instance identities are exhausted.");
+            AdvancePublicationCore();
             var handle = new ZoneManagedStaticInstanceHandle(++_nextIdentity);
             _instances.Add(handle, new(mesh, primitive, localToWorld, worldToLocal, bounds, admitted, keys));
             if (keys.Length == 0) _oversized.Add(handle);
@@ -95,7 +96,9 @@ public sealed partial class ZoneManagedStaticGeometry
     {
         lock (_gate)
         {
-            if (!_instances.Remove(handle, out var instance)) return false;
+            if (!_instances.TryGetValue(handle, out var instance)) return false;
+            AdvancePublicationCore();
+            _instances.Remove(handle);
             _oversized.Remove(handle);
             foreach (var key in instance.Buckets)
             {
@@ -119,6 +122,7 @@ public sealed partial class ZoneManagedStaticGeometry
     {
         lock (_gate)
         {
+            if (_instances.Count != 0) AdvancePublicationCore();
             _instances.Clear();
             _buckets.Clear();
             _oversized.Clear();

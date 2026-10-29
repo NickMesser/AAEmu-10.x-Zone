@@ -15,11 +15,13 @@ public sealed class ZoneGoalOperationFactory
     private readonly IZoneLocateGoalServices? _location;
     private readonly ZoneActorContinuationState? _continuation;
     private readonly IZoneLookAtGoalServices? _looking;
+    private readonly IZoneApproachGoalServices? _approach;
 
     public ZoneGoalOperationFactory(ZoneGoalExecutor executor, Func<long> frameTimeMicroseconds,
         Func<uint> random, IZoneDevalueGoalServices devaluation, IZoneSignalGoalServices? signals = null,
         IZoneActorControlGoalServices? controls = null, IZoneLocateGoalServices? location = null,
-        ZoneActorContinuationState? continuation = null, IZoneLookAtGoalServices? looking = null)
+        ZoneActorContinuationState? continuation = null, IZoneLookAtGoalServices? looking = null,
+        IZoneApproachGoalServices? approach = null)
     {
         _executor = executor ?? throw new ArgumentNullException(nameof(executor));
         _frameTimeMicroseconds = frameTimeMicroseconds ?? throw new ArgumentNullException(nameof(frameTimeMicroseconds));
@@ -30,6 +32,7 @@ public sealed class ZoneGoalOperationFactory
         _location = location;
         _continuation = continuation;
         _looking = looking;
+        _approach = approach;
     }
 
     public IZoneGoalOperation Create(ZoneGoalDefinition definition)
@@ -38,6 +41,9 @@ public sealed class ZoneGoalOperationFactory
         var parameters = definition.Parameters;
         return definition.Operation switch
         {
+            ZoneGoalOperation.Approach => new ZoneApproachGoal(ZoneApproachGoalSettings.FromParameters(parameters, _random),
+                _approach ?? throw new InvalidOperationException("Approach goals require actor-owned pathfinding and trace services."),
+                _frameTimeMicroseconds),
             ZoneGoalOperation.Continuous => new ZoneContinuousGoal(parameters.Boolean,
                 _continuation ?? throw new InvalidOperationException("Continuous goals require actor movement-continuation state.")),
             ZoneGoalOperation.LookAt => new ZoneLookAtGoal(parameters,

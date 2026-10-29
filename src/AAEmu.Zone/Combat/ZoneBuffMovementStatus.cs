@@ -3,8 +3,9 @@ using AAEmu.Zone.Protocol.Units;
 
 namespace AAEmu.Zone.Combat;
 
-/// <summary>Only the three BuffMan counters consumed by AIUnitSystem::CanMove39212E70.</summary>
-public readonly record struct ZoneBuffMovementStatusCounters(byte Stun, byte Sleep, byte Root);
+/// <summary>The BuffMan counters consumed by AIUnitSystem::CanMove39212E70 and CanTurn39212F30.</summary>
+public readonly record struct ZoneBuffMovementStatusCounters(byte Stun, byte Sleep, byte Root,
+    byte Psychokinesis = 0, byte ImpossibleRotate = 0);
 
 /// <summary>
 ///39D2CF70/39D2C030: one contribution per actual instance. A refresh (visitor2) returns
@@ -31,7 +32,8 @@ public static class ZoneBuffMovementStatus
     private static ZoneBuffMovementStatusCounters Change(ZoneBuffMovementStatusCounters current, BuffStatTemplate template, int delta)
     {
         ArgumentNullException.ThrowIfNull(template);
-        return new(Next(current.Stun, template.Stun), Next(current.Sleep, template.Sleep), Next(current.Root, template.Root));
+        return new(Next(current.Stun, template.Stun), Next(current.Sleep, template.Sleep), Next(current.Root, template.Root),
+            Next(current.Psychokinesis, template.Psychokinesis), Next(current.ImpossibleRotate, template.ImpossibleRotate));
         byte Next(byte count, bool enabled) => !enabled || delta > 0 && count == byte.MaxValue || delta < 0 && count == 0
             ? count : (byte)(count + delta);
     }
