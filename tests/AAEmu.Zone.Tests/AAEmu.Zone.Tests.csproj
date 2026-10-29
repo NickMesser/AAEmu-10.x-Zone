@@ -42,5 +42,9 @@
     <EmbeddedResource Include="Fixtures\npc-actor-ordinary-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-actor-dynamics-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-actor-buff-turn-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\particle-x2_sounds.xml" />
+    <EmbeddedResource Include="Fixtures\particle-x2_effects.xml" />
+    <EmbeddedResource Include="Fixtures\particle-x2_effects_p.xml" />
+    <EmbeddedResource Include="Fixtures\vegetation-native-controls.json" />
   </ItemGroup>
 </Project>

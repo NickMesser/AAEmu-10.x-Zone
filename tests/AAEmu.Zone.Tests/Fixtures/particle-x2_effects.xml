@@ -1,0 +1,57 @@
+<ParticleLibrary Name="X2_EFFECTS" SandboxVersion="2.3.2.6387" ParticleVersion="20">
+ <Particles Name="mon_effects.nmon_poison_fog_launch" Id="{72600E5C-D0F9-4A94-90C9-98056410A06E}">
+  <Params BindToEmitter="true" />
+  <Childs>
+   <Particles Name="nmon_poison_fog_launch_smoke_outer">
+    <Params Continuous="true" Count="30" ParticleLifeTime="6,0.5" TextureTiling="4,4,,,16,,,true" Material="materials/effects/poison_fog" SoftParticle="true" Alpha="0.525,,,(;0.2857143,0.704;1)" Color="(0.72,0.78,0.725)" DiffuseLighting="0.5" DiffuseBacklighting="0.2" EmissiveLighting="0.2" Size="3,0.5,,(0.008928572,0.546,36;1,1)" SizeX="1.2,0.5" SizeY=",0.5" Stretch=",0.15,,(0.004464286,1;0.15625,0.546;0.3571429,0.16;0.71875;1)" AttachType="Render" PositionOffset=",,-0.3" Speed="0,0.5" AirResistance=",0.5" GravityScale="0.01" Acceleration="0.1" Turbulence3DSpeed=",0.2" RotateInitAngle="180,1" RotateSpeed="0.001" RotateLength="3" RotatePosition=",,1" EmitAngle="90" RandomAngles=",,180" RotationRate=",,2" RandomRotationRate=",,5" SortOldestFirst="true" FillRateCost="0" />
+   </Particles>
+   <Particles Name="nmon_poison_fog_launch_smoke_inner">
+    <Params Continuous="true" Count="30" ParticleLifeTime="6,0.5" TextureTiling="4,4,,,16,,,true" Material="materials/effects/poison_fog" SoftParticle="true" Alpha=",,,(;0.2857143,0.704;1)" Color="(0.72,0.78,0.725)" DiffuseLighting="0.5" DiffuseBacklighting="0.2" EmissiveLighting="0.2" Size="3,0.5,,(0.008928572,0.546,36;1,1)" SizeX="1.2,0.5" SizeY=",0.5" Stretch=",0.15,,(0.004464286,1;0.15625,0.546;0.3571429,0.16;0.71875;1)" AttachType="Render" PositionOffset=",,-0.3" Speed="0,0.5" AirResistance=",0.5" GravityScale="0.01" Acceleration="-0.1" Turbulence3DSpeed=",0.2" RotateInitAngle="180,1" RotateSpeed="0.001" RotateLength="3" RotatePosition=",,1" EmitAngle="90" RandomAngles=",,180" RotationRate=",,2" RandomRotationRate=",,5" SortOldestFirst="true" FillRateCost="0" />
+    <Childs>
+     <Particles Name="nmon_poison_fog_launch_smoke_inner1">
+      <Params Continuous="true" Count="30" ParticleLifeTime="3,0.1" Texture="game/textures/p_effects/glow_01.dds" SoftParticle="true" Alpha=",,,(,,36;0.09821428,1;0.4955357,1;1)" Color=",0.5,,(0.01315789,(0.39,0.56,0.416);0.7236842,(0.48,0.592,0.46))" Size="0.03,0.2,,(;0.3035714,1;1,0.183,36)" SizeX="1.2,0.5" SizeY=",0.5" Stretch="0.1,0.15,,(,1;0.40625)" AttachType="Render" PositionOffset=",,0.5" RandomOffset=",,0.2" Speed="0,0.5" AirResistance=",0.5" Acceleration=",,0.12" Turbulence3DSpeed="0.3,0.2" TurbulenceSize="0.5" TurbulenceSpeed="2" RotateInitAngle="180,1" RotateSpeed="0.001" RotateLength="3,0.3" RotatePosition=",,1" EmitAngle="90" RandomAngles=",,180" SortOldestFirst="true" FillRateCost="0" />
+     </Particles>
+    </Childs>
+   </Particles>
+   <Particles Name="nmon_poison_fog_launch_sound">
+    <Params Enabled="false" Continuous="true" Sound="Sounds/x2skills:monster_skill:poison_gas_fog_launch" BindToEmitter="true" />
+   </Particles>
+  </Childs>
+ </Particles>
+ <Particles Name="fire_smoke.torchlight_a" Id="{990250F3-FAD6-4B28-BC77-12A6F23DD068}">
+  <Params Continuous="true" Speed="0" />
+  <Childs>
+   <Particles Name="torchlight_a_main_fire">
+    <Params Continuous="true" Count="2" ParticleLifeTime="1.5,0.3" BlendType="Additive" Texture="game/textures/p_effects/fire_flame10_v.dds" TextureTiling="6,6,,,36,,,true" Alpha=",,,(;0.12053572,1;0.83035713,1;1)" Color="(,0.824,0.667)" DiffuseBacklighting="1" EmissiveLighting="1.5" Size="0.7,0.1" Speed="0" Acceleration=",,0.1" FocusGravityDir="true" DrawLast="54" NoOffset="true" FillRateCost="0" CameraMaxDistance="5000" />
+    <Childs>
+     <Particles Name="torchlight_a_main_fire1">
+      <Params Continuous="true" Count="2" ParticleLifeTime="3,0.3" BlendType="Additive" Texture="game/textures/p_effects/fire_flameball_8x8.dds" TextureTiling="8,8,,,64,32,,true" Alpha=",,,(;0.12053572,1;0.8035714,1;1)" Color="(,0.81,0.7)" DiffuseBacklighting="1" EmissiveLighting="1.2" Size="0.7,0.2" SizeY="1.5" Speed="0" DrawLast="54" NoOffset="true" FillRateCost="0" CameraMaxDistance="5000" />
+     </Particles>
+    </Childs>
+   </Particles>
+   <Particles Name="torchlight_a_part">
+    <Params Continuous="true" Count="8" ParticleLifeTime="1.5" BlendType="Additive" Texture="textures/p_effects/exp_piece_21.tif" TextureTiling="2,2,,4" Color="(,0.49,0.075)" DiffuseLighting="4" DiffuseBacklighting="1" EmissiveLighting="3" Size="0.02,0.5" PositionOffset=",,0.2" RandomOffset=",,0.2" PosRandomOffset="0.2" Speed="0.5" AirResistance="1" Acceleration=",,0.5" Turbulence3DSpeed="0.5" TurbulenceSize="0.2" TurbulenceSpeed="0.5" FocusGravityDir="true" EmitAngle="20,1" RandomAngles=",,180" RotationRate=",,360" RandomRotationRate=",,777" CameraMaxDistance="5000" />
+   </Particles>
+   <Particles Name="torchlight_a_dark_smoke">
+    <Params Continuous="true" Count="15" ParticleLifeTime="3.5,0.35" Texture="game/textures/sprites/smoke_massive_smoke_gren2.dds" TextureTiling="2,2,,4" Alpha="0.8,0.3,,(;0.20535715,0.317;1)" Color=",,,(0.004385965,(0.29,0.29,0.29);0.9780702,(0.608,0.608,0.608))" DiffuseLighting="0.6" Size="0.8,0.3,,(,0.433;0.9955357,1)" Stretch="0.35,0.2,,(,0.296,36;1,1)" PositionOffset=",,0.3" RandomOffset=",,0.3" Speed="0.05,0.2" Acceleration=",,0.2" Turbulence3DSpeed="0.1" TurbulenceSize="0.2" FocusAngle="90" RandomAngles=",,180" RotationRate=",,2" RandomRotationRate=",,5" DrawLast="57" FillRateCost="0" CameraMaxDistance="10000" />
+   </Particles>
+   <Particles Name="torchlight_a_fire_glow">
+    <Params Continuous="true" PulsePeriod=",1" BlendType="Additive" Texture="textures/sprites/big_glow_mono.dds" SoftParticle="true" Alpha="0.01,0.2,,(,0.91;0.4866071,1;1,0.91)" Color="(,0.58,0.35)" DiffuseLighting="0.1" DiffuseBacklighting="1" EmissiveLighting="1" LightSourceIntensity="0.8,,,(,0.5;0.5133929,1;1,0.52)" LightHDRDynamic="1" LightSourceRadius="1.5" Size="2.5,0.2" Speed="0" CameraMaxDistance="15000" />
+   </Particles>
+   <Particles Name="torchlight_a_sound">
+    <Params Continuous="true" Speed="0" Sound="Sounds/x2physics:particles:fire_torch_a" BindToEmitter="true" />
+   </Particles>
+   <Particles Name="torchlight_a_main_fire_medium">
+    <Params Enabled="false" Continuous="true" Count="2" ParticleLifeTime="1.5,0.3" BlendType="Additive" Texture="game/textures/p_effects/fire_flame10_v.dds" TextureTiling="6,6,,,36,,,true" Alpha="0.8,,,(;0.12053572,1;0.83035713,1;1)" Color="(,0.9,0.808)" DiffuseBacklighting="1" EmissiveLighting="1" Size="0.7,0.1" Speed="0" Acceleration=",,0.1" FocusGravityDir="true" DrawLast="54" NoOffset="true" FillRateCost="0" CameraMaxDistance="5000" ConfigMax="Medium" />
+    <Childs>
+     <Particles Name="torchlight_a_main_fire1_medium">
+      <Params Enabled="false" Continuous="true" Count="2" ParticleLifeTime="3,0.3" BlendType="Additive" Texture="game/textures/p_effects/fire_flameball_8x8.dds" TextureTiling="8,8,,,64,32,,true" Alpha="0.7,,,(;0.12053572,1;0.8035714,1;1)" Color="(,0.93,0.882)" DiffuseBacklighting="1" EmissiveLighting="1" Size="0.7,0.2" SizeY="1.5" Speed="0" DrawLast="54" NoOffset="true" FillRateCost="0" CameraMaxDistance="5000" ConfigMax="Medium" />
+     </Particles>
+    </Childs>
+   </Particles>
+   <Particles Name="torchlight_a_ref">
+    <Params Continuous="true" Count="2" ParticleLifeTime="0.8,0.1" Material="game/materials/effects/skill_refraction_17" SoftParticle="true" Alpha=",0.2,,(;0.4955357,0.363;1)" Size="0.5,0.1,,(,0.34,32;1,1)" Stretch="0.2" Speed="0.25" Acceleration=",,1.5" FocusAngle="90" RandomAngles=",,180" DrawLast="2" />
+   </Particles>
+  </Childs>
+ </Particles>
+</ParticleLibrary>

@@ -1,0 +1,30 @@
+<ParticleLibrary Name="X2_EFFECTS_P" SandboxVersion="2.3.2.6387" ParticleVersion="20">
+ <Particles Name="env.elf_light_r" Id="{91254158-467F-4FCD-9134-299192796284}">
+  <Params />
+  <Childs>
+   <Particles Name="elf_light_r_star">
+    <Params Continuous="true" Count="10" ParticleLifeTime=",0.238" Texture="game/textures/p_effects/star_yellow_01.dds" SoftParticle="true" Alpha="0.7,0.218,,(;0.4642857,0.704,36;1)" Color="(,0.537,0.384),0.257" DiffuseLighting="0.5" DiffuseBacklighting="0.5" EmissiveLighting="0.5" Size="0.35,1" RandomOffset="0.68,0.68,0.45" Speed="0" Acceleration=",,0.3" FocusGravityDir="true" EmitAngle="90" RandomAngles=",,180" />
+   </Particles>
+   <Particles Name="elf_light_r_glow">
+    <Params Continuous="true" BlendType="Additive" Texture="game/textures/p_effects/glow_big.dds" SoftParticle="true" Alpha="0.2,,,(,1;0.4017857,0.91;1,1)" Color="(0.843,0.153,0.118)" DiffuseLighting="0.3" DiffuseBacklighting="0.783" EmissiveLighting="0.5" LightSourceIntensity="4" LightHDRDynamic="0.4" LightSourceRadius="3" Speed="0" />
+   </Particles>
+   <Particles Name="elf_light_r_sound">
+    <Params />
+   </Particles>
+  </Childs>
+ </Particles>
+ <Particles Name="env.elf_light_y" Id="{1192E15B-8A68-44FF-9C09-9A943B36836C}">
+  <Params />
+  <Childs>
+   <Particles Name="elf_light_y_star">
+    <Params Continuous="true" Count="10" ParticleLifeTime=",0.238" Texture="game/textures/p_effects/star_yellow_01.dds" SoftParticle="true" Alpha="0.7,0.218,,(;0.46875,0.66,36;1)" Color="(,0.8,0.384),0.257" DiffuseLighting="0.5" DiffuseBacklighting="0.5" EmissiveLighting="0.5" Size="0.35,1" RandomOffset="0.68,0.68,0.45" Speed="0" Acceleration=",,0.3" FocusGravityDir="true" EmitAngle="90" RandomAngles=",,180" />
+   </Particles>
+   <Particles Name="elf_light_y_glow">
+    <Params Continuous="true" BlendType="Additive" Texture="game/textures/p_effects/glow_big.dds" SoftParticle="true" Alpha="0.2,,,(,1;0.4017857,0.91;1,1)" Color="(0.867,0.486,0.11)" DiffuseLighting="0.3" DiffuseBacklighting="0.783" EmissiveLighting="0.5" LightSourceIntensity="4" LightHDRDynamic="0.4" LightSourceRadius="3" Speed="0" />
+   </Particles>
+   <Particles Name="elf_light_y_sound">
+    <Params DynamicFriction="8.59" />
+   </Particles>
+  </Childs>
+ </Particles>
+</ParticleLibrary>

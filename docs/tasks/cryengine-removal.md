@@ -36,6 +36,14 @@ They reuse existing content readers, unit/NPC registries, World protocol,
 scene retirement, owned integration and movement publication. Native ABI adapters remain for
 comparison; managed scene startup never constructs them.
 
+Additional bounded [vegetation publication](../managed-vegetation-default-proxies.md) and
+[particle content](../managed-particle-collision-content.md) owners now pass the combined suite of
+1,019 tests. Original-resource controls publish four tree proxies and validate nine particle graphs.
+This component batch has 0 build errors and no new analyzer diagnostics. It does not change
+production Host/navigation coverage: special/foliage/compound vegetation, entity/road certificates,
+player AI ownership and complete populated-cell admission remain open. The prior accepted
+world-entry application/evidence remains the separate 8fd2eb4 batch described below.
+
 ## Implemented first milestone
 
 - [x] **CE-01 — Independent host composition.** Native-free configuration, World join once,

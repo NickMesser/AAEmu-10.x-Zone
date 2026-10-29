@@ -1,0 +1,17 @@
+<ParticleLibrary Name="x2_sounds" SandboxVersion="2.3.2.6387" ParticleVersion="20">
+ <Particles Name="particles.stubble_poison_fog" Id="{B938A32D-CB97-4402-AFC3-5F5C2C402018}">
+  <Params Continuous="true" Sound="Sounds/x2ambience:world2_object:gw_stubble_poison_fog" BindToEmitter="true" />
+ </Particles>
+ <Particles Name="particles.vendor_elf_bottle" Id="{FBF22664-C033-4436-AEAE-A03090F9785C}">
+  <Params Continuous="true" Sound="Sounds/x2ambience:world2_merchant:drug_market" BindToEmitter="true" />
+ </Particles>
+ <Particles Name="particles.vender_elf_misc" Id="{D89AA8FE-4887-40B4-AB3A-A141986AFCCA}">
+  <Params Continuous="true" Sound="Sounds/x2ambience:world2_merchant:ndeco_making" BindToEmitter="true" />
+ </Particles>
+ <Particles Name="particles.vendor_elf_repair" Id="{1835F0CE-E84B-483F-91AD-E360E95D375E}">
+  <Params Continuous="true" Sound="Sounds/x2ambience:world2_merchant:weapon_market" BindToEmitter="true" />
+ </Particles>
+ <Particles Name="particles.vendor_elf_food" Id="{C34E8C22-3C80-442C-8306-5AB70037AFB0}">
+  <Params Continuous="true" Sound="Sounds/x2ambience:world2_merchant:food_market" BindToEmitter="true" />
+ </Particles>
+</ParticleLibrary>

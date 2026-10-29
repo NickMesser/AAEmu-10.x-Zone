@@ -1,7 +1,9 @@
 # Managed collision coverage for populated cells
 
 Priority: P0 for the original zone 129 NPC far-return control. Status: source audit and
-original-content census complete; implementation and physical-coverage acceptance remain open.
+original-content census complete; the world catalog, bounded direct-default vegetation publisher
+and particle graph reader are implemented. Production cell integration and physical-coverage
+acceptance remain open.
 This task extends [managed NPC navigation](../managed-npc-navigation.md) and CE-06/CE-08 in
 [CryEngine removal](cryengine-removal.md).
 
@@ -19,6 +21,14 @@ collision does not account for the other authored families. Replace that refusal
 concrete current cell owner has classified every relevant row for the requested collision mask.
 A decoded model, render mesh, authored bounding box, missing native body or successful ray miss
 does not establish physical clearance.
+
+The first implementation now provides [default vegetation proxies](../managed-vegetation-default-proxies.md)
+and [particle content certificates](../managed-particle-collision-content.md). The tested core reads
+all 4,145 world groups and 7,127 target-cell vegetation rows, publishes four group335 proxies with
+real character/ray/nondegenerate-capsule witnesses and retires both inventories to 0. The particle
+reader validates the nine original graphs' 28 nodes. These are bounded component owners, with
+1,019 passing tests and no new analyzer diagnostics; the production Host/navigation coverage
+composition is unchanged. The original 4 m far-return acceptance above is still open.
 
 The smallest useful first profile is engine cell (0, 0), authored `main_world/cells/009_014`.
 Recorded 8173 starts at local `(775.96875,940.6719,230.23447)`; its existing 4 m far-return stimulus
@@ -85,24 +95,24 @@ material graph; do not derive material names from model basenames.
 
 ### Catalog, load gates and transforms
 
-- [ ] Add a managed world vegetation catalog, for example
+- [x] Add a managed world vegetation catalog, for example
   `Content/ZoneWorldVegetationContent.cs`. Reuse the asset source and read original
   `game/worlds/main_world/vegetation.xml`. The current world has 4,145 unique group IDs.
   Preserve source IDs, model/material paths, quality/config fields and flags. Do not interpret
   a group ID as an index in the object.dat model table.
-- [ ] Port the relevant `30107F70` XML reads and `30108AD0` group publication semantics.
+- [x] Port the relevant `30107F70` XML reads and `30108AD0` group publication semantics.
   The latter publishes through engine virtual 1176 into the ID-indexed StatInstGroup catalog.
   Preserve replacement/source-order behavior rather than relying on dictionary iteration.
 - [ ] Preserve `302221D0` signed group-index validation, native quality/model gates, configured
   vegetation/minimum-size/collision-only policy and scale clamp `[0.1,5]`. Recover and declare
   the supported configuration explicitly. An on-demand or skipped allocation is not evidence
   that physical geometry cannot affect a query.
-- [ ] Reuse `ZoneCellVegetationContent` and `ZoneCellObjectContent`, which already retain the
+- [x] Reuse `ZoneCellVegetationContent` and `ZoneCellObjectContent`, which already retain the
   complete 64-byte records. `302253C0` supplies sector translation
   `((engineCellX*4+sectorX)<<8,(engineCellY*4+sectorY)<<8,0)`, with X outer/Y inner.
   Tagged vegetation in object.dat uses engine-cell translation `(X<<10,Y<<10,0)`.
   World absolute cell coordinates must not be added a second time.
-- [ ] Port exact transform `30102840` and Euler helper `30106900`. Raw row bytes `0x39`,
+- [x] Port exact transform `30102840` and Euler helper `30106900`. Raw row bytes `0x39`,
   `0x3A`, `0x3C` become native X, Y, Z angles respectively, using the original float order
   `float(byte)*1.4117647*0.017453292`. Apply authored uniform scale and translated position.
   General terrain alignment calls `300CD590` when the group enables it and explicit X/Y angles
@@ -160,12 +170,12 @@ policy must be explicit and must not drop geometry that the native on-demand pat
 
 ### Cell and resource lifetime
 
-- [ ] Add a scene-owned vegetation instance lease, for example
+- [x] Add a scene-owned vegetation instance lease, for example
   `Scene/ZoneManagedSceneVegetation.cs`. Share immutable resource/material variants, retain
   distinct player/ray handles and tie every placement to the exact loaded cell generation.
-- [ ] Stage a placement's complete admitted part set before publication. On partial failure,
+- [x] Stage a placement's complete admitted part set before publication. On partial failure,
   remove every handle already added for that placement and retain its exact named diagnostic.
-- [ ] Unloading or replacing a cell invalidates coverage before exposing the replacement,
+- [x] Unloading or replacing a cell invalidates coverage before exposing the replacement,
   removes all its player/ray instances and prevents stale leases from removing new handles.
   Shared mesh/BVH resources may survive only while their owning scene/cache remains valid.
 - [ ] Report authored rows, classified nonblocking rows, admitted parts and failed placements
@@ -213,8 +223,8 @@ The target 33 rows reference nine original effects across three libraries. Their
 contain no `ePhysicsType`, legacy `PhysicsType`, collision or Geometry fields. Native parameter
 constructor `30086910` initializes byte`+976` to 0; metadata `3007B0B0` maps `ePhysicsType` there.
 Matching PE enum table `302D5AF0` maps 0=`ParticlePhysics_None`,1=`SimpleCollision`,
-2=`SimplePhysics`,3=`RigidBody`. These are source/content findings; the runtime classifier and
-native-control acceptance still need implementation.
+2=`SimplePhysics`,3=`RigidBody`. The version20 content reader now validates the complete selected
+default/no-force graph. Entity class/row certification and complete physicalizer acceptance remain open.
 
 | Original particle library | Referenced effect names after library prefix |
 | --- | --- |
@@ -222,7 +232,7 @@ native-control acceptance still need implementation.
 | `game/libs/particles/x2_effects.xml` | `mon_effects.nmon_poison_fog_launch`, `fire_smoke.torchlight_a` |
 | `game/libs/particles/x2_effects_p.xml` | `env.elf_light_r`, `env.elf_light_y` |
 
-- [ ] Implement the supported parameter-default/descendant traversal profile. Resolve the full
+- [x] Implement the supported parameter-default/descendant traversal profile. Resolve the full
   effect name, preserve library version/default semantics and inspect every nested effect.
   Refuse unresolved names, unowned inheritance/default sources or possible physical descendants.
   Do not classify effects from the absence of a top-level geometry field alone.
