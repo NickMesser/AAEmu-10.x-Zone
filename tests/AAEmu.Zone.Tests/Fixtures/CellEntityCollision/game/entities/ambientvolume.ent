@@ -1,0 +1,4 @@
+<Entity
+ Name="AmbientVolume"
+ Script="Scripts/Entities/Sound/AmbientVolume.lua"
+/>

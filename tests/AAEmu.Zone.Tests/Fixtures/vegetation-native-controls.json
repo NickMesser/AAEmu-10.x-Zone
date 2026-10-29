@@ -6283,5 +6283,5510 @@
       ],
       "intersects": true
     }
-  ]
+  ],
+  "rootPublication": {
+    "image": "D:\\aaemu-runtime\\engine-bin64\\cry3dengine_dedicate.dll",
+    "sha256": "5e22f8338d6e146939f4f22fc0531d78c7c2313547a1863cadb2cb5e3b8d3caf",
+    "function": "30103DC0",
+    "engineModuleLoads": 0,
+    "declaredCallbacks": [
+      "?_Orphan_all@_Container_base12@std@@QEAAXXZ",
+      "?_Orphan_all@_Container_base0@std@@QEAAXXZ",
+      "strncmp",
+      "??3@YAXPEAX@Z",
+      "??_V@YAXPEAX@Z",
+      "??2@YAPEAX_K@Z",
+      "memmove",
+      "memcpy",
+      "memset",
+      "free",
+      "strstr",
+      "CVegetation.GetBBox",
+      "CStatObj.SubCount",
+      "CStatObj.Subobject",
+      "CStatObj.Min",
+      "CStatObj.Max",
+      "CStatObj.Mass",
+      "Physical.SetParams",
+      "Physical.GetParams",
+      "Physical.Action",
+      "Physical.AddGeometry",
+      "Physical.Thread"
+    ],
+    "scope": "Direct root, no children, controlled already-existing static entity; retained native HasPhysics and native root mask branches.",
+    "controls": [
+      {
+        "slots": [],
+        "quality": 0,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 0,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 1,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 1,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 0,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 0,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 1,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 1,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 2,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          1
+        ],
+        "quality": 0,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [
+          1
+        ],
+        "quality": 0,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          1
+        ],
+        "quality": 1,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [
+          1
+        ],
+        "quality": 1,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          1
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [
+          1
+        ],
+        "quality": 2,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 1,
+            "geometryFlags": 3153920,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          2
+        ],
+        "quality": 0,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [
+          2
+        ],
+        "quality": 0,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          2
+        ],
+        "quality": 1,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [
+          2
+        ],
+        "quality": 1,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          2
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [
+          2
+        ],
+        "quality": 2,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          1,
+          2
+        ],
+        "quality": 0,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [
+          1,
+          2
+        ],
+        "quality": 0,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          1,
+          2
+        ],
+        "quality": 1,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [
+          1,
+          2
+        ],
+        "quality": 1,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          1,
+          2
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [
+          1,
+          2
+        ],
+        "quality": 2,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 2,
+            "geometryFlags": 1064960,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 1,
+            "geometryFlags": 2105344,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1
+        ],
+        "quality": 0,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1
+        ],
+        "quality": 0,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1
+        ],
+        "quality": 1,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1
+        ],
+        "quality": 1,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 1,
+            "geometryFlags": 3145728,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1
+        ],
+        "quality": 2,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 1,
+            "geometryFlags": 3153920,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          2
+        ],
+        "quality": 0,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          2
+        ],
+        "quality": 0,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          2
+        ],
+        "quality": 1,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          2
+        ],
+        "quality": 1,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          2
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          2
+        ],
+        "quality": 2,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1,
+          2
+        ],
+        "quality": 0,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1,
+          2
+        ],
+        "quality": 0,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1,
+          2
+        ],
+        "quality": 1,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1,
+          2
+        ],
+        "quality": 1,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1,
+          2
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 1064960,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 1,
+            "geometryFlags": 2097152,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1,
+          2
+        ],
+        "quality": 2,
+        "foliage": 1,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 1064960,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 1,
+            "geometryFlags": 2105344,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 128,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 128,
+        "rowFlags": 2,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 256,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 75599871,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 256,
+        "rowFlags": 2,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 384,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 75599871,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 384,
+        "rowFlags": 2,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0
+        ],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": true,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 0,
+            "slots": [
+              0
+            ]
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 256,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "EnterChildPhysicalizer",
+            "root": true
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 0,
+            "slots": [
+              1
+            ]
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 0,
+            "slots": [
+              2
+            ]
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 0,
+            "slots": [
+              0,
+              1
+            ]
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 256,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 257,
+            "geometryFlags": 3145728,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "EnterChildPhysicalizer",
+            "root": true
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 0,
+            "slots": [
+              1,
+              2
+            ]
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 1,
+            "slots": [
+              0
+            ]
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 256,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "EnterChildPhysicalizer",
+            "root": true
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 1,
+            "slots": [
+              1
+            ]
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 1,
+            "slots": [
+              2
+            ]
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 1,
+            "slots": [
+              0,
+              1
+            ]
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 256,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 257,
+            "geometryFlags": 3145728,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "EnterChildPhysicalizer",
+            "root": true
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 1,
+            "slots": [
+              1,
+              2
+            ]
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [],
+        "events": []
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 0,
+            "slots": [
+              0
+            ]
+          },
+          {
+            "kind": 0,
+            "slots": [
+              0
+            ]
+          }
+        ],
+        "groupMaterial": true,
+        "parts": [
+          {
+            "slot": 256,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 512,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 2
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 2
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 2
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 2
+          },
+          {
+            "kind": "EnterChildPhysicalizer",
+            "root": true
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 2
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 2
+          },
+          {
+            "kind": "SetParams",
+            "type": 21
+          },
+          {
+            "kind": "SetParams",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 0,
+            "slots": [
+              0
+            ],
+            "suppressed": 2
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 256,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "EnterChildPhysicalizer",
+            "root": true
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "slots": [],
+        "quality": 2,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [
+          {
+            "kind": 0,
+            "slots": [
+              0
+            ],
+            "compiled": 128
+          }
+        ],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 256,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "EnterChildPhysicalizer",
+            "root": true
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 1
+          },
+          {
+            "kind": "SetParams",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1,
+          2
+        ],
+        "quality": -1,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 3162112,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      },
+      {
+        "slots": [
+          0,
+          1,
+          2
+        ],
+        "quality": 3,
+        "foliage": 0,
+        "compiledFlags": 0,
+        "rowFlags": 0,
+        "foreignId": 0,
+        "children": [],
+        "groupMaterial": false,
+        "parts": [
+          {
+            "slot": 0,
+            "geometryFlags": 67211263,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 0,
+            "localPosition": [
+              800.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 2,
+            "geometryFlags": 1064960,
+            "colliderFlags": 1,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          },
+          {
+            "slot": 1,
+            "geometryFlags": 2097152,
+            "colliderFlags": 0,
+            "part": 4294967295,
+            "material": 4294967295,
+            "localPosition": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "matrix": null
+          }
+        ],
+        "events": [
+          {
+            "kind": "SetParams",
+            "type": 0
+          },
+          {
+            "kind": "Action",
+            "type": 9
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SetParams",
+            "type": 20
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          },
+          {
+            "kind": "SubCount",
+            "root": true,
+            "count": 0
+          }
+        ]
+      }
+    ]
+  },
+  "foliageCompilation": {
+    "engineModuleLoads": 0,
+    "function": "3003EA10",
+    "scope": "Fresh CStatObj, bounded declared spine/vertex/bone arrays; allocation/copy/free and diagnostic callbacks only.",
+    "controls": [
+      {
+        "vertexCounts": [],
+        "compiledSpines": 0
+      },
+      {
+        "vertexCounts": [
+          3
+        ],
+        "compiledSpines": 1
+      },
+      {
+        "vertexCounts": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "compiledSpines": 18
+      },
+      {
+        "vertexCounts": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "compiledSpines": 27
+      },
+      {
+        "vertexCounts": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "compiledSpines": 31
+      },
+      {
+        "vertexCounts": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "compiledSpines": 0
+      },
+      {
+        "vertexCounts": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "compiledSpines": 63
+      },
+      {
+        "vertexCounts": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "compiledSpines": 0
+      },
+      {
+        "vertexCounts": [
+          65
+        ],
+        "compiledSpines": 1
+      },
+      {
+        "vertexCounts": [
+          65,
+          1
+        ],
+        "compiledSpines": 2
+      },
+      {
+        "vertexCounts": [
+          3,
+          63
+        ],
+        "compiledSpines": 0
+      },
+      {
+        "vertexCounts": [
+          63,
+          3
+        ],
+        "compiledSpines": 0
+      }
+    ]
+  },
+  "cvarRegistration": {
+    "engineModuleLoads": 0,
+    "functions": [
+      "3000a900",
+      "30011a40"
+    ],
+    "controls": [
+      {
+        "name": "e_vegetation_bending",
+        "kind": "int",
+        "value": 2,
+        "bits": "00000002",
+        "field": 324
+      },
+      {
+        "name": "e_vegetation",
+        "kind": "int",
+        "value": 1,
+        "bits": "00000001",
+        "field": 336
+      },
+      {
+        "name": "e_vegetation_min_size",
+        "kind": "float",
+        "value": 0.0,
+        "bits": "00000000",
+        "field": 1524
+      },
+      {
+        "name": "e_vegetation_create_collision_only",
+        "kind": "float",
+        "value": 0.0,
+        "bits": "00000000",
+        "field": 1528
+      },
+      {
+        "name": "e_view_dist_ratio_detail",
+        "kind": "float",
+        "value": 30.0,
+        "bits": "41f00000",
+        "field": 1468
+      },
+      {
+        "name": "e_phys_foliage",
+        "kind": "int",
+        "value": 2,
+        "bits": "00000002",
+        "field": 1156
+      },
+      {
+        "name": "e_foliage_stiffness",
+        "kind": "float",
+        "value": 3.200000047683716,
+        "bits": "404ccccd",
+        "field": 1732
+      },
+      {
+        "name": "e_obj_quality",
+        "kind": "int",
+        "value": 0,
+        "bits": "00000000",
+        "field": 1204
+      }
+    ]
+  },
+  "staticOrigin": {
+    "engineModuleLoads": 0,
+    "sha256": "5252aa3889e8b188ed47061e9d7df6cee1eb3e9938b4a508601f97aeaf0f3f24",
+    "function": "3653EF00",
+    "controls": [
+      {
+        "x": 0,
+        "y": 0,
+        "origin": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "x": 9,
+        "y": 14,
+        "origin": [
+          9216.0,
+          14336.0,
+          0.0
+        ]
+      },
+      {
+        "x": 17,
+        "y": 31,
+        "origin": [
+          17408.0,
+          31744.0,
+          0.0
+        ]
+      },
+      {
+        "x": -2,
+        "y": -3,
+        "origin": [
+          -2048.0,
+          -3072.0,
+          0.0
+        ]
+      },
+      {
+        "x": 2097152,
+        "y": 4194303,
+        "origin": [
+          -2147483648.0,
+          -1024.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "radiusAndFactory": {
+    "engineModuleLoads": 0,
+    "functions": [
+      "30024D70",
+      "300212E0",
+      "302221D0"
+    ],
+    "scope": "Declared loaded model bbox/radius/default refs; native gate/clamp/field copy/exclusion path; trace/group-bind/bbox/register/physicalizer ABI callbacks.",
+    "radii": [
+      {
+        "minimum": [
+          -3,
+          -4,
+          0
+        ],
+        "maximum": [
+          3,
+          4,
+          0
+        ],
+        "radius": 5.0,
+        "bits": "40a00000"
+      },
+      {
+        "minimum": [
+          0,
+          0,
+          0
+        ],
+        "maximum": [
+          0,
+          0,
+          2
+        ],
+        "radius": 1.0,
+        "bits": "3f800000"
+      },
+      {
+        "minimum": [
+          -1,
+          -2,
+          -3
+        ],
+        "maximum": [
+          4,
+          6,
+          9
+        ],
+        "radius": 7.632168769836426,
+        "bits": "40f43aba"
+      },
+      {
+        "minimum": [
+          8000,
+          7000,
+          100
+        ],
+        "maximum": [
+          8002,
+          7003,
+          104
+        ],
+        "radius": 2.692582368850708,
+        "bits": "402c5345"
+      },
+      {
+        "minimum": [
+          0,
+          0,
+          0
+        ],
+        "maximum": [
+          0,
+          0,
+          0
+        ],
+        "radius": 0.0,
+        "bits": "00000000"
+      }
+    ],
+    "transforms": [
+      {
+        "minimum": [
+          -2.5684704672970264,
+          -4.8920848264840755,
+          -4.18070995661284
+        ],
+        "maximum": [
+          3.4770613791305065,
+          7.213129068561877,
+          0.1584529285652545
+        ],
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "bounds": [
+          -2.5684704780578613,
+          -4.892084121704102,
+          -4.1807098388671875,
+          3.4770612716674805,
+          7.213129043579102,
+          0.15845298767089844
+        ]
+      },
+      {
+        "minimum": [
+          -4.374275405175811,
+          -3.4065972023022155,
+          -0.5659686813547138
+        ],
+        "maximum": [
+          4.967865085643375,
+          6.788513571190175,
+          4.147469806534819
+        ],
+        "matrix": [
+          -2.397241403001787,
+          -0.1064336788710678,
+          1.591496903844071,
+          -1.2467910424150388,
+          2.3663392643735337,
+          -0.3415393892826222,
+          1.6080491764306677,
+          -1.1891752285086568,
+          2.259088234770001,
+          1.7654556038173048,
+          1.0689094790177798,
+          2.5980700022969545
+        ],
+        "bounds": [
+          -14.779226303100586,
+          -14.768843650817871,
+          -13.902968406677246,
+          16.202665328979492,
+          18.39929962158203,
+          30.239002227783203
+        ]
+      },
+      {
+        "minimum": [
+          -2.168875188396513,
+          -4.591497688406838,
+          -0.8645080555084181
+        ],
+        "maximum": [
+          5.87197239097017,
+          6.318997163342456,
+          0.9737052439362044
+        ],
+        "matrix": [
+          1.9867042765204168,
+          0.8217321139400546,
+          -1.8479710069533455,
+          2.2119528695673587,
+          -0.899484939128028,
+          0.6693424247431379,
+          -2.78510213280415,
+          1.4977789454524704,
+          -1.9710882884331784,
+          0.34570592241925624,
+          2.230341837739312,
+          -0.9633434683752338
+        ],
+        "bounds": [
+          -7.6693220138549805,
+          -9.569124221801758,
+          -16.052976608276367,
+          20.66793441772461,
+          10.085966110229492,
+          7.667911529541016
+        ]
+      },
+      {
+        "minimum": [
+          -3.723347719066066,
+          -0.4424021250338921,
+          -3.797421220302849
+        ],
+        "maximum": [
+          3.41979603446899,
+          4.548159911594543,
+          7.435251448264463
+        ],
+        "matrix": [
+          2.5212879635033945,
+          -2.1620488843258885,
+          -1.0328950987855852,
+          1.5054960996643505,
+          2.514576103336312,
+          2.8075565555511552,
+          2.881583751130491,
+          -2.7856713933855035,
+          0.6004581284103363,
+          -1.2871719884427784,
+          2.425216905598668,
+          2.3638404807669975
+        ],
+        "bounds": [
+          -25.395315170288086,
+          -24.332971572875977,
+          -14.935708999633789,
+          15.006620407104492,
+          40.00818634033203,
+          23.018831253051758
+        ]
+      },
+      {
+        "minimum": [
+          -1.2602559292240056,
+          -3.461956242439377,
+          -1.217808301261611
+        ],
+        "maximum": [
+          2.25619092776443,
+          4.5985635914383645,
+          7.521742817806328
+        ],
+        "matrix": [
+          1.5889997171009966,
+          0.0838433412532571,
+          0.08581702379655809,
+          -0.10458207234819872,
+          -0.8722207358887095,
+          1.92648910987534,
+          -2.90705025917383,
+          2.1595993909429465,
+          -0.834150156467226,
+          2.316117723151992,
+          2.846001219050626,
+          1.1797790022116956
+        ],
+        "bounds": [
+          -2.501899242401123,
+          -28.34380340576172,
+          -12.186405181884766,
+          4.511557579040527,
+          15.658133506774902,
+          34.288726806640625
+        ]
+      },
+      {
+        "minimum": [
+          -3.041915061445234,
+          -4.979656974649783,
+          -2.3377207188855227
+        ],
+        "maximum": [
+          4.321058277289141,
+          6.810775353191253,
+          7.905866623689173
+        ],
+        "matrix": [
+          2.282615227167632,
+          0.8076720098163612,
+          2.1535443288750438,
+          -1.224293699540972,
+          2.644469909561388,
+          2.970043939385002,
+          -2.536761964368296,
+          -1.5722019835022438,
+          1.0993750233562842,
+          -1.063257281563989,
+          -2.6484384717666076,
+          2.6811295465843745
+        ],
+        "bounds": [
+          -17.22412872314453,
+          -44.46155548095703,
+          -28.842884063720703,
+          31.16552734375,
+          36.01325225830078,
+          18.917560577392578
+        ]
+      },
+      {
+        "minimum": [
+          -4.390563262421842,
+          -1.8489229746463036,
+          -4.679646153158809
+        ],
+        "maximum": [
+          5.123931756783937,
+          7.839253140987887,
+          6.960551733100399
+        ],
+        "matrix": [
+          -0.8879850742841731,
+          0.39933062805997643,
+          0.2083412567345424,
+          1.3611311685175167,
+          0.30613191145027985,
+          -0.5619392205652356,
+          0.31639980663318257,
+          1.5310540436844438,
+          2.3560787063507096,
+          2.389936626898204,
+          -0.2730780800835131,
+          -2.168371095093155
+        ],
+        "bounds": [
+          -4.902139663696289,
+          -5.698861122131348,
+          -18.832469940185547,
+          9.840510368347168,
+          6.3409528732299805,
+          29.91724395751953
+        ]
+      },
+      {
+        "minimum": [
+          -1.9768679035545906,
+          -1.9300137375281707,
+          -0.46516953576238773
+        ],
+        "maximum": [
+          4.871235291338183,
+          2.5803364124451678,
+          4.342459239269987
+        ],
+        "matrix": [
+          -0.12557506694355736,
+          -2.702933801163788,
+          -0.39587215131900777,
+          -0.8447950510692017,
+          2.460054732342683,
+          -0.21220470149373938,
+          -1.4345625917919786,
+          1.133889042328077,
+          -1.6987627776184597,
+          -2.2260603394019594,
+          -1.5535730084992956,
+          0.21769209561392522
+        ],
+        "bounds": [
+          -10.15003776550293,
+          -10.506402015686035,
+          -20.547693252563477,
+          4.80429744720459,
+          14.194266319274902,
+          8.59492301940918
+        ]
+      },
+      {
+        "minimum": [
+          -2.693036388945145,
+          -0.7947919186514234,
+          -1.4489016480058234
+        ],
+        "maximum": [
+          2.121045656811976,
+          1.7007293157539687,
+          1.3531543460157511
+        ],
+        "matrix": [
+          -0.5482644561243584,
+          -2.67355411142457,
+          1.966271034296077,
+          -2.467005102507647,
+          1.5502710881557977,
+          -1.5835410046512026,
+          -0.7070689105944625,
+          1.8028135144227795,
+          -1.017030059224588,
+          -1.4813779218829581,
+          -1.1528744256234265,
+          -2.70611465104807
+        ],
+        "bounds": [
+          -11.025823593139648,
+          -6.02207088470459,
+          -8.94272232055664,
+          3.7950778007507324,
+          7.374068260192871,
+          2.880573272705078
+        ]
+      },
+      {
+        "minimum": [
+          -1.176968439719031,
+          -4.619145236658163,
+          -0.15505621445505913
+        ],
+        "maximum": [
+          5.7019180870505926,
+          6.707650322733878,
+          7.784472865996849
+        ],
+        "matrix": [
+          0.7267641972078316,
+          -0.1789788650670059,
+          0.005866024842976714,
+          -1.7278312910593105,
+          2.44506807618313,
+          2.3145381663366207,
+          2.1259422337748806,
+          -2.556778673091624,
+          -0.34860525358797734,
+          -1.3507029014738396,
+          -2.117853874536939,
+          -2.4046760913602645
+        ],
+        "bounds": [
+          -3.784646987915039,
+          -16.45537567138672,
+          -29.938812255859375,
+          3.2885122299194336,
+          43.459251403808594,
+          4.5731000900268555
+        ]
+      },
+      {
+        "minimum": [
+          -3.4406513482089696,
+          -2.7561714811946967,
+          -4.73904901284547
+        ],
+        "maximum": [
+          7.631481641072796,
+          2.6418839787830146,
+          3.035241198679972
+        ],
+        "matrix": [
+          1.2210296233325941,
+          -0.1479541147768466,
+          -0.2892422132311907,
+          2.432662343529236,
+          2.2500390747060584,
+          -0.6583217974649642,
+          0.3202658356792423,
+          2.2390966388723372,
+          -0.7715300783322259,
+          -2.6835570884705815,
+          -0.00562084527686757,
+          0.05880514986288832
+        ],
+        "bounds": [
+          -3.037273406982422,
+          -8.759469032287598,
+          -12.935819625854492,
+          13.529447555541992,
+          22.196762084960938,
+          10.136350631713867
+        ]
+      },
+      {
+        "minimum": [
+          -1.809661971567094,
+          -4.050980252905177,
+          -4.336566206260065
+        ],
+        "maximum": [
+          4.104063957101925,
+          5.219483941243144,
+          2.5956230392958455
+        ],
+        "matrix": [
+          -0.22349331805465633,
+          -2.537705256005683,
+          2.003304453223894,
+          0.09064630156519993,
+          -1.7090476848458203,
+          1.2401268229355384,
+          -1.950671854574307,
+          1.9758856099925257,
+          -1.5391752433730692,
+          0.3903882875903717,
+          1.8577318715018363,
+          1.6446786500609996
+        ],
+        "bounds": [
+          -22.759557723999023,
+          -15.125093460083008,
+          -14.309826850891113,
+          15.97511100769043,
+          20.000722885131836,
+          11.28966236114502
+        ]
+      },
+      {
+        "minimum": [
+          -1.5696873694490092,
+          -4.948791516745446,
+          -2.6211914038140645
+        ],
+        "maximum": [
+          1.610102862322485,
+          0.7954991410098549,
+          1.7958435750250077
+        ],
+        "matrix": [
+          0.8034669596323329,
+          1.9840128877737833,
+          -0.24014849034131203,
+          1.7676443787744613,
+          -2.105635279642838,
+          0.9388352706179481,
+          -0.13916502284547239,
+          -0.06944903781264555,
+          1.8297271247706224,
+          -0.7075345035072775,
+          -2.54534958267619,
+          -0.2995504321272273
+        ],
+        "bounds": [
+          -9.743282318115234,
+          -8.355756759643555,
+          -8.305543899536133,
+          5.269064903259277,
+          4.347360610961914,
+          12.819787979125977
+        ]
+      },
+      {
+        "minimum": [
+          -2.9165828551290613,
+          -2.8540752344695908,
+          -0.6350403610996462
+        ],
+        "maximum": [
+          4.058913621143584,
+          2.0656976609121687,
+          3.3571643169497856
+        ],
+        "matrix": [
+          1.856958809069206,
+          0.6757582300739862,
+          1.4082654363394767,
+          -2.4253352818320213,
+          1.2153587600108295,
+          0.47779868518380386,
+          2.289876320164007,
+          -1.5435217116337834,
+          2.1218147046838816,
+          2.643407969827555,
+          -0.7769245429244571,
+          -1.0336655105379098
+        ],
+        "bounds": [
+          -10.664278984069824,
+          -7.90605354309082,
+          -17.374862670898438,
+          11.235590934753418,
+          12.063993453979492,
+          13.532458305358887
+        ]
+      },
+      {
+        "minimum": [
+          -4.252746845716605,
+          -2.049810965128798,
+          -2.134743771916146
+        ],
+        "maximum": [
+          2.6058867568977453,
+          4.159812896832395,
+          1.578600247755105
+        ],
+        "matrix": [
+          -2.1753446168753756,
+          -2.9459533096166473,
+          -1.3434432439529325,
+          0.3468612068612531,
+          -2.8153552185561894,
+          1.595673637939429,
+          2.5949522339656106,
+          -1.9149747016323988,
+          -1.9997398547848273,
+          -2.572668653739372,
+          -0.8581993079717858,
+          -0.2165552718118855
+        ],
+        "bounds": [
+          -19.697216033935547,
+          -18.061859130859375,
+          -17.48422622680664,
+          18.504608154296875,
+          20.792118072509766,
+          15.393353462219238
+        ]
+      },
+      {
+        "minimum": [
+          -2.2847142003393794,
+          -3.688213681511801,
+          -1.2622527222715947
+        ],
+        "maximum": [
+          6.4096388290620165,
+          5.681375276144851,
+          4.603608244581412
+        ],
+        "matrix": [
+          -0.43730698764294385,
+          -1.2860438527437799,
+          -0.2979132274113634,
+          0.8415178644519701,
+          0.6205858394531871,
+          2.225352371540634,
+          -2.3748885761727747,
+          -1.6130454801831078,
+          0.990367727544399,
+          -2.9478432392903673,
+          1.3614801591601955,
+          1.9054263072460182
+        ],
+        "bounds": [
+          -10.639435768127441,
+          -22.171537399291992,
+          -18.82361602783203,
+          6.959885597229004,
+          18.005456924438477,
+          25.393321990966797
+        ]
+      },
+      {
+        "minimum": [
+          -1.225754466515573,
+          -0.7537010718351809,
+          -3.412766061807553
+        ],
+        "maximum": [
+          3.043471598749341,
+          1.5771308642627133,
+          2.680267667390475
+        ],
+        "matrix": [
+          2.265313866061467,
+          2.404327777130284,
+          0.5233554867129211,
+          -2.9787091031287796,
+          -1.9262210629954455,
+          -0.08480019995819266,
+          -0.5944747393361283,
+          -1.2322477085159746,
+          2.3762462671049294,
+          2.2071979895332863,
+          -0.4736724852098555,
+          -1.574307956603643
+        ],
+        "bounds": [
+          -9.35366153717041,
+          -8.821739196777344,
+          -7.420138835906982,
+          9.110381126403809,
+          3.2215428352355957,
+          10.755302429199219
+        ]
+      },
+      {
+        "minimum": [
+          -0.8160764765101716,
+          -3.0560650883366565,
+          -1.195586410107076
+        ],
+        "maximum": [
+          4.1441880428566495,
+          7.06542349471581,
+          4.169907772717218
+        ],
+        "matrix": [
+          0.5102372973566611,
+          0.005796018103362499,
+          0.28689892812667317,
+          0.16619612868749023,
+          -1.2493262869714938,
+          -1.329439155534702,
+          -1.5577905979507418,
+          -2.8146808547015167,
+          -0.6451176570973933,
+          -1.149179651745003,
+          1.584563799569163,
+          2.27651731271514
+        ],
+        "bounds": [
+          -0.6109219789505005,
+          -23.88101577758789,
+          -10.410896301269531,
+          3.5180087089538574,
+          4.130190849304199,
+          12.922435760498047
+        ]
+      },
+      {
+        "minimum": [
+          -4.574602860325962,
+          -2.483123068984727,
+          -0.4365996720773948
+        ],
+        "maximum": [
+          0.8930714693189818,
+          7.217604268828323,
+          3.692708787787307
+        ],
+        "matrix": [
+          2.5642651404056513,
+          0.27942237932013825,
+          1.810025118463817,
+          0.34298963129646687,
+          2.0375718612049996,
+          -1.4522709943618985,
+          2.028708054879922,
+          2.9165556599550984,
+          0.13964883984535348,
+          -2.3489542619207504,
+          -0.23591540266374889,
+          -1.9986489151270133
+        ],
+        "bounds": [
+          -12.871603012084961,
+          -17.77217674255371,
+          -20.462474822998047,
+          11.333717346191406,
+          15.83384895324707,
+          4.061809539794922
+        ]
+      },
+      {
+        "minimum": [
+          -1.8035930402924407,
+          -2.795994333418921,
+          -1.46694752122196
+        ],
+        "maximum": [
+          4.7586923681134525,
+          7.7307220431670025,
+          3.4890841822697656
+        ],
+        "matrix": [
+          -1.8148183247833753,
+          -0.5011492699566631,
+          2.6788342718340514,
+          -1.5175273637831475,
+          2.37126119008201,
+          2.1743838958556134,
+          -0.04355960749622856,
+          2.2700084395196445,
+          0.2728231730877999,
+          -0.057451927918348744,
+          -2.2449934854530373,
+          1.8039877005954388
+        ],
+        "bounds": [
+          -17.957645416259766,
+          -8.238327980041504,
+          -6.965190410614014,
+          12.503555297851562,
+          30.427566528320312,
+          6.556191921234131
+        ]
+      },
+      {
+        "minimum": [
+          -4.047383111754652,
+          -4.005006194474085,
+          -0.10141583676904897
+        ],
+        "maximum": [
+          3.0578683663249606,
+          7.30817291765577,
+          3.4562126510164104
+        ],
+        "matrix": [
+          -2.796480429038521,
+          0.12257761630288577,
+          2.0217320327284156,
+          1.0490369978106058,
+          -0.7533430948207362,
+          -1.000092679587692,
+          -0.06530542900584102,
+          -1.4724031267976292,
+          1.347989228133705,
+          1.5267622258658964,
+          2.1142213832122057,
+          -0.7379196384070199
+        ],
+        "bounds": [
+          -8.19819164276123,
+          -11.310586929321289,
+          -12.522856712341309,
+          20.25082015991211,
+          5.58866548538208,
+          21.84909439086914
+        ]
+      },
+      {
+        "minimum": [
+          -0.4859207900874942,
+          -2.8652659914599896,
+          -2.208956601704171
+        ],
+        "maximum": [
+          4.111050462443995,
+          2.8066691301636837,
+          0.5940337674925971
+        ],
+        "matrix": [
+          -2.1361727167471907,
+          0.18120463960045852,
+          2.7542420649942487,
+          1.667814288246218,
+          -1.2871970403622426,
+          2.2318579781537498,
+          2.1916711216839957,
+          2.2649367510627165,
+          1.0896128969148569,
+          2.078321627151035,
+          -1.0878509041964661,
+          0.006653099138346441
+        ],
+        "bounds": [
+          -13.717301368713379,
+          -14.262969017028809,
+          -7.1239776611328125,
+          4.850520133972168,
+          10.456425666809082,
+          12.722284317016602
+        ]
+      },
+      {
+        "minimum": [
+          -2.7325521519033247,
+          -4.0882431900478675,
+          -2.3058719133373278
+        ],
+        "maximum": [
+          7.913137542727979,
+          7.070362549931127,
+          2.2199938683752354
+        ],
+        "matrix": [
+          -1.3841689647978186,
+          -0.8122369688580768,
+          -2.2246189076704272,
+          -2.216457322030104,
+          1.9754307564751414,
+          0.4055588837972106,
+          -0.97521257168273,
+          2.620914690479375,
+          0.6048574383067749,
+          -0.768739833526543,
+          2.691261818605579,
+          0.46093982606482076
+        ],
+        "bounds": [
+          -23.85102653503418,
+          -6.600041389465332,
+          -12.83283805847168,
+          10.016164779663086,
+          23.368934631347656,
+          14.364639282226562
+        ]
+      },
+      {
+        "minimum": [
+          -1.808569994176719,
+          -3.7823269964558377,
+          -3.557124887001932
+        ],
+        "maximum": [
+          2.2439761028918186,
+          6.719957740313765,
+          1.5642146430343962
+        ],
+        "matrix": [
+          -1.6656001004703944,
+          -1.078005882710781,
+          0.9706476032970692,
+          2.636545588700419,
+          -1.9942148863580398,
+          1.3943464558327259,
+          2.9468995390953543,
+          -2.076329171521089,
+          2.784330607428254,
+          -2.777173446029866,
+          1.4042274007725943,
+          1.2009254612586746
+        ],
+        "bounds": [
+          -11.797889709472656,
+          -22.307662963867188,
+          -27.492231369018555,
+          11.244571685791016,
+          15.509880065917969,
+          20.149587631225586
+        ]
+      },
+      {
+        "minimum": [
+          -1.5604422310105175,
+          -3.6322924776361294,
+          -4.185384532861466
+        ],
+        "maximum": [
+          3.8493688459641575,
+          0.8326003629203704,
+          2.702877299387791
+        ],
+        "matrix": [
+          -2.6013678883145226,
+          -2.3279296399319698,
+          2.203495257895816,
+          -0.3632266529170023,
+          -1.3282732094260383,
+          -2.1721240526999273,
+          2.568996164483263,
+          2.4071695079141904,
+          -0.6452069571408643,
+          -1.8526244034042259,
+          1.254769777217028,
+          -2.035533469465613
+        ],
+        "bounds": [
+          -21.537561416625977,
+          -15.266592025756836,
+          -11.313362121582031,
+          18.10755729675293,
+          19.31333351135254,
+          9.092037200927734
+        ]
+      },
+      {
+        "minimum": [
+          -1.8472430504444182,
+          -0.7900346203954349,
+          -2.2960388510782535
+        ],
+        "maximum": [
+          5.354834418884186,
+          4.0361977984293675,
+          2.9442489397205485
+        ],
+        "matrix": [
+          -0.067449180276693,
+          2.345299661995874,
+          1.3761844188099444,
+          0.9752542533425634,
+          2.9588546797160156,
+          -2.1394334237616004,
+          2.5466059155587164,
+          -0.1230478834185984,
+          -2.9261082624795405,
+          -2.227015082341132,
+          2.1778490024590393,
+          -2.9153373932266415
+        ],
+        "bounds": [
+          -4.398566246032715,
+          -20.071056365966797,
+          -32.573265075683594,
+          14.617772102355957,
+          24.909198760986328,
+          10.661443710327148
+        ]
+      },
+      {
+        "minimum": [
+          -3.1591437572588372,
+          -2.1388697183127854,
+          -4.008002488204925
+        ],
+        "maximum": [
+          3.2059501734569027,
+          7.948257702071594,
+          3.130919613504304
+        ],
+        "matrix": [
+          0.8301704674402735,
+          -0.16652046772252138,
+          0.5946529344565046,
+          2.033419390699745,
+          0.022740624418683186,
+          -2.4583872234717514,
+          -1.444161126231081,
+          1.1677357858996071,
+          0.6849776884070078,
+          -1.8765417679803729,
+          -2.7716060266933162,
+          -0.8824918266650084
+        ],
+        "bounds": [
+          -4.296126365661621,
+          -22.965553283691406,
+          -26.639347076416016,
+          6.912880897521973,
+          12.28701114654541,
+          16.435794830322266
+        ]
+      },
+      {
+        "minimum": [
+          -2.7113346131476357,
+          -3.939975731808997,
+          -0.7140595905836111
+        ],
+        "maximum": [
+          6.960112716451175,
+          6.853673398440776,
+          2.3142200766603302
+        ],
+        "matrix": [
+          -1.8530237176466258,
+          1.0629472443613377,
+          -2.3231672893932234,
+          1.9834164888455108,
+          -0.6053992233228827,
+          -2.961434842125568,
+          1.4195798135262958,
+          1.8027341634766563,
+          -1.6886240800815306,
+          0.8487509224379375,
+          -0.35855560414438603,
+          -1.388471991883814
+        ],
+        "bounds": [
+          -20.478147506713867,
+          -23.72128677368164,
+          -17.31532096862793,
+          15.951559066772461,
+          18.397377014160156,
+          9.263046264648438
+        ]
+      },
+      {
+        "minimum": [
+          -1.0687914807035903,
+          -0.33683005196175575,
+          -1.148257022487984
+        ],
+        "maximum": [
+          1.73773813993017,
+          4.943048899161244,
+          7.658968672863976
+        ],
+        "matrix": [
+          -0.004148956557640915,
+          1.110717733788344,
+          -0.06023164748055798,
+          -1.668549574140514,
+          0.8525892131165911,
+          -1.8735696493044034,
+          1.8519207725002556,
+          0.07905233466227202,
+          0.10151033295431366,
+          0.7252851229408188,
+          2.0736310253295773,
+          0.6437692381917213
+        ],
+        "bounds": [
+          -2.511194944381714,
+          -12.219815254211426,
+          -2.090083122253418,
+          3.895378828048706,
+          16.375507354736328,
+          20.28716278076172
+        ]
+      },
+      {
+        "minimum": [
+          -2.4669382705956377,
+          -1.0027748958856186,
+          -4.96481694276591
+        ],
+        "maximum": [
+          6.677269276924596,
+          5.888626412170125,
+          7.486402275372299
+        ],
+        "matrix": [
+          1.1662718664126306,
+          0.3180611930659456,
+          1.8152857429581966,
+          -1.3779324058436886,
+          -2.399317946058009,
+          2.740960962515576,
+          0.8738894854126769,
+          -2.4542796001288605,
+          -1.8136781616694815,
+          0.7305828062810016,
+          -1.2775278648884618,
+          1.056652229889024
+        ],
+        "bounds": [
+          -13.586559295654297,
+          -25.562440872192383,
+          -21.3504638671875,
+          21.872482299804688,
+          26.14747428894043,
+          16.175704956054688
+        ]
+      },
+      {
+        "minimum": [
+          -2.111139431406131,
+          -4.727113137009723,
+          -2.9830137933298935
+        ],
+        "maximum": [
+          5.056621435072718,
+          0.15184032097052302,
+          7.074555440083167
+        ],
+        "matrix": [
+          -2.5075253756318814,
+          2.165638011806263,
+          2.3529883682384938,
+          -2.636792694288828,
+          2.375105312288773,
+          -1.8496110258257898,
+          -0.7201692633902312,
+          -0.01850790643110445,
+          2.3185233408875003,
+          0.1719552390809609,
+          2.3102044279350187,
+          0.6554098130250461
+        ],
+        "bounds": [
+          -32.57261276245117,
+          -10.408408164978027,
+          -11.943541526794434,
+          19.632122039794922,
+          22.883094787597656,
+          28.74908447265625
+        ]
+      },
+      {
+        "minimum": [
+          -4.120987950490393,
+          -3.455322067262136,
+          -4.94262414535798
+        ],
+        "maximum": [
+          4.100995356938691,
+          0.5861199959625196,
+          0.5990799659902715
+        ],
+        "matrix": [
+          2.5418345745875586,
+          -0.04869396633711265,
+          2.7627821380922466,
+          2.8351005874982222,
+          -1.526956149719958,
+          -1.5273952290824193,
+          0.8424209484282708,
+          0.7906056657243683,
+          2.721828463301403,
+          -0.3796002665370617,
+          0.4718755575804896,
+          6.305507938275667e-05
+        ],
+        "bounds": [
+          -21.323701858520508,
+          -10.530440330505371,
+          -13.771352767944336,
+          15.08253288269043,
+          12.865492820739746,
+          12.756601333618164
+        ]
+      },
+      {
+        "minimum": [
+          -4.8140187017828655,
+          -3.387300278823311,
+          -4.258983317928547
+        ],
+        "maximum": [
+          3.0718519645424687,
+          7.539675614232741,
+          4.7437812510223205
+        ],
+        "matrix": [
+          2.930520313093444,
+          2.033521099741236,
+          2.1001987231826504,
+          1.4543733689528162,
+          -2.889360912517838,
+          1.5383349509853748,
+          -2.4972221945849133,
+          1.0539562202412016,
+          -2.9409798325691705,
+          -1.6627616451649894,
+          -2.4981830009670913,
+          -1.206928911689985
+        ],
+        "bounds": [
+          -28.48606300354004,
+          -24.87881088256836,
+          -34.628700256347656,
+          35.751468658447266,
+          37.197566986083984,
+          29.22299575805664
+        ]
+      },
+      {
+        "minimum": [
+          -1.4503129004122695,
+          -3.474519345320759,
+          -4.721539824113871
+        ],
+        "maximum": [
+          5.394284313870114,
+          1.102044744122316,
+          1.3410985525089787
+        ],
+        "matrix": [
+          2.5517337539553058,
+          -0.05489447207945464,
+          -1.0790926568101815,
+          -0.6870015623451535,
+          2.2588019993426878,
+          2.225645913266062,
+          -2.419795671356375,
+          1.0935536741444327,
+          2.580510714743811,
+          -1.1036355127260855,
+          2.9130626232443166,
+          -0.6707004640108503
+        ],
+        "bounds": [
+          -5.895479679107666,
+          -13.160650253295898,
+          -19.38364601135254,
+          18.363487243652344,
+          27.156095504760742,
+          20.99061393737793
+        ]
+      },
+      {
+        "minimum": [
+          -3.278380262541183,
+          -2.4057968925685644,
+          -3.538775013343397
+        ],
+        "maximum": [
+          2.9699795877714434,
+          4.597905992831252,
+          0.6860575922709122
+        ],
+        "matrix": [
+          -2.595092457466543,
+          -0.8189735226169486,
+          0.5134230884604785,
+          1.271346708908295,
+          1.972951978944037,
+          0.18707181563573272,
+          -1.8776850513782166,
+          -1.1484622849826995,
+          1.1561989246043494,
+          -1.5885714376641085,
+          -0.7075167469163071,
+          -2.4379649465205206
+        ],
+        "bounds": [
+          -12.018476486206055,
+          -9.354805946350098,
+          -14.017925262451172,
+          12.101568222045898,
+          12.216008186340332,
+          7.321445941925049
+        ]
+      },
+      {
+        "minimum": [
+          -4.9383008343395876,
+          -2.227311262963416,
+          -3.6844173119411723
+        ],
+        "maximum": [
+          6.513940195208124,
+          4.108809226763625,
+          4.565656653564066
+        ],
+        "matrix": [
+          -2.9785470921670103,
+          -2.463781614128905,
+          1.1688956992896218,
+          -1.5732552511259743,
+          2.4125499298564206,
+          2.3462181837602927,
+          -1.134359299282177,
+          2.033785677820033,
+          -2.46075110827074,
+          1.5270625985413133,
+          -0.5758553033860738,
+          -2.7002710421026253
+        ],
+        "bounds": [
+          -35.405242919921875,
+          -20.28496551513672,
+          -24.759859085083008,
+          23.96009063720703,
+          31.568607330322266,
+          17.84775733947754
+        ]
+      },
+      {
+        "minimum": [
+          -0.3581834856233215,
+          -0.8475282843305791,
+          -3.1461331683596248
+        ],
+        "maximum": [
+          7.731365378874032,
+          1.882914282932493,
+          6.17195114687242
+        ],
+        "matrix": [
+          0.6082767827265068,
+          1.8294844432069048,
+          0.12290545998068136,
+          1.254133456198983,
+          -2.2799133621389345,
+          -1.876526789602652,
+          -1.984120024402345,
+          0.5254229141287272,
+          -1.2717775409026453,
+          -0.7817017533025936,
+          -0.10171376234731655,
+          0.24010604055958273
+        ],
+        "bounds": [
+          -0.9009580612182617,
+          -32.880653381347656,
+          -11.692120552062988,
+          10.160272598266602,
+          9.174766540527344,
+          1.6781558990478516
+        ]
+      },
+      {
+        "minimum": [
+          -3.4695053893607204,
+          -4.356943305385505,
+          -3.779516282720304
+        ],
+        "maximum": [
+          5.006234459783159,
+          1.6593107705901105,
+          1.602683817852279
+        ],
+        "matrix": [
+          -1.7245606092451766,
+          -0.149593709617458,
+          -2.7378871498826807,
+          -2.2018838026581795,
+          1.9533496205401484,
+          0.11531301743857814,
+          2.5176820327312397,
+          1.2615053089035317,
+          2.3135556243095916,
+          0.32109661109936516,
+          -2.1895372417593126,
+          -1.4360716330878578
+        ],
+        "bounds": [
+          -15.471630096435547,
+          -15.533684730529785,
+          -14.371101379394531,
+          14.781148910522461,
+          15.266819953918457,
+          18.954322814941406
+        ]
+      },
+      {
+        "minimum": [
+          -3.610409791668166,
+          -3.70341291740841,
+          -1.2181874529921681
+        ],
+        "maximum": [
+          2.4967041723329437,
+          3.5907566962749655,
+          5.347453826634105
+        ],
+        "matrix": [
+          1.5565902105886362,
+          2.5981117668806677,
+          -0.7098823202614888,
+          -2.356364225858189,
+          -1.6360311827692764,
+          -2.9726670136628117,
+          -1.0142160597528824,
+          2.4603072997929676,
+          -1.7179550335161535,
+          -0.12707134925721864,
+          2.568018063856898,
+          2.057477288096355
+        ],
+        "bounds": [
+          -21.394237518310547,
+          -17.721973419189453,
+          -5.816357612609863,
+          11.72393798828125,
+          20.611568450927734,
+          22.46295166015625
+        ]
+      },
+      {
+        "minimum": [
+          -4.912236104177911,
+          -4.945982393386687,
+          -4.074089303586922
+        ],
+        "maximum": [
+          7.922297749977654,
+          5.314231214704847,
+          0.5596230192688587
+        ],
+        "matrix": [
+          0.11113418711363199,
+          -1.2660051360205207,
+          -0.5546956130860874,
+          -0.3554679930495328,
+          -0.769261001796063,
+          -1.6868866981305888,
+          -2.1120499434792706,
+          2.4093463239743365,
+          0.6845523876515927,
+          1.0338717019973327,
+          0.28040566545048584,
+          -1.7275977242611529
+        ],
+        "bounds": [
+          -7.939650058746338,
+          -13.831425666809082,
+          -11.346189498901367,
+          9.046488761901855,
+          23.136131286621094,
+          9.346784591674805
+        ]
+      }
+    ],
+    "creation": [
+      {
+        "minimum": 1,
+        "radius": 1,
+        "rawScale": 0.9,
+        "collisionOnly": 1,
+        "hasDefault": true,
+        "accepted": false,
+        "clampedScale": null,
+        "cursorAdvanced": 64
+      },
+      {
+        "minimum": 1,
+        "radius": 1,
+        "rawScale": 1,
+        "collisionOnly": 1,
+        "hasDefault": true,
+        "accepted": true,
+        "clampedScale": 1.0,
+        "cursorAdvanced": 64
+      },
+      {
+        "minimum": 1,
+        "radius": 1,
+        "rawScale": 1.01,
+        "collisionOnly": 1,
+        "hasDefault": true,
+        "accepted": true,
+        "clampedScale": 1.0099999904632568,
+        "cursorAdvanced": 64
+      },
+      {
+        "minimum": 0.08,
+        "radius": 1,
+        "rawScale": 0.05,
+        "collisionOnly": 0,
+        "hasDefault": true,
+        "accepted": false,
+        "clampedScale": null,
+        "cursorAdvanced": 64
+      },
+      {
+        "minimum": 5.5,
+        "radius": 1,
+        "rawScale": 6,
+        "collisionOnly": 0,
+        "hasDefault": true,
+        "accepted": true,
+        "clampedScale": 5.0,
+        "cursorAdvanced": 64
+      },
+      {
+        "minimum": -1,
+        "radius": 1,
+        "rawScale": -0.5,
+        "collisionOnly": 0,
+        "hasDefault": true,
+        "accepted": true,
+        "clampedScale": 0.10000000149011612,
+        "cursorAdvanced": 64
+      },
+      {
+        "minimum": 0,
+        "radius": 0,
+        "rawScale": -1,
+        "collisionOnly": 0,
+        "hasDefault": true,
+        "accepted": true,
+        "clampedScale": 0.10000000149011612,
+        "cursorAdvanced": 64
+      },
+      {
+        "minimum": 1,
+        "radius": 1,
+        "rawScale": 1,
+        "collisionOnly": 0.5,
+        "hasDefault": false,
+        "accepted": false,
+        "clampedScale": null,
+        "cursorAdvanced": 64
+      },
+      {
+        "minimum": 1,
+        "radius": 1,
+        "rawScale": 1,
+        "collisionOnly": 0.5,
+        "hasDefault": true,
+        "accepted": true,
+        "clampedScale": 1.0,
+        "cursorAdvanced": 64
+      }
+    ]
+  }
 }

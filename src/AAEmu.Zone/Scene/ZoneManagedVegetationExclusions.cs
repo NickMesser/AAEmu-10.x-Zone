@@ -17,6 +17,15 @@ public sealed class ZoneManagedVegetationExclusions
     private readonly ZoneManagedVegetationExclusion[] _entries;
     public Vector3 EngineOrigin { get; }
     public IReadOnlyList<ZoneManagedVegetationExclusion> Entries { get; }
+    /// <summary>
+    /// Dedicated nonstreaming365704D0 sets Seamless160/164 from the resolved Zone origin before cell loading;
+    /// v32/3653EF00 converts those signed shifted cells to float meters. Runtime mutation/streaming is not admitted.
+    /// </summary>
+    public static ZoneManagedVegetationExclusions FreshStaticScene(ZoneWorldMapLayout layout)
+    {
+        ArgumentNullException.ThrowIfNull(layout);
+        return new(new Vector3(unchecked(layout.Origin.X << 10), unchecked(layout.Origin.Y << 10), 0), []);
+    }
     public ZoneManagedVegetationExclusions(Vector3 engineOrigin, IEnumerable<ZoneManagedVegetationExclusion> entries)
     {
         ArgumentNullException.ThrowIfNull(entries);

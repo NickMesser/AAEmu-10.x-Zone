@@ -16,10 +16,10 @@ public sealed record ZoneManagedNpcMovementAbilitySnapshot(ZoneActorMovementSpee
     public ZoneManagedNpcLookAbility? Look { get; init; }
     /// <summary>392ADC00: typed avoidanceRadius plus the resolved pathRadius, actor1620.</summary>
     public float AvoidanceRadius { get; init; }
-    //392A10F0/3100891C initialize AIParams177/178 to0.392ADC00 does not
-    //overwrite either byte; no later parameter-mutation producer is admitted here.
-    public bool CrowdFlag177 => false;
-    public bool CrowdFlag178 => false;
+    //3927FEDC..3927FF0D runs after392ADC00 and copies the actual unit model's
+    //descriptor144 bits2/8 into AIParams177/178 before RegisterAI.
+    public bool CrowdFlag177 { get; init; }
+    public bool CrowdFlag178 { get; init; }
     //392ADC00 installs these masks from the actual registered creature flags;
     //the pathType script read is not assigned to this field in this client.
     public ulong NavigationCapabilities => FlyingCreature ? 184UL : UnderwaterCreature ? 172UL : 134UL;
@@ -106,6 +106,8 @@ public sealed class ZoneManagedNpcMovementAbility : IDisposable
         {
             Look = _models is null ? null : ReadLook(binding, ability),
             AvoidanceRadius = Number(ability.Get("avoidanceRadius"), 0) + pathRadius,
+            CrowdFlag177 = model?.Big ?? false,
+            CrowdFlag178 = model?.ForceNavigateAroundObject ?? false,
         };
         binding.RequireCurrent(); _actors.Require(binding.Actor);
         var owner = new ZoneManagedNpcMovementAbilityLease(this, binding, snapshot);

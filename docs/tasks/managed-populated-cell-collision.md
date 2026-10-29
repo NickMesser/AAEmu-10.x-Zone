@@ -1,9 +1,8 @@
 # Managed collision coverage for populated cells
 
-Priority: P0 for the original zone 129 NPC far-return control. Status: source audit and
-original-content census complete; the world catalog, bounded direct-default vegetation publisher
-and particle graph reader are implemented. Production cell integration and physical-coverage
-acceptance remain open.
+Priority: P0 for the original zone 129 NPC far-return control. Status: target-cell vegetation,
+dependency-backed object/entity certificates and live production coverage are implemented.
+Whole-world query admission and the original far-return acceptance remain open.
 This task extends [managed NPC navigation](../managed-npc-navigation.md) and CE-06/CE-08 in
 [CryEngine removal](cryengine-removal.md).
 
@@ -15,26 +14,31 @@ original scripts, goal parameters, 7 m position-check threshold, single physical
 pose publisher. A forced timeout, direct teleport in place of Approach, rewritten Lua or an
 empty synthetic scene does not satisfy this task.
 
-`ZoneManagedNpcNavigationQueries.CheckCollisionCoverage` currently refuses a cell containing
-vegetation, XML entities or non-brush/non-decal object rows. This is deliberate: complete brush
-collision does not account for the other authored families. Replace that refusal only when a
-concrete current cell owner has classified every relevant row for the requested collision mask.
+`ZoneManagedNpcNavigationQueries.CheckCollisionCoverage` now uses the concrete
+[cell coverage owner](../managed-cell-collision-coverage.md). It classifies the initial cell for
+both character and ray categories, retaining exact inputs, dependency proofs and live handles.
+Native physical queries are global across loaded cells: a complete local inventory cannot
+exclude an unknown contributor from another cell. Those remaining contributors still refuse
+global clearance. Admit them through their real owners or prove selected-class/current physical
+influence exclusion; do not replace the global query with an authored-cell filter.
 A decoded model, render mesh, authored bounding box, missing native body or successful ray miss
 does not establish physical clearance.
 
-The first implementation now provides [default vegetation proxies](../managed-vegetation-default-proxies.md)
-and [particle content certificates](../managed-particle-collision-content.md). The tested core reads
-all 4,145 world groups and 7,127 target-cell vegetation rows, publishes four group335 proxies with
-real character/ray/nondegenerate-capsule witnesses and retires both inventories to 0. The particle
-reader validates the nine original graphs' 28 nodes. These are bounded component owners, with
-1,019 passing tests and no new analyzer diagnostics; the production Host/navigation coverage
-composition is unchanged. The original 4 m far-return acceptance above is still open.
+The [vegetation owner](../managed-vegetation-default-proxies.md) now reads all 4,145 world groups
+and accounts for all 7,127 target-cell vegetation rows under the actual configured CVars:
+`e_vegetation=1`, quality 0, minimum size 1, collision-only 1, foliage 0. It publishes 385 placements with
+396 character and 396 ray proxies; the other 6,742 rows take source configuration skips. Every
+published proxy has a real source-triangle ray and nondegenerate-capsule witness. The target's
+74 XML rows and 107 roads/decals also have runtime dependency-backed certificates. Both query
+indices retire completely. The original 4 m far-return acceptance remains open because other
+loaded cells retain unowned possible world-query contributors.
 
 The smallest useful first profile is engine cell (0, 0), authored `main_world/cells/009_014`.
 Recorded 8173 starts at local `(775.96875,940.6719,230.23447)`; its existing 4 m far-return stimulus
-stays inside this cell. Other populated cells may continue to return explicit unsupported
-coverage until their own physical families are admitted. This is a per-cell collision milestone,
-not whole-scene collision or full NPC gameplay parity.
+stays inside this cell. Other populated cells retain explicit unsupported coverage until their
+physical families are admitted, and currently prevent this global physical query from being
+certified. Local publication is a completed milestone; it is not whole-scene collision or full
+NPC gameplay parity.
 
 ## Original-content census
 
@@ -87,9 +91,11 @@ Paths in this table are relative to `game/objects/env/`.
 | 1466 | 1 | No | `05_nature/08_cry_source/trees/thin_leave_tree/thin_leave_tree_big_grey_green_240_deg.cgf` |
 | 2972 | 11 | Yes | `01_nuia/04_gw/gw2_tree_a02.cgf` |
 
-Group 2972 has the authored material override `objects/env/01_nuia/04_gw/gw2_tree_a01`.
-The other 17 groups have empty overrides. Resolve actual CGF/material slots through the existing
-material graph; do not derive material names from model basenames.
+Group 2972 has the authored render material override `objects/env/01_nuia/04_gw/gw2_tree_a01`.
+The other 17 groups have empty overrides. Original 30121740 loads physical CGFs with a null
+material override;30147630 stores the group material separately for rendering. Query materials
+therefore resolve from the actual intrinsic StatObj/node material graph. A native poisoned
+override-pointer control verifies that physicalization does not read this render-only pointer.
 
 ## Native vegetation contract to implement
 
@@ -103,7 +109,7 @@ material graph; do not derive material names from model basenames.
 - [x] Port the relevant `30107F70` XML reads and `30108AD0` group publication semantics.
   The latter publishes through engine virtual 1176 into the ID-indexed StatInstGroup catalog.
   Preserve replacement/source-order behavior rather than relying on dictionary iteration.
-- [ ] Preserve `302221D0` signed group-index validation, native quality/model gates, configured
+- [x] Preserve `302221D0` signed group-index validation, native quality/model gates, configured
   vegetation/minimum-size/collision-only policy and scale clamp `[0.1,5]`. Recover and declare
   the supported configuration explicitly. An on-demand or skipped allocation is not evidence
   that physical geometry cannot affect a query.
@@ -140,7 +146,7 @@ and ray bit`0x8000` separate from the world entity-selection mask used by naviga
 | One available root special resource | `0x00300000`, optionally OR`0x4000` and/or`0x2000` | Contains neither |
 | Independent child 4097 in `300442F0` | `0x00008000` | Ray only |
 
-- [ ] Preserve the distinction between the low 32-bit flags and adjacent collider flags in the
+- [x] Preserve the distinction between the low 32-bit flags and adjacent collider flags in the
   native geometry parameters. For example, the default initialization is the 64-bit word
   `0x0000000104018FFF`; do not treat its upper word as another collision category.
 - [ ] Port the physicalizer's actual root/default list and independent child call. Its final
@@ -152,15 +158,15 @@ and ray bit`0x8000` separate from the world entity-selection mask used by naviga
   a selected `colltype_player` child uses`0x2`. Child model flag`468 & 0x400` removes player,
   flag`472 & 0x100` adds`0x800000`, and the native signed-flag/CVar branch can select`0x40`.
   These must be recovered/admitted or explicitly refused, not replaced by one universal mask.
-- [ ] Do not apply brush picking policy to vegetation root special slots. Conversely, do not
+- [x] Do not apply brush picking policy to vegetation root special slots. Conversely, do not
   declare all vegetation 4097/4098 nonblocking: independent child 4097 is a ray target.
   The 6,721 target-cell special-only placements have no independently published child physics;
   other cells contain such children, including noncompound resources.
-- [ ] Reuse `ZoneCgfContent`, `ZoneCgfPhysicsGeometry`, `ZoneTerrainMaterialResolver` and shared
+- [x] Reuse `ZoneCgfContent`, `ZoneCgfPhysicsGeometry`, `ZoneTerrainMaterialResolver` and shared
   `ZoneManagedTriangleMesh`/primitive instances. Extract reusable resource/material construction
   from `ZoneManagedSceneCollision` if needed, while keeping brush and vegetation publication
   policies separate. Use serialized proxies, never render triangles or proxy-shaped AABBs.
-- [ ] Preserve local/default material-slot semantics, group material overrides, helper gates,
+- [x] Preserve local/default material-slot semantics, group material overrides, helper gates,
   native root-versus-child transforms and physical entity union bounds. Decode or refuse any
   required foliage/breakability/physicalization branch whose flags remain unowned.
 
@@ -178,7 +184,7 @@ policy must be explicit and must not drop geometry that the native on-demand pat
 - [x] Unloading or replacing a cell invalidates coverage before exposing the replacement,
   removes all its player/ray instances and prevents stale leases from removing new handles.
   Shared mesh/BVH resources may survive only while their owning scene/cache remains valid.
-- [ ] Report authored rows, classified nonblocking rows, admitted parts and failed placements
+- [x] Report authored rows, classified nonblocking rows, admitted parts and failed placements
   separately. Preserve group/model/source-file/sector/row provenance. Resource-level failures
   must not be counted repeatedly as unrelated successful coverage.
 
@@ -192,22 +198,22 @@ allowlist or a checked-in success count is insufficient.
 The 74 XML entities are 33 ParticleEffect,15 RandomSoundVolume,13 Light,6 AmbientVolume,
 5 AreaShape and 2 ReverbVolume. All have empty Geometry/Archetype and no FlowGraph.
 
-- [ ] Add a bounded entity-collision classifier, for example
+- [x] Add a bounded entity-collision classifier, for example
   `Scene/ZoneManagedCellEntityCollision.cs`, backed by `ZoneCellEntityContent` and the original
   `game/entities/*.ent` class descriptions. Native registry `32094D70`/`32094E80` resolves these
   descriptions; load manager `32097000` owns class/quality/parent/proxy admission. Validate
   class/script identity and all supported row children. Unexpected geometry, archetypes,
   custom creators, FlowGraphs, physical callbacks or child spawning remain named refusals.
-- [ ] Certify the exact original sound profiles from
+- [x] Certify the exact original sound profiles from
   `Scripts/Entities/Sound/{AmbientVolume,RandomSoundVolume,ReverbVolume}.lua`.
   Their server initialization owns NetPresent/sound/area flags and contains no geometry load or
   physicalization. Preserve the actual resource dependency checks rather than inventing silent
   script execution success.
-- [ ] Certify target Light rows through original `Scripts/Entities/Lights/Light.lua` and
+- [x] Certify target Light rows through original `Scripts/Entities/Lights/Light.lua` and
   binding `3204B2D0` -> entity virtual 848/`3200F430`. This creates a light/render slot, not a
   solid physical proxy. Reject unsupported FlowGraphs: two Light rows elsewhere in zone 129
   have them even though none of the target 13 does.
-- [ ] Certify the scriptless/invisible `game/entities/areashape.ent` ordinary polygon profile.
+- [x] Certify the scriptless/invisible `game/entities/areashape.ent` ordinary polygon profile.
   `CAreaProxy` constructor `3208C1E0` creates a CAreaManager record; `3208CD80` loads the
   Points/Height branch into shape-type 0. This is not `CPhysicalProxy::PhysicalizeArea`.
   Do not use that conclusion for its gravity/Bezier or other unported branches.
@@ -223,8 +229,9 @@ The target 33 rows reference nine original effects across three libraries. Their
 contain no `ePhysicsType`, legacy `PhysicsType`, collision or Geometry fields. Native parameter
 constructor `30086910` initializes byte`+976` to 0; metadata `3007B0B0` maps `ePhysicsType` there.
 Matching PE enum table `302D5AF0` maps 0=`ParticlePhysics_None`,1=`SimpleCollision`,
-2=`SimplePhysics`,3=`RigidBody`. The version20 content reader now validates the complete selected
-default/no-force graph. Entity class/row certification and complete physicalizer acceptance remain open.
+2=`SimplePhysics`,3=`RigidBody`. The version20 content reader validates the complete selected
+default/no-force graph, and the target entity-row certificates consume that proof. Additional
+parameter and physical-descendant families elsewhere in the scene remain refused.
 
 | Original particle library | Referenced effect names after library prefix |
 | --- | --- |
@@ -236,7 +243,7 @@ default/no-force graph. Entity class/row certification and complete physicalizer
   effect name, preserve library version/default semantics and inspect every nested effect.
   Refuse unresolved names, unowned inheritance/default sources or possible physical descendants.
   Do not classify effects from the absence of a top-level geometry field alone.
-- [ ] Test a nested rigid-body effect and a missing/default-inheriting effect as refusals,
+- [x] Test a nested rigid-body effect and a missing/default-inheriting effect as refusals,
   alongside the original nine nonphysical candidates. Keep an explicit reason per entity row.
 
 ### Roads require the normal load/compile lifecycle
@@ -252,11 +259,11 @@ call/jump or vtable reference to it, and it is not invoked by the authored facto
 This supports a bounded normal-load road profile; it does not establish that every possible
 road state or external editor/game call is nonphysical.
 
-- [ ] Classify the target 10 roads only under the verified normal authored load/compile lifecycle.
+- [x] Classify the target 10 roads only under the verified normal authored load/compile lifecycle.
   Preserve source parameters/material dependencies and refuse any admitted owner that can
   install a physical road body. Add an offline factory/compiler call-path control before marking
   this certificate complete.
-- [ ] Keep render compilation readiness separate. The existing
+- [x] Keep render compilation readiness separate. The existing
   `ZoneNativeStaticObjectServices.Roads.cs` comparison owner intentionally stops in the queued
   phase; that implementation is not evidence of completed road compilation or collision parity.
 
@@ -271,38 +278,38 @@ road state or external editor/game call is nonphysical.
 | Navigation | `ZoneManagedNpcNavigationQueries` | Consult real coverage for every touched cell and requested mask |
 | Verification | New focused content/collision/coverage tests and original-resource probe | Source controls, real collision hits and unchanged 8173 far return |
 
-- [ ] Define a concrete copied coverage result containing engine cell/generation, query mask,
+- [x] Define a concrete copied coverage result containing engine cell/generation, query mask,
   classified/admitted/unsupported counts and original dependency diagnostics. Do not expose a
   caller-provided permissive boolean as the authority.
-- [ ] Require exactly one current cell inventory and complete required input reads. Missing,
+- [x] Require exactly one current cell inventory and complete required input reads. Missing,
   malformed, failed or retired input is not equivalent to an authored absent file.
-- [ ] Replace the populated-cell guard only for complete relevant coverage. A clear capsule
+- [x] Replace the populated-cell guard only for complete relevant coverage. A clear capsule
   sweep and a clear navigation ray may require different admitted part sets.
-- [ ] Preserve terrain support, holes, world-to-engine mapping, brush completeness and existing
+- [x] Preserve terrain support, holes, world-to-engine mapping, brush completeness and existing
   navigation work/support limits. Eager vegetation publication is not permission to change path
   search, support sampling or controller motion policy.
-- [ ] Keep general `FullSceneCollisionReady` and gameplay readiness separate. One supported cell
+- [x] Keep general `FullSceneCollisionReady` and gameplay readiness separate. One supported cell
   must not clear failures in another cell or enable wet/dynamic/animated profiles globally.
 
 ## Tests and acceptance
 
-- [ ] Offline native controls record actual `AddGeometry` IDs, flags and transforms for direct
+- [x] Offline native controls record actual `AddGeometry` IDs, flags and transforms for direct
   default vegetation, root-special-only vegetation and compound/helper child cases. Read or
   emulate matching PE instructions without loading original DLLs. Distinguish child 4097 ray
   eligibility from the root special masks and pin source-specific child default masks.
-- [ ] Exact transform controls distinguish all three packed angle bytes, scale clamp endpoints,
+- [x] Exact transform controls distinguish all three packed angle bytes, scale clamp endpoints,
   both placement coordinate systems and nonzero engine-cell translations. Refuse unported
   terrain alignment rather than borrowing a render orientation or bounding box.
-- [ ] Material controls cover group 2972's override, local/default triangle slots and unresolved
+- [x] Material controls cover group 2972's override, local/default triangle slots and unresolved
   material graphs. Positive original tree rays/capsule contacts must report actual physical
   normals/materials; a root-only special foliage proxy must remain absent from those masks.
-- [ ] Failure/lifetime controls cover missing group/model, unsupported physical chunk,
+- [x] Failure/lifetime controls cover missing group/model, unsupported physical chunk,
   independent child proxy, partial placement rollback, unload/reload, stale generation and
   removal of both character/ray instances. Reused resources must not duplicate vertex arrays.
-- [ ] Certificate controls use actual class descriptions/scripts and nested particle parameters.
+- [x] Certificate controls use actual class descriptions/scripts and nested particle parameters.
   Add explicit Geometry, FlowGraph, physical descendant, class mismatch and unsupported area
   variants; each must prevent coverage instead of being dropped.
-- [ ] An original 009_014 regression accounts for all 7,127 vegetation,74 entities and 10 roads,
+- [x] An original 009_014 regression accounts for all 7,127 vegetation,74 entities and 10 roads,
   independently of its 675 brushes/97 decals. Assert final admitted/nonblocking/failure totals
   derived by the owners; do not hardcode 385 as an exact final collider count.
 - [ ] Unchanged original 8173 enters original `return_state` after the same 4 m displacement inside
@@ -311,11 +318,32 @@ road state or external editor/game call is nonphysical.
 - [ ] Observe return-to-idle completion and destructor restoration through the actual original
   callbacks. Verify body/model/Unit/spatial/AI/outgoing coherence, sole backend Step and sole
   Unit pose writer. Do not use timeout or `NpcTeleportTo` as a replacement for movement.
-- [ ] Retirement/re-entry cancels old route/controller work, removes cell geometry and prevents
+- [x] Retirement/re-entry cancels old route/controller work, removes cell geometry and prevents
   pending callbacks or commands from publishing a retired actor or cell generation.
-- [ ] Run focused tests, the required solution checks and the original-resource control. Inspect
+- [x] Run focused tests, the required solution checks and the original-resource control. Inspect
   loaded modules in the real managed host: zero CryEngine/native-Lua modules. Record scope,
   unresolved families and original-content provenance with the result.
+
+## Current integrated boundary
+
+The local cell proof is complete for `0x2|0x8000`. The global query still refuses before a
+false no-path or route publication: other loaded cells contain independent vegetation helpers,
+compound special/foliage branches, terrain-aligned resources, unowned decal/material profiles,
+particle descendants, physical/animated entities and non-Entity Object records. All of them
+remain visible in the copied source inventory and diagnostics.
+
+The root/default publication plan is implemented for the supported resource profiles. The two
+remaining child-publication tasks above cover generic independent helpers, compound selected
+special aggregation, active compound foliage localization and mutation/joint propagation.
+The configured `302221D0` minimum-size gate uses the actual loaded CStatObj radius: raw
+Mesh0800 header bounds, native ordinary-node union/transform and half-diagonal float order.
+The gate multiplies the raw placement scale before the accepted scale is clamped. Those bounds
+are a loader gate input, never replacement collision geometry.
+
+Bodyless cell/brush retirement and exact owned-handle loss invalidate cached navigation before
+another physical step. Water must match exact source-cell order and resolved ocean bits; loss
+of any source cell invalidates global water completeness rather than producing a drier ceiling.
+General scene readiness and NPC gameplay readiness remain false.
 
 ## Other-cell work that remains open
 
@@ -331,11 +359,12 @@ resource census, not a collision coverage result.
 | GeomEntity | 3 | Class flag 2/nonempty Geometry automatic physicalization; `32097000` -> `32011FC0` selects static/rigid behavior |
 | BasicEntity airport elevator | 1 | Actual `bPhysicalize=1`, `bRigidBody=1`, `bGimmick=1`; never classify as cosmetic |
 | Boid flock entities | 31 | 14 Chickens,12 Birds,5 Fish; `CreateFlock` `320BA9F0` can create child entities/proxies; no dedicated skip has been established |
-| Water rows | 127 | Existing `ZoneManagedWaterQueries` owns 19 actual areas; verify PE_AREA/query-mask exclusion before changing collision coverage |
+| Water rows | 127 | Class 5/bit `0x20` upper bounds now exclude the navigation mask `0x107`; actual water queries/19 areas remain a separate owner |
 | Other vegetation | 111,569 placements | Actual default/special/helper publication, material/foliage flags and any terrain alignment |
-| SoundEventSpot | 34 | Exact original pure-sound profile and dependency certificate |
+| SoundEventSpot | 34 | Implemented exact ordinary sound profile and dependency certificate; arbitrary script execution remains separate |
 | Light FlowGraphs | 2 | Resolve actual effects before any no-solid certificate |
-| FogVolume | 1 | Exact render-profile certificate; no class-name-only omission |
+| FogVolume | 1 | Implemented exact type 7 render profile, full-null physical accessor and dependency certificate |
+| Non-Entity Object children | 27 | 11 OccluderArea, 7 Portal, 6 VisArea and 3 VoxelObject; retain every row and recover each physical/proxy producer |
 
 BasicEntity/AnimObject use original `BasicEntity.lua` and
 `EntityCommon.PhysicalizeRigid`; animated shapes need their actual physical/frame consumers.
@@ -343,7 +372,54 @@ GeomEntity can reuse authored CGF proxies only after its entity/class/material p
 Do not substitute render bounds for any of these proxies. Keep general XML scripting, FlowGraph,
 child spawning, moving bodies and area effects as explicit remaining capabilities.
 
+The next source-backed increments are:
+
+1. Complete eligible independent vegetation helpers in `300442F0`, selected-special aggregation,
+   active compound foliage localization and the real `300CD590` alignment producer. Preserve
+   the actual per-part flags, material slots, transforms and mutation exclusions.
+2. Own the three actual GeomEntity registrations through `32097000`/`32011FC0`, class flags,
+   geometry resources and selected static/rigid behavior. AnimObject, elevator, voxel and flock
+   physical descendants require their separate animation/dynamic/mutation lifetimes.
+3. Recover the additional particle parameter/resource families. Current refusals include explicit
+   Geometry descendants; ordinary visual parameters cannot justify dropping those descendants.
+4. Classify all27 non-Entity Object children, other decal projection/material profiles, parented
+   lights, area variants and FlowGraphs. Retain exact row/dependency proofs and global scope.
+5. Integrate the [fresh-player AI owner](managed-player-ai-grid.md) with shared scene identities
+   and the actual player controller/publication boundary, then implement positive crowd solving.
+   The external player stage alone does not make a live managed player a covered crowd actor.
+
 ## Evidence and source locations
+
+The integrated batch passes 1,159 tests with 0 failures/skips. The final normal solution build
+has 0 errors and no new analyzer diagnostics. Build4 emits 34 existing warnings incrementally;
+the last test-project analyzer pass and final production pass together match the prior diagnostic
+set. Exact compiled core SHA-256:
+`0CB8DA14D82D81A9F099AF0968A11CB2B7734D9075F77038A9232DBCBEA2763A`.
+
+Accepted evidence under `D:/aaemu-runtime/`:
+
+- `cell-coverage-final-{build4,tests4}.log`: normal solution build and full suite.
+- `research/cell-coverage-final-scene.json`: actual 6-cell publication; target mask 32770,
+  no target diagnostics; character/ray inventories 10,562/10,824 retire to 0/0. Other cells
+  retain 11,545 unsupported vegetation rows and explicit entity/object refusals.
+- `research/managed-vegetation-extension-final-probe/final-evidence-summary.json`: exact-core
+  configured target publication, 396 real triangle/ray/capsule witnesses and original input hashes.
+- `research/collision-final-census/collision-final-results.json`: all 809 XML children accounted
+  for (782 entities plus 27 other Object rows), 557 certified/252 refused; 123/123 roads,
+  723/827 decals, 127/127 water class bounds. The 104 decal refusals remain explicit.
+- `research/cell-coverage-npc-return-{near,far}-control.json`: five original constructors and
+  corrections, 150-frame near hold/idle controls, real idle skill request and 22 owner categories
+  retiring to 0. The unchanged 4 m far return retires 8173 on the global cell(2,0) helper-physics
+  refusal; it is not an accepted route or completion.
+- `cell-coverage-ready-entry-verification.json` and
+  `research/cell-coverage-ready-entry-wire-verification.json`: 116.25 s real TCP replay, 81 modules,
+  zero engine/native-Lua modules, player 387 grounded at the accepted pose, one ZoneLoaded and
+  five complete movement rows (two player/three NPC). Both player payloads match the previous
+  accepted capture after normalizing only Time. No actor refusals; replay exit 0/zone exit 3.
+- `research/cell-coverage-batch-evidence.json`: combined source-commit/artifact-hash record.
+
+These probes execute the same core as the final test suite and server. No staged reader assembly
+is substituted. Earlier `parity-artifacts` and four-proxy component evidence remain unchanged.
 
 Original client: `ArcheAge Returns 10.0.2.13 - 8yx - r575 - 2026-06-18`.
 Required inputs are `game/worlds/main_world/{world.xml,vegetation.xml}`,

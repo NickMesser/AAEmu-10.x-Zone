@@ -126,8 +126,12 @@ public sealed class ManagedWaterQueriesTests
         await Assert.That(water.Report.Complete).IsTrue();
         await Assert.That(water.GetWaterLevel(new(1030, 20, 100), 2)).IsEqualTo(100f);
         water.RetireCell(new(0, 0));
-        await Assert.That(water.GetWaterLevel(new(1030, 20, 100), 2)).IsEqualTo(50f);
-        await Assert.That(water.MaximumPotentialWaterLevel).IsEqualTo(50f);
+        //The removed cell owned a contour that crossed into its live neighbor.
+        //A newly requested global dry certificate cannot ignore that lost source.
+        await Assert.That(water.Report.Complete).IsFalse();
+        await Assert.That(() => water.GetWaterLevel(new(1030, 20, 100), 2)).Throws<NotSupportedException>();
+        await Assert.That(() => water.MaximumPotentialWaterLevel).Throws<NotSupportedException>();
+        await Assert.That(() => water.MaximumPotentialWaterLevelAt(new(1030, 20, 100))).Throws<NotSupportedException>();
         await Assert.That(() => water.GetWaterLevel(new(1010, 20, 100), 2)).Throws<NotSupportedException>();
         water.Dispose(); await Assert.That(() => water.MaximumPotentialWaterLevel).Throws<ObjectDisposedException>();
     }

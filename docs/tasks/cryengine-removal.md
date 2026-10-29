@@ -36,13 +36,26 @@ They reuse existing content readers, unit/NPC registries, World protocol,
 scene retirement, owned integration and movement publication. Native ABI adapters remain for
 comparison; managed scene startup never constructs them.
 
-Additional bounded [vegetation publication](../managed-vegetation-default-proxies.md) and
-[particle content](../managed-particle-collision-content.md) owners now pass the combined suite of
-1,019 tests. Original-resource controls publish four tree proxies and validate nine particle graphs.
-This component batch has 0 build errors and no new analyzer diagnostics. It does not change
-production Host/navigation coverage: special/foliage/compound vegetation, entity/road certificates,
-player AI ownership and complete populated-cell admission remain open. The prior accepted
-world-entry application/evidence remains the separate 8fd2eb4 batch described below.
+The earlier bounded vegetation/particle component batch passed 1,019 tests and published four
+tree proxies. Production now also composes [live cell collision evidence](../managed-cell-collision-coverage.md)
+from the actual configured sources. Original cell 009_014 accounts for all 7,127 vegetation rows,
+74 XML entities and 107 roads/decals, with 396 character and 396 ray vegetation proxies. Entity
+certificates also cover all 34 SoundEventSpot rows and the original FogVolume; 127 water rows have
+typed class bounds excluding navigation mask `0x107`. Exact dependencies, live handles and
+bodyless retirement retain their own publication checks.
+
+Native physical queries are global across loaded cells. Remaining vegetation helpers/alignment,
+animated or physical entities, particle descendants and unowned object/material profiles in other
+cells still refuse global route clearance. This local milestone does not complete the original
+far-return acceptance, player AI/crowd integration or full scene/gameplay parity. Historical
+8fd2eb4 world-entry evidence remains separately identified below.
+
+This integrated batch passes 1,159 tests and the normal solution build with 0 errors/no new analyzer
+diagnostics. Its exact-core 116.25 second World replay reaches the accepted grounded player pose,
+samples 81 modules/zero engine-native-Lua modules, and preserves both player movement payloads
+after timestamp normalization. Original far return now refuses the global cell(2,0) helper-physics
+gap. Detailed counts, artifact hashes and remaining tasks are in
+[populated-cell collision](managed-populated-cell-collision.md#evidence-and-source-locations).
 
 ## Implemented first milestone
 
@@ -82,7 +95,7 @@ requests/acknowledgments. Recorded Lua constructor failures retire before subseq
 preparation or script effects. Initial construction passes for all five sampled original NPC
 profiles; their idle group/position-check dependencies remain explicit failures under CE-08.
 
-A fresh recorded entry with this composition admits player387 grounded at the accepted local
+A fresh recorded entry with this composition admits player 387 grounded at the accepted local
 position, performs NPC construction and retires cleanly. The post-player inventory contains
 80 modules and zero CryEngine/native-Lua modules. All three player movement payloads match
 the previous accepted capture after normalizing only their server timestamps. The control takes
@@ -183,7 +196,7 @@ coverage. Both scene checks accept `--scene-probes rays.json --scene-probe-outpu
 Each input ray has `name`, three-component `origin` and three-component `displacement` arrays in
 zone-local meters. The native comparison uses `--check-scene` and the native configuration.
 
-Remaining: vegetation and entity collision owners, visibility-imported geometry, water/procedural
+Remaining: unsupported vegetation/entity physical profiles, visibility-imported geometry, dynamic water/procedural
 owners and complete scene-instance admission. Exact nominal tangencies remain sensitive to native
 float transforms and intersection rounding; keep those controls visible rather than declaring
 bit-exact conformance. The current catalog's `BrushCoverageComplete` reports decoded/admitted brush
@@ -490,10 +503,11 @@ Next admission sequence from the original-resource control:
 4. Extend the admitted dry static-support CActor metadata/NPC replication profile to wet/dynamic
    motion and optional fields. Continue physical routes, perception, hostility, leash and combat.
 
-The next concrete collision work is split into38 detailed tasks in
-[managed populated-cell collision](managed-populated-cell-collision.md), including all18 default-bearing
-vegetation resources for original8173's cell009_014. It retains the native root/child character-versus-ray
-distinction and data-backed entity/particle/road certificates; render bounds do not certify clearance.
+The current collision work and remaining acceptance are tracked in
+[managed populated-cell collision](managed-populated-cell-collision.md). Target-cell publication
+is implemented, with the native root/child character-versus-ray distinction and data-backed
+entity/particle/road certificates. Global clearance still requires the remaining contributors in
+other loaded cells; render bounds and source-cell distance cannot exclude them.
 
 Measure cold-construction cost and admission fairness under continuous World traffic. The
 current work-count/ingress policy is explicit replacement scheduling, not native throughput parity.
@@ -511,7 +525,7 @@ now implement them; remaining full gameplay dependencies stay open):
 - Consume actual `AI.idlePos`, `talkPos` and `spawnPos` in their context-specific 3D checks.
   The apparent movement gate is the group record at AIObject+212, not locomotion. Outside-region
   spawn recovery is suppressed by actual Puppet alertness2, not an attention-target type.
-- Port the full relocation producer3925A7C0→39269040: physical Action4 reset, Action10 payload,
+- Port the full relocation producer3925A7C0â†’39269040: physical Action4 reset, Action10 payload,
   actual model/entity transform, Unit/spatial publication and generation invalidation. A raw
   AI-position assignment or the initial body teleport omits required effects.
 - Own the per-NPC replication sampler reset and required default-posture restoration. The
@@ -570,7 +584,7 @@ Detailed contracts and evidence scope are in [position/replication](../managed-n
 Entity scheduling and the corrected fall gate are documented in
 [entity activity](../managed-npc-entity-activity.md) and [fall entry](../managed-npc-fall-entry.md).
 
-Previous published position batch: **763/763 tests pass**, no skips; the full analyzer build has0 errors
+Previous published position batch: **763/763 tests pass**, no skips; the full analyzer build has 0 errors
 and64 existing warnings. The final assembly SHA256 is
 `4484081A1F3716F5FBDB7F8D19C4B0A8EBC6A6C34C11B6803B8D56EDC21B7B37`.
 The fresh stationary player entry completes in119.657seconds with80 sampled modules and zero
@@ -619,7 +633,7 @@ original-instruction controls cover67 CanMove,52 position-predicate and105 statu
 An independent review found no defect in the admitted effect-journal/lifetime path.
 
 The final stationary entry completes in117.000seconds with80 sampled modules, zero forbidden
-engine/native-Lua modules and the same grounded player387 pose. Its17 movement batches contain26
+engine/native-Lua modules and the same grounded player 387 pose. Its17 movement batches contain26
 complete rows (2 player/24 NPC), one ZoneLoaded, no debug location row and no actor refusal. Both
 player payloads match the accepted capture after normalizing only Time; sample counts and elapsed
 time do not establish cadence or throughput equivalence. EOF retirement is ordered, listener/zone
@@ -641,9 +655,10 @@ signal with actual component-owned leases and no teleport/correction. Five origi
 constructors and corrections still pass;8173 retains150 hold/idle-hold frames and StartSkill40917.
 All22 owner categories retire and no engine module loads.
 
-The same final application also executes the unchanged original4m far-return stimulus.
-It now stops at the truthful vegetation/entity collision classification refusal in cell(0,0),
-authored009_014. This is the next physical coverage task, not an accepted original return route.
+That historical application also executed the unchanged original 4 m far-return stimulus and
+stopped at the vegetation/entity classification refusal in cell(0,0), authored 009_014.
+The current cell publication closes that local gap; other loaded cells still prevent global
+clearance. The original return route remains unaccepted.
 Actual physical players also require their missing source AI/type100 owner before empty-crowd
 admission; current body distance cannot substitute for an independently cached grid position.
 

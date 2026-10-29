@@ -108,6 +108,8 @@ public sealed class ManagedNpcNavigationTests
     [Arguments(1)]
     [Arguments(2)]
     [Arguments(3)]
+    [Arguments(4)]
+    [Arguments(5)]
     public async Task RetiredPhysicalCoverageStopsACachedMovingRequestBeforeAnotherStep(int family)
     {
         using var fixture = new Fixture();
@@ -171,6 +173,8 @@ public sealed class ManagedNpcNavigationTests
     private sealed class Fixture : IDisposable
     {
         private readonly ZoneManagedSceneCollision _collision;
+        private readonly ZoneManagedCellCollisionCoverage _coverage;
+        private readonly ZoneManagedSceneCellLoadReport _cell;
         private readonly ZoneManagedWaterQueries _water;
         private readonly ZoneManagedNpcPuppetOutput _output;
         private readonly ZoneManagedActorGrids _grids;
@@ -192,12 +196,20 @@ public sealed class ManagedNpcNavigationTests
             var entities = withUnknownEntity ? ZoneCellEntityContent.Read("<Root><Objects><Entity EntityClass='UnknownCollisionOwner'/></Objects></Root>") : null;
             var cell = new ZoneManagedSceneCellLoadReport(placement, new(ZoneTerrainCellLoadStatus.Loaded),
                 new(null, null, entities, null, diagnostics));
-            _collision = new(scene.Assets, ZoneTerrainMaterialResolver.Load(scene.Assets), [cell]);
+            _cell = cell;
+            var materials = ZoneTerrainMaterialResolver.Load(scene.Assets);
+            var report = new ZoneManagedSceneLoadReport([cell], true, 1, 0, []);
+            _collision = new(scene.Assets, materials, [cell]);
+            _coverage = new(scene.Layout, scene.Assets, report, _collision, materials, ZoneEngineCVars.Empty);
             ZoneManagedNpcNavigation? navigationOwner = null;
             ZoneManagedNpcPuppetOutput? outputOwner = null;
             Runtime = new(withMovementRequests: true, withMovementAbility: true, movementNormalSpeed: 6,
                 movementStaticGeometry: _collision.Geometry, navigationFactory: () => navigationOwner!,
                 puppetOutputFactory: () => outputOwner!);
+            //Navigation binds the actual scene ocean producer, independently of sample loading.
+            var heights = Runtime.Backend!.Geometry.HeightField;
+            heights.UnloadCell(1, 1); heights.InitializeNodeTree(0);
+            heights.LoadCell(1, 1, TerrainHeightFieldTests.CreateCell(10, 0));
             ManagedNpcMovementAbilityTests.InstallTables(Runtime);
             using (var result = Runtime.Runtime.Lua.Execute("npc.ActorTemplate.AIMovementAbility.usePredictiveFollowing=1; npc.ActorTemplate.AIMovementAbility.pathRegenIntervalDuringTrace=4")) { }
             var tiles = new NavigationTileFixture();
@@ -206,7 +218,7 @@ public sealed class ManagedNpcNavigationTests
             Graph = new(tiles.Origin, [tiles.Load(Tile)]);
             _water = new(0, [cell], ZoneManagedWaterQueryProfile.StaticServerWithoutOceanVortex);
             var queries = new ZoneManagedNpcNavigationQueries(Runtime.Backend!, Runtime.Backend!.Geometry.HeightField,
-                new([cell], true, 1, 0, []), _collision, _water, new(new(128, .25f, 1024, .75f, 2, .7f), 2, 65536));
+                report, _collision, _water, new(new(128, .25f, 1024, .75f, 2, .7f), 2, 65536), _coverage);
             _grids = new(Runtime.Runtime.Actors.Objects, ZoneManagedActorGridConfiguration.FromLayout(scene.Layout));
             Runtime.Runtime.Actors.ActorGrids = _grids;
             Navigation = navigationOwner = new(Runtime.Runtime.Actors, Runtime.MovementAbility!, Runtime.Motion!, Runtime.Bodies!, Graph, queries,
@@ -244,6 +256,8 @@ public sealed class ManagedNpcNavigationTests
                 terrain.LoadCell(1, 1, TerrainHeightFieldTests.CreateCell(10, 0)); //Same data still has a new publication.
             }
             else if (family == 3) _water.RetireCell(new(1, 1));
+            else if (family == 4) _collision.RetireBrushCell(_cell);
+            else if (family == 5) _coverage.RetireCell(_cell);
             else
             {
                 var geometry = family == 1 ? _collision.Geometry : _collision.RayGeometry;
@@ -283,7 +297,7 @@ public sealed class ManagedNpcNavigationTests
         public void Dispose()
         {
             try { _phases?.Dispose(); Runtime.Dispose(); }
-            finally { try { _output.Dispose(); Navigation.Dispose(); _grids.Dispose(); } finally { _water.Dispose(); Graph.Dispose(); _collision.Dispose(); } }
+            finally { try { _output.Dispose(); Navigation.Dispose(); _grids.Dispose(); } finally { _coverage.Dispose(); _water.Dispose(); Graph.Dispose(); _collision.Dispose(); } }
         }
     }
     private sealed class BackendPhases(ZoneManagedPhysicsBackend backend) : IZoneMovementFramePhases

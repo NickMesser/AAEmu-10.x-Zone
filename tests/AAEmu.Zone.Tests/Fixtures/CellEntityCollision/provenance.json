@@ -1,0 +1,101 @@
+{
+  "client": "ArcheAge Returns 10.0.2.13 - 8yx - r575 - 2026-06-18",
+  "scope": "Original class/script dependencies and unchanged complete entity documents for target009_014 plus all34 SoundEventSpot and one FogVolume rows in their three original cells; no rendering/audio or entity execution.",
+  "resources": [
+    {
+      "asset": "game/worlds/main_world/cells/009_014/client/entities.xml",
+      "bytes": 42630,
+      "sha256": "C5F294240DF725956560E86CA8917EB54F2DD3C56186C2A8EDD22C151C7D9DB9"
+    },
+    {
+      "asset": "game/entities/ambientvolume.ent",
+      "bytes": 86,
+      "sha256": "D12813E19CFF41027C7E5BDB616B32CD05D67AB3F54E518429E58C5B958D1C12"
+    },
+    {
+      "asset": "game/entities/randomsoundvolume.ent",
+      "bytes": 94,
+      "sha256": "5E1B8C4777534E87D2F4A4E927A2A76D3E802F0B8F00CE76DE4567741EF9708A"
+    },
+    {
+      "asset": "game/entities/reverbvolume.ent",
+      "bytes": 84,
+      "sha256": "26B4EC2E874D81E82DC33A59C6AD38AB2A3B9E968C183A14ED4D6A3773838C65"
+    },
+    {
+      "asset": "game/entities/light.ent",
+      "bytes": 72,
+      "sha256": "A7C539D70529328B7394E0E44E8D41B435AE0D21CCDD8252AF4B0EEFCC5F15B1"
+    },
+    {
+      "asset": "game/entities/areashape.ent",
+      "bytes": 46,
+      "sha256": "961EFF4884ABD4D80C5CF9D49DFFBD381D8107E3129197A1E7EB9DB3CC1EE2B6"
+    },
+    {
+      "asset": "game/entities/particleeffect.ent",
+      "bytes": 92,
+      "sha256": "1FF4380AF613BF168A6B8D71329A5FB597E55EEEACB2D90ACE735FC20C164081"
+    },
+    {
+      "asset": "game/scripts/entities/sound/ambientvolume.lua",
+      "bytes": 12289,
+      "sha256": "CE93065B0370546E4083166F260CA55A48A4BB20737482DDF2C01CB90F7B0BD4"
+    },
+    {
+      "asset": "game/scripts/entities/sound/randomsoundvolume.lua",
+      "bytes": 12733,
+      "sha256": "0A5338532FCFEB48A5BF55730A34091A3EC73D41FAE6D4EF9DBE06714ADFB613"
+    },
+    {
+      "asset": "game/scripts/entities/sound/reverbvolume.lua",
+      "bytes": 10271,
+      "sha256": "532F7ED0232E6DA5DC135A99A04D2D9D633EBD4BFEEF9898D263DCD97EAD5A9C"
+    },
+    {
+      "asset": "game/scripts/entities/lights/light.lua",
+      "bytes": 5423,
+      "sha256": "DF237EFD736E699B24EAA40F1F0201194728B0E5C2C2E0700141DC6D0749EC45"
+    },
+    {
+      "asset": "game/scripts/entities/particle/particleeffect.lua",
+      "bytes": 4465,
+      "sha256": "9AA8598ACF5902BEA52DE8A33AEEC2521FFF02E60FF29D9D79CDD570D7FCFDC3"
+    },
+    {
+      "asset": "game/entities/soundeventspot.ent",
+      "bytes": 88,
+      "sha256": "467713DF525E466678EA5D7491AC5B73BB8EC305ABEDBB6F1017991EAB17E532"
+    },
+    {
+      "asset": "game/entities/fogvolume.ent",
+      "bytes": 79,
+      "sha256": "687E4E4E420DC5851585CFDA3719DA36BD782CFD66754E7D3C403F1A76BEE651"
+    },
+    {
+      "asset": "game/scripts/entities/sound/soundeventspot.lua",
+      "bytes": 7424,
+      "sha256": "7C1436A0824B4A576A8BA529C154768AA8C881B32B30AB47F7A8B5F6E0BD6F3A"
+    },
+    {
+      "asset": "game/scripts/entities/render/fogvolume.lua",
+      "bytes": 3967,
+      "sha256": "B5E0BB832DF4BE185FD80B800843F7D17426149990A08B4159F627DB7E20D8DF"
+    },
+    {
+      "asset": "game/worlds/main_world/cells/011_014/client/entities.xml",
+      "bytes": 63168,
+      "sha256": "DC38E7AA10C035CEAC74188CE443C56161F50399929B6E5E566369E13654EFC7"
+    },
+    {
+      "asset": "game/worlds/main_world/cells/011_015/client/entities.xml",
+      "bytes": 46797,
+      "sha256": "21978E778BD7EA7E4C73C19C1D5D039124765070A0B482B6B74A16A13500E19D"
+    },
+    {
+      "asset": "game/worlds/main_world/cells/010_014/client/entities.xml",
+      "bytes": 177926,
+      "sha256": "D6CFDBE6730CE2F288D27B83B3F036ABACA8F2E1841A119167D6DB8117A5E7E7"
+    }
+  ]
+}

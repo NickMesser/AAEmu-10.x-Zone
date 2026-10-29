@@ -14,7 +14,8 @@ namespace AAEmu.Zone.Scene;
 public sealed record ZoneManagedNpcNavigationPolicy(ZoneManagedNavigationQueryPolicy Walking,
     float MaximumEndpointDistance, int MaximumExpandedNodes);
 
-internal readonly record struct ZoneManagedNpcNavigationCoverage(ulong Terrain, ulong Characters, ulong Rays, ulong Water);
+internal readonly record struct ZoneManagedNpcNavigationCoverage(ulong Terrain, ulong Characters, ulong Rays, ulong Water,
+    ulong BrushCells, ulong ClassifiedCells);
 
 /// <summary>
 /// Real terrain, water and registered physical inventories for path admission. Authored
@@ -28,17 +29,19 @@ public sealed class ZoneManagedNpcNavigationQueries
     private readonly ZoneManagedSceneLoadReport _scene;
     private readonly ZoneManagedSceneCollision _collision;
     private readonly ZoneManagedWaterQueries _water;
+    private readonly ZoneManagedCellCollisionCoverage? _cellCoverage;
     public ZoneManagedNpcNavigationPolicy Policy { get; }
 
     public ZoneManagedNpcNavigationQueries(ZoneManagedPhysicsBackend physics, ZoneTerrainHeightField heights,
         ZoneManagedSceneLoadReport scene, ZoneManagedSceneCollision collision, ZoneManagedWaterQueries water,
-        ZoneManagedNpcNavigationPolicy policy)
+        ZoneManagedNpcNavigationPolicy policy, ZoneManagedCellCollisionCoverage? cellCoverage = null)
     {
         _physics = physics ?? throw new ArgumentNullException(nameof(physics));
         _heights = heights ?? throw new ArgumentNullException(nameof(heights));
         _scene = scene ?? throw new ArgumentNullException(nameof(scene));
         _collision = collision ?? throw new ArgumentNullException(nameof(collision));
         _water = water ?? throw new ArgumentNullException(nameof(water));
+        _cellCoverage = cellCoverage;
         Policy = policy ?? throw new ArgumentNullException(nameof(policy));
         if (!(policy.MaximumEndpointDistance > 0) || !float.IsFinite(policy.MaximumEndpointDistance) || policy.MaximumExpandedNodes <= 0)
             throw new ArgumentOutOfRangeException(nameof(policy));
@@ -46,6 +49,10 @@ public sealed class ZoneManagedNpcNavigationQueries
             throw new ArgumentException("Navigation requires the scene's existing physical brush inventory.", nameof(collision));
         if (!ReferenceEquals(physics.Geometry.HeightField, heights))
             throw new ArgumentException("Navigation coverage requires the physical backend's actual installed terrain owner.", nameof(heights));
+        if (cellCoverage is not null && !cellCoverage.Uses(scene, collision))
+            throw new ArgumentException("Navigation requires the exact scene/collision classification owner.", nameof(cellCoverage));
+        if (!HasCurrentWaterSource())
+            throw new ArgumentException("Navigation requires water from the exact ordered scene inputs and the terrain's resolved ocean level.", nameof(water));
     }
 
     public IZoneNavigationSceneQueries ForActor(ZoneActorHandle actor) => new ZoneManagedNavigationQueries(
@@ -54,16 +61,20 @@ public sealed class ZoneManagedNpcNavigationQueries
     internal IReadOnlyList<ZoneManagedNavigationPhysicalEntity> CopyPhysicalInventory() => _physics.CopyNavigationPhysicalEntities();
     internal ZoneManagedNpcNavigationCoverage CaptureCoverage()
     {
-        if (_collision.IsDisposed || _water.IsDisposed)
+        if (_collision.IsDisposed || !HasCurrentWaterSource() || _cellCoverage?.IsDisposed == true)
             throw new NotSupportedException("The NPC navigation collision/water publication has retired.");
         return new(_heights.PublicationRevision, _collision.Geometry.PublicationRevision,
-            _collision.RayGeometry.PublicationRevision, _water.PublicationRevision);
+            _collision.RayGeometry.PublicationRevision, _water.PublicationRevision, _collision.BrushPublicationRevision,
+            _cellCoverage?.PublicationRevision ?? 0);
     }
-    internal bool IsCurrent(ZoneManagedNpcNavigationCoverage publication) => !_collision.IsDisposed && !_water.IsDisposed &&
+    internal bool IsCurrent(ZoneManagedNpcNavigationCoverage publication) => !_collision.IsDisposed && HasCurrentWaterSource() &&
+        _cellCoverage?.IsDisposed != true &&
         publication == CaptureCoverage();
 
     public ZoneNavigationSegmentAdmission CheckTerrainCoverage(ZonePhysicsQueryBounds bounds)
     {
+        if (!Finite(bounds.Minimum) || !Finite(bounds.Maximum) || Vector3.Min(bounds.Minimum, bounds.Maximum) != bounds.Minimum)
+            throw new ArgumentException("Navigation coverage requires finite ordered query bounds.", nameof(bounds));
         if (bounds.Minimum.X < 0 || bounds.Minimum.Y < 0 || bounds.Maximum.X >= 8192 || bounds.Maximum.Y >= 8192)
             return new(ZoneNavigationSegmentOutcome.MissingData, "Navigation query extends outside the engine-local terrain window.");
         for (var x = (int)MathF.Floor(bounds.Minimum.X / 1024); x <= (int)MathF.Floor(bounds.Maximum.X / 1024); x++)
@@ -77,44 +88,59 @@ public sealed class ZoneManagedNpcNavigationQueries
     {
         var terrain = CheckTerrainCoverage(bounds);
         if (terrain.Outcome != ZoneNavigationSegmentOutcome.Clear) return terrain;
-        if (!_collision.Report.BrushCoverageComplete)
-            return new(ZoneNavigationSegmentOutcome.Unsupported, "Navigation requires complete admitted authored brush collision.");
+        if (!HasCurrentWaterSource())
+            return new(ZoneNavigationSegmentOutcome.MissingData, "The exact scene water publication is absent or retired.");
+        if (_cellCoverage is not null) return _cellCoverage.Check(bounds, ZoneManagedCollisionQueryMask.CharactersAndRays);
         for (var x = (int)MathF.Floor(bounds.Minimum.X / 1024); x <= (int)MathF.Floor(bounds.Maximum.X / 1024); x++)
             for (var y = (int)MathF.Floor(bounds.Minimum.Y / 1024); y <= (int)MathF.Floor(bounds.Maximum.Y / 1024); y++)
             {
                 var matches = _scene.Cells.Where(cell => cell.Placement.EngineCell == new ZoneMapCoordinate(x, y)).ToArray();
                 if (matches.Length != 1) return new(ZoneNavigationSegmentOutcome.MissingData, "Navigation requires one current cell inventory per query cell.");
-                var cell = matches[0];
-                foreach (var kind in new[] { ZoneCellObjectAsset.Objects, ZoneCellObjectAsset.BigObjects,
-                    ZoneCellObjectAsset.Vegetation, ZoneCellObjectAsset.Entities })
-                {
-                    var present = kind switch
-                    {
-                        ZoneCellObjectAsset.Objects => cell.Objects.Objects is not null,
-                        ZoneCellObjectAsset.BigObjects => cell.Objects.BigObjects is not null,
-                        ZoneCellObjectAsset.Vegetation => cell.Objects.Vegetation is not null,
-                        ZoneCellObjectAsset.Entities => cell.Objects.Entities is not null,
-                        _ => false,
-                    };
-                    if (!present && !cell.Objects.Diagnostics.Contains($"{kind}: authored asset is absent."))
-                        return new(ZoneNavigationSegmentOutcome.MissingData, $"Navigation cannot classify the unread {kind} inventory in cell({x},{y}).");
-                }
-                if (cell.Objects.Vegetation is { Instances.Count: > 0 } || cell.Objects.Entities is { Entities.Count: > 0 })
-                    return new(ZoneNavigationSegmentOutcome.Unsupported,
-                        $"Navigation collision still requires authored vegetation/entity classification in cell({x},{y}).");
-                if (HasUnknown(cell.Objects.Objects) || HasUnknown(cell.Objects.BigObjects))
-                    return new(ZoneNavigationSegmentOutcome.Unsupported,
-                        $"Navigation collision still requires authored non-brush object classification in cell({x},{y}).");
             }
+        //Without the composed owner only an entirely known brush/empty world is
+        //admitted. Native queries are global: an unknown row in another loaded
+        //cell, a decal without dependency proof or a lost owned handle stays unknown.
+        foreach (var cell in _scene.Cells)
+        {
+            var x = cell.Placement.EngineCell.X; var y = cell.Placement.EngineCell.Y;
+            foreach (var kind in new[] { ZoneCellObjectAsset.Objects, ZoneCellObjectAsset.BigObjects,
+                ZoneCellObjectAsset.Vegetation, ZoneCellObjectAsset.Entities })
+            {
+                var present = kind switch
+                {
+                    ZoneCellObjectAsset.Objects => cell.Objects.Objects is not null,
+                    ZoneCellObjectAsset.BigObjects => cell.Objects.BigObjects is not null,
+                    ZoneCellObjectAsset.Vegetation => cell.Objects.Vegetation is not null,
+                    ZoneCellObjectAsset.Entities => cell.Objects.Entities is not null,
+                    _ => false,
+                };
+                if (!present && !cell.Objects.Diagnostics.Contains($"{kind}: authored asset is absent."))
+                    return new(ZoneNavigationSegmentOutcome.MissingData, $"Navigation cannot classify the unread {kind} inventory in cell({x},{y}).");
+            }
+            if (cell.Objects.Vegetation is { Instances.Count: > 0 } || cell.Objects.Entities is not null)
+                return new(ZoneNavigationSegmentOutcome.Unsupported,
+                    $"Navigation collision still requires authored vegetation/entity classification in cell({x},{y}).");
+            if (HasUnknown(cell.Objects.Objects) || HasUnknown(cell.Objects.BigObjects))
+                return new(ZoneNavigationSegmentOutcome.Unsupported,
+                    $"Navigation collision still requires authored non-brush object classification in cell({x},{y}).");
+            var brush = _collision.CopyBrushCell(cell);
+            if (!brush.IsCompleteFor(ZoneManagedCollisionQueryMask.CharactersAndRays) || !_collision.IsCurrent(brush))
+                return new(ZoneNavigationSegmentOutcome.Unsupported,
+                    $"Navigation requires a complete current brush publication in loaded cell({x},{y}).");
+        }
         return new(ZoneNavigationSegmentOutcome.Clear);
 
         static bool HasUnknown(ZoneCellObjectContent? content) => content is not null &&
-            content.Objects.Any(row => row is not ZoneCellBrushObject && row.Type != ZoneCellObjectType.Decal);
+            content.Objects.Any(row => row is not ZoneCellBrushObject);
     }
+
+    private static bool Finite(Vector3 value) => float.IsFinite(value.X) && float.IsFinite(value.Y) && float.IsFinite(value.Z);
+    private bool HasCurrentWaterSource() => _heights.Nodes is { } nodes && _water.UsesSource(_scene.Cells, nodes.OceanWaterLevel);
 
     internal IReadOnlyList<ZoneNavigationWaterProbe> MeasureWater(ZoneManagedNpcActor actor,
         ZoneManagedNpcBodySnapshot body, ZoneManagedNpcActorMotion motion, ZoneNavigationPath candidate)
     {
+        if (!HasCurrentWaterSource()) throw new NotSupportedException("The exact scene water publication is absent or retired.");
         var threshold = motion.CopyNavigationSwimThreshold(actor);
         var stance = body.CurrentStance;
         var upper = stance.HeightCollider + stance.Size.Z;
@@ -135,7 +161,10 @@ public sealed class ZoneManagedNpcNavigationQueries
     private ZoneNavigationClearanceHit? Cast(ZoneNavigationClearanceRay ray)
     {
         var end = ray.Origin + ray.Displacement;
-        var admission = CheckCollisionCoverage(new(Vector3.Min(ray.Origin, end), Vector3.Max(ray.Origin, end)));
+        var bounds = new ZonePhysicsQueryBounds(Vector3.Min(ray.Origin, end), Vector3.Max(ray.Origin, end));
+        var admission = CheckTerrainCoverage(bounds);
+        if (admission.Outcome == ZoneNavigationSegmentOutcome.Clear)
+            admission = _cellCoverage is not null ? _cellCoverage.Check(bounds, ZoneManagedCollisionQueryMask.Rays) : CheckCollisionCoverage(bounds);
         if (admission.Outcome != ZoneNavigationSegmentOutcome.Clear)
             throw new NotSupportedException(admission.Diagnostic);
         ZonePhysicsHit? result = null;

@@ -19,6 +19,14 @@ inflate it by1.1. The original five NPC resources use this supported model-backe
 non-Actor AimBox fallback retains a named refusal. The radius fixture compares102 executed
 original-instruction controls bit for bit.
 
+The enclosing common registration tail `3927FEDC..3927FF0D` then copies the actual Unit
+model descriptor's `Big` bit2 and `ForceNavigateAroundObject` bit8 into AIParams177/178.
+These are installed crowd-navigation flags, not constructor-zero constants: `392ADC00`
+does not write them, but its caller does before `RegisterAI`. The model loader `39ADC040`
+supplies those bits from the original `models` columns. Thirty-two executed original
+common-tail controls cover all eight Unit kinds and all four flag combinations; managed
+NPC construction tests verify all four combinations survive NPC parameter registration.
+
 `ZoneActorMovementSpeedTable` implements `31169B4C`. Urgency thresholds are`.305`,`.7` and`1.2`;
 the proxy's accepted stance selects the source stance group. Directional scaling uses the actual
 previous/body turn, body/move directions, installed directional reference speeds and the copied

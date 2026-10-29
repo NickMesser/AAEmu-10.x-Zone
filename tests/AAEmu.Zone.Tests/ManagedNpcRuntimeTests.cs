@@ -492,15 +492,16 @@ public sealed class ManagedNpcRuntimeTests
         public ZoneMovementFrame CurrentFrame { get; set; }
         public ZoneModelContent Models { get; }
         public ZoneManagedNpcSceneScriptServices Components => (ZoneManagedNpcSceneScriptServices)Runtime.ScriptServices;
-        public ZoneModelDefinition Model { get; } = new() { Id = 42, Name = "runtime_fixture", Subtype = "ActorModel", SubtypeId = 9 };
+        public ZoneModelDefinition Model { get; }
         public Fixture(bool withEffects = false, bool admitProfile = true, bool withComponents = false, bool withConstruction = false,
             bool withMovement = false, ZoneEngineCVars? movementCVars = null, ZoneBuffContent? movementBuffContent = null,
             bool withGameRequests = false, bool withMovementRequests = false, float movementNormalSpeed = 0,
             bool withMovementAbility = false, ZoneManagedStaticGeometry? movementStaticGeometry = null,
             float movementWalkMultiplier = 1, Func<ZoneManagedNpcNavigation>? navigationFactory = null,
             Func<ZoneManagedNpcPuppetOutput>? puppetOutputFactory = null,
-            IReadOnlyList<StatModifier>? movementStatModifiers = null)
+            IReadOnlyList<StatModifier>? movementStatModifiers = null, ZoneModelDefinition? model = null)
         {
+            Model = model ?? new() { Id = 42, Name = "runtime_fixture", Subtype = "ActorModel", SubtypeId = 9 };
             withMovement |= withMovementRequests || withMovementAbility;
             withConstruction |= withMovement;
             withComponents |= withConstruction;

@@ -67,27 +67,34 @@ An empty type index therefore does not prove an empty player grid. Crowd admissi
 checks the backend's actual physical actor inventory and refuses an actor without a current
 AI/grid classification, including an admitted player. It does not infer membership or cached
 position from current body distance. A new unclassified body also invalidates a cached moving
-route before the next physical request. This is a conservative replacement admission boundary;
-it does not assert that native dedicated players always register, or always skip, type100.
+route before the next physical request. The original type100 producer and the frozen fresh-player
+construction controls are documented in the [player AI tasks](tasks/managed-player-ai-grid.md).
+Production integration remains open.
 
 Graph search currently uses the existing bounded A* and sampled-ground query policy. Production
 explicitly configures segment/work/support limits; these are replacement limits, not recovered
 native search or walkability constants. Height ownership is checked against actual installed
 cells, independently of the renderer-height getter's zero fallback. Brush coverage alone cannot
-certify authored vegetation, entity or road collision. The current adapter conservatively refuses
-an affected cell until those inventories have physical classification. This remains a real blocker
-for far-return movement in the original populated zone, even when its brush proxies all load.
+certify authored vegetation, entity or road collision. The production adapter now consumes the
+concrete [cell collision publications](managed-cell-collision-coverage.md), with complete local
+character/ray evidence for original cell 009_014. Native physical queries traverse the loaded
+world, so unclassified possible contributors in another loaded cell still prevent global clearance.
 
 Completed routes retain their graph and [physical publication](managed-collision-publications.md)
-tokens: terrain, character geometry, picking geometry and water. Retirement is checked before
+tokens: terrain, character geometry, picking geometry, water, brush-cell and composed-cell
+publication. Water binds exact ordered scene inputs and the terrain's resolved ocean level.
+Retirement is checked before
 physical requests, independently of AI cadence. Equal-data terrain reload or add/remove of a
-collision instance cannot resurrect an old admission. The runtime retires the stale actor before
+collision instance, or retirement of a bodyless cell, cannot resurrect an old admission.
+The runtime retires the stale actor before
 the next physical step, keeping its Unit pose fixed. Per-cell invalidation/replanning remains
 future work; this bounded profile refuses a retired publication.
 
 The detailed next implementation is [populated-cell collision](tasks/managed-populated-cell-collision.md):
-original8173's entire far-return route is in cell009_014, where385 default-bearing vegetation
-placements and data-validated nonblocking families can replace the present coverage refusal.
+original8173's entire far-return route is in cell 009_014. That cell now accounts for all 7,127
+vegetation rows, 74 entities and 107 roads/decals, but remaining contributors elsewhere in the
+loaded world still refuse the global query. The task retains those concrete families and the
+unchanged original far-return acceptance.
 
 ## Stuck-state distinction
 

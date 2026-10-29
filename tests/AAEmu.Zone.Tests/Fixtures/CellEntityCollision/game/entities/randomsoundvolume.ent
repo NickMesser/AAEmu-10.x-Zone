@@ -1,0 +1,4 @@
+<Entity
+ Name="RandomSoundVolume"
+ Script="Scripts/Entities/Sound/RandomSoundVolume.lua"
+/>

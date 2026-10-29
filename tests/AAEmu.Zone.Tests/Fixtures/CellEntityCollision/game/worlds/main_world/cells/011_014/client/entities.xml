@@ -1,0 +1,687 @@
+<Mission CGFCount="2593">
+ <Objects>
+  <Entity Name="ParticleEffect1794" Pos="180.22192,241.7334,144.17554" EntityClass="ParticleEffect" EntityId="17646" EntityGuid="4fcf6ed65da97a02" Layer="demonolater_camp">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="sound_gweonid_forest_AmbientVolume_36" Pos="57.861816,265.00928,528.08948" EntityClass="AmbientVolume" EntityId="7903" EntityGuid="4fe71f6e8af33c03" OutdoorOnly="1" Layer="_sound_gweonid_forest">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" soundName="Sounds/x2ambience:world2_day:dark_forest_amb" OuterRadius="20" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="Light81" Pos="171.56104,298.42871,138.7966" Rotate="0.88294762,0,0,0.4694716" EntityClass="Light" EntityId="17749" EntityGuid="48bc0957bfaf3805" ViewDistRatio="5" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="7">
+    <Color clrDiffuse="0.92549,0.552941,0.47451" fDiffuseMultiplier="1.5" fHDRDynamic="1" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="sound_gweonid_forest_Shape_129_dance1990_25" Pos="57.861816,265.00928,-61.339996" EntityClass="AreaShape" EntityId="7884" EntityGuid="4a9fc9bd97ba8b08" Layer="_sound_gweonid_forest">
+   <Area Id="0" Group="0" Proximity="0" Priority="0" value1="0" value2="0" flags="0" Height="350">
+    <Points>
+     <Point Pos="0,0,0"/>
+     <Point Pos="52.464355,68.052277,-6.1035156e-005"/>
+     <Point Pos="24.962891,116.86823,0"/>
+     <Point Pos="-22.172363,170.22775,0"/>
+     <Point Pos="38.110596,205.81287,0"/>
+     <Point Pos="109.28491,234.82019,0"/>
+     <Point Pos="152.27197,207.84302,0"/>
+     <Point Pos="192.63184,226.1106,0"/>
+     <Point Pos="214.12012,272.65375,6.1035156e-005"/>
+     <Point Pos="252.38745,306.59601,6.1035156e-005"/>
+     <Point Pos="281.16724,317.70007,0"/>
+     <Point Pos="403.552,356.59198,0"/>
+     <Point Pos="467.91064,400.43872,0"/>
+     <Point Pos="483.13672,434.20667,0.013092041"/>
+     <Point Pos="525.7207,433.62549,0.04788208"/>
+     <Point Pos="555.70923,397.4519,6.1035156e-005"/>
+     <Point Pos="604.05713,448.19202,6.1035156e-005"/>
+     <Point Pos="656.44141,419.85278,0.1300354"/>
+     <Point Pos="703.07129,385.51898,6.1035156e-005"/>
+     <Point Pos="688.83496,333.03168,0"/>
+     <Point Pos="628.42822,227.22672,0"/>
+     <Point Pos="498.34058,131.63751,0"/>
+     <Point Pos="399.56372,225.25375,0.024414063"/>
+     <Point Pos="365.77124,217.104,0"/>
+     <Point Pos="359.73901,174.22501,0"/>
+     <Point Pos="305.07178,95.487,0"/>
+     <Point Pos="276.70313,-1.7188721,-0.15863037"/>
+     <Point Pos="230.48755,-70.998428,0"/>
+     <Point Pos="174.58325,-114.40324,-6.1035156e-005"/>
+     <Point Pos="62.372559,-88.982986,0"/>
+    </Points>
+    <Entities>
+     <Entity EntityGuid="4fe71f6e8af33c03"/>
+    </Entities>
+    <TimeOfDay />
+    <SkyBox />
+   </Area>
+  </Entity>
+  <Entity Name="ParticleEffect1771" Pos="131.03857,685.83301,162.71954" Scale="2.3089533,2.3089533,2.3089533" EntityClass="ParticleEffect" EntityId="17789" EntityGuid="4526882b5d02c50a" Layer="100111_fx">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_K.waterfall_black.waterfall_splash_smooth01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Light_242" Pos="395.17603,873.71533,183.06459" Rotate="0.8829475,0,0,0.46947184" EntityClass="Light" EntityId="17608" EntityGuid="4dc0a0afc04a7f0b" ViewDistRatio="20" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="5">
+    <Color clrDiffuse="0.847059,0.976471,0.45098" fDiffuseMultiplier="2" fHDRDynamic="1" fSpecularMultiplier="2"/>
+    <Options bAffectsThisAreaOnly="0" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="Light76" Pos="193.56104,437.30371,154.95306" Rotate="0.88294762,0,0,0.4694716" EntityClass="Light" EntityId="17688" EntityGuid="43e0efc04802590c" ViewDistRatio="5" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="7">
+    <Color clrDiffuse="0.92549,0.552941,0.47451" fDiffuseMultiplier="1.5" fHDRDynamic="1" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect1577" Pos="186.67798,423.39063,150.76579" EntityClass="ParticleEffect" EntityId="17607" EntityGuid="4dc8027b34900b15" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect1583" Pos="136.63477,258.51172,138.17738" Scale="1.0125,1.0125,1.0125" EntityClass="ParticleEffect" EntityId="17522" EntityGuid="44d90807e35a5718" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Light_234" Pos="273.79199,1018.0059,199.70264" Rotate="0.8829475,0,0,0.46947184" EntityClass="Light" EntityId="17543" EntityGuid="4a57567f73d67a19" ViewDistRatio="20" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="12">
+    <Color clrDiffuse="0.858824,0.976471,0.486275" fDiffuseMultiplier="2.5" fHDRDynamic="1" fSpecularMultiplier="2"/>
+    <Options bAffectsThisAreaOnly="0" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect_2192" Pos="454.83691,530.94214,129.99445" EntityClass="ParticleEffect" EntityId="17634" EntityGuid="4fd4053c6ed44a1a" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ga_AmbientVolume_3" Pos="876,54,185.10001" EntityClass="AmbientVolume" EntityId="7905" EntityGuid="4098277c81ee311c" Layer="_sound_garangdol">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" soundName="Sounds/x2ambience:world2_object:pond_big" OuterRadius="10" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ga_RandomSoundVolume20" Pos="733.5,349,524" EntityClass="RandomSoundVolume" EntityId="7908" EntityGuid="43ede69e15212123" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties DiscRadius="10" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="30" MinWaitTime="10" soundName="Sounds/x2ambience:world2_random:cricket_random" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ga_ReverbVolume5" Pos="741,256,582" EntityClass="ReverbVolume" EntityId="7910" EntityGuid="4872bccb9cee5123" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties bEnabled="1" Environment="1" bFullEffectWhenInside="1" OuterRadius="40" reverbpresetReverbPreset="x2_outdoor_1"/>
+  </Entity>
+  <Entity Name="Light_243" Pos="427.07666,885.58594,181.47893" Rotate="0.8829475,0,0,0.46947184" EntityClass="Light" EntityId="17382" EntityGuid="42936fd6a1bd9923" ViewDistRatio="20" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="5">
+    <Color clrDiffuse="0.847059,0.976471,0.45098" fDiffuseMultiplier="2" fHDRDynamic="1" fSpecularMultiplier="2"/>
+    <Options bAffectsThisAreaOnly="0" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect1554" Pos="12.69751,349.68506,167.42923" Scale="0.90011263,0.90011263,0.90011263" EntityClass="ParticleEffect" EntityId="17236" EntityGuid="4722f9e54cb2c023" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect1702" Pos="230.84717,221.16406,146.4502" Scale="1.152,1.152,1.152" EntityClass="ParticleEffect" EntityId="17720" EntityGuid="4085479d06506025" MinSpec="3" Layer="100111_fx">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_K.waterfall_black.waterfall_splash_smooth01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Light30" Pos="254.3772,904.58838,202.5697" EntityClass="Light" EntityId="17953" EntityGuid="4afb2c41c258d626" ViewDistRatio="4" CastShadow="0" MinSpec="3" Layer="Main">
+   <Properties bActive="1" Radius="25">
+    <Color clrDiffuse="0.894118,0.811765,0.596078" fDiffuseMultiplier="1.5" fHDRDynamic="1" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="Light112" Pos="683.53711,889.68811,214.62157" Rotate="0.97629607,0,0,0.21643943" EntityClass="Light" EntityId="15431" EntityGuid="4d55a17472d5ce2a" ViewDistRatio="3" CastShadow="0" Layer="Main">
+   <Properties bActive="1" Radius="10">
+    <Color clrDiffuse="0.486275,0.847059,0.854902" fDiffuseMultiplier="1.2" fHDRDynamic="0.75" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="lilyut_SoundEventSpot_34" Pos="1004,597,146" EntityClass="SoundEventSpot" EntityId="7916" EntityGuid="43b04b441e5a2a2c" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" soundName="Sounds/x2ambience:world2_object:waterfall_mid_short" bOnce="0" bPlay="1"/>
+  </Entity>
+  <Entity Name="lilyut_ReverbVolume_01" Pos="734,893,855" EntityClass="ReverbVolume" EntityId="7890" EntityGuid="4b479a6c6266902c" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties bEnabled="1" Environment="1" bFullEffectWhenInside="1" OuterRadius="40" reverbpresetReverbPreset="x2_outdoor_1"/>
+  </Entity>
+  <Entity Name="ParticleEffect1699" Pos="179.08105,300.34619,141.76266" Scale="1.152,1.152,1.152" EntityClass="ParticleEffect" EntityId="17927" EntityGuid="413c0bbe0c642e38" Layer="100111_fx">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_K.waterfall_black.waterfall_splash_smooth01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="lilyut_AmbientVolume_night_01" Pos="734,893,831" EntityClass="AmbientVolume" EntityId="7891" EntityGuid="4fcc5194961b7039" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" soundName="Sounds/x2ambience:world2_night:field_night" OuterRadius="40" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ga_RandomSoundVolume18" Pos="807.5,367,586.5" EntityClass="RandomSoundVolume" EntityId="7892" EntityGuid="4401c5c5c3268a39" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties DiscRadius="10" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="60" MinWaitTime="30" soundName="Sounds/x2ambience:world2_random:wind_grass" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ParticleEffect_2332" Pos="629.89404,993.14111,220.23305" Rotate="0.86162919,0,0,0.50753838" EntityClass="ParticleEffect" EntityId="15476" EntityGuid="404cfc4d4b01da39" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.env.elf_light_r" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Light_239" Pos="254.32935,883.48535,181.85687" Rotate="0.8829475,0,0,0.46947184" EntityClass="Light" EntityId="17753" EntityGuid="407961ab4196693f" ViewDistRatio="20" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="5">
+    <Color clrDiffuse="0.847059,0.976471,0.45098" fDiffuseMultiplier="2" fHDRDynamic="1" fSpecularMultiplier="2"/>
+    <Options bAffectsThisAreaOnly="0" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect1769" Pos="297.10742,681.56543,162.71954" Scale="2.3089533,2.3089533,2.3089533" EntityClass="ParticleEffect" EntityId="17381" EntityGuid="479692411b380e43" MinSpec="3" Layer="100111_fx">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_K.waterfall_black.waterfall_splash_smooth01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect1576" Pos="193.52832,437.21631,150.86288" Scale="0.648,0.648,0.648" EntityClass="ParticleEffect" EntityId="17763" EntityGuid="4a7ccbb3dc670547" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.doodad.quest_cook_fire" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect_2453" Pos="212.32202,246.80444,143.1434" Scale="0.80000001,0.80000001,0.80000001" EntityClass="ParticleEffect" EntityId="17567" EntityGuid="4797346130f6ac48" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.doodad.quest_cook_fire" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect1579" Pos="200.27808,297.82129,136.34488" Scale="0.80000001,0.80000001,0.80000001" EntityClass="ParticleEffect" EntityId="17796" EntityGuid="431d0146742f2c49" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.doodad.quest_cook_fire" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="lilyut_RandomSoundVolume_19" Pos="734,893,736" EntityClass="RandomSoundVolume" EntityId="7893" EntityGuid="4273cc3d99f1104d" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties DiscRadius="20" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="40" MinWaitTime="20" soundName="Sounds/x2ambience:world2_random:cricket_random" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ParticleEffect_2195" Pos="439.0459,527.9353,130.06552" Rotate="0.28401533,0,0,0.95881975" EntityClass="ParticleEffect" EntityId="17296" EntityGuid="4ddd0ffc9d317c4f" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect1796" Pos="206.95459,240.9209,143.8855" EntityClass="ParticleEffect" EntityId="17389" EntityGuid="4908b5fbc78e5d50" Layer="demonolater_camp">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="lilyut_AmbientVolume_01" Pos="734,893,843" EntityClass="AmbientVolume" EntityId="7894" EntityGuid="4bb9472d63cdf851" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" soundName="Sounds/x2ambience:world2_day:countryside03" OuterRadius="40" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ParticleEffect1696" Pos="210.67578,520.33447,156.15997" Scale="1.152,1.152,1.152" EntityClass="ParticleEffect" EntityId="17657" EntityGuid="49bf4c6a75c40c53" Layer="100111_fx">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_K.waterfall_black.waterfall_splash_smooth01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="lilyut_sound_shape_01" Pos="764,767,125" EntityClass="AreaShape" EntityId="7883" EntityGuid="49463eee42185758" Layer="_sound_lilyut">
+   <Area Id="0" Group="0" Proximity="0" Priority="0" value1="0" value2="0" flags="0" Height="650">
+    <Points>
+     <Point Pos="0,0,0"/>
+     <Point Pos="-45,22,0"/>
+     <Point Pos="-31,58,0"/>
+     <Point Pos="-231,53,0"/>
+     <Point Pos="-235,204,0"/>
+     <Point Pos="-219,307,0"/>
+     <Point Pos="-296,448,0"/>
+     <Point Pos="-455,481,0"/>
+     <Point Pos="-502,555,0"/>
+     <Point Pos="-506,698,0"/>
+     <Point Pos="-442,836,0"/>
+     <Point Pos="-413,1031,0"/>
+     <Point Pos="-381,1193,0"/>
+     <Point Pos="-279,1280,0"/>
+     <Point Pos="-139,1331,0"/>
+     <Point Pos="-32,1282,0"/>
+     <Point Pos="171,1190,0"/>
+     <Point Pos="199,1294,11"/>
+     <Point Pos="257,1324,18"/>
+     <Point Pos="204,1098,34"/>
+     <Point Pos="259,-98,0"/>
+     <Point Pos="246,-99,0"/>
+     <Point Pos="161,-81,0"/>
+     <Point Pos="87,-99,0"/>
+    </Points>
+    <Entities>
+     <Entity EntityGuid="4b479a6c6266902c"/>
+     <Entity EntityGuid="4bb9472d63cdf851"/>
+     <Entity EntityGuid="467811d521b84ce7"/>
+     <Entity EntityGuid="4d7faa225d7bf49e"/>
+     <Entity EntityGuid="4fb0084c7c8258e7"/>
+     <Entity EntityGuid="4adad0f69b0f1cf4"/>
+     <Entity EntityGuid="4dfe6e708023e29c"/>
+     <Entity EntityGuid="4273cc3d99f1104d"/>
+     <Entity EntityGuid="44d4752c0be74d6c"/>
+     <Entity EntityGuid="4e938986c5da0768"/>
+     <Entity EntityGuid="4fcc5194961b7039"/>
+    </Entities>
+    <TimeOfDay />
+    <SkyBox />
+   </Area>
+  </Entity>
+  <Entity Name="Light87" Pos="188.65552,229.48535,146.78761" Rotate="0.8829475,0,0,0.46947166" EntityClass="Light" EntityId="17303" EntityGuid="476f69f7c33c6a58" ViewDistRatio="5" CastShadow="0" MinSpec="2" Layer="demonolater_camp">
+   <Properties bActive="1" Radius="15">
+    <Color clrDiffuse="0.894118,0.635294,0.505882" fDiffuseMultiplier="1" fHDRDynamic="1" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ga_ReverbVolume4" Pos="698,366,582" EntityClass="ReverbVolume" EntityId="7895" EntityGuid="4b61e1c54c063561" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties bEnabled="1" Environment="1" bFullEffectWhenInside="1" OuterRadius="40" reverbpresetReverbPreset="x2_outdoor_1"/>
+  </Entity>
+  <Entity Name="ParticleEffect1758" Pos="445.59009,880.09961,180.97369" Scale="1.152,1.152,1.152" EntityClass="ParticleEffect" EntityId="17209" EntityGuid="47311582581b0c63" Layer="100111_fx">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_K.waterfall_black.waterfall_splash_smooth01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Light_241" Pos="278.22119,903.07129,185.50174" Rotate="0.8829475,0,0,0.46947184" EntityClass="Light" EntityId="17206" EntityGuid="4a13835cb74a7c63" ViewDistRatio="20" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="5">
+    <Color clrDiffuse="0.847059,0.976471,0.45098" fDiffuseMultiplier="2" fHDRDynamic="1" fSpecularMultiplier="2"/>
+    <Options bAffectsThisAreaOnly="0" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect1584" Pos="120.23804,251.36597,137.55475" Scale="0.80000001,0.80000001,0.80000001" EntityClass="ParticleEffect" EntityId="17256" EntityGuid="4cc0be058891c764" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.doodad.quest_cook_fire" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect_2455" Pos="230.60303,258.26099,143.83897" EntityClass="ParticleEffect" EntityId="17413" EntityGuid="401f909a1a68f964" Layer="demonolater_camp">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect_2332" Pos="682.84448,890.88428,213.78343" Rotate="0.96592575,0,0,-0.25881931" EntityClass="ParticleEffect" EntityId="15432" EntityGuid="487ecf5a7427e667" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.env.elf_light_r" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="lilyut_RandomSoundVolume_21" Pos="734,893,710" EntityClass="RandomSoundVolume" EntityId="7896" EntityGuid="4e938986c5da0768" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties DiscRadius="20" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="50" MinWaitTime="25" soundName="Sounds/x2ambience:world2_random:bird_random" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ParticleEffect1575" Pos="200.57813,514.73608,149.58464" Scale="1.0125,1.0125,1.0125" EntityClass="ParticleEffect" EntityId="17587" EntityGuid="4b79d94f36a64268" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="lilyut_AmbientVolume_river2" Pos="797.52539,620.3562,716.58875" EntityClass="AmbientVolume" EntityId="7897" EntityGuid="408a0c48bc84bf6b" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" soundName="Sounds/x2ambience:world2_day:river_small" OuterRadius="15" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="lilyut_RandomSoundVolume_20" Pos="734,893,723" EntityClass="RandomSoundVolume" EntityId="7898" EntityGuid="44d4752c0be74d6c" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties DiscRadius="20" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="25" MinWaitTime="10" soundName="Sounds/x2ambience:world2_random:cricket_random" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ga_AmbientVolume_03" Pos="907.5,136.5,432" EntityClass="AmbientVolume" EntityId="7899" EntityGuid="4cc8abb3145fb376" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" soundName="Sounds/x2ambience:world2_day:field_drywindy_day" OuterRadius="40" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ParticleEffect1574" Pos="189.40601,509.08691,149.00934" Scale="0.80000001,0.80000001,0.80000001" EntityClass="ParticleEffect" EntityId="17224" EntityGuid="4f9f708827474f77" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.doodad.quest_cook_fire" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Birds.Chickens_small5" Archetype="animals.Birds.Chickens_small" Pos="179.5,249.125,144.23273" EntityClass="Chickens" EntityId="17998" EntityGuid="4a61423b12703b7c" Layer="Main"/>
+  <Entity Name="Light115" Pos="141.30518,943.97266,201.73862" Rotate="0.94551861,0,0,-0.32556817" EntityClass="Light" EntityId="17640" EntityGuid="43e699ebd3d2e67f" ViewDistRatio="20" CastShadow="0" Layer="camp">
+   <Properties bActive="1" Radius="28">
+    <Color clrDiffuse="0.611765,0.894118,0.929412" fDiffuseMultiplier="1.5" fHDRDynamic="0.75" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ga_RandomSoundVolume19" Pos="758.5,363,480" EntityClass="RandomSoundVolume" EntityId="7900" EntityGuid="465303f55e204385" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties DiscRadius="10" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="40" MinWaitTime="20" soundName="Sounds/x2ambience:world2_animal:bird04" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ga_AmbientVolume_02" Pos="910,535,453" EntityClass="AmbientVolume" EntityId="7901" EntityGuid="486aff86663aa88a" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" soundName="Sounds/x2ambience:world2_day:field_day2" OuterRadius="40" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ParticleEffect1599" Pos="142.95581,946.5459,195.52557" Scale="0.66521257,0.66521257,0.66521257" EntityClass="ParticleEffect" EntityId="17575" EntityGuid="4e29b6cb231ebc8a" Layer="camp">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.doodad.quest_cook_fire" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ga_AmbientVolume_night5" Pos="753.52539,214.3562,639.58875" EntityClass="AmbientVolume" EntityId="7902" EntityGuid="4929729c7bc94494" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" soundName="Sounds/x2ambience:world2_night:wind_night3" OuterRadius="40" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="lilyut_sound_shape_river1" Pos="974,570,123" EntityClass="AreaShape" EntityId="7885" EntityGuid="4df291d364a2dc96" Layer="_sound_lilyut">
+   <Area Id="0" Group="0" Proximity="0" Priority="0" value1="0" value2="0" flags="0" Height="90">
+    <Points>
+     <Point Pos="0,0,0"/>
+     <Point Pos="-9,69,0"/>
+     <Point Pos="43,153,0"/>
+     <Point Pos="62,235,0"/>
+     <Point Pos="44,332,0"/>
+     <Point Pos="69,418,0"/>
+     <Point Pos="97,460,0"/>
+     <Point Pos="86,555,0"/>
+     <Point Pos="140,646,0"/>
+     <Point Pos="70,728,0"/>
+     <Point Pos="75,795,0"/>
+     <Point Pos="85,825,0"/>
+     <Point Pos="58,873,0"/>
+     <Point Pos="-7,928,0"/>
+     <Point Pos="38,928,0"/>
+     <Point Pos="101,880,0"/>
+     <Point Pos="125,830,0"/>
+     <Point Pos="120,744,0"/>
+     <Point Pos="186,645,0"/>
+     <Point Pos="180,622,0"/>
+     <Point Pos="127,539,0"/>
+     <Point Pos="156,458,0"/>
+     <Point Pos="96,393,0"/>
+     <Point Pos="78,337,0"/>
+     <Point Pos="88,270,0"/>
+     <Point Pos="106,244,0"/>
+     <Point Pos="88,198,0"/>
+     <Point Pos="81,135,0"/>
+     <Point Pos="46,72,0"/>
+     <Point Pos="57,12,0"/>
+     <Point Pos="97,-56,0"/>
+     <Point Pos="38,-90,0"/>
+     <Point Pos="6,-40,0.1000061"/>
+    </Points>
+    <Entities>
+     <Entity EntityGuid="408a0c48bc84bf6b"/>
+    </Entities>
+    <TimeOfDay />
+    <SkyBox />
+   </Area>
+  </Entity>
+  <Entity Name="Light29" Pos="361.46362,946.86572,214.21182" EntityClass="Light" EntityId="17928" EntityGuid="45a9260f454a539b" ViewDistRatio="5" CastShadow="0" MinSpec="3" Layer="Main">
+   <Properties bActive="1" Radius="30">
+    <Color clrDiffuse="0.894118,0.811765,0.596078" fDiffuseMultiplier="1.5" fHDRDynamic="1" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect1700" Pos="125.51221,285.22754,160.47809" Scale="1.152,1.152,1.152" EntityClass="ParticleEffect" EntityId="17724" EntityGuid="47511f86a8b9f19b" MinSpec="3" Layer="100111_fx">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_K.waterfall_black.waterfall_splash_smooth01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="lilyut_RandomSoundVolume_18" Pos="734,893,748" EntityClass="RandomSoundVolume" EntityId="7904" EntityGuid="4dfe6e708023e29c" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties DiscRadius="20" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="40" MinWaitTime="20" soundName="Sounds/x2ambience:world2_random:bird_random" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ga_sound_Shape_140_dance1990_3" Pos="876,54,122.10001" EntityClass="AreaShape" EntityId="7886" EntityGuid="485372df33c9469e" Layer="_sound_garangdol">
+   <Area Id="0" Group="0" Proximity="0" Priority="0" value1="0" value2="0" flags="0" Height="30">
+    <Points>
+     <Point Pos="0,0,0"/>
+     <Point Pos="-22,17,0"/>
+     <Point Pos="-45,11,0"/>
+     <Point Pos="-46,-15,0"/>
+     <Point Pos="-24,-28,0"/>
+     <Point Pos="-1,-22,0"/>
+     <Point Pos="9,-24,0"/>
+     <Point Pos="26,-44,0"/>
+     <Point Pos="39,-49,0"/>
+     <Point Pos="49,-41,0"/>
+     <Point Pos="45,-16,0"/>
+     <Point Pos="32,2,0"/>
+     <Point Pos="15,5,0"/>
+    </Points>
+    <Entities>
+     <Entity EntityGuid="4098277c81ee311c"/>
+    </Entities>
+    <TimeOfDay />
+    <SkyBox />
+   </Area>
+  </Entity>
+  <Entity Name="ParticleEffect1581" Pos="178.81104,311.58203,136.61914" Scale="1.2,1.2,1.2" EntityClass="ParticleEffect" EntityId="17747" EntityGuid="446dfa58ed00cc9e" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="lilyut_RandomSoundVolume_03" Pos="734,893,792" EntityClass="RandomSoundVolume" EntityId="7906" EntityGuid="4d7faa225d7bf49e" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties DiscRadius="10" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="40" MinWaitTime="20" soundName="Sounds/x2ambience:world2_animal:bird04" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ParticleEffect1568" Pos="197.5769,1002.2954,197.06703" Scale="0.80000001,0.80000001,0.80000001" EntityClass="ParticleEffect" EntityId="17394" EntityGuid="44a9da0f0cd2b79f" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect1580" Pos="189.50952,294.2771,137.02049" EntityClass="ParticleEffect" EntityId="17785" EntityGuid="4e134e3c3e2c31a1" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ga_RandomSoundVolume6" Pos="932.66235,573.92383,450.95352" EntityClass="RandomSoundVolume" EntityId="7907" EntityGuid="46d6af508e6be2a3" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties DiscRadius="10" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="40" MinWaitTime="20" soundName="Sounds/x2ambience:world2_animal:sparrow01" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ParticleEffect_2332" Pos="604.76782,992.0835,221.8625" Rotate="0.90258509,0,0,-0.43051144" EntityClass="ParticleEffect" EntityId="15358" EntityGuid="41a5c7065e3fe4a5" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.env.elf_light_g" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ga_sound_shape_03" Pos="1007,190,118" EntityClass="AreaShape" EntityId="7887" EntityGuid="45200e734e47b2aa" Layer="_sound_garangdol">
+   <Area Id="0" Group="0" Proximity="0" Priority="0" value1="0" value2="0" flags="0" Height="400">
+    <Points>
+     <Point Pos="0,0,0"/>
+     <Point Pos="-178,71,0"/>
+     <Point Pos="-276,47,0"/>
+     <Point Pos="-362,1,0"/>
+     <Point Pos="-410,-54,0"/>
+     <Point Pos="-464,-116,0"/>
+     <Point Pos="-470,-260,0"/>
+     <Point Pos="-400,-338,0"/>
+     <Point Pos="-251,-279,0"/>
+     <Point Pos="-70,-369,0"/>
+     <Point Pos="5,-338,0"/>
+     <Point Pos="30,-190,0"/>
+     <Point Pos="27,-85,0"/>
+    </Points>
+    <Entities>
+     <Entity EntityGuid="4cc8abb3145fb376"/>
+     <Entity EntityGuid="469dff20250472e4"/>
+     <Entity EntityGuid="4929729c7bc94494"/>
+     <Entity EntityGuid="4872bccb9cee5123"/>
+     <Entity EntityGuid="4b183b70920768e6"/>
+    </Entities>
+    <TimeOfDay />
+    <SkyBox />
+   </Area>
+  </Entity>
+  <Entity Name="Light_240" Pos="256.09131,870.33545,183.11465" Rotate="0.8829475,0,0,0.46947184" EntityClass="Light" EntityId="17949" EntityGuid="4e4730e8eb74e3ad" ViewDistRatio="20" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="5">
+    <Color clrDiffuse="0.847059,0.976471,0.45098" fDiffuseMultiplier="2" fHDRDynamic="1" fSpecularMultiplier="2"/>
+    <Options bAffectsThisAreaOnly="0" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect1572" Pos="259.19165,1012.2422,195.24289" Scale="1.0125,1.0125,1.0125" EntityClass="ParticleEffect" EntityId="17957" EntityGuid="4a65989f34889cb3" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Birds.Chickens_small_16" Archetype="animals.Birds.Chickens_small" Pos="444.11084,532.91211,130.20287" Rotate="0.2840153,0,0,0.95881975" EntityClass="Chickens" EntityId="18024" EntityGuid="4a80b41e3d15dfbb" Layer="Main"/>
+  <Entity Name="Light112" Pos="631.07788,993.85449,221.07118" Rotate="0.52991921,0,0,0.84804815" Scale="0.99999994,0.99999994,1" EntityClass="Light" EntityId="15475" EntityGuid="4532ddcac15a78be" ViewDistRatio="3" CastShadow="0" Layer="Main">
+   <Properties bActive="1" Radius="10">
+    <Color clrDiffuse="0.486275,0.847059,0.854902" fDiffuseMultiplier="1.2" fHDRDynamic="0.75" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect1704" Pos="166.55273,431.75146,151.98984" Scale="1.152,1.152,1.152" EntityClass="ParticleEffect" EntityId="17754" EntityGuid="4748382bcb8e57c3" Layer="100111_fx">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_K.waterfall_black.waterfall_splash_smooth01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect_2454" Pos="203.93823,258.94702,143.7388" EntityClass="ParticleEffect" EntityId="17635" EntityGuid="48c5f5d9a1d68dc7" Layer="demonolater_camp">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Light117" Pos="328.5979,730.80908,158.94994" EntityClass="Light" EntityId="17661" EntityGuid="429b849285efe1c7" ViewDistRatio="15" CastShadow="0" Layer="Main">
+   <Properties bActive="1" Radius="15">
+    <Color clrDiffuse="0.611765,0.894118,0.929412" fDiffuseMultiplier="1.5" fHDRDynamic="0.75" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect1692" Pos="278.69995,763.20361,160.325" Scale="1.152,1.152,1.152" EntityClass="ParticleEffect" EntityId="17697" EntityGuid="431fbc6b011ae2c8" MinSpec="3" Layer="100111_fx">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_K.waterfall_black.waterfall_splash_smooth01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect_2334" Pos="1002.5759,597.86401,142.64082" Rotate="-0.076884009,-0.015642241,0.19875342,0.97690392" Scale="2,2,2" EntityClass="ParticleEffect" EntityId="17762" EntityGuid="44cdda67fa9653ca" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.water_etc.maha_waterfall_step_01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Light_156" Pos="457.75293,530.31738,133.51138" Rotate="0.88294768,0,0,0.46947163" EntityClass="Light" EntityId="17793" EntityGuid="473b0a3575c91fcb" ViewDistRatio="5" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="7">
+    <Color clrDiffuse="0.92549,0.552941,0.47451" fDiffuseMultiplier="1.5" fHDRDynamic="1" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect1585" Pos="113.71265,262.1084,138.16087" Scale="1.0125,1.0125,1.0125" EntityClass="ParticleEffect" EntityId="17605" EntityGuid="47bc97b891f56acb" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Birds.Chickens_small8" Archetype="animals.Birds.Chickens_small" Pos="136.55347,945.125,195.50331" EntityClass="Chickens" EntityId="17980" EntityGuid="4270fc59a9d6cdcc" Layer="camp"/>
+  <Entity Name="ParticleEffect1582" Pos="171.54028,298.32373,135.80714" Scale="0.60780376,0.60780376,0.60780376" EntityClass="ParticleEffect" EntityId="17507" EntityGuid="44d10987c35718d1" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.doodad.quest_cook_fire" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Light_158" Pos="447.65381,520.47607,134.99889" Rotate="0.2840153,0,0,0.95881975" EntityClass="Light" EntityId="17185" EntityGuid="4edadc357c506cd1" ViewDistRatio="20" CastShadow="0" Layer="Main">
+   <Properties bActive="1" Radius="25">
+    <Color clrDiffuse="0.611765,0.894118,0.929412" fDiffuseMultiplier="1.5" fHDRDynamic="0.75" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect_2196" Pos="457.70264,522.05615,130.25748" Rotate="0.28401533,0,0,0.95881975" Scale="0.75,0.75,0.75" EntityClass="ParticleEffect" EntityId="17820" EntityGuid="40daba7174dba6d4" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="lilyut_RandomSoundVolume_02" Pos="734,893,807" EntityClass="RandomSoundVolume" EntityId="7909" EntityGuid="456223535b06bed4" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties DiscRadius="10" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="80" MinWaitTime="30" soundName="Sounds/x2ambience:world2_random:wind_grass" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="Light_238" Pos="297.50635,988.38037,195.62975" Rotate="0.8829475,0,0,0.46947184" EntityClass="Light" EntityId="17723" EntityGuid="47b1880e7c7136d5" ViewDistRatio="20" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="5">
+    <Color clrDiffuse="0.847059,0.976471,0.45098" fDiffuseMultiplier="2" fHDRDynamic="1" fSpecularMultiplier="2"/>
+    <Options bAffectsThisAreaOnly="0" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="sound_ParticleEffect_59" Pos="131.70166,953.08057,196.629" Rotate="0.98628557,0,0,-0.16504769" EntityClass="ParticleEffect" EntityId="15243" EntityGuid="4dd82e0f638fa5d7" Layer="ship">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="x2_sounds.particles.vendor_elf_repair" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect1703" Pos="193.1499,307.26514,137.02116" Scale="1.152,1.152,1.152" EntityClass="ParticleEffect" EntityId="17243" EntityGuid="4e920b93c50b90dc" Layer="100111_fx">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_K.waterfall_black.waterfall_splash_smooth01" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Light82" Pos="120.31104,251.42871,140.7375" Rotate="0.88294756,0,0,0.46947157" EntityClass="Light" EntityId="17790" EntityGuid="4f6c4214b7cb96dd" ViewDistRatio="5" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="15">
+    <Color clrDiffuse="0.92549,0.552941,0.47451" fDiffuseMultiplier="1.5" fHDRDynamic="1" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="Light_164" Pos="193.99194,1004.0444,204.60371" Rotate="0.8829475,0,0,0.46947184" EntityClass="Light" EntityId="17198" EntityGuid="403c982cbbf9b3df" ViewDistRatio="20" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="18">
+    <Color clrDiffuse="0.941177,0.968628,0.501961" fDiffuseMultiplier="2.5" fHDRDynamic="1" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="0" bAmbientLight="0" bCastShadow="0" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="sound_gweonid_forest_Shape_129_dance1990_24" Pos="264.5127,784.92822,137.58578" EntityClass="AreaShape" EntityId="7888" EntityGuid="4692d51a3fd02fe0" Layer="_sound_gweonid_forest">
+   <Area Id="0" Group="0" Proximity="0" Priority="0" value1="0" value2="0" flags="0" Height="50">
+    <Points>
+     <Point Pos="0,0,0"/>
+     <Point Pos="-1.2416992,-20.849731,0"/>
+     <Point Pos="16.455322,-52.290405,0"/>
+     <Point Pos="12.325439,-56.96936,-1.5258789e-005"/>
+     <Point Pos="-10.812988,-64.541809,-3.0517578e-005"/>
+     <Point Pos="-5.1142578,-86.030762,-1.5258789e-005"/>
+     <Point Pos="-1.0700684,-101.24072,-3.0517578e-005"/>
+     <Point Pos="28.659912,-107.02673,-1.5258789e-005"/>
+     <Point Pos="48.88208,-132.62903,-1.5258789e-005"/>
+     <Point Pos="92.900146,-118.73401,-3.0517578e-005"/>
+     <Point Pos="97.017822,-89.828796,0"/>
+     <Point Pos="51.449951,-59.952698,-1.5258789e-005"/>
+     <Point Pos="44.249268,-55.660583,-1.5258789e-005"/>
+     <Point Pos="55.860596,-42.807434,0"/>
+     <Point Pos="55.094238,-23.250122,-3.0517578e-005"/>
+     <Point Pos="39.723877,-13.061462,0"/>
+     <Point Pos="32.064697,3.1813354,-1.5258789e-005"/>
+     <Point Pos="15.663818,11.593994,-3.0517578e-005"/>
+    </Points>
+    <Entities>
+     <Entity EntityGuid="4617bd7d3e1b9de0"/>
+    </Entities>
+    <TimeOfDay />
+    <SkyBox />
+   </Area>
+  </Entity>
+  <Entity Name="ParticleEffect_2194" Pos="448.56421,531.89404,130.25771" Rotate="0.28401518,0,0,0.95881981" Scale="0.80000007,0.80000007,0.80000001" EntityClass="ParticleEffect" EntityId="17766" EntityGuid="47afe72154b972e0" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.doodad.quest_cook_fire" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="sound_gweonid_forest_AmbientVolume_30" Pos="264.5127,784.92822,849.78302" EntityClass="AmbientVolume" EntityId="7911" EntityGuid="4617bd7d3e1b9de0" OutdoorOnly="1" Layer="_sound_gweonid_forest">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" soundName="Sounds/x2ambience:world2_object:pond" OuterRadius="10" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ParticleEffect1795" Pos="188.64526,229.43604,143.15877" Scale="0.80000001,0.80000001,0.80000001" EntityClass="ParticleEffect" EntityId="17803" EntityGuid="4c67778f2686e7e0" Layer="demonolater_camp">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.doodad.quest_cook_fire" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="Light80" Pos="200.31104,297.92871,139.3033" Rotate="0.88294762,0,0,0.4694716" EntityClass="Light" EntityId="17203" EntityGuid="48212f5015278ee1" ViewDistRatio="5" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="7">
+    <Color clrDiffuse="0.92549,0.552941,0.47451" fDiffuseMultiplier="1.5" fHDRDynamic="1" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="Light74" Pos="189.43604,509.17871,152.90417" Rotate="0.88294762,0,0,0.4694716" EntityClass="Light" EntityId="17197" EntityGuid="4d19868a2850afe2" ViewDistRatio="5" CastShadow="0" MinSpec="2" Layer="Main">
+   <Properties bActive="1" Radius="7">
+    <Color clrDiffuse="0.92549,0.552941,0.47451" fDiffuseMultiplier="1.5" fHDRDynamic="1" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ga_RandomSoundVolume4" Pos="908.5,115.5,438" EntityClass="RandomSoundVolume" EntityId="7912" EntityGuid="469dff20250472e4" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties DiscRadius="10" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="50" MinWaitTime="30" soundName="Sounds/x2ambience:world2_random:rnd_hvy_wind04" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ga_RandomSoundVolume_119" Pos="908.5,115.5,412" EntityClass="RandomSoundVolume" EntityId="7913" EntityGuid="4b183b70920768e6" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties DiscRadius="20" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="70" MinWaitTime="30" soundName="Sounds/x2ambience:world2_random:monster_amb" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="lilyut_RandomSoundVolume_01" Pos="734,893,821" EntityClass="RandomSoundVolume" EntityId="7914" EntityGuid="467811d521b84ce7" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties DiscRadius="10" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="40" MinWaitTime="20" soundName="Sounds/x2ambience:world2_animal:sparrow01" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="lilyut_RandomSoundVolume_04" Pos="734,893,776" EntityClass="RandomSoundVolume" EntityId="7915" EntityGuid="4fb0084c7c8258e7" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties DiscRadius="10" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="20" MinWaitTime="8" soundName="Sounds/x2ambience:world2_random:cricket_random" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="ga_sound_shape_02" Pos="1008,662,89" EntityClass="AreaShape" EntityId="7889" EntityGuid="4537239374f62dee" Layer="_sound_garangdol">
+   <Area Id="0" Group="0" Proximity="0" Priority="0" value1="0" value2="0" flags="0" Height="550">
+    <Points>
+     <Point Pos="0,0,0"/>
+     <Point Pos="465,22,0"/>
+     <Point Pos="655,0,0"/>
+     <Point Pos="329,-882,0"/>
+     <Point Pos="309,-839,-1"/>
+     <Point Pos="264,-785,-1"/>
+     <Point Pos="211,-765,-1"/>
+     <Point Pos="165,-691,-1"/>
+     <Point Pos="234,-612,-1"/>
+     <Point Pos="214,-557,-1"/>
+     <Point Pos="81,-589,0"/>
+     <Point Pos="40,-643,0"/>
+     <Point Pos="36,-557.5,0"/>
+     <Point Pos="4,-469.5,-0.5"/>
+     <Point Pos="-182.25,-393.5,-0.5"/>
+     <Point Pos="-281.5,-415,-0.5"/>
+     <Point Pos="-364.25,-461.25,-0.5"/>
+     <Point Pos="-468,-580.5,-0.5"/>
+     <Point Pos="-479.5,-729.5,-0.5"/>
+     <Point Pos="-744.75,-823.75,-0.5"/>
+     <Point Pos="-993.5,-813.5,-0.5"/>
+     <Point Pos="-998,-586,0"/>
+     <Point Pos="-710,-532,0"/>
+     <Point Pos="-426,-364,0"/>
+     <Point Pos="-232.45844,-152.18164,-0.019439697"/>
+     <Point Pos="-203,-70,0"/>
+     <Point Pos="-153,-2,0"/>
+     <Point Pos="-84,20,0"/>
+    </Points>
+    <Entities>
+     <Entity EntityGuid="486aff86663aa88a"/>
+     <Entity EntityGuid="46d6af508e6be2a3"/>
+     <Entity EntityGuid="4401c5c5c3268a39"/>
+     <Entity EntityGuid="465303f55e204385"/>
+     <Entity EntityGuid="4b61e1c54c063561"/>
+     <Entity EntityGuid="4fb37924d8c0fefd"/>
+     <Entity EntityGuid="43ede69e15212123"/>
+    </Entities>
+    <TimeOfDay />
+    <SkyBox />
+   </Area>
+  </Entity>
+  <Entity Name="Birds.Chickens_small_15" Archetype="animals.Birds.Chickens_small" Pos="450.88403,526.12891,130.20287" Rotate="0.2840153,0,0,0.95881975" EntityClass="Chickens" EntityId="18045" EntityGuid="4b4c65f2c00f5bee" Layer="Main"/>
+  <Entity Name="ParticleEffect1578" Pos="196.76123,410.60425,151.28224" Scale="1.0125,1.0125,1.0125" EntityClass="ParticleEffect" EntityId="17919" EntityGuid="42d6ecafdead2cef" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.fire_smoke.torchlight_a" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="lilyut_RandomSoundVolume_17" Pos="734,893,762" EntityClass="RandomSoundVolume" EntityId="7917" EntityGuid="4adad0f69b0f1cf4" OutdoorOnly="1" Layer="_sound_lilyut">
+   <Properties DiscRadius="20" bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" MaxWaitTime="30" MinWaitTime="10" soundName="Sounds/x2ambience:world2_random:bird_random" bRandomPosition="1" bSensitiveToBattle="0"/>
+  </Entity>
+  <Entity Name="Light112" Pos="604.98901,990.77368,222.74635" Rotate="0.99939084,0,0,0.034899201" Scale="0.99999994,0.99999994,1" EntityClass="Light" EntityId="15357" EntityGuid="4f72d05584da66fa" ViewDistRatio="3" CastShadow="0" Layer="Main">
+   <Properties bActive="1" Radius="10">
+    <Color clrDiffuse="0.486275,0.847059,0.854902" fDiffuseMultiplier="1.2" fHDRDynamic="0.75" fSpecularMultiplier="1"/>
+    <Options bAffectsThisAreaOnly="1" bAmbientLight="0" bCastShadow="1" nCastShadows="0" bDeferredClipBounds="0" bDeferredLight="1" bFakeLight="0" bIgnoreMirrorCull="0" bIrradianceVolumes="0" fShadowBias="10" fShadowSlopeBias="1" fShadowUpdateMinRadius="10" fShadowUpdateRatio="1"/>
+    <Projector bProjectInAllDirs="0" fProjectorFov="90" fProjectorNearPlane="0" texture_Texture=""/>
+    <Style fCoronaDistIntensityFactor="1" fCoronaDistSizeFactor="1" fCoronaScale="1" nLightStyle="0"/>
+    <Test bNegativeLight="0"/>
+   </Properties>
+  </Entity>
+  <Entity Name="ParticleEffect_2190" Pos="328.8186,730.52173,155.41255" Scale="0.69999999,0.69999999,0.69999999" EntityClass="ParticleEffect" EntityId="17674" EntityGuid="4cb7e1a87237bcfa" Layer="camp">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS_P.doodad.quest_cook_fire" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ParticleEffect165" Pos="499.62671,58.796387,161.67577" Rotate="-0.3434163,0.14348231,-0.012183439,0.92807847" Scale="0.72511011,0.72510988,0.72510993" EntityClass="ParticleEffect" EntityId="15264" EntityGuid="466b5e25179011fc" Layer="Main">
+   <Properties bActive="1" AttachForm="Surface" AttachType="" bCountPerUnit="0" CountScale="1" ParticleEffect="X2_EFFECTS.e_effect.e0018" bPrime="1" PulsePeriod="0" Scale="1" soclasses_SmartObjectClass="" SpeedScale="1"/>
+  </Entity>
+  <Entity Name="ga_AmbientVolume_night4" Pos="770.52539,390.3562,639.58875" EntityClass="AmbientVolume" EntityId="7918" EntityGuid="4fb37924d8c0fefd" OutdoorOnly="1" Layer="_sound_garangdol">
+   <Properties bEnabled="1" bIgnoreCulling="0" bIgnoreObstruction="0" bLogBattleValue="0" soundName="Sounds/x2ambience:world2_night:forest_night1" OuterRadius="40" bSensitiveToBattle="0"/>
+  </Entity>
+ </Objects>
+</Mission>

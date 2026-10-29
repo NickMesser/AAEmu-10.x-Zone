@@ -1,0 +1,1052 @@
+{
+  "scope": "Unchanged raw127 water payloads and original material tables in filtered BigObjects transport; original source indices/offsets preserved separately, not fabricated by the compact parser. Query-class proof is not body-count/geometry readiness.",
+  "files": [
+    {
+      "assetPath": "game/worlds/main_world/cells/009_014/client/object.dat",
+      "originalFileSha256": "237003254a7cecf2accd2ea704eec4790b587f45cc0018ecaf277208c281e10e",
+      "originalKind": 0,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "H4sIAAAAAAACCu2cPZLsNBCAu4AihQCKkAhSj5fdB4egCB4H6JLttq1dWTKyPH5zCKq4ABkRESlEXILkRdwAQkJatmd2Z+eHoooE9XPtjiXPz5a+6W71nxcA4CUsR6M6ylxxT2UYMrLbbHOHVoXRU7b5Aku/w8GNvqTMu/JhyEqj6xqfj7HAzg3Dbv1MeB+Ojo++fa+L57eOL8NPv/z6Z7z29vwD8M7L4+e/W9/w++s/lvOnH8yf8+OHX07x/NsnH//w9PXvrue/vl/+3v44vP/rn7+CM8cpgxztqFW2ucVmygrdBE+ECkQxuCoH96NtDOHJBBVamtKUg2ZCMrWnTmmLBFIYXJWDYdThfux6fDZ9ohdHWvE/l4M4qKh0WacetG2yeYLLBCfVOAspMehUIK+VGTKlkIeeJT/jJccrweMywiF4NWG+2ShIkMFZOXjB37nXWXxAN5TKY9kym8K9AjEMDrqwKEHpus7ZRRg2N5A2gxts+avn34VDO3NoqWIOUQZEMDiRA2eqrFDek0Gn2B8CoQwMKW/jhuCKTQ4yGfTe9XyhG03QIJDBYhMHZatCNSwFchn4UdtZGm4EMDi/L8wclClb6nZv5OAzEGoTJ+cq9g54lbuBnWmQqwt+mk1jIBtQVRXbR3kMjN6yjzBrxAtImcGJLrRuHGLwbBQvVoEEBrcYWu2r2sXMyeZzrJQfs/iAUQcApMkBB4tZfOBw0fmYWU2XwbUcyhSfw945jpgsR9C29BSIB4apVDowCCF7Y4gMauU7LEEQg31euaOOo4WgCkPsH71hcCOMwQ02iq2Bp7g3EohkcLAH34w0hDVqmMdsIdlPBEkM9j7SQmGdYW3cRJ5pMARJvvKaW+6NsmGI0sDKIY3BoB+/fkiZwfX6wrw/DDSvXBCDU5u4ZhNAmhxMpPpYZ2rJ1Lzs5Bg8xgv7Qus+ZtA+xDDBO1Vh/gIbr3Y5yGIwYa9i2oTDRktL/RkL7yYLaevC1R6MglTZ4vPxuu70Yuco/3P7wawInX7FmuBGyzqxuYP0GFyOmWJGfWCHwRgQy4DjxtUrNKRqDhKSZXDRJjpfFoadgR1utTE4bxNsA8XIwXH/gbO1njOKohjs+1Q5cuhBMoN9Hkn3lt1EQ5GAAAYX/INiZDd5bVKO47VdOQ55wyCyAMn3Jy4G8S52JybJ4D/o2Y6RBAirueaQMoMLsXPtfDObxEQZ/Ct7UIAcOThTYwGpDCYOmNg3EsngYA/2stCQbbQl8hUNDyDRJpbOPSxdCEvpMQd5DPqxAHEMjuMFa+O+KJXBUlnCnoIym1uQx6BTnhfMvsHQ5iCPwZU6k7YPPQdJcnQh3rQhlcFRb16sMNZkSwKJcpCz/nO0FEAig6OcqqetpmmuuilbgTgGpzaxcCHExVMFovzEIf4fhICl8gGkMojxgp+dZRDIINqDsiUaCKQxOPgHIJfBM12oHCq71Sbe25c8g7N55WVvaJ/sDUEvvUmxYVVSbv20RzOHJBlcvpfnSQN34gyuyAGH0EEbQ34XawyQLoOzMVPLPnLQzoJgBmz8lrvaxDHYd+0f+vVHb/Vcj20HrOPeeLgCInxl5XuOF1RRVpA8gwu197Uxb9kXs6GL1SdDakvHE0g3t+7ZLVKj5/XjXGYTwuAf7UH+OI+2MSUG1/zE2SZASgz+BjxnKNdQUwAA",
+      "rows": []
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/009_014/client/big_object.dat",
+      "originalFileSha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "originalKind": 1,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "H4sIAAAAAAACCmNggAAAad8iZQgAAAA=",
+      "rows": []
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/011_014/client/object.dat",
+      "originalFileSha256": "8ca42be85cbf58bc527ae206cf4ecb4f7b092f2421d796e92e31966bb1098960",
+      "originalKind": 0,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "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",
+      "rows": [
+        {
+          "originalOrder": 714,
+          "originalOffset": 401245,
+          "payloadSha256": "c6a3c728ae971a9307c849854327e98efd0b98ec37a2d1a6e1dce3384afd773d"
+        },
+        {
+          "originalOrder": 726,
+          "originalOffset": 404031,
+          "payloadSha256": "656d5049fd3fc4f86c9d2189a3783cdd1c3e47fc96e791bbe229fcea6841b27a"
+        },
+        {
+          "originalOrder": 731,
+          "originalOffset": 405180,
+          "payloadSha256": "77f1c246d694dbaebf7958b196ba9cf24c8e97f884ca039aa2c8aaa7155fdc96"
+        },
+        {
+          "originalOrder": 964,
+          "originalOffset": 442585,
+          "payloadSha256": "e807585baaf4a9ec5fc003c2419d682540880442a93f72e9bfdfda3161a4c973"
+        },
+        {
+          "originalOrder": 994,
+          "originalOffset": 447087,
+          "payloadSha256": "22d1bf63f506c3a884b4ed475fbfab02d1d9a3a3022a49f6ad093cef223f1ac1"
+        },
+        {
+          "originalOrder": 1599,
+          "originalOffset": 544803,
+          "payloadSha256": "e6a800725358787f4db375235b70bebed124525f8b9dd082aaeb4e33e2e2a7ab"
+        },
+        {
+          "originalOrder": 2465,
+          "originalOffset": 670449,
+          "payloadSha256": "672470f3b9b45054eb5aec911830040bf884bcc116ee5a8603e23069d25fd0c7"
+        },
+        {
+          "originalOrder": 2467,
+          "originalOffset": 670754,
+          "payloadSha256": "bd5e2b462f44eb75d0e691b21cb7713f0fd2944936d02a76d3da9534996136b9"
+        },
+        {
+          "originalOrder": 2468,
+          "originalOffset": 670958,
+          "payloadSha256": "0324bc5c04335e7afa3974570ddcd0e9678d74b827e9cf2340606484ce917755"
+        },
+        {
+          "originalOrder": 2469,
+          "originalOffset": 671195,
+          "payloadSha256": "602f1a8285e54675d99f643e0fa244d6409dc22e21b7fdcbca0f5cec9390486f"
+        },
+        {
+          "originalOrder": 2471,
+          "originalOffset": 671500,
+          "payloadSha256": "80add1fad245fd909133b3a9c9a24bea701a5b465e7f8862679c887fca2faf23"
+        },
+        {
+          "originalOrder": 2480,
+          "originalOffset": 672995,
+          "payloadSha256": "31fce53c9467917a1538d54fc75e8dd7d53ef5ce057a8749ca030fc6aa4c48ef"
+        },
+        {
+          "originalOrder": 2481,
+          "originalOffset": 673199,
+          "payloadSha256": "657331eba275a2ce1f75ed643dbdf5ed6538992d7d0963241c18c9cda0e629c2"
+        },
+        {
+          "originalOrder": 2482,
+          "originalOffset": 673370,
+          "payloadSha256": "edf98beec32650c4cbd30cdbc5b980a10e8c61b7b9b2123589c22a8f38ccecae"
+        },
+        {
+          "originalOrder": 2492,
+          "originalOffset": 674828,
+          "payloadSha256": "3bdd6dbadd757b0696e422c35f2bdffc84d2886db4b8ff53255bb0ed74f2ebe2"
+        },
+        {
+          "originalOrder": 2494,
+          "originalOffset": 675164,
+          "payloadSha256": "dcfac673ec5998b4bd28b6520d7187d26e61b16bdee7649d3ed9fa1a2c60cd0c"
+        },
+        {
+          "originalOrder": 2495,
+          "originalOffset": 675335,
+          "payloadSha256": "290f9563e25c55d56d4da578048c646f9cc809886c16d0cead8b22504addb610"
+        },
+        {
+          "originalOrder": 2513,
+          "originalOffset": 678492,
+          "payloadSha256": "0ed6b57336678178302d31cf01759d0e791106cc081222a1f1b2971438ecc27b"
+        },
+        {
+          "originalOrder": 2514,
+          "originalOffset": 678696,
+          "payloadSha256": "c63080ef6ddb8c55624e227c267e68cf33523c74d5d5f4ee9c6fca57e3fdd4e0"
+        },
+        {
+          "originalOrder": 2515,
+          "originalOffset": 678867,
+          "payloadSha256": "ef2a2655c7a04da62dceefc2bf2407fcff1e80f3589468a22cd515852b8e04ae"
+        },
+        {
+          "originalOrder": 2522,
+          "originalOffset": 680028,
+          "payloadSha256": "dce41dea518223534ea01454bf5f19fadea5d62be352e33a49331d0ed488fd32"
+        },
+        {
+          "originalOrder": 2523,
+          "originalOffset": 681303,
+          "payloadSha256": "e7321246225f740954fa24514fe1dac3d97737959d3c9df41f9b7578f8a77284"
+        }
+      ]
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/011_014/client/big_object.dat",
+      "originalFileSha256": "fb5255df96348518f38924c92c7a4ea83f49fb339c9e4a2d4f360da3643619f5",
+      "originalKind": 1,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "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",
+      "rows": [
+        {
+          "originalOrder": 0,
+          "originalOffset": 268,
+          "payloadSha256": "ae283bf31baf47cbc61a1a70d3a624c742e1fc9e866a079dadcbb9c44f26ea06"
+        },
+        {
+          "originalOrder": 1,
+          "originalOffset": 439,
+          "payloadSha256": "ad0bd9398a033f0fe375a349001519ef7aaa28f21d80cc2481d86b526d867910"
+        },
+        {
+          "originalOrder": 2,
+          "originalOffset": 1714,
+          "payloadSha256": "8d5e73417a37aaa540ca65e86f992b03ef07f441af7c3788047c21bac20d0581"
+        },
+        {
+          "originalOrder": 3,
+          "originalOffset": 1885,
+          "payloadSha256": "182f94b3ec2a61f5766291ce80df9b9d7655104c58dfb9d4456329beb128586d"
+        },
+        {
+          "originalOrder": 4,
+          "originalOffset": 2056,
+          "payloadSha256": "8699ffb89786d53da355106fc2149da25e9cc37bd5bc347031ab0e7b5dc2587f"
+        },
+        {
+          "originalOrder": 5,
+          "originalOffset": 2227,
+          "payloadSha256": "1b6355d50cb4c8864604e33b98687a805c73497f049bfc8148a03296373bf17a"
+        },
+        {
+          "originalOrder": 6,
+          "originalOffset": 2398,
+          "payloadSha256": "d0e345da6dea9d99d61cc425a7931d9477158d4c47a274633e048f2c93e3a149"
+        },
+        {
+          "originalOrder": 7,
+          "originalOffset": 2569,
+          "payloadSha256": "12a999f057f81681f0b32050ed8b3d41068a270b7e0b11fe1e1a2c8599f091d5"
+        },
+        {
+          "originalOrder": 8,
+          "originalOffset": 2740,
+          "payloadSha256": "f7c8caa36773faf81ab3aa43a76eca6d5f0568a4a4ab98ec8021598ce4a7cd6e"
+        },
+        {
+          "originalOrder": 9,
+          "originalOffset": 2911,
+          "payloadSha256": "53ed62a90efed5586831baeac5d6db5f5dccd7c991ce01bcdbb0f8629f34ff22"
+        },
+        {
+          "originalOrder": 10,
+          "originalOffset": 3082,
+          "payloadSha256": "bf67391f884c2cfe38cdbb0c689402a38cdf54d0b287b07b71dc1f62d0a7c5e9"
+        },
+        {
+          "originalOrder": 11,
+          "originalOffset": 3253,
+          "payloadSha256": "a99bd713df766b29fbe9ab76157dc54f590bc3c26366a1dbd7095bc548f46c1c"
+        },
+        {
+          "originalOrder": 12,
+          "originalOffset": 4672,
+          "payloadSha256": "7064843496e9c09192bc5f535dec66b5e0288ee5859696a719c16af4fcd403f9"
+        },
+        {
+          "originalOrder": 13,
+          "originalOffset": 4843,
+          "payloadSha256": "bbb13985ac1e140622057d5a0b00790257bd9c53cbde1d652594bae134dbc76d"
+        },
+        {
+          "originalOrder": 14,
+          "originalOffset": 5014,
+          "payloadSha256": "93d07f47802aac588cf7beae1e866453de73929fb50984f804da6f5ee9b6e975"
+        },
+        {
+          "originalOrder": 15,
+          "originalOffset": 5185,
+          "payloadSha256": "5b123dcdfb456f876ea146aa9677c41c74e40d953d37957e9968ce6d0cc4ba60"
+        },
+        {
+          "originalOrder": 16,
+          "originalOffset": 5356,
+          "payloadSha256": "edc5f68e956970970dbf6004e009fa955235b4eab0261b4f9b699138cbc3d826"
+        },
+        {
+          "originalOrder": 17,
+          "originalOffset": 5527,
+          "payloadSha256": "82dbce4a1a0bd5135005f1f363fe1e3dc5813a41b0c398257f65b9ab9e7fb8a5"
+        },
+        {
+          "originalOrder": 18,
+          "originalOffset": 5698,
+          "payloadSha256": "e419845603febbebf87b6eb384d0ee2bf3d2d2fe94b2b4ebb42478f8b8a48727"
+        },
+        {
+          "originalOrder": 19,
+          "originalOffset": 5869,
+          "payloadSha256": "15a55742f10831763b3683885d8d79e9a199255422ce614cad0de4eae0838c1c"
+        },
+        {
+          "originalOrder": 20,
+          "originalOffset": 6040,
+          "payloadSha256": "23fc6736f0b8469d550f3d671be4448125beccade18b1c6d97711a4b95f883de"
+        },
+        {
+          "originalOrder": 21,
+          "originalOffset": 6211,
+          "payloadSha256": "e90b3296db4cc77efbad43be81fa154cf127c2a56fc786cb5a61ed9f54a87fac"
+        },
+        {
+          "originalOrder": 22,
+          "originalOffset": 6382,
+          "payloadSha256": "38c87c6bd8f2e524064c62b860eb10103fe146258db04bd2ae573aae3bba15f2"
+        },
+        {
+          "originalOrder": 23,
+          "originalOffset": 6553,
+          "payloadSha256": "73b90c33d401117f9e08fc9df4ade3ef25d85326811815bf032535732efb8431"
+        },
+        {
+          "originalOrder": 24,
+          "originalOffset": 6724,
+          "payloadSha256": "0146923dea67f815c830499e2294209300d0c6395b5c0db6962686795563771e"
+        },
+        {
+          "originalOrder": 25,
+          "originalOffset": 6895,
+          "payloadSha256": "a8c7224a0c49b924fd3d5e27d676e23ce9582c03c479fa9d91498e101203756d"
+        },
+        {
+          "originalOrder": 26,
+          "originalOffset": 7066,
+          "payloadSha256": "cf2c1641da27fd0172aac0e85b93634fa4fc40b3c3ad1e330cf075d92e59edd3"
+        },
+        {
+          "originalOrder": 27,
+          "originalOffset": 7237,
+          "payloadSha256": "33b0d394f85abda6a17f3e8b768d9c30520d643461e072a889ab094674800913"
+        },
+        {
+          "originalOrder": 28,
+          "originalOffset": 7408,
+          "payloadSha256": "088b0b44e5b5335dcbf0d28231883e439d52dd00105eacf24785d86cb21dc22e"
+        },
+        {
+          "originalOrder": 29,
+          "originalOffset": 7579,
+          "payloadSha256": "5155ecf365083007ec755223b697cc91822e8048e72f1928a028d7a84e9793c3"
+        },
+        {
+          "originalOrder": 30,
+          "originalOffset": 7750,
+          "payloadSha256": "ce5a8f4bc4276f39da37a9e286f88473f9ba8710e2ecfd8907ebb89d5089bc65"
+        }
+      ]
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/011_015/client/object.dat",
+      "originalFileSha256": "9dde468efa3df190886c34bfec4fb4d353ff6f805c38ceb25f82248d627a110c",
+      "originalKind": 0,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "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",
+      "rows": [
+        {
+          "originalOrder": 975,
+          "originalOffset": 414838,
+          "payloadSha256": "40e63028d7b03850bebc4c9cc1c41f78a5535c91fc6b73ed769d15d7de252fe8"
+        },
+        {
+          "originalOrder": 976,
+          "originalOffset": 415321,
+          "payloadSha256": "427babde156305545a1be5dfe42e09279d7459087531361824c0d0c68a34ea09"
+        },
+        {
+          "originalOrder": 979,
+          "originalOffset": 415822,
+          "payloadSha256": "a5d207f93512a00c0f4adf395b944352b0cd90d2efddbeaf76dd476a0170a75d"
+        },
+        {
+          "originalOrder": 980,
+          "originalOffset": 415993,
+          "payloadSha256": "e8ebea3bb16613193712770ef0a5c8af4ead2807856a433f89e18c6fb2ca81f1"
+        },
+        {
+          "originalOrder": 981,
+          "originalOffset": 416197,
+          "payloadSha256": "f71dd071159a7832efdc5dc1500d6f778454ba4e7ae9e2a1581b6cb15f83af3c"
+        },
+        {
+          "originalOrder": 982,
+          "originalOffset": 416434,
+          "payloadSha256": "8ef469db49df9af59be11f1fc35b7b13fc7e66c5e89c5da24b4f264231665e7d"
+        },
+        {
+          "originalOrder": 984,
+          "originalOffset": 416770,
+          "payloadSha256": "1c1dab524c2ecf9b8c0a3f58c2d545591a9aff7395d19e182b09309f798ac50f"
+        },
+        {
+          "originalOrder": 985,
+          "originalOffset": 416941,
+          "payloadSha256": "2c51a52ecb563cb89cc8c8f64a14cf71f0e92a0db236fdea831672ffa420200b"
+        },
+        {
+          "originalOrder": 1485,
+          "originalOffset": 492296,
+          "payloadSha256": "74f8cc264f0375896d70f64410f66838f7a6a292442cfb192e12f3d72059a46c"
+        },
+        {
+          "originalOrder": 1486,
+          "originalOffset": 492500,
+          "payloadSha256": "afcca71ee1f9cb769e847d9fb5bcb21d1ac7fd4cc1aaf8e95f95702afee98b57"
+        },
+        {
+          "originalOrder": 1487,
+          "originalOffset": 492671,
+          "payloadSha256": "f2b02169565957ff32d04e1d7494601a8f8f9a49df798f1039e83e01e953bd3e"
+        },
+        {
+          "originalOrder": 1488,
+          "originalOffset": 492908,
+          "payloadSha256": "d5bebfe04e9ffdb270fcbaa33b09ba79a774d762ec52e162e13938057a625e4b"
+        },
+        {
+          "originalOrder": 1489,
+          "originalOffset": 493112,
+          "payloadSha256": "57a303e46181050440e6c6a9be30ab5a9ec8b39f9dd287fc511dc7227f3c30c5"
+        },
+        {
+          "originalOrder": 1490,
+          "originalOffset": 493283,
+          "payloadSha256": "c77bcd25df7a8cb1d47744b7b0f248e8455303a10910863c0b59e9ef8ed18217"
+        },
+        {
+          "originalOrder": 1522,
+          "originalOffset": 498018,
+          "payloadSha256": "1c4f0318d401f96279b43afe067772562db3f7afd2028345b9ccfe8b5176078b"
+        },
+        {
+          "originalOrder": 1523,
+          "originalOffset": 498222,
+          "payloadSha256": "d8a735b18d3764eb5e71c63297c6d4dd913d1ea92d7ae8922c8c4f29f1714cf4"
+        },
+        {
+          "originalOrder": 1524,
+          "originalOffset": 498393,
+          "payloadSha256": "42cd0108c5042324b2c8638d7e9542be277527d3310ccdd7cad1dae72b7e13de"
+        },
+        {
+          "originalOrder": 1525,
+          "originalOffset": 498630,
+          "payloadSha256": "8ad2cd0c297780293213a4511dab8c381c0d0a621b7234da985a0ddd4b2c7d0b"
+        },
+        {
+          "originalOrder": 1526,
+          "originalOffset": 498834,
+          "payloadSha256": "80d8edb01e2751b7cc9aeb3f42e1e113d84c8bb609caf4bcb8783394e9727446"
+        },
+        {
+          "originalOrder": 1527,
+          "originalOffset": 499005,
+          "payloadSha256": "23da041392339a7f061469835250c552e8d70fc5a0ea9b056be9b8729f5598c7"
+        },
+        {
+          "originalOrder": 1581,
+          "originalOffset": 506554,
+          "payloadSha256": "ac36206d65e66777e05a75970a83b17317cb2c1bce58497ee11639d7b53fe818"
+        },
+        {
+          "originalOrder": 1582,
+          "originalOffset": 506725,
+          "payloadSha256": "23ab5c20f6725120d3563916e6ae5c84cae48df7fc2e507cb01e71ba8737024e"
+        },
+        {
+          "originalOrder": 1583,
+          "originalOffset": 506929,
+          "payloadSha256": "80b2a94fe3c1bc6ee0a5062f59b371ced814ff6bd8e6807293ecbcafd18c908c"
+        },
+        {
+          "originalOrder": 1584,
+          "originalOffset": 507166,
+          "payloadSha256": "10b47afe17306e9b2386e8306817de8910a3f3f322eeecbdcad5e8eeeed9a702"
+        },
+        {
+          "originalOrder": 1585,
+          "originalOffset": 507337,
+          "payloadSha256": "55d6b6df167cdfa7ae1d08ae85366ad744b5aa9a79bc5a92916b76d940846d38"
+        },
+        {
+          "originalOrder": 1586,
+          "originalOffset": 507541,
+          "payloadSha256": "eb0f1209229d2588c3c46ee66a871a71b778300d2a141421aeb5d28957096223"
+        },
+        {
+          "originalOrder": 1630,
+          "originalOffset": 513928,
+          "payloadSha256": "addd033cc25fdf307796b066f9b5255095a2ccd3110c6a1d17b6aee5520bc698"
+        },
+        {
+          "originalOrder": 1631,
+          "originalOffset": 514099,
+          "payloadSha256": "a33245480a957fc1c727bb87291c146534f9e6283cad5c9a62597a43bf39db12"
+        },
+        {
+          "originalOrder": 1634,
+          "originalOffset": 514567,
+          "payloadSha256": "db39682fd5d8845a5acc6ee18937914e5c0ad3971bbc3f33a3510b20436115ad"
+        },
+        {
+          "originalOrder": 1635,
+          "originalOffset": 514804,
+          "payloadSha256": "e084f70a78b08bdf9fca6398ca27626d5af538e2439f1f0c7de05644ff16d50a"
+        },
+        {
+          "originalOrder": 1636,
+          "originalOffset": 514975,
+          "payloadSha256": "f385e646d22feef637287cf2abbc56f82545c329f3c213feb810b8b3d3b6c204"
+        },
+        {
+          "originalOrder": 1638,
+          "originalOffset": 515311,
+          "payloadSha256": "d728b05c7ca085347b4c34807994eea9e0b36ef439215c0f2e38687a58c12a2d"
+        },
+        {
+          "originalOrder": 1699,
+          "originalOffset": 523755,
+          "payloadSha256": "eba0672bc92c7f562c138075fcbc8595025f7927cfb0cbc147432a233316116e"
+        },
+        {
+          "originalOrder": 1700,
+          "originalOffset": 523926,
+          "payloadSha256": "15859b0168ef9c78057ff18c56d2a3fb1fba991d3234e5e62b340350702cecf2"
+        },
+        {
+          "originalOrder": 1701,
+          "originalOffset": 524130,
+          "payloadSha256": "46f0c09cb9fc6b6765e1c5978df6402b5251d034a19315d066534a22a8315ee6"
+        },
+        {
+          "originalOrder": 1705,
+          "originalOffset": 524829,
+          "payloadSha256": "95660a089d9a43228c3af189a2959728cbcf0420871092f9b99904f02ab31357"
+        },
+        {
+          "originalOrder": 1706,
+          "originalOffset": 525000,
+          "payloadSha256": "ab914e110884000b05c6267624bca65c06d64469253a4c6703b73d779ee2b255"
+        },
+        {
+          "originalOrder": 1708,
+          "originalOffset": 525336,
+          "payloadSha256": "b1ec4b0b6d83f88a0b5e38a4ea13e000f0462fd8efedbb27932e4c5769390976"
+        },
+        {
+          "originalOrder": 1736,
+          "originalOffset": 529415,
+          "payloadSha256": "3f1deef7cbcc47eec311063a3cc2cee8fefd83f6a7954d43ddd5d9db9ced906d"
+        },
+        {
+          "originalOrder": 1743,
+          "originalOffset": 531539,
+          "payloadSha256": "7ce3e7b4543c5d0f4cb165ba9955e0338243e58b76ac65310e50c77663275e5e"
+        },
+        {
+          "originalOrder": 1754,
+          "originalOffset": 533294,
+          "payloadSha256": "6e8efbbb0bc73f3d500ce3a436931a142ccc354f469c81220a5ae6681fccbb8b"
+        },
+        {
+          "originalOrder": 1755,
+          "originalOffset": 533465,
+          "payloadSha256": "953521be2915759c60adcb9b3b20a5ec45cdf5328b5b371e812be4dd74165287"
+        },
+        {
+          "originalOrder": 1768,
+          "originalOffset": 535319,
+          "payloadSha256": "2d86fadb5df74a34f1ddebeec68bb5bdac93f40b5d43916177b333ffafb71f8a"
+        },
+        {
+          "originalOrder": 1769,
+          "originalOffset": 535490,
+          "payloadSha256": "e91e5567b03180653df06e03672201591c7c853e43f69c726d0ef1f5415b7322"
+        }
+      ]
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/011_015/client/big_object.dat",
+      "originalFileSha256": "d5d347d255531f46095cb0419908249b0530677d1dd0e2a472821451ac96c8f6",
+      "originalKind": 1,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "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",
+      "rows": [
+        {
+          "originalOrder": 0,
+          "originalOffset": 528,
+          "payloadSha256": "b11544de122be9277accf36fa5b8de6f9302f5981be234d3ec682375aa262cf8"
+        },
+        {
+          "originalOrder": 1,
+          "originalOffset": 1011,
+          "payloadSha256": "70276f0ae687f83d4e924c183ccb6d79d91ffae2e81b6aca7ebd69e2c8537e94"
+        },
+        {
+          "originalOrder": 2,
+          "originalOffset": 1182,
+          "payloadSha256": "703a04e98c5d8499adaf4b5b6573b20c73a09853c97f0ad216f2928b383aee82"
+        },
+        {
+          "originalOrder": 3,
+          "originalOffset": 1761,
+          "payloadSha256": "d626e25ca83721a6349b0570705c9b68632bb3ec56ca7e7c4fca48893830dbd0"
+        },
+        {
+          "originalOrder": 4,
+          "originalOffset": 1932,
+          "payloadSha256": "0fccda3cc4afc1c00fa07cd16d00dfd5f3b54b48ae886c4bc838d632aa77f1c7"
+        },
+        {
+          "originalOrder": 5,
+          "originalOffset": 3063,
+          "payloadSha256": "d9c47221dd6517dbe6a863826ee4ea735e55fd701ce43c855cb03eedec494f26"
+        },
+        {
+          "originalOrder": 6,
+          "originalOffset": 3234,
+          "payloadSha256": "d5075fa005ceceb06a1b483c9d617c0da6d3262ea9238ea8f009a4cc50f2c030"
+        },
+        {
+          "originalOrder": 7,
+          "originalOffset": 3717,
+          "payloadSha256": "ad1f9b4112767a2dea1032005cfc93c7249ad7bbd87e908aa042f77e6f771b0a"
+        },
+        {
+          "originalOrder": 8,
+          "originalOffset": 4296,
+          "payloadSha256": "ae5a9ad43b50e8bf9e79ea659883ac741bbe2856bb778e0b551b60b7bfa71d88"
+        },
+        {
+          "originalOrder": 9,
+          "originalOffset": 4467,
+          "payloadSha256": "6f1499b6ecc8500b90829fe0135908abe527d862da6980b835ea85bd16c6a196"
+        },
+        {
+          "originalOrder": 10,
+          "originalOffset": 4638,
+          "payloadSha256": "7625bcf936ac3a75933f28055044e1fa35ac1f7cf6508ddd12ce5129af1f541d"
+        },
+        {
+          "originalOrder": 11,
+          "originalOffset": 4809,
+          "payloadSha256": "896fe6ea5d1c05e2f0618a21b3ededd63038856f58474614169e976d81e94f71"
+        },
+        {
+          "originalOrder": 12,
+          "originalOffset": 4980,
+          "payloadSha256": "09e28237570d01e60f70179fcd5e1efeeb19b36919dc1e6bb1841c59275db281"
+        },
+        {
+          "originalOrder": 13,
+          "originalOffset": 5151,
+          "payloadSha256": "4497573a82feb3b8a05d1368862a806cd273a72eba625146f01cc70568711f4c"
+        },
+        {
+          "originalOrder": 14,
+          "originalOffset": 5322,
+          "payloadSha256": "edbab5ad75dd81d27d74e8ac0bdb61a28d9ddeb22b0142e7a057d4f9f10bdcee"
+        },
+        {
+          "originalOrder": 15,
+          "originalOffset": 5493,
+          "payloadSha256": "ca58a87b11962d78f31eebbf552c4094fb2b251bb5696013ead0fb5d9e2036d5"
+        },
+        {
+          "originalOrder": 16,
+          "originalOffset": 5664,
+          "payloadSha256": "04a7179748d490a291d1e80d57032e247d78b5f54137ec246069770a930fa190"
+        },
+        {
+          "originalOrder": 17,
+          "originalOffset": 5835,
+          "payloadSha256": "27b1edb8cd65542072e2bf1e7cce1f4180d058e9b4b6bc269925db56508fb0e3"
+        }
+      ]
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/009_015/client/object.dat",
+      "originalFileSha256": "892a88d86bd0181cf8122a62aff7cacff838bbfa1166fc9e058dcb48e1e4f5f6",
+      "originalKind": 0,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "H4sIAAAAAAACCu2aTbLjNBDHG4Ziy2zmBixYYSczD6g5w3CGLtlu23qRJdOS45fDcAFWHIA1O6pYz4obzJYlkj+mkrwh1GM37lE5UctOUtW/dP/Vkg0A8Brm1qiOMlfcUxl8RvaY5XdoVRiYsvwHLPmE3g1cUsauPPisNLqu8drGAjvn/Wn5TXgOF+3z6Vjeztrzr357k859Ox0AX7y+vP7nZ3P/19t38/jZPP7lxZsx9V9///vb889/ufR///xNd35+/f6v7/74ET7QnsigIFW2eG0vBD5qBp0KxFoZnymF0WSlbXRaVT4LjMnATj9gw26wFe7yO9gyg4rK1K0cHJeFca464VEbg5XmgPkOtsjgIhd2aAetsvwVNmPWjEimZuoiESTYMIMP5sIaEoyTNQfBXZ4XsP04uKmJftDhfuh6vBqezREXM8RHngvRaN3gtW2ypZ/GlKXL6yXYJoObcXA/2MYQPhqgQksjiIyDPWydgY1q6FYC2TRanceabEmots+gdF3mTJUdiauBVaoSovPMJ9g2gz22inV8Lfkwx8IUAxFJ5yz2RtngsXchfykkF+zivzuwD44JRDOYEGBQhaFYLcpj0A8FSGdgSIWWlmwQyqAe2OpUO2HCoBrK9yCNgfOlYuzZ9SCWQSTQU0BVlBVIYvDftfJOSBykQrFQzGTQqQMWsH0GT6oT9+IYeI21cSNxdB+2zOBfNNEHpqiJURoDyGOQ9IDpqGmMAuCDshVsncGNXJiqZNQgmcFjTdyJqw/e18tZ67HGgiosQZAm8qBtqpTjXy+HwXqfaYn8uG6sUYFMBqMyJjovksFVLozOVaPj6O0DbJ7B/7vH0rCKjm81F4oY/VIZXNSJper6WqdNpFgvszv5QAyCGMx6UM1by8QxLOQx+GkgHxYSkz3pY+EeQFgutESeQBqD95oIchlc7607big9jCSBwY11o9HHuHSaVg3fgaRc6KhzqK1NMSCVwbyDiD0FZfJX8InBXiCDTnHaPqu0b3cglMGqBxynRDWwstNzqmIY3KgTCxdCcp4qEDQ3zhzaMw5Bo2/JpH0VSWsmZY86ScImGTzpmW0FAuMgrZmCcwZrxR1W8IlBKZLBOj82ZBttibgifwBZDB7PjdoeerIgbl4oVHno4wtr2D6Dm3vrk4P4yAYJtfKlFmyIwT8AFpxQ8DoAAA==",
+      "rows": []
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/009_015/client/big_object.dat",
+      "originalFileSha256": "1a2c48e7599c627b32e3e84510e6895c74574b7daa8cbd77b864980f1d264b0e",
+      "originalKind": 1,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "H4sIAAAAAAACCmNgYGBgZICA9MTcVP3cxJLUoszEnGL9/OTUxDz9nMTsVKAcK1SNSSCjMYjWWFluDqI3vD/rC6L/Q4HJ8/dgdQeg4g9uQfgVUHqVqE852ByoOhhIMT92C5mPbj4M4LInQfqRE7L5DAxpzCCS8SaqPQaSbQ2MSPbfNUowA9HRQMwNFql1YfjwwZnhwCJnhiutLgwVXC4MDoudQTJ/JNe5gN2awsAEUj7P6OrkvS+9oSbbr/VNt+7mVbfZfcDBBmFhgz1Q+2EwDcRc15VtwBgmBwRgdkATwqqcBheGFRwuDAZA9oZ6oDgzhD0B6LSAn85gNtiZn50ZFJY6M9xpgDgZJC7QDDTjkzPYnA0tLgwK3yHiIK88YHBhSACyvwDFBdiBZgHZA2QvADX0pg93AgAA",
+      "rows": [
+        {
+          "originalOrder": 0,
+          "originalOffset": 268,
+          "payloadSha256": "76a185fa981fed77a6ce587a51f362a02df325091043bf70237a5f1ee225b734"
+        }
+      ]
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/010_015/client/object.dat",
+      "originalFileSha256": "ff29238f5beb2ba9a487ecb6b0bfaff8eca32726f9c6e3289e0cf62700034d47",
+      "originalKind": 0,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "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",
+      "rows": [
+        {
+          "originalOrder": 1035,
+          "originalOffset": 405249,
+          "payloadSha256": "fbe2da9baab35ced5531e2ccccaf9692738fa13ea4a1c7363512ce7ca72abdf4"
+        },
+        {
+          "originalOrder": 3334,
+          "originalOffset": 718070,
+          "payloadSha256": "077b89b59990cc9d294d91efb3ec85d4a486e7099e75e70e6da77d3475968863"
+        },
+        {
+          "originalOrder": 3587,
+          "originalOffset": 749612,
+          "payloadSha256": "ad27ad1093e36cc01a6607003ebdeeb80599ce48cae85d898ecc012ef8d2ff90"
+        }
+      ]
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/010_015/client/big_object.dat",
+      "originalFileSha256": "08d9f84a4cd14f7e9ef852abf698cd2991181bb0386f1b23b482872781e84e51",
+      "originalKind": 1,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "H4sIAAAAAAACCmNgYGBgZoCA9MTcVP3cxJLUoszEnGL9/OTUxDz95MSi5MTi4vicxOxUoBqTQEZjkFqNleXmIDqg6JwviP4PBSbP34PNSoCKP7gF4VdA6VWiPuUgGqYOBlLMj91C5qObDwO47Cm499gJ2XwGhjSwtxhvotozwcDrNSOS/XeNEsxAdDS+MEgvB3vfnGEEhwE4/kdGGHAD8Q3NIJcDmxVcAozaHD1u97qE3Wt2UU1udQapiY1mcQO7NYWBCUhNW7xqApOAvQNIqP/QVxvl58bWJ4xnWTc3NFgjLGywB2o/DKJBmOu6sg0I84PlqsDGgtgSO1tcCvLqwVat2VHnsierAcw+w1LoYlJeC2Zn5CeDnRPT0ur8YXWIC8OHGrC4gV6wy76dqWA2yPkNc53B7B+fYsFeAbEtTtW7XGJUcdGJaXVesL3ZxS9b32VSXKtzjFGzC5OnN1gNyLsZ6pkuzZGtzis8e1w0bhe4bPUD2nW4w2XJ7XqXBq1WZ56cVpe0vw0ua4JbnYeim0FRrHBKyVllR+1hhgMOzhLn+FwCBFWdGQ54gePigDwnchRfMFtrX/ZgrQcoxZw942OXPcvX6oSxlPVa33SUKAZqx4hiHrCcgiOIBLEvhAc7K9grHQZZNWP7HLATfmz1ct7Aec/5xPRKMDtmDZ/LhhwnMBvktB1H5x4CsUOmMbkw+Dg4gtgCGhecb3zgdAaxFSaWOIOcD2YDvdVgPQus5sN/Necf/48fYmTwBrI1gfgzmH3hj67zBzb2w1dkgOxB5h5ucHg5HGT48AEYHYucGRqsnBgquFwYHBaDo+aP5DoXpKjhnmd0dfLel95MkDiwB0VJN6+6ze4DDjYoUeOwGCNquGByQABhT3FEWBXhwLCCw4XBAMResJ+hghnKljnIEPDTGcIGOfOzM4PCUiD7jgPYyWDxI44MDp+cIeaIOTEofIeIg7zygMGFIQHElnNiEGB3YQgAqRkYewHik5b5/QcAAA==",
+      "rows": [
+        {
+          "originalOrder": 0,
+          "originalOffset": 788,
+          "payloadSha256": "ad27ad1093e36cc01a6607003ebdeeb80599ce48cae85d898ecc012ef8d2ff90"
+        },
+        {
+          "originalOrder": 1,
+          "originalOffset": 1271,
+          "payloadSha256": "457fda4df4cd6606011b028db704a95936c7149f0ef342e9c35b9007208a49cd"
+        },
+        {
+          "originalOrder": 2,
+          "originalOffset": 1682,
+          "payloadSha256": "5cc4f74b74786e38580eb83530e25b5909855f6fc164d4b80fff45d67dcd51d1"
+        }
+      ]
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/010_014/client/object.dat",
+      "originalFileSha256": "5b19899d6e58d96c58b4f78d416e9a409b23a9b204544c71703f6f61855016c1",
+      "originalKind": 0,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "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",
+      "rows": [
+        {
+          "originalOrder": 625,
+          "originalOffset": 284557,
+          "payloadSha256": "ff7cd399099f1724d18db43be5aa7f4fafc6913b3c4325b791edeceb6990b194"
+        },
+        {
+          "originalOrder": 1094,
+          "originalOffset": 346677,
+          "payloadSha256": "8231725f65c08108022b485bde15496b53b03a8d8ef13863ad9278b4feee4a71"
+        },
+        {
+          "originalOrder": 2696,
+          "originalOffset": 571461,
+          "payloadSha256": "432151aeca4369498da3eae401c63790e0a54ef72c6754251c3d892da123ecc5"
+        },
+        {
+          "originalOrder": 2808,
+          "originalOffset": 591644,
+          "payloadSha256": "7c912efc7a1e502e95555bfb9f829dc79e8b76b28d613521f8731846eb9554eb"
+        }
+      ]
+    },
+    {
+      "assetPath": "game/worlds/main_world/cells/010_014/client/big_object.dat",
+      "originalFileSha256": "5584c037cf06d50cd135a52fd1e6cd8c3908ce416b25ceb37d0673cb7a723f4b",
+      "originalKind": 1,
+      "transportKind": 1,
+      "waterRowsGzipBase64": "H4sIAAAAAAACCmNgYGBgZICA9MTcVP3cxJLUoszEnGL9/OTUxDz99PL4nMTsVHOoGpNARmMQfWNmOVio4dpOPxD9HwpMnr8Hq5sAFX9wC8KvgNKrRH3KweZA1cHAVFX5Jch8Us0v8H3ihGy+z73+nt4gBgyAbs5f2QQzEB0NxNxArHBKyfnHRAcXhgMOzhLn+Fy0Fk0Bsr2cQWr2y3O6geiUFAYmIHXBbK192YO1HiChs2d87LJn+VqdMJayXuubbo2wsMEeqP0wmAZiruvKNiDMA5ZTcASRIPaF8GBni4JwsFUzts8BO+HHVi/nDZz3nPlmOYLZMWv4XK6k+IPZIKd5ueeA2SHTmFxmNDSC2QIaF5xl7CaC2QoTS5xBzgezgd56l9EEZn/4rwb0TroLI4M3kK3pzNSQCGZf+KPr7GIX53JFBsgeZO4BAMjFZ7enAgAA",
+      "rows": [
+        {
+          "originalOrder": 0,
+          "originalOffset": 268,
+          "payloadSha256": "432151aeca4369498da3eae401c63790e0a54ef72c6754251c3d892da123ecc5"
+        }
+      ]
+    }
+  ],
+  "native": {
+    "scope": "Offline original water physicalizer/class constructor/mask controls. No engine DLL loads.",
+    "engineModuleLoads": 0,
+    "images": [
+      {
+        "path": "D:\\aaemu-runtime\\engine-bin64\\cry3dengine_dedicate.dll",
+        "sha256": "5e22f8338d6e146939f4f22fc0531d78c7c2313547a1863cadb2cb5e3b8d3caf"
+      },
+      {
+        "path": "D:\\aaemu-runtime\\engine-bin64\\cryphysics_dedicate.dll",
+        "sha256": "b558cd33b93177d3163ecf483368e3c7a0612507257ad73bc87a73ee872e2e20"
+      }
+    ],
+    "controls": [
+      {
+        "variant": "lake_or_river_valid",
+        "constructorTable": "0x351ef598",
+        "constructorSimulationClass": 5,
+        "areaCreated": true,
+        "simulationClass": 5,
+        "materialSetterPreservesArea": true,
+        "events": [
+          "AddArea",
+          "MaterialAddRef",
+          "MaterialRelease"
+        ]
+      },
+      {
+        "variant": "with_velocity_array",
+        "constructorTable": "0x351ef598",
+        "constructorSimulationClass": 5,
+        "areaCreated": true,
+        "simulationClass": 5,
+        "materialSetterPreservesArea": true,
+        "events": [
+          "AddArea",
+          "MaterialAddRef",
+          "MaterialRelease"
+        ]
+      },
+      {
+        "variant": "empty_contour",
+        "constructorTable": "0x351ef598",
+        "constructorSimulationClass": 5,
+        "areaCreated": false,
+        "simulationClass": 5,
+        "materialSetterPreservesArea": true,
+        "events": [
+          "MaterialAddRef",
+          "MaterialRelease"
+        ]
+      },
+      {
+        "variant": "invalid_index_count",
+        "constructorTable": "0x351ef598",
+        "constructorSimulationClass": 5,
+        "areaCreated": false,
+        "simulationClass": 5,
+        "materialSetterPreservesArea": true,
+        "events": [
+          "MaterialAddRef",
+          "MaterialRelease"
+        ]
+      },
+      {
+        "variant": "mismatched_velocity_count",
+        "constructorTable": "0x351ef598",
+        "constructorSimulationClass": 5,
+        "areaCreated": false,
+        "simulationClass": 5,
+        "materialSetterPreservesArea": true,
+        "events": [
+          "MaterialAddRef",
+          "MaterialRelease"
+        ]
+      },
+      {
+        "variant": "physics_world_absent",
+        "constructorTable": "0x351ef598",
+        "constructorSimulationClass": 5,
+        "areaCreated": false,
+        "simulationClass": 5,
+        "materialSetterPreservesArea": true,
+        "events": [
+          "MaterialAddRef",
+          "MaterialRelease"
+        ]
+      }
+    ],
+    "maskControls": [
+      {
+        "simulationClass": 0,
+        "mask": 263,
+        "nativeSelectedBits": 1
+      },
+      {
+        "simulationClass": 0,
+        "mask": 327686,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 0,
+        "mask": 32,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 0,
+        "mask": 295,
+        "nativeSelectedBits": 1
+      },
+      {
+        "simulationClass": 0,
+        "mask": 4294967295,
+        "nativeSelectedBits": 1
+      },
+      {
+        "simulationClass": 1,
+        "mask": 263,
+        "nativeSelectedBits": 2
+      },
+      {
+        "simulationClass": 1,
+        "mask": 327686,
+        "nativeSelectedBits": 2
+      },
+      {
+        "simulationClass": 1,
+        "mask": 32,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 1,
+        "mask": 295,
+        "nativeSelectedBits": 2
+      },
+      {
+        "simulationClass": 1,
+        "mask": 4294967295,
+        "nativeSelectedBits": 2
+      },
+      {
+        "simulationClass": 2,
+        "mask": 263,
+        "nativeSelectedBits": 4
+      },
+      {
+        "simulationClass": 2,
+        "mask": 327686,
+        "nativeSelectedBits": 4
+      },
+      {
+        "simulationClass": 2,
+        "mask": 32,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 2,
+        "mask": 295,
+        "nativeSelectedBits": 4
+      },
+      {
+        "simulationClass": 2,
+        "mask": 4294967295,
+        "nativeSelectedBits": 4
+      },
+      {
+        "simulationClass": 3,
+        "mask": 263,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 3,
+        "mask": 327686,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 3,
+        "mask": 32,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 3,
+        "mask": 295,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 3,
+        "mask": 4294967295,
+        "nativeSelectedBits": 8
+      },
+      {
+        "simulationClass": 4,
+        "mask": 263,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 4,
+        "mask": 327686,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 4,
+        "mask": 32,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 4,
+        "mask": 295,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 4,
+        "mask": 4294967295,
+        "nativeSelectedBits": 16
+      },
+      {
+        "simulationClass": 5,
+        "mask": 263,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 5,
+        "mask": 327686,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 5,
+        "mask": 32,
+        "nativeSelectedBits": 32
+      },
+      {
+        "simulationClass": 5,
+        "mask": 295,
+        "nativeSelectedBits": 32
+      },
+      {
+        "simulationClass": 5,
+        "mask": 4294967295,
+        "nativeSelectedBits": 32
+      },
+      {
+        "simulationClass": 6,
+        "mask": 263,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 6,
+        "mask": 327686,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 6,
+        "mask": 32,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 6,
+        "mask": 295,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 6,
+        "mask": 4294967295,
+        "nativeSelectedBits": 64
+      },
+      {
+        "simulationClass": 7,
+        "mask": 263,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 7,
+        "mask": 327686,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 7,
+        "mask": 32,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 7,
+        "mask": 295,
+        "nativeSelectedBits": 0
+      },
+      {
+        "simulationClass": 7,
+        "mask": 4294967295,
+        "nativeSelectedBits": 128
+      }
+    ],
+    "declaredDependencies": [
+      "World.AddArea returns original-constructed CPhysArea; contour/PCA creation is separately owned",
+      "World.RemoveArea callback",
+      "uncontended physical worker classification",
+      "area-grid publication boundaries",
+      "material retain/release",
+      "CRT memory/math imports"
+    ],
+    "originalFunctions": [
+      "300F5E90 complete physicalizer",
+      "300F55B0 material setter",
+      "35042150 CPhysArea constructor",
+      "3504EE60 status and35045B50 parameter writes via actual vtable",
+      "3508538F..3508539C GetEntitiesInBox class filter"
+    ]
+  }
+}

@@ -1,11 +1,48 @@
 using System.Numerics;
+using System.Text.Json;
+using AAEmu.Zone.Content;
 using AAEmu.Zone.Protocol;
+using AAEmu.Zone.Protocol.Units;
 using AAEmu.Zone.Scripting;
 
 namespace AAEmu.Zone.Tests;
 
 public sealed class ManagedNpcMovementAbilityTests
 {
+    [Test]
+    public async Task OriginalCommonRegistrationTailCopiesActualWorldModelCrowdFlagsAfterNpcParameters()
+    {
+        using var stream = typeof(ManagedNpcMovementAbilityTests).Assembly.GetManifestResourceStream(
+            "AAEmu.Zone.Tests.Fixtures.npc-model-common-tail-native-controls.json")!;
+        using var controls = JsonDocument.Parse(stream);
+        var tested = 0;
+        foreach (var value in controls.RootElement.GetProperty("controls").EnumerateArray()
+            .Where(value => value.GetProperty("unitKind").GetByte() == (byte)ZoneUnitKind.Npc))
+        {
+            var flags = value.GetProperty("modelFlags144").GetByte();
+            var actualModel = new ZoneModelDefinition
+            {
+                Id = 42, Name = "runtime_fixture", Subtype = "ActorModel", SubtypeId = 9,
+                Big = (flags & 2) != 0, ForceNavigateAroundObject = (flags & 8) != 0,
+            };
+            using var fixture = new ManagedNpcRuntimeTests.Fixture(withMovementAbility: true, model: actualModel);
+            InstallTables(fixture);
+            //These model bytes survive the NPC-specific parameter setup before the
+            //common tail publishes them. Lua movement-table defaults are not their producer.
+            var npc = fixture.Admission.CreateFromWire(actualModel.Id, new(1100, 1100, 10.1f));
+            var handle = fixture.Admission.Catalog.TryGet(npc)!.Value;
+            var actor = fixture.Runtime.Actors.Find(handle) ?? throw new InvalidOperationException(
+                fixture.Admission.Catalog.GetAdmission(handle)?.Refusal ?? "The common-tail control did not admit its actual model.");
+            var state = fixture.MovementAbility!.CopyState(actor);
+            var native = value.GetProperty("native");
+            await Assert.That(state.CrowdFlag177).IsEqualTo(native.GetProperty("flag177").GetBoolean());
+            await Assert.That(state.CrowdFlag178).IsEqualTo(native.GetProperty("flag178").GetBoolean());
+            tested++;
+        }
+        await Assert.That(tested).IsEqualTo(4);
+        await Assert.That(controls.RootElement.GetProperty("controlCount").GetInt32()).IsEqualTo(32);
+    }
+
     [Test]
     public async Task ActualPostInitTablesAreCopiedBeforeTheCharacterConstructorAndRemainInstalled()
     {

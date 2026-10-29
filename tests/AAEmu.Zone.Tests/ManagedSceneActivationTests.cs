@@ -11,6 +11,55 @@ namespace AAEmu.Zone.Tests;
 public sealed class ManagedSceneActivationTests
 {
     [Test]
+    [Arguments("open")]
+    [Arguments("close")]
+    [Arguments("trace")]
+    public async Task CreationCannotPublishCurrentServicesAfterABorrowedSourceOrTraceRetiresTheOwner(string boundary)
+    {
+        var fixture = new Fixture((9, 14));
+        ZoneManagedSceneActivation? scene = null;
+        Action<string> retire = path => { if (path == "game/worlds/authored/surface.xml") scene!.Dispose(); };
+        if (boundary == "open") fixture.Assets.OnOpened = retire;
+        if (boundary == "close") fixture.Assets.OnClosed = retire;
+        using (scene = new(fixture.Layout, fixture.Assets,
+            trace: value => { if (boundary == "trace" && value == "CreateManagedSceneServices") scene!.Dispose(); }))
+        {
+            await Assert.That(() => scene.Create()).Throws<ObjectDisposedException>();
+            await Assert.That(scene.IsCreated).IsFalse();
+            await Assert.That(scene.Collision).IsNull();
+            await Assert.That(scene.CellCollisionCoverage).IsNull();
+            await Assert.That(scene.Report).IsNull();
+            if (boundary != "trace") await Assert.That(scene.Heights.Nodes).IsNull();
+            await Assert.That(fixture.Assets.Opened).IsEqualTo(fixture.Assets.Closed);
+        }
+    }
+
+    [Test]
+    [Arguments("open")]
+    [Arguments("close")]
+    [Arguments("trace")]
+    public async Task LoadingRetiredInsideAnExternalBoundaryCannotRepublishTerrainOrCollisionCoverage(string boundary)
+    {
+        var fixture = new Fixture((9, 14)); fixture.Cell(9, 14, Heightmap(24, 100));
+        fixture.Text("game/worlds/authored/cells/009_014/client/entities.xml", "<Mission><Objects/></Mission>");
+        ZoneManagedSceneActivation? scene = null;
+        Action<string> retire = path => { if (path.EndsWith("/entities.xml", StringComparison.Ordinal)) scene!.Dispose(); };
+        if (boundary == "open") fixture.Assets.OnOpened = retire;
+        if (boundary == "close") fixture.Assets.OnClosed = retire;
+        using (scene = new(fixture.Layout, fixture.Assets,
+            trace: value => { if (boundary == "trace" && value.StartsWith("ManagedTerrain cell=", StringComparison.Ordinal)) scene!.Dispose(); }))
+        {
+            scene.Create();
+            await Assert.That(() => scene.Load()).Throws<ObjectDisposedException>();
+            await Assert.That(scene.Heights.GetHeight(100, 100)).IsEqualTo(0f);
+            await Assert.That(scene.Collision).IsNull();
+            await Assert.That(scene.CellCollisionCoverage).IsNull();
+            await Assert.That(scene.Report).IsNull();
+            await Assert.That(fixture.Assets.Opened).IsEqualTo(fixture.Assets.Closed);
+        }
+    }
+
+    [Test]
     public async Task AuthoredWorldFilesLoadAtZoneLocalCoordinatesAndKeepDecodedEntityPlacements()
     {
         var fixture = new Fixture((9, 14), (10, 14));
@@ -188,12 +237,15 @@ public sealed class ManagedSceneActivationTests
         public Dictionary<string, byte[]> Files { get; } = new(StringComparer.Ordinal);
         public int Opened { get; private set; }
         public int Closed { get; private set; }
+        public Action<string>? OnOpened { get; set; }
+        public Action<string>? OnClosed { get; set; }
 
         public Stream? OpenRead(string virtualPath)
         {
             if (!Files.TryGetValue(virtualPath, out var bytes)) return null;
             Opened++;
-            return new AssetStream(bytes, () => Closed++);
+            OnOpened?.Invoke(virtualPath);
+            return new AssetStream(bytes, () => { Closed++; OnClosed?.Invoke(virtualPath); });
         }
 
         private sealed class AssetStream(byte[] bytes, Action closed) : MemoryStream(bytes, false)

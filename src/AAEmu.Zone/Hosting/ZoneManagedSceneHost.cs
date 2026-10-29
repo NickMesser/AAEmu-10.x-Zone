@@ -78,7 +78,7 @@ public static class ZoneManagedSceneHost
             ZoneSceneRegistryServices Registry(ZoneUnitRegistry registry, ZoneSceneResourceScope resources)
             {
                 scope = resources;
-                activation = resources.Own(new ZoneManagedSceneActivation(inputs.Layout, inputs.Assets, inputs.Trace));
+                activation = resources.Own(new ZoneManagedSceneActivation(inputs.Layout, inputs.Assets, inputs.Trace, inputs.Startup.EngineCVars));
                 IZoneScriptSource source = inputs.Configuration.ScriptRoot is { } scriptRoot
                     ? new ZoneDirectoryScriptSource(scriptRoot) : new ZoneAssetScriptSource(inputs.Assets);
                 construction = resources.Own(new ZoneManagedNpcActorConstruction(registry, catalog, inputs.Models));
@@ -210,7 +210,7 @@ public static class ZoneManagedSceneHost
                         //Explicit bounded route/physical admission. These are replacement query
                         //work bounds, not recovered native walkability/search constants.
                         var pathQueries = new ZoneManagedNpcNavigationQueries(backend, activation.Heights, activation.Report!,
-                            activation.Collision!, water, new(new(128, .25f, 1024, .75f, 2, .7f), 2, 65536));
+                            activation.Collision!, water, new(new(128, .25f, 1024, .75f, 2, .7f), 2, 65536), activation.CellCollisionCoverage);
                         npcNavigation = resources.Own(new ZoneManagedNpcNavigation(scripts.Actors, npcMovementAbility!,
                             npcMotion!, npcPhysics!, navigation, pathQueries, inputs.Startup.EngineCVars, new ZoneStatCalculator(inputs.Stats), npcComponents));
                         scripts.Actors.Navigation = npcNavigation;

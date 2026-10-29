@@ -28,7 +28,7 @@ public sealed record ZoneManagedSceneCollisionReport(int BrushCount, int LoadedB
 /// are never used as collision geometry. Meshes/BVHs and analytic primitives are shared by resource and material identity;
 /// missing or unsupported physical data remains in the coverage report.
 /// </summary>
-public sealed class ZoneManagedSceneCollision : IDisposable
+public sealed partial class ZoneManagedSceneCollision : IDisposable
 {
     public ZoneManagedStaticGeometry Geometry { get; } = new();
     /// <summary>Native picking rays use slot1 when present, otherwise slot0; living bodies use slot0.</summary>
@@ -52,8 +52,9 @@ public sealed class ZoneManagedSceneCollision : IDisposable
         foreach (var cell in cells)
         {
             if (cell.Placement.InvalidLocalX || cell.Placement.InvalidLocalY) continue;
-            LoadObjects(cell.Objects.Objects, cell.Placement);
-            LoadObjects(cell.Objects.BigObjects, cell.Placement);
+            var publication = TrackBrushCell(cell);
+            LoadObjects(cell.Objects.Objects, cell.Placement, publication);
+            LoadObjects(cell.Objects.BigObjects, cell.Placement, publication);
             other += cell.Objects.Vegetation?.Instances.Count ?? 0;
             other += cell.Objects.Entities?.Entities.Count ?? 0;
         }
@@ -65,7 +66,7 @@ public sealed class ZoneManagedSceneCollision : IDisposable
         foreach (var resource in Report.Resources.Where(row => row.Diagnostics.Count != 0).Take(12))
             trace?.Invoke($"Static collision coverage {resource.AssetPath}: {string.Join("; ", resource.Diagnostics.Take(3))}");
 
-        void LoadObjects(ZoneCellObjectContent? objects, ZoneWorldMapCellPlacement placement)
+        void LoadObjects(ZoneCellObjectContent? objects, ZoneWorldMapCellPlacement placement, BrushCellPublication publication)
         {
             if (objects is null) return;
             foreach (var row in objects.Objects)
@@ -78,7 +79,13 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                 brushes++;
                 var model = objects.GetModelResource(brush.ModelIndex)?.Name;
                 if (string.IsNullOrWhiteSpace(model) || model.Equals("NOFILE", StringComparison.OrdinalIgnoreCase))
-                { renderOnly++; continue; }
+                {
+                    renderOnly++;
+                    TrackBrushPlacement(publication, objects, brush, [], [],
+                        string.Equals(model, "NOFILE", StringComparison.OrdinalIgnoreCase),
+                        "The brush model-table entry is absent/empty; its native fallback is not owned.");
+                    continue;
+                }
                 var material = objects.GetMaterialResource(brush.MaterialIndex)?.Name;
                 Resource resource;
                 try
@@ -117,6 +124,8 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                         // compound statobjs take the multipart physicalization path instead.
                         renderOnly++;
                         resource.SkippedNonUniformBrushes++;
+                        TrackBrushPlacement(publication, objects, brush, [], [], !resource.HasContentFailure,
+                            resource.HasContentFailure ? "The nonuniform brush has unresolved source physics." : null);
                         continue;
                     }
                     ZoneManagedBounds? entityBounds = null;
@@ -161,6 +170,9 @@ public sealed class ZoneManagedSceneCollision : IDisposable
                 else if (!resource.HasContentFailure && !placementFailed) renderOnly++;
                 resource.RayInstances += rayHandles.Count;
                 if (resource.HasContentFailure || placementFailed) unsupported++;
+                TrackBrushPlacement(publication, objects, brush, handles, rayHandles,
+                    !resource.HasContentFailure && !placementFailed,
+                    string.Join("; ", resource.Diagnostics));
             }
         }
 
@@ -350,6 +362,7 @@ public sealed class ZoneManagedSceneCollision : IDisposable
     public void Dispose()
     {
         if (_disposed) return;
+        RetireAllBrushCells();
         _disposed = true;
         Geometry.Clear();
         RayGeometry.Clear();

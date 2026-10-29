@@ -1,153 +1,196 @@
-# Managed default vegetation proxies
+﻿# Managed vegetation proxy publication
 
-This increment adds the first independent vegetation publication seam. It does **not** establish
-populated-cell collision coverage or admit the original NPC far-return control. The production
-Host, Navigation and activation coverage checks are unchanged. The remaining cell families and
-vegetation branches are tracked in [the populated-cell task](tasks/managed-populated-cell-collision.md).
+The vegetation owner now classifies all 26 authored groups and 7,127 placements in target cell
+009_014 under the actual dedicated configuration. It publishes 385 placements containing 396
+player proxies and 396 ray proxies; 6,742 placements skip by configuration, with zero unsupported
+rows in that cell. This is vegetation evidence. Whole-cell and cross-cell collision admission also
+requires the independent family, input-completion and live-handle owners described in
+[the populated-cell task](tasks/managed-populated-cell-collision.md).
 
-## Source and admitted profile
+## Source configuration and load gates
 
-`ZoneWorldVegetationContent` reads the actual `game/worlds/{world}/vegetation.xml` through the
-configured asset source. The source-order rows and complete attributes remain copied; later rows
-replace earlier equal IDs, and publication order is sorted by the final ID map. This follows
-`30107F70`, `30109F90` and `30108AD0`. The current bounded parser requires the known numeric
-attributes and finite floats rather than inventing missing native constructor values. It preserves
-integer and float attributes separately; it does not implement the group's rendering/editor behavior.
+`ZoneWorldVegetationContent` reads `game/worlds/{world}/vegetation.xml` through the configured asset
+source. It retains the source-order rows and complete attributes; later equal IDs replace earlier
+rows, and publication uses the final ID map. The serialized signed 16-bit vegetation group ID is
+separate from object.dat's model table. Missing/negative references remain unsupported.
 
-`ZoneManagedVegetationResources` borrows the scene's existing **distinct** character and ray
-`ZoneManagedStaticGeometry` owners. Its accepted resource is a noncompound, directly selected
-root with exactly decoded default 4096 physics, actual root material mapping, and no unowned
-independent helper physics, root special slots or foliage-info chunk `0xAAFC0005`.
-General triangle meshes remain surfaces, decoded primitive boxes retain their solid volume,
-and sphere/cylinder/capsule proxies use the existing analytic kernels. CGF node transforms do
-not replace the native direct-root identity transform.
+`ZoneManagedVegetationPolicy.FromCVars(actualCVars)` consumes the actual engine configuration,
+including dedicated.cfg and command-line overrides. Offline instruction execution of the original
+CVar registrations `3000A900`/`30011A40` establishes these engine defaults:
 
-The ported configuration/gates are:
+| CVar | Engine default | Actual configured value used by the content probe |
+| --- | ---: | ---: |
+| e_vegetation | 1 | 1 |
+| e_obj_quality | 0 | 0 |
+| e_vegetation_min_size | 0 | 1 |
+| e_vegetation_create_collision_only | 0 | 1 |
+| e_view_dist_ratio_detail | 30 | 30 |
+| e_phys_foliage | 2 | 0 |
+| e_vegetation_bending | 2 | 2 |
+| e_foliage_stiffness | 3.2 | 3.2 |
 
-- The serialized group is a signed 16-bit vegetation-catalog ID, separate from object.dat's model table.
-  Missing/negative group references are unsupported and publish no handles.
-- Actual `e_vegetation`, `e_obj_quality`, `e_vegetation_min_size`,
-  `e_vegetation_create_collision_only` and, when needed, `e_view_dist_ratio_detail` inputs are
-  explicit `ZoneManagedVegetationPolicy` fields. Spec 7 requires the actual detail ratio;
-  native `302462D0` permits spec 0, otherwise quality 0 or spec<=unsigned quality, with detail 0
-  excluding spec 7. A configured skip is reported separately from an unsupported dependency.
-- This first profile accepts minimum-size 0 and finite nonnegative authored scale. A nonzero
-  minimum size needs the actual CStatObj radius and remains unsupported. Raw scale 0 passes
-  that admitted minimum-size gate and then clamps to 0.1; the upper clamp is 5. For every admitted
-  resource, the collision-only gate's recursive HasPhysics 4096 test is true.
-- Group material overrides remain unsupported. Actual root material slots and mapped physical
-  surface IDs are copied from the existing material/surface owners; no basename-derived material
-  or physical 0 fallback is substituted for a missing dependency.
-- Explicit angle bytes X=`0x39`, Y=`0x3A`, Z=`0x3C` use the float order
-  `(float(byte)*1.4117647f)*0.017453292f`, original Euler `30106900` and scale multiplication
-  `30106AC0`. A group requesting terrain alignment with zero explicit X/Y angles is refused
-  because that branch calls the unowned `300CD590` terrain-normal operation. Nonzero explicit
-  X/Y bypass that branch, as in the original.
-- Sector translation is `((engineCellX*4+sectorX)<<8,(engineCellY*4+sectorY)<<8,0)`,
-  X outer/Y inner; tagged vegetation uses `(engineCellX<<10,engineCellY<<10,0)`.
-  Absolute authored cell coordinates are never added again.
+The minimum size, collision-only value and detail ratio are floats. In particular, a nonzero
+collision-only float selects recursive default-4096 admission; it is not an integer CVar.
+`302462D0` permits spec 0, otherwise quality 0 or spec <= unsigned quality. Detail ratio 0 excludes
+spec 7. A configured skip is distinct from an unowned resource or publication branch.
 
-`30103DC0`'s default physicalizer uses the low geometry word `0x04018FFF` and separate collider
-word 1 from `0x0000000104018FFF`. Both character bit 2 and ray bit `0x8000` are present. The copied
-report exposes these two words separately. The source default-slot compilation checks actual used
-physical materials for break-energy flag `0x400`; root flag `0x100` then adds geometry bit `0x800000`
-unless the placement's raw Flags20 bit 2 suppresses that branch. These are publication/query flags;
-breakage dynamics, bending and destruction are not implemented by this seam.
-`300400D0` compiles per-triangle flags only for native mesh kinds; boxes decoded into twelve query
-triangles still follow the primitive wrapper slot rule. A negative box/curved wrapper slot skips
-that flag compilation even when its query material later maps to a break-energy surface.
-The direct vegetation root reads compiled break flag `0x100` but does not read compiled
-vehicle-only flag `0x80` or substitute mask64. The brush filter and `300442F0` child flag branch
-must not be applied to this root by analogy; a dedicated regression preserves player/ray
-publication with an actual vehicle-only physical material. Child publication remains unsupported.
+`302221D0` compares `minimumSize <= statObjRadius * rawSerializedScale` before clamping scale to
+0.1..5 and before the collision-only gate. The radius is the actual CStatObj+260 producer:
+Mesh0800 header bounds at +124..144 pass through `301D3A30`/`30030500`, and `30024D70` computes
+half their diagonal with the original float operation order. `3002F720` returns that scalar. A direct
+resource uses the selected ordinary mesh's raw bounds; compound `30030D90` unions the ordinary
+node bounds after the original unpadded `300212E0` transforms. These render bounds serve only
+the load-size gate. Physical queries use the decoded physical proxies.
 
-## Exclusion ownership
+The raw-scale order matters: a small raw scale can fail minimum size even though the later 0.1
+clamp would have enlarged it. NaN fails the original ordered size comparison. A surviving
+nonfinite transform or a radius overflow remains outside this finite managed profile.
 
-The final `302221D0` gate calls `301597D0`. It compares the translated **authored bounding box**
-against the engine's current runtime exclusion OBB table with `30164440`; it does not replace the
-physical proxy with that authored box. `ZoneManagedVegetationExclusions` is a mandatory copied,
-immutable snapshot of that table and the actual current engine origin. Its entries contain source
-ID, orthonormal basis, half extents, local center and world position. Touching OBBs exclude the row;
-no collision-tolerance epsilon changes this decision.
+## Physical parts, materials and foliage
 
-The engine constructor initializes the table pointer/count to 0 (`C3DEngine+24096/+24104`).
-For a fresh static scene with no admitted runtime exclusion producers, the truthful initial
-snapshot is `new ZoneManagedVegetationExclusions(actualEngineOrigin, [])`. This is an explicit
-source state, not a default selected because no geometry was found. `3015C1E0` adds exclusion
-records and also invokes other removal operations; `30158690` removes records. This increment
-does not implement those later mutation/destruction operations or automatically remove proxies
-after the immutable snapshot changes. A production integration must own that lifetime or restrict
-admission to the proven fresh-scene/no-mutation profile. Exclusions are not a caller-supplied
-coverage boolean.
+`ZoneManagedVegetationResources` borrows the scene's existing distinct character and ray
+`ZoneManagedStaticGeometry` owners. Immutable mesh/BVH and analytic resources are shared by
+normalized CGF path. General triangle meshes remain surfaces, primitive boxes retain solid volume,
+and sphere/cylinder/capsule proxies use the existing analytic kernels.
 
-## API and lifetime
+The initial static publication plan follows `30103DC0`, `30025950` and `300442F0`:
 
-Create one `ZoneManagedVegetationResources(assets, materials, layout, catalog, characters, rays,
-policy, exclusions)` for the scene. `BeginCell(exactLayoutPlacement)` returns an exact-generation
-`ZoneManagedVegetationCellLease`. `LoadTaggedObjects(content)` consumes vegetation rows from one
-typed object input; `LoadSectors(content)` consumes the sixteen vegetation.dat sectors. Repeating
-the same input kind is rejected. Every report retains source kind/sector, row order/offset,
-signed group, asset path, transform, separate part/collider flags, installed counts and diagnostic.
-Outcomes are `Published`, `SkippedByConfiguration`, `SkippedByExclusion` and `Unsupported`.
+- A direct default 4096 root uses geometry word `0x04018FFF` and separate collider word 1. Player
+  bit 2 and ray bit `0x8000` are present. Its physical local transform is identity; the node's render
+  transform is not substituted.
+- Root special 4097/4098 parts retain their distinct original flags and entity bounds. The compiled
+  foliage count and signed `e_phys_foliage >= 2` gate decide the special-part plan. These special
+  masks do not contribute player/ray proxies in the admitted direct-root profile.
+- The selected-default compound prefix publishes each selected ordinary child's default geometry
+  once with the original raw identity transform, then excludes it from the final child pass. This
+  includes the source prefix's children whose later flag-2 gate would otherwise differ. All four
+  target-cell compounds have empty compiled foliage and no selected special-child data; their
+  default children are supported. Group 2972 contributes two proxies per placement.
+- Foliage chunk `0xAAFC0005` is decoded and validated. Its copied spine/vertex/skin/bone arrays and
+  original `3003EA10` 64-bone compilation result drive the initial publication flags. An empty
+  32-byte chunk is an empty source state. A present chunk is not treated as either automatically
+  unsupported or automatically empty. Dynamic bending, wind, articulated foliage and destruction
+  remain separate unported behavior.
+- The complete physical entity union includes every actually published part, including parts whose
+  flags exclude the current player/ray query. Each query-included instance carries that union as
+  its admission bounds. A query mask does not justify shrinking the source entity bounds.
+- Actual intrinsic node material slots map through the existing material/surface owners. Native
+  `30147630` retains a group render-material override separately, while `30121740` loads the model
+  without that override and the direct/default physicalizer never reads group+104. It therefore
+  does not replace the physical material map here. An original instruction control poisons that
+  pointer and verifies the same publication.
 
-Immutable mesh/BVH or analytic resource data is shared per normalized CGF path. Only the admitted
-resource profile enters the character/ray inventories. Each placement stages its full admitted part
-set, rolls back both inventories on failure, and validates the exact cell generation after external
-asset/material callbacks. A callback that retires/replaces the cell cannot cache or publish that
-stale load. Replacing a cell invalidates and removes its prior generation before publishing the
-new one. Cell/scene disposal removes only owned handles; foreign scene geometry survives, and
-stale disposal cannot remove replacement handles. Reports and `IsCurrent` describe generation/history;
-they do not certify that a caller has not separately cleared the borrowed target geometry. Any future
-coverage owner must also verify live handles, complete inputs and geometry revisions. The asset source
-and target geometries remain caller-owned. This is a scene-thread owner, not a concurrent loader.
+`300400D0` checks used physical materials for break-energy flag `0x400`; compiled root flag
+`0x100` adds geometry bit `0x800000` unless placement Flags20 bit 2 suppresses it. Only native mesh
+kinds use per-triangle flag compilation. A box decoded into twelve query triangles still follows
+the primitive wrapper slot rule; a negative wrapper slot skips that compilation. Query material
+resolution remains independent of this flag-compilation rule.
 
-Eager retention of admitted resources replaces native on-demand allocation scheduling `301008C0`.
-It preserves query targets that on-demand creation can produce; an unallocated source object is
-never treated as proof of physical clearance.
+The direct root reads compiled break flag `0x100` but ignores compiled vehicle-only flag `0x80`.
+It does not substitute brush/child mask 64. The regression with a vehicle-only intrinsic material
+preserves player/ray publication. This distinction must survive later child/brush extensions.
 
-## Verification
+A complete plan with neither player bit 2 nor ray bit `0x8000` returns `ClassifiedNonBlocking`.
+It does not invent a terrain-aligned transform or a material to explain an absent contribution.
+At the actual collision-only configuration, the target's nondefault groups skip before publication.
 
-The portable `ManagedVegetationTests` suite covers catalog replacement, original math controls,
-cell/sector translation, direct-root transforms, true capsule contact, material IDs, curved defaults,
-scale clamp, source exclusion bounds/origin, separate flags, quality/size gates, unsupported
-dependencies, generation replacement, foreign-handle preservation and retirement inside an asset
-callback and synchronous publication reentry. Its focused isolated run passed 13/13.
+## Placement and exclusion ownership
 
-`Fixtures/vegetation-native-controls.json` records offline original instruction execution from
-`cry3dengine_dedicate.dll`, SHA256
+Explicit angle bytes X=`0x39`, Y=`0x3A`, Z=`0x3C` follow the original float order
+`(float(byte)*1.4117647f)*0.017453292f`, Euler routine `30106900` and scale routine `30106AC0`.
+A contributing resource requesting terrain alignment with zero explicit X/Y angles still refuses
+because `300CD590` terrain-normal ownership is absent. Nonzero explicit X/Y bypass that branch,
+as in the original. Sector translation is
+`((engineCellX*4+sectorX)<<8,(engineCellY*4+sectorY)<<8,0)`, X outer/Y inner. Tagged rows use
+`(engineCellX<<10,engineCellY<<10,0)`; absolute authored cell coordinates are not added again.
+
+The final `302221D0` gate calls `301597D0`, comparing the translated authored bounding box with
+the runtime exclusion OBB table through `30164440`. That box is an exclusion input, never a
+replacement physical proxy. The mandatory immutable snapshot retains each source ID, basis,
+half extents, local center, world position and the actual engine origin. Touching excludes the row;
+no collision epsilon changes this source decision.
+
+`ZoneManagedVegetationExclusions.FreshStaticScene(layout)` is restricted to dedicated,
+nonstreaming static LoadZone with no admitted exclusion mutation. Original CrySystem `365704D0`
+sets Seamless+160/+164 from the zone origin before cell loading; virtual 32, `3653EF00`, returns
+`float(int32(originX << 10)), float(int32(originY << 10)), 0`. The factory preserves that signed
+shift/conversion order, including nonzero origins. The engine constructor's exclusion pointer/count
+starts at zero. Later `3015C1E0` insertion/destruction, `30158690` removal and streaming-origin
+mutation need their own owner; this snapshot does not silently support them.
+
+## API, completeness and lifetime
+
+Construct one `ZoneManagedVegetationResources(assets, materials, layout, catalog, characters, rays,
+policy, exclusions)` per scene. `BeginCell(exactLayoutPlacement)` returns an exact-generation
+`ZoneManagedVegetationCellLease`. `LoadTaggedObjects(content)` consumes one typed object input;
+`LoadSectors(content)` consumes the sixteen vegetation.dat sectors. A repeated attempted input is
+rejected. Source-row order/offset, group, asset, model radius, part flags/transforms/bounds, foliage
+counts, installed handle counts and diagnostics are copied in the placement reports.
+
+The read-only internal input snapshots retain the exact content object identities and completion
+state, plus a copied placement-lease list. A failed attempt remains incomplete and cannot be
+retried as if it had never happened. Normal completion does not turn `Unsupported` reports into
+coverage. The outcome set is `Published`, `SkippedByConfiguration`, `SkippedByExclusion`,
+`ClassifiedNonBlocking` and `Unsupported`.
+
+`PublicationRevision` is a monotonic managed lifetime token, not a native counter. It advances
+before cell bind/retirement, placement publication/retirement, and input attempt/completion,
+including bodyless classified placements. Checked exhaustion refuses before lifetime or handle
+mutation. Repeated disposal is idempotent. Each placement stages its admitted part set and rolls
+back both inventories on failure. Asset/material callbacks are followed by exact-generation checks;
+synchronous same-owner publication reentry is refused. Cell replacement retires its predecessor,
+foreign handles survive, and stale disposal cannot remove a replacement's handles.
+
+Reports and `IsCurrent` describe lifetime/history. They do not certify that another borrower has
+not cleared the target geometry. A coverage owner must also match complete source inputs,
+placement dispositions, live handles and geometry revisions. The asset source and target
+geometries remain caller-owned. This is a scene-thread owner. Eager immutable retention replaces
+native on-demand allocation scheduling `301008C0`; an unallocated native object is not evidence
+of clearance.
+
+## Verification and remaining branches
+
+The isolated focused build has zero warnings/errors and all 23 `ManagedVegetationTests` pass.
+They cover root/special/default plans, compound raw transforms and duplicate suppression,
+foliage compilation, intrinsic materials, wrapper flags, actual CVar defaults, minimum-size/raw
+scale ordering, exclusion origin, cell/sector coordinates, incomplete inputs, lifetime revisions,
+callback reentry/retirement and atomic revision-exhaustion refusal.
+
+`Fixtures/vegetation-native-controls.json` contains offline original PE instruction controls from
+cry3dengine_dedicate.dll, SHA256
 `5e22f8338d6e146939f4f22fc0531d78c7c2313547a1863cadb2cb5e3b8d3caf`:
 
-- 16 `30102840` transforms, including `30106900` and `30106AC0`: 192/192 output float bits agree,
-  including signed-zero cases. The only callbacks are actual CRT `sinf(float)`/`cosf(float)`.
-- 140 `30164440` exclusion controls: 87 overlaps/53 misses, all decisions agree. Inputs include
-  three-axis rotations, touching/separated faces, local centers and coordinates near 8000 m.
+| Original leaf | Controls |
+| --- | ---: |
+| 30102840 placement transforms, including 30106900/30106AC0 | 16; 192/192 output float bits agree |
+| 30164440 exclusion SAT | 140; 87 overlap/53 miss decisions agree |
+| 30103DC0 with original 30025950/300442F0 selected-child processing | 70 publication controls |
+| 3003EA10 foliage compilation | 12 |
+| 3000A900/30011A40 CVar registrations | 8 |
+| CrySystem 3653EF00 origin | 5 |
+| 30024D70 radius | 5; output float bits agree |
+| 300212E0 unpadded render-bound transform | 40; output float bits agree |
+| 302221D0 factory size/clamp/collision-only gates | 9 |
 
-No engine DLL was loaded. These are transform/exclusion controls, not an original live physicalizer
-comparison or complete world collision oracle. Generator and source extracts are retained under
-`D:/aaemu-runtime/research/managed-vegetation-stage/` and
-`D:/aaemu-runtime/research/scene-collision-next/` respectively.
+The publication harness declares the model/world ABI callbacks and copies the original
+AddGeometry outputs; allocation/CRT callbacks are explicit in the fixture. It does not run an
+original live physical world. No engine DLL is loaded. Generators are retained under
+`D:/aaemu-runtime/research/managed-vegetation-stage/`, and recovered publication extracts under
+`D:/aaemu-runtime/research/scene-collision-next/`.
 
-A separate managed read-only probe used the configured original 10.x asset source. It read 4145
-world groups and 7127 vegetation rows in authored cell 009_014. The strict profile admitted four
-group 335 `jungle_tree_large_big_bright_green_fallen_e.cgf` placements: three tagged object.dat rows
-(source orders 464, 791, 866) and one vegetation.dat sector 10 row (order 1212). Each real serialized
-triangle witness answered both target inventories and a true capsule overlap, with material 123;
-cell retirement reduced both owned inventories from 4 to 0. The report is
+The separate configured-original-content probe reads 4,145 world groups and all 7,127 target rows.
+Under the actual policy above, it reports 26/26 supported groups, 385 published placements,
+6,742 configured skips, 396 instances per query inventory and zero unsupported rows. Every
+published serialized triangle supplies an independent ray/contact witness, with physical materials
+copied from the authored graph; retirement returns both owned inventories to zero. This is managed
+query verification against real content, not a live original AddGeometry/material/collision census.
+The report is
 `D:/aaemu-runtime/research/managed-vegetation-stage/vegetation-managed-content-results.json`.
-These four managed admissions are source-backed; they are not a live original collider census.
 
-Every other group remains explicitly unsupported in this first seam. In particular, the other
-default-bearing groups need root specials, foliage or compound/helper publication. Special-only
-and no-physics resources are not yet certified nonblocking by this owner. XML entities, roads,
-decals and all other populated-cell families remain separate work. Production coverage stays false.
-
-Final combined validation passes 1,019 tests, 0 failures/skips, and an analyzer build with 0 errors,
-64 existing warnings and no new warning diagnostics. A fresh original-content probe executes the
-same tested core SHA256 `2163927F18A207C502FD7663676A3FAF670595ABC8B36DBBBA1D95B3E1E89609`.
-Its four real triangle witnesses pass both ray inventories and nondegenerate capsule overlaps
-(radius 0.05 m, segment half-height 0.2 m), preserve material 123 and retire both four-instance inventories
-to 0. All 192 transform components are bit exact and 140 exclusion decisions match. The probe records
-source input hashes and rejects an executing core that differs from the tested reference.
-Final evidence is under `D:/aaemu-runtime/research/managed-vegetation-final-probe/` and
-`D:/aaemu-runtime/research/collision-leaf-batch-evidence.json`. The production Host/navigation
-composition and the previous accepted world-entry application are unchanged by this component batch.
+Remaining general branches refuse precisely: eligible independent-helper physics, active compound
+foliage localization, selected compound special aggregation, compound break-flag propagation,
+joint/cutdown mutation, other node-property processors, missing/incomplete material or physical
+resources, and required terrain alignment. Dynamic foliage/breakage and mutable exclusion or
+streaming-origin behavior remain unported even for initially supported static resources. These
+branches do not occur in the admitted target-cell plan under its actual configuration. Other cells
+and other cell families still require their own complete-input and query-specific proofs.

@@ -1,0 +1,302 @@
+{
+  "scope": "Original3927F610 common registration tail after type100/type5 parameter setup, before Entity.RegisterAI. Instructions copied from the original Game binary and executed offline in Unicorn; no original module loaded.",
+  "binarySha256": "50EDCD49D0537AA0F94DB55ECF22008D7FB9ED937EA02121919199B5BF8BB7ED",
+  "entry": "0x3927FEDC",
+  "stopBeforeEntityRegisterAI": "0x3927FF0D",
+  "parameterBase": "RBP+B0",
+  "flags177": "ModelDesc.Big(bit2)",
+  "flags178": "ModelDesc.ForceNavigateAroundObject(bit8)",
+  "kind180": "UnitIdentity.Kind",
+  "controls": [
+    {
+      "modelFlags144": 0,
+      "unitKind": 0,
+      "native": {
+        "flag177": false,
+        "flag178": false,
+        "kind180": 0
+      }
+    },
+    {
+      "modelFlags144": 0,
+      "unitKind": 1,
+      "native": {
+        "flag177": false,
+        "flag178": false,
+        "kind180": 1
+      }
+    },
+    {
+      "modelFlags144": 0,
+      "unitKind": 2,
+      "native": {
+        "flag177": false,
+        "flag178": false,
+        "kind180": 2
+      }
+    },
+    {
+      "modelFlags144": 0,
+      "unitKind": 3,
+      "native": {
+        "flag177": false,
+        "flag178": false,
+        "kind180": 3
+      }
+    },
+    {
+      "modelFlags144": 0,
+      "unitKind": 4,
+      "native": {
+        "flag177": false,
+        "flag178": false,
+        "kind180": 4
+      }
+    },
+    {
+      "modelFlags144": 0,
+      "unitKind": 5,
+      "native": {
+        "flag177": false,
+        "flag178": false,
+        "kind180": 5
+      }
+    },
+    {
+      "modelFlags144": 0,
+      "unitKind": 6,
+      "native": {
+        "flag177": false,
+        "flag178": false,
+        "kind180": 6
+      }
+    },
+    {
+      "modelFlags144": 0,
+      "unitKind": 7,
+      "native": {
+        "flag177": false,
+        "flag178": false,
+        "kind180": 7
+      }
+    },
+    {
+      "modelFlags144": 2,
+      "unitKind": 0,
+      "native": {
+        "flag177": true,
+        "flag178": false,
+        "kind180": 0
+      }
+    },
+    {
+      "modelFlags144": 2,
+      "unitKind": 1,
+      "native": {
+        "flag177": true,
+        "flag178": false,
+        "kind180": 1
+      }
+    },
+    {
+      "modelFlags144": 2,
+      "unitKind": 2,
+      "native": {
+        "flag177": true,
+        "flag178": false,
+        "kind180": 2
+      }
+    },
+    {
+      "modelFlags144": 2,
+      "unitKind": 3,
+      "native": {
+        "flag177": true,
+        "flag178": false,
+        "kind180": 3
+      }
+    },
+    {
+      "modelFlags144": 2,
+      "unitKind": 4,
+      "native": {
+        "flag177": true,
+        "flag178": false,
+        "kind180": 4
+      }
+    },
+    {
+      "modelFlags144": 2,
+      "unitKind": 5,
+      "native": {
+        "flag177": true,
+        "flag178": false,
+        "kind180": 5
+      }
+    },
+    {
+      "modelFlags144": 2,
+      "unitKind": 6,
+      "native": {
+        "flag177": true,
+        "flag178": false,
+        "kind180": 6
+      }
+    },
+    {
+      "modelFlags144": 2,
+      "unitKind": 7,
+      "native": {
+        "flag177": true,
+        "flag178": false,
+        "kind180": 7
+      }
+    },
+    {
+      "modelFlags144": 8,
+      "unitKind": 0,
+      "native": {
+        "flag177": false,
+        "flag178": true,
+        "kind180": 0
+      }
+    },
+    {
+      "modelFlags144": 8,
+      "unitKind": 1,
+      "native": {
+        "flag177": false,
+        "flag178": true,
+        "kind180": 1
+      }
+    },
+    {
+      "modelFlags144": 8,
+      "unitKind": 2,
+      "native": {
+        "flag177": false,
+        "flag178": true,
+        "kind180": 2
+      }
+    },
+    {
+      "modelFlags144": 8,
+      "unitKind": 3,
+      "native": {
+        "flag177": false,
+        "flag178": true,
+        "kind180": 3
+      }
+    },
+    {
+      "modelFlags144": 8,
+      "unitKind": 4,
+      "native": {
+        "flag177": false,
+        "flag178": true,
+        "kind180": 4
+      }
+    },
+    {
+      "modelFlags144": 8,
+      "unitKind": 5,
+      "native": {
+        "flag177": false,
+        "flag178": true,
+        "kind180": 5
+      }
+    },
+    {
+      "modelFlags144": 8,
+      "unitKind": 6,
+      "native": {
+        "flag177": false,
+        "flag178": true,
+        "kind180": 6
+      }
+    },
+    {
+      "modelFlags144": 8,
+      "unitKind": 7,
+      "native": {
+        "flag177": false,
+        "flag178": true,
+        "kind180": 7
+      }
+    },
+    {
+      "modelFlags144": 10,
+      "unitKind": 0,
+      "native": {
+        "flag177": true,
+        "flag178": true,
+        "kind180": 0
+      }
+    },
+    {
+      "modelFlags144": 10,
+      "unitKind": 1,
+      "native": {
+        "flag177": true,
+        "flag178": true,
+        "kind180": 1
+      }
+    },
+    {
+      "modelFlags144": 10,
+      "unitKind": 2,
+      "native": {
+        "flag177": true,
+        "flag178": true,
+        "kind180": 2
+      }
+    },
+    {
+      "modelFlags144": 10,
+      "unitKind": 3,
+      "native": {
+        "flag177": true,
+        "flag178": true,
+        "kind180": 3
+      }
+    },
+    {
+      "modelFlags144": 10,
+      "unitKind": 4,
+      "native": {
+        "flag177": true,
+        "flag178": true,
+        "kind180": 4
+      }
+    },
+    {
+      "modelFlags144": 10,
+      "unitKind": 5,
+      "native": {
+        "flag177": true,
+        "flag178": true,
+        "kind180": 5
+      }
+    },
+    {
+      "modelFlags144": 10,
+      "unitKind": 6,
+      "native": {
+        "flag177": true,
+        "flag178": true,
+        "kind180": 6
+      }
+    },
+    {
+      "modelFlags144": 10,
+      "unitKind": 7,
+      "native": {
+        "flag177": true,
+        "flag178": true,
+        "kind180": 7
+      }
+    }
+  ],
+  "controlCount": 32,
+  "disagreements": 0
+}

@@ -45,6 +45,12 @@ not use these tokens to certify an unowned mutation in another resource. Navigat
 also uses its actual water publication/retirement owner and graph revision, in addition
 to live terrain/collision coverage checks.
 
+The scene now adds [brush-cell and composed-cell publications](managed-cell-collision-coverage.md).
+Their revisions also observe bodyless retirement. They retain exact source rows and live owned
+handles rather than treating total geometry counts as evidence. Navigation captures all six
+physical publication tokens before work and checks them before another request. A lost water
+source invalidates global completeness; a source contour may cross into a neighboring cell.
+
 The defect which motivated this seam was reproduced with the real composed managed
 Approach/Predictive/Puppet/proxy/body test fixture: after a terrain cell unload, a route
 guard checking only graph freshness accepted another physical request and moved its Unit.

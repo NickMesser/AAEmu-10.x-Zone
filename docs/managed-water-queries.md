@@ -25,7 +25,10 @@ range should be replaced with a guessed physical-body radius or model bound.
 Queries require a live cell at the point and a complete admitted loaded inventory.
 Missing/invalid object data or an unsupported processor produces a named refusal.
 Explicitly absent authored files are an empty inventory. `RetireCell` removes that
-cell's physical areas and point coverage; `Dispose` invalidates all queries. This
+cell's physical areas and point coverage and invalidates global inventory completeness.
+A contour can cross into a neighboring cell; its loss cannot establish a new dry ceiling
+there. Navigation also validates exact ordered source-cell references and the initialized
+terrain's resolved ocean input. `Dispose` invalidates all queries. This
 is an initial-load/retirement owner, not a dynamic area creation or cell reentry
 service. Reentry constructs a fresh owner from its actual load reports.
 

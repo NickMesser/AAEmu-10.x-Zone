@@ -35,6 +35,7 @@
     <EmbeddedResource Include="Fixtures\npc-adaptive-urgency-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-puppet-look-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-movement-radius-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\npc-model-common-tail-native-controls.json" />
     <EmbeddedResource Include="Fixtures\npc-return-state.lua" />
     <EmbeddedResource Include="Fixtures\npc-original-math.lua" />
     <EmbeddedResource Include="Fixtures\npc-controller-angle-native-controls.json" />
@@ -46,5 +47,10 @@
     <EmbeddedResource Include="Fixtures\particle-x2_effects.xml" />
     <EmbeddedResource Include="Fixtures\particle-x2_effects_p.xml" />
     <EmbeddedResource Include="Fixtures\vegetation-native-controls.json" />
+    <EmbeddedResource Include="Fixtures\CellEntityCollision\**\*">
+      <LogicalName>$([System.String]::new('$(AssemblyName).%(Identity)').Replace('\', '.').Replace('/', '.'))</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fixtures\cell-nonbrush-009014-controls.json" />
+    <EmbeddedResource Include="Fixtures\water-query-class-controls.json" />
   </ItemGroup>
 </Project>

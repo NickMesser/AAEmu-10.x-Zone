@@ -30,6 +30,7 @@ public sealed class ZoneManagedWaterQueries : IDisposable
     private readonly List<ZoneManagedWaterVolumeReport> _rows = [];
     private readonly List<string> _coverageErrors = [];
     private readonly List<string> _refusals = [];
+    private readonly ZoneManagedSceneCellLoadReport[] _sourceCells;
     private int _unsupported;
     public float OceanLevel { get; }
     public bool IsDisposed { get; private set; }
@@ -44,9 +45,9 @@ public sealed class ZoneManagedWaterQueries : IDisposable
         if (profile != ZoneManagedWaterQueryProfile.StaticServerWithoutOceanVortex)
             throw new NotSupportedException("Water queries require an explicit static server profile without an active ocean vortex or dynamic areas.");
         if (!float.IsFinite(resolvedOceanLevel)) throw new NotSupportedException("The world's resolved ocean level is not finite.");
-        OceanLevel = resolvedOceanLevel;
+        OceanLevel = resolvedOceanLevel; _sourceCells = cells.ToArray();
         var ids = new HashSet<ulong>();
-        foreach (var cell in cells)
+        foreach (var cell in _sourceCells)
         {
             var local = cell.Placement.EngineCell;
             if (cell.Placement.InvalidLocalX || cell.Placement.InvalidLocalY || (uint)local.X >= 8 || (uint)local.Y >= 8 ||
@@ -89,6 +90,12 @@ public sealed class ZoneManagedWaterQueries : IDisposable
             }
         }
     }
+
+    /// <summary>Registration order matters to volume-ID deduplication and the four-area query cap.</summary>
+    internal bool UsesSource(IReadOnlyList<ZoneManagedSceneCellLoadReport> cells, float resolvedOceanLevel) =>
+        !IsDisposed && _sourceCells.Length == cells.Count && _liveCells.Count == _sourceCells.Length &&
+        BitConverter.SingleToUInt32Bits(OceanLevel) == BitConverter.SingleToUInt32Bits(resolvedOceanLevel) &&
+        _sourceCells.Select((cell, index) => ReferenceEquals(cell, cells[index]) && _liveCells.Contains(cell.Placement.EngineCell)).All(value => value);
 
     /// <summary>
     /// Certified ceiling for the complete horizontal inventory, including native float projection
@@ -165,6 +172,7 @@ public sealed class ZoneManagedWaterQueries : IDisposable
         var revision = checked(PublicationRevision + 1);
         _liveCells.Remove(engineCell); PublicationRevision = revision;
         _volumes.RemoveAll(volume => volume.Cell == engineCell);
+        _coverageErrors.Add($"Water cell ({engineCell.X},{engineCell.Y}) retired; the complete source inventory is no longer live.");
     }
     public void Dispose()
     { if (IsDisposed) return; PublicationRevision = checked(PublicationRevision + 1); IsDisposed = true; _liveCells.Clear(); _volumes.Clear(); }

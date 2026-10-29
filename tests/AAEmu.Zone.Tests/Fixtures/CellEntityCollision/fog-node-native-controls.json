@@ -1,0 +1,87 @@
+{
+  "scope": "Offline original FogVolume constructor/render-slot/setter/physical accessor controls. No engine DLL loads.",
+  "engineModuleLoads": 0,
+  "images": [
+    {
+      "path": "D:\\aaemu-runtime\\engine-bin64\\cry3dengine_dedicate.dll",
+      "sha256": "5e22f8338d6e146939f4f22fc0531d78c7c2313547a1863cadb2cb5e3b8d3caf"
+    },
+    {
+      "path": "D:\\aaemu-runtime\\engine-bin64\\cryentitysystem_dedicate.dll",
+      "sha256": "eadc46ff915dca687700aa15d7f3aa4892954336da5d65cb523918288ea3e413"
+    }
+  ],
+  "entityPrimaryTable": "0x320cd998",
+  "entityLoadFogSlot": 864,
+  "entityLoadFogTarget": "0x3200f5b0",
+  "originalFunctions": [
+    "3200F5B0 complete entity LoadFogVolume leaf",
+    "320897E0 full render-slot creation/reuse",
+    "301395F0 actual type7 factory",
+    "300C38D0 full fog constructor",
+    "301C17E0 render material holder constructor",
+    "300C2DC0 complete property setter",
+    "300212E0 render bounds transform",
+    "300C0990/300C09A0 physical getters/setters",
+    "30020AD0 physicalization slots"
+  ],
+  "controls": [
+    {
+      "variant": "fresh_original_volume",
+      "returnedSlot": 0,
+      "renderNodeTable": "0x30287198",
+      "physicalGetter": "0x300c0990",
+      "physicalSetter": "0x300c09a0",
+      "physicalize": "0x30020ad0",
+      "dephysicalize": "0x30020ad0",
+      "physicalPointer": 0,
+      "externalSetPhysicsIgnored": true,
+      "physicalizationPreservesNode": true,
+      "actualHalfSize": [
+        175.0,
+        175.0,
+        15.0
+      ],
+      "events": [
+        "RenderSlotRelease",
+        "RendererFogResource",
+        "RendererFogResource",
+        "FogMaterialBinding",
+        "FogMaterialBinding",
+        "FogRenderRegistry",
+        "RenderSlotTransform",
+        "RenderProxyLocalBounds"
+      ]
+    },
+    {
+      "variant": "reused_slot_with_changed_size",
+      "returnedSlot": 0,
+      "renderNodeTable": "0x30287198",
+      "physicalGetter": "0x300c0990",
+      "physicalSetter": "0x300c09a0",
+      "physicalize": "0x30020ad0",
+      "dephysicalize": "0x30020ad0",
+      "physicalPointer": 0,
+      "externalSetPhysicsIgnored": true,
+      "physicalizationPreservesNode": true,
+      "actualHalfSize": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "events": [
+        "RenderSlotTransform",
+        "RenderProxyLocalBounds"
+      ]
+    }
+  ],
+  "declaredDependencies": [
+    "renderer fog resource lookup",
+    "fog material shader binding",
+    "fog render-node registry",
+    "render slot allocation/release and transform publication",
+    "render proxy local bounds",
+    "active render quality selector",
+    "CRT allocation/memory/math imports"
+  ]
+}

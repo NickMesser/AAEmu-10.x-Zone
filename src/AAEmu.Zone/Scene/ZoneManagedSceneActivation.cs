@@ -2,6 +2,7 @@ using System.Buffers.Binary;
 using System.Xml;
 
 using AAEmu.Zone.Content;
+using AAEmu.Zone.Hosting;
 using AAEmu.Zone.Terrain;
 
 namespace AAEmu.Zone.Scene;
@@ -48,6 +49,7 @@ public sealed class ZoneManagedSceneActivation : IDisposable
     private readonly IZoneAssetSource _assets;
     private readonly ZoneTerrainAssetFiles _files;
     private readonly Action<string>? _trace;
+    private readonly ZoneEngineCVars _cvars;
     private readonly List<ZoneMapCoordinate> _loadedCells = [];
     private bool _created, _loadAttempted, _disposed;
 
@@ -56,11 +58,12 @@ public sealed class ZoneManagedSceneActivation : IDisposable
     public ZonePhysicalSurfaceContent? SurfaceContent { get; private set; }
     public ZoneTerrainMaterialResolver? Materials { get; private set; }
     public ZoneManagedSceneCollision? Collision { get; private set; }
+    public ZoneManagedCellCollisionCoverage? CellCollisionCoverage { get; private set; }
     public ZoneManagedSceneLoadReport? Report { get; private set; }
     public bool IsCreated { get { lock (_gate) return _created && !_disposed; } }
 
     public ZoneManagedSceneActivation(ZoneWorldMapLayout layout, IZoneAssetSource assets,
-        Action<string>? trace = null)
+        Action<string>? trace = null, ZoneEngineCVars? cvars = null)
     {
         ArgumentNullException.ThrowIfNull(layout);
         ArgumentNullException.ThrowIfNull(assets);
@@ -68,6 +71,7 @@ public sealed class ZoneManagedSceneActivation : IDisposable
         _assets = assets;
         _files = new(assets, layout.World);
         _trace = trace;
+        _cvars = cvars ?? ZoneEngineCVars.Empty;
     }
 
     public void Create()
@@ -79,9 +83,15 @@ public sealed class ZoneManagedSceneActivation : IDisposable
             // Resolve every material before publishing the tree, so malformed world setup leaves
             // no partially initialized terrain tree that a subsequent Create could reuse.
             var materials = ZoneTerrainMaterialResolver.Load(_assets);
-            using var input = _files.OpenWorldSurfaces(_layout.World) ??
-                throw new FileNotFoundException("Managed terrain setup requires the world's surface.xml.");
-            var surfaces = new ZoneTerrainSurfaceBindings(ZoneTerrainSurfaceContent.Load(input), materials);
+            RequireCurrent();
+            ZoneTerrainSurfaceContent sourceSurfaces;
+            using (var input = _files.OpenWorldSurfaces(_layout.World) ??
+                throw new FileNotFoundException("Managed terrain setup requires the world's surface.xml."))
+                sourceSurfaces = ZoneTerrainSurfaceContent.Load(input);
+            //Opening, reading and closing a borrowed source can call back into the owner.
+            //Finish those boundaries before publishing any initialized terrain state.
+            RequireCurrent();
+            var surfaces = new ZoneTerrainSurfaceBindings(sourceSurfaces, materials);
             var nodes = Heights.InitializeNodeTree(ZoneTerrainWorldInitialization.ResolveOceanLevel(_layout.World));
             nodes.BindSurfaces(surfaces);
             Surfaces = surfaces;
@@ -89,6 +99,7 @@ public sealed class ZoneManagedSceneActivation : IDisposable
             SurfaceContent = materials.SurfaceContent;
             _created = true;
             _trace?.Invoke("CreateManagedSceneServices");
+            RequireCurrent();
         }
     }
 
@@ -118,6 +129,7 @@ public sealed class ZoneManagedSceneActivation : IDisposable
                         "Two authored cells resolve to the same local terrain slot."));
                 else
                     terrain.Add(LoadTerrain(placement));
+                RequireCurrent();
             }
 
             var cells = new List<ZoneManagedSceneCellLoadReport>(_layout.Cells.Count);
@@ -125,14 +137,35 @@ public sealed class ZoneManagedSceneActivation : IDisposable
             {
                 var placement = _layout.Cells[index];
                 cells.Add(new(placement, terrain[index], LoadObjects(placement)));
+                RequireCurrent();
                 _trace?.Invoke($"ManagedTerrain cell=({placement.Cell.Coordinate.X},{placement.Cell.Coordinate.Y}) " +
                     $"local=({placement.EngineCell.X},{placement.EngineCell.Y}) status={terrain[index].Status}" +
                     (terrain[index].Error is { } error ? $" error={error}" : ""));
+                RequireCurrent();
             }
-            Collision = new(_assets, Materials!, cells, _trace);
-            return Report = new(cells.AsReadOnly(), terrain.All(result => result.Succeeded),
+            var report = new ZoneManagedSceneLoadReport(cells.AsReadOnly(), terrain.All(result => result.Succeeded),
                 terrain.Count(result => result.Status == ZoneTerrainCellLoadStatus.Loaded),
                 terrain.Count(result => result.Status == ZoneTerrainCellLoadStatus.Empty), Limitations);
+            ZoneManagedSceneCollision? collision = null;
+            ZoneManagedCellCollisionCoverage? coverage = null;
+            try
+            {
+                collision = new(_assets, Materials!, cells, _trace);
+                RequireCurrent();
+                coverage = new(_layout, _assets, report, collision, Materials!, _cvars);
+                RequireCurrent();
+                Collision = collision; CellCollisionCoverage = coverage;
+                collision = null; coverage = null; //Ownership transferred to this scene.
+                return Report = report;
+            }
+            finally
+            {
+                //Exception paths before transfer retain these locals. CA1508 follows
+                //the successful null assignments without modeling those exceptional paths.
+#pragma warning disable CA1508
+                try { coverage?.Dispose(); } finally { collision?.Dispose(); }
+#pragma warning restore CA1508
+            }
         }
     }
 
@@ -146,6 +179,7 @@ public sealed class ZoneManagedSceneActivation : IDisposable
             using var xml = _files.OpenLevelData(placement.Cell) ??
                 throw new FileNotFoundException("The cell leveldata.xml could not be opened.");
             var cellSurfaces = ZoneTerrainCellSurfaceContent.Load(xml);
+            RequireCurrent();
             var cell = placement.EngineCell;
             Surfaces!.ApplyCellSurfaceTypes(cell.X, cell.Y, cellSurfaces);
             if (content.Header.ChunkSize == 0) return new(ZoneTerrainCellLoadStatus.Empty);
@@ -213,11 +247,15 @@ public sealed class ZoneManagedSceneActivation : IDisposable
     private static bool IsAssetFailure(Exception error) =>
         error is IOException or InvalidDataException or XmlException or UnauthorizedAccessException;
 
+    private void RequireCurrent() => ObjectDisposedException.ThrowIf(_disposed, this);
+
     public void Dispose()
     {
         lock (_gate)
         {
             if (_disposed) return;
+            _disposed = true;
+            CellCollisionCoverage?.Dispose();
             Collision?.Dispose();
             var retiredCells = _loadedCells.Count;
             for (var index = _loadedCells.Count - 1; index >= 0; index--)
@@ -226,7 +264,6 @@ public sealed class ZoneManagedSceneActivation : IDisposable
                 Heights.UnloadCell(cell.X, cell.Y);
             }
             _loadedCells.Clear();
-            _disposed = true;
             _trace?.Invoke($"Managed scene terrain retired cells={retiredCells}");
         }
     }
